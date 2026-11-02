@@ -47,6 +47,6 @@ Tests: `tests/unit/test_temporal.py`, `tests/integration/test_temporal_queries.p
 ## Open questions (Phase 3)
 - A persistence default ("assume a job continues unless contradicted") would turn some UNKNOWNs into
   presumptions; if added, answers must label it as a presumption.
-- Supersessions cannot yet be reversed.
+- Supersessions cannot yet be reversed. (Answered in ADR 0006: they are reviewable.)
 - Valid-time evaluation runs in Python over the claims for one proposition; moving the certain cases into
   TypeQL functions would let TypeDB narrow candidates for broad questions.

@@ -1,0 +1,4 @@
+# Phase 3: a supersession (correction) can itself be reviewed, so it can be withdrawn and reinstated.
+
+define
+  supersession plays review:reviewed;

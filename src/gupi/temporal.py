@@ -63,3 +63,52 @@ def combine(truths, anything_recorded):
     if Truth.FALSE in truths:
         return Answer.FALSE
     return Answer.UNKNOWN
+
+
+# --- periods, for comparing claims (docs/adr/0006) ---
+# A period is (start, end), half-open; None means unbounded on that side.
+
+def possible_period(vt: ValidTime):
+    """Where the claim could hold at all: from its earliest possible start to its latest possible end."""
+    return vt.from_earliest, vt.to_latest
+
+
+def certain_period(vt: ValidTime):
+    """Where the claim certainly holds, or None if nowhere (an unknown start or end leaves no certainty)."""
+    if vt.from_latest is None or vt.to_earliest is None or vt.from_latest >= vt.to_earliest:
+        return None
+    return vt.from_latest, vt.to_earliest
+
+
+def overlap(a, b):
+    """The overlap of two periods, or None."""
+    if a is None or b is None:
+        return None
+    start = a[0] if b[0] is None else b[0] if a[0] is None else max(a[0], b[0])
+    end = a[1] if b[1] is None else b[1] if a[1] is None else min(a[1], b[1])
+    if start is not None and end is not None and start >= end:
+        return None
+    return start, end
+
+
+def false_side(vt: ValidTime, at):
+    """Why a claim says FALSE at `at`: "before" its earliest start, "after" its latest end, or None."""
+    if vt.from_earliest is not None and at < vt.from_earliest:
+        return "before"
+    if vt.to_latest is not None and at >= vt.to_latest:
+        return "after"
+    return None
+
+
+def same_spell(c: ValidTime, x: ValidTime, side):
+    """Does claim c's FALSE on `side` really bear on claim x, i.e. are they certainly the same spell?
+
+    "after": x certainly started before c's end window, so x continuing past c's end disagrees with c.
+    "before": x certainly lasted past c's start window, so x holding before c's start disagrees with c.
+    Otherwise x may be a different spell (an earlier or later period), and c's FALSE says nothing about it.
+    """
+    if side == "after":
+        return x.from_latest is not None and c.to_earliest is not None and x.from_latest < c.to_earliest
+    if side == "before":
+        return x.to_earliest is not None and c.from_latest is not None and x.to_earliest > c.from_latest
+    return False
