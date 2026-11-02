@@ -1,6 +1,6 @@
-# ADR 0001: Assertions are typed relations (assertion-as-relation), with decisions kept separately
+# ADR 0001: Claims are typed relations, one per attestation, with decisions kept separately
 
-Status: proposed (Phase 0), 2026-11-02
+Status: accepted (Phase 0 approved; revised before Phase 1), 2026-11-02
 
 ## Context
 GUPI must store claims about the world with provenance, confidence, review status and bitemporal
@@ -11,40 +11,47 @@ object through generic link relations (`asserts (assertion, subject)`, ...).
 
 **B. Assertion-as-relation.** The claim *is* a typed domain relation, e.g.
 `reporting (report: $alice, manager: $bob)`, and that relation instance owns its time bounds and plays
-roles in `evidence`, `review` and `supersession`. Every domain relation subtypes an abstract `fact`.
-
-## Comparison
+roles in `evidence`, `review` and `supersession`. Every domain relation subtypes an abstract `claim`.
 
 | Concern | A: entity | B: relation |
 |---|---|---|
-| Role semantics | lost or rebuilt by hand (generic `subject`/`object` slots; n-ary claims need a role table) | native: roles are the schema's own roles, checked by TypeDB |
-| Querying a domain fact | joins through the reification layer | a normal pattern: `reporting (report: $a, manager: $m)` |
-| Several competing claims about the same players | natural | natural: TypeDB 3 keeps distinct relation instances with the same players (verified) |
-| Provenance, review, supersession | entity plays roles | relation plays roles (verified: an abstract relation can play roles, subtypes inherit) |
-| Bitemporal attributes | on the entity | on the relation (verified: relations own attributes, inherited from `fact`) |
-| Claims about an attribute ("Alice's title is CTO") | natural | modelled as a small typed relation that owns the value (`employment ... has job-title`); a domain author must create one |
-| Generic tooling (one query for "all facts") | trivial | `$f isa fact` works through inheritance (verified) |
-| Domain extensibility | no schema per claim type: weakly typed | one `sub fact` relation per claim type: strongly typed |
+| Role semantics | lost or rebuilt by hand (generic slots; n-ary claims need a role table) | native: the schema's own roles, checked by TypeDB |
+| Querying a domain claim | joins through the reification layer | a normal pattern: `reporting (report: $a, manager: $m)` |
+| Provenance, review, supersession | entity plays roles | relation plays roles (verified: abstract relations can play roles; subtypes inherit) |
+| Claims about an attribute value | natural | a typed relation that owns the value (`employment ... has job-title`) |
+| Generic tooling ("all claims") | trivial | `$c isa claim` through inheritance (verified) |
 
 ## Decision
-Use **B**. A fact is an instance of a subtype of the abstract relation `fact`, so domain meaning and role
-semantics stay native, and generic machinery works on `fact`.
+Use **B**, with one refinement from the pre-Phase-1 review: **a claim is one attestation**, not a
+deduplicated fact. Two sources saying the same thing produce two claims. Each claim has its own
+`gupi-id` (derived from its content and evidence), its own evidence, and its own reviews. Claims about
+the same proposition share a `proposition-key` (claim type + role players), so they can be found together.
 
-Separate layers, each its own type:
-- `observation` (entity): what a source said, verbatim. Never edited.
-- `fact` (relation subtypes): a claim. Inserted once and never mutated. It is a **hypothesis** until a
-  `review` with verdict `accepted` exists; rejection and retraction are also reviews.
-- `evidence` links a fact to the observations (with spans) that support it.
-- `supersession` links a corrected fact to its replacement. Old facts are kept.
-- Identity merges are facts too (`identity (same, same)`), so they can be reviewed and reversed.
+Layers, each its own type:
+- `observation`: what a source said, verbatim. Never edited.
+- `claim` subtypes: one attestation. Inserted once, never mutated. A **hypothesis** until accepted.
+- `evidence`: claim -> observation, with a character span.
+- `review`: a decision (accepted / rejected / retracted). Historical: the latest review recorded by time T
+  sets the status at T (ADR 0003).
+- `supersession`: a correction; the old claim stays.
+- `alternatives`: competing readings of the same evidence.
+- `identity (same, same)`: a claim, so identity merges are reviewable and reversible (logic in Phase 3).
 
-Every decision carries its own `recorded-at`, so "what did we believe at time T" is answerable
-(`believed_at` in schema/functions.tql).
+## Review against the four scenarios
+Each is a live test in `tests/integration/test_claims.py`.
+
+| Scenario | How it is represented | What the test shows |
+|---|---|---|
+| Several independent sources assert the same fact | one claim per source, same `proposition-key` | each claim and its source retrievable on its own; retracting one leaves the other believed |
+| Contradictory claims | separate claims kept side by side; nothing is overwritten | competing job titles both returned with their sources; opposite time bounds give `CONTESTED` |
+| Retrospective correction | new claim + `supersession` | "now" and "as believed in March" differ; the old claim and its evidence remain |
+| Several interpretations of one observation | one claim per reading, same evidence span, linked by `alternatives` | both are hypotheses (answer `UNKNOWN`, not `FALSE`) until reviewed; each lists the other |
+
+The ontology changed as a result: `fact` was renamed `claim` (it may be false), and `proposition-key`,
+`alternatives` and decision ids were added.
 
 ## Consequences
-- Attribute-valued claims need a typed carrier relation; GUPI should ship a small set of core carriers
-  (Phase 1) so domain authors rarely need to write one.
-- Status is derived (latest review), not stored on the fact; queries pay a small join for it.
-- If a future need for statements *about* reviews appears, reviews can play roles too, without
-  changing facts.
-- Verified in `tests/integration/test_core_ontology.py`.
+- "Is X true?" aggregates over claims (`Memory.ask`), rather than reading one record.
+- Attribute-valued claims need a typed carrier relation per claim type (e.g. `employment` owning
+  `job-title`). Whether GUPI should ship generic carriers is a Phase 2 question.
+- Nothing in the schema stops a caller accepting two alternatives at once; policy is Phase 3.
