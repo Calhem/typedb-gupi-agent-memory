@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 
 from gupi import typeql
-from gupi.status import ReviewEvent, Status, status_at
+from gupi.status import ReviewEvent, Status, status_at, supersession_in_force
 from gupi.temporal import Truth, ValidTime, holds_at
 
 CORE_ATTRIBUTES = {
@@ -33,6 +33,17 @@ class EvidenceView:
 
 
 @dataclass(frozen=True)
+class SupersessionView:
+    id: str
+    replacement: str
+    recorded_at: datetime
+    reviews: tuple[ReviewEvent, ...]
+
+    def in_force_at(self, t):
+        return supersession_in_force(self.recorded_at, self.reviews, t)
+
+
+@dataclass(frozen=True)
 class ClaimView:
     id: str
     type: str
@@ -51,6 +62,7 @@ class ClaimView:
     alternatives: tuple[str, ...]
     evidence: tuple[EvidenceView, ...] = field(default=())
     basis: str | None = None
+    supersessions: tuple[SupersessionView, ...] = field(default=())  # where this claim is the one replaced
 
     @property
     def provisional(self):
@@ -58,7 +70,8 @@ class ClaimView:
         return self.type == "statement"
 
     def status_at(self, t) -> Status:
-        return status_at(self.recorded_at, self.reviews, [at for _, at in self.superseded_by], t)
+        in_force = [s.recorded_at for s in self.supersessions if s.in_force_at(t)]
+        return status_at(self.recorded_at, self.reviews, in_force, t)
 
     def holds_at(self, v) -> Truth:
         return holds_at(self.valid, v)
@@ -71,7 +84,8 @@ fetch {
   "players": [ match $c links ($role: $x); $x has gupi-id $xid; fetch { "role": $role, "id": $xid }; ],
   "reviews": [ match $rv isa review, links (reviewed: $c); fetch { $rv.* }; ],
   "superseded_by": [ match $sb isa supersession, links (superseded: $c, replacement: $nb);
-                     fetch { "id": $nb.gupi-id, "at": $sb.recorded-at }; ],
+                     fetch { "id": $nb.gupi-id, "at": $sb.recorded-at, "sid": $sb.gupi-id,
+                             "reviews": [ match $sr isa review, links (reviewed: $sb); fetch { $sr.* }; ] }; ],
   "supersedes": [ match $sp isa supersession, links (replacement: $c, superseded: $ob); fetch { "id": $ob.gupi-id }; ],
   "alternatives": [ match $al isa alternatives, links (option: $c, option: $other); fetch { "id": $other.gupi-id }; ],
   "evidence": [ match $ev isa evidence, links (supported: $c, support: $ob2);
@@ -90,11 +104,16 @@ def _view(doc):
     for p in doc["players"]:
         role = p["role"]["label"].split(":", 1)[1]
         roles.setdefault(role, set()).add(p["id"])
-    reviews = tuple(sorted(
-        (ReviewEvent(r["verdict"], t(r["recorded-at"]), r.get("decided-by"), r.get("reason"), r.get("gupi-id"))
-         for r in doc["reviews"]),
-        key=lambda r: (r.recorded_at, r.id or ""),
-    ))
+    def review_events(docs):
+        return tuple(sorted(
+            (ReviewEvent(r["verdict"], t(r["recorded-at"]), r.get("decided-by"), r.get("reason"), r.get("gupi-id"))
+             for r in docs),
+            key=lambda r: (r.recorded_at, r.id or ""),
+        ))
+    reviews = review_events(doc["reviews"])
+    supersessions = tuple(sorted(
+        {s["sid"]: SupersessionView(s["sid"], s["id"], t(s["at"]), review_events(s["reviews"]))
+         for s in doc["superseded_by"]}.values(), key=lambda s: (s.recorded_at, s.id)))
     evidence = tuple(sorted(
         {EvidenceView(e["observation"], e["source"], e["content"], t(e["observed_at"]), t(e["received_at"]),
                       e["span_start"], e["span_end"]) for e in doc["evidence"]},
@@ -119,6 +138,7 @@ def _view(doc):
         alternatives=tuple(sorted({o["id"] for o in doc["alternatives"]} - {a["gupi-id"]})),
         evidence=evidence,
         basis=a.get("extraction-basis"),
+        supersessions=supersessions,
     )
 
 

@@ -110,17 +110,19 @@ def test_phase_1_database_with_data_upgrades_to_phase_2(driver, database, tmp_pa
         shutil.copy(f, phase1 / f.name)
     clock = Clock("2025-01-10")
     migrations.migrate(driver, database, ["core", "people"], extra_dirs=[phase1], clock=clock)
-    old = Memory(driver, database, clock)
+    with pytest.raises(RuntimeError, match="needs migrating"):
+        Memory(driver, database, clock)
+    old = Memory(driver, database, clock, require_current_schema=False)  # stand-in for Phase 1 code
     obs = observe(HR, "hr-1", "Alice reports to Bob.", "2025-01-05")
     claim = reports(obs)
     record(old, [obs], [claim])
-    old.review(claim.id, "accepted", "test")
 
     clock.set("2025-02-01")
     applied = migrations.migrate(driver, database, ["core", "people"], backup_dir=tmp_path / "backups", clock=clock)
     later_core = [m.id for m in migrations.discover(["core"])][2:]  # 0003 onwards
     assert applied == later_core and applied[0] == "core/0003_extraction.schema.tql"
     new = Memory(driver, database, clock)
+    new.review(claim.id, "accepted", "test")
     view = new.claim(claim.id)
     assert view.evidence[0].quote == "Alice reports to Bob." and view.basis is None
     assert new.believed_ids(clock()) == {claim.id}

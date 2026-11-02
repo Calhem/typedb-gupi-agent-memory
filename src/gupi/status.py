@@ -44,3 +44,15 @@ def status_at(recorded_at, reviews, supersession_times, t):
         if verdict in verdicts:
             return status
     return Status.ACCEPTED
+
+
+def supersession_in_force(recorded_at, reviews, t):
+    """A supersession applies from when it was recorded until a rejection or retraction of it (recorded by t)
+    with no later acceptance; ties count as withdrawn. Reviews make corrections reversible."""
+    if t < recorded_at:
+        return False
+    seen = [r for r in reviews if r.recorded_at <= t]
+    if not seen:
+        return True
+    latest = max(r.recorded_at for r in seen)
+    return all(r.verdict == "accepted" for r in seen if r.recorded_at == latest)

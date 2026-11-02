@@ -80,16 +80,6 @@ def certain_period(vt: ValidTime):
     return vt.from_latest, vt.to_earliest
 
 
-def certainly_false_periods(vt: ValidTime):
-    """Where the claim says the proposition does not hold: before its earliest start, after its latest end."""
-    out = []
-    if vt.from_earliest is not None:
-        out.append((None, vt.from_earliest))
-    if vt.to_latest is not None:
-        out.append((vt.to_latest, None))
-    return out
-
-
 def overlap(a, b):
     """The overlap of two periods, or None."""
     if a is None or b is None:
@@ -99,3 +89,26 @@ def overlap(a, b):
     if start is not None and end is not None and start >= end:
         return None
     return start, end
+
+
+def false_side(vt: ValidTime, at):
+    """Why a claim says FALSE at `at`: "before" its earliest start, "after" its latest end, or None."""
+    if vt.from_earliest is not None and at < vt.from_earliest:
+        return "before"
+    if vt.to_latest is not None and at >= vt.to_latest:
+        return "after"
+    return None
+
+
+def same_spell(c: ValidTime, x: ValidTime, side):
+    """Does claim c's FALSE on `side` really bear on claim x, i.e. are they certainly the same spell?
+
+    "after": x certainly started before c's end window, so x continuing past c's end disagrees with c.
+    "before": x certainly lasted past c's start window, so x holding before c's start disagrees with c.
+    Otherwise x may be a different spell (an earlier or later period), and c's FALSE says nothing about it.
+    """
+    if side == "after":
+        return x.from_latest is not None and c.to_earliest is not None and x.from_latest < c.to_earliest
+    if side == "before":
+        return x.to_earliest is not None and c.from_latest is not None and x.to_earliest > c.from_latest
+    return False

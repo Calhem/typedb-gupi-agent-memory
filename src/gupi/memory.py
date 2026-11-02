@@ -8,7 +8,7 @@ from typedb.driver import TransactionType
 from gupi import ids, migrations, retrieval, typeql
 from gupi.records import VERDICTS, Batch, Claim, proposition_key
 from gupi.status import Status
-from gupi.temporal import Answer, Truth, combine, overlap, possible_period
+from gupi.temporal import Answer, Truth, combine, false_side, same_spell
 from gupi.typedb.connection import connect, transaction
 from gupi.typeql import label
 
@@ -31,10 +31,15 @@ class AnswerResult:
 
 
 class Memory:
-    def __init__(self, driver, database, clock=None, packs=("core", "people")):
+    def __init__(self, driver, database, clock=None, packs=("core", "people"), require_current_schema=True):
         self.driver = driver
         self.database = database
         self.packs = tuple(packs)
+        if require_current_schema:
+            todo = migrations.pending(driver, database, self.packs)
+            if todo:
+                raise RuntimeError(f"database {database!r} needs migrating first ({todo[0].id} and {len(todo) - 1} more): "
+                                   "use Memory.open or gupi.migrations.migrate")
         self.clock = clock or (lambda: datetime.now(timezone.utc))
         self._types = None
 
@@ -243,22 +248,24 @@ class Memory:
             if latest.verdict == verdict and latest.decided_by == decided_by:
                 return latest.id
         self._check_clock(now, [view.recorded_at] + [r.recorded_at for r in view.reviews])
-        review_id = ids.stable_id("review", claim_id, verdict, now, decided_by)
-        attrs = {"gupi-id": review_id, "verdict": verdict, "recorded-at": now,
-                 "decided-by": decided_by, "reason": reason}
-        _insert(tx, "$r isa review (reviewed: $c)", attrs,
-                match="$c isa claim, has gupi-id == $claim_id;", params={"claim_id": claim_id})
-        return review_id
+        return self._insert_review(tx, now, claim_id, verdict, decided_by, reason)
 
-    def supersede(self, old_id, new_id, reason=None):
-        """Record that `new_id` replaces `old_id` (a correction). Both claims are kept."""
+    def supersede(self, old_id, new_id, reason=None, decided_by=None):
+        """Record that `new_id` replaces `old_id` (a correction). Both claims are kept.
+
+        Superseding a pair whose supersession was withdrawn reinstates it (a new acceptance review on it).
+        """
         if old_id == new_id:
             raise ValueError("a claim cannot supersede itself")
         sup_id = ids.stable_id("supersession", old_id, new_id)
         with transaction(self.driver, self.database, TransactionType.WRITE) as tx:
-            if self._type_of(tx, sup_id):
-                return sup_id
             now = self.clock()
+            if self._type_of(tx, sup_id):
+                view = next(s for s in retrieval.claim(tx, old_id).supersessions if s.id == sup_id)
+                if not view.in_force_at(now):
+                    self._check_clock(now, [view.recorded_at] + [r.recorded_at for r in view.reviews])
+                    self._insert_review(tx, now, sup_id, "accepted", decided_by or "unspecified", reason, "supersession")
+                return sup_id
             views = [retrieval.claim(tx, i) for i in (old_id, new_id)]
             if None in views:
                 raise KeyError(old_id if views[0] is None else new_id)
@@ -268,6 +275,53 @@ class Memory:
                     match="$old isa claim, has gupi-id == $old_id; $new isa claim, has gupi-id == $new_id;",
                     params={"old_id": old_id, "new_id": new_id})
             return sup_id
+
+    def withdraw_supersession(self, supersession_id, decided_by, reason=None):
+        """Undo a correction from now on: the replaced claim's own reviews decide its status again."""
+        if not decided_by:
+            raise ValueError("every decision needs a decided_by")
+        with transaction(self.driver, self.database, TransactionType.WRITE) as tx:
+            now = self.clock()
+            docs = typeql.documents(tx, 'match $s isa supersession, has gupi-id == $id, links (superseded: $o); '
+                                        'fetch { "old": $o.gupi-id };', {"id": supersession_id})
+            if not docs:
+                raise KeyError(supersession_id)
+            view = next(s for s in retrieval.claim(tx, docs[0]["old"]).supersessions if s.id == supersession_id)
+            if not view.in_force_at(now):
+                return None
+            self._check_clock(now, [view.recorded_at] + [r.recorded_at for r in view.reviews])
+            return self._insert_review(tx, now, supersession_id, "retracted", decided_by, reason, "supersession")
+
+    def _insert_review(self, tx, now, target_id, verdict, decided_by, reason, target_type="claim"):
+        review_id = ids.stable_id("review", target_id, verdict, now, decided_by)
+        attrs = {"gupi-id": review_id, "verdict": verdict, "recorded-at": now, "decided-by": decided_by, "reason": reason}
+        _insert(tx, "$r isa review (reviewed: $x)", attrs,
+                match=f"$x isa {label(target_type)}, has gupi-id == $target_id;", params={"target_id": target_id})
+        return review_id
+
+    def suggest_supersessions(self, at=None):
+        """Suggest corrections among believed claims about the same thing from the same source, newer replacing
+        older by when the source SAID them (observed-at), never by arrival order. Nothing is applied."""
+        from gupi import conflicts, identity
+        at = at or self.clock()
+        claims = self.all_claims()
+        believed = [c for c in claims if c.status_at(at) is Status.ACCEPTED and c.type != "identity"]
+        groups = identity.equivalents([c for c in claims if c.type == "identity"], at)
+        by_id = {c.id: c for c in believed}
+        out = []
+        for x in conflicts.detect(believed, conflicts.load_constraints(self.packs),
+                                  include=(conflicts.CONTRADICTION, conflicts.DIFFERING), groups=groups):
+            a, b = (by_id[i] for i in x.claim_ids)
+            said = {c.id: max((e.observed_at for e in c.evidence if e.observed_at), default=None) for c in (a, b)}
+            sources = {c.id: {e.source_id for e in c.evidence} for c in (a, b)}
+            if None in said.values() or said[a.id] == said[b.id] or not (sources[a.id] & sources[b.id]):
+                continue
+            old, new = sorted((a, b), key=lambda c: said[c.id])
+            arrived = "after" if old.recorded_at > new.recorded_at else "before"
+            out.append({"old": old.id, "new": new.id, "conflict": x.kind,
+                        "reason": f"same source; newer statement ({said[new.id].date()}) than {said[old.id].date()}, "
+                                  f"which arrived {arrived} it; {x.reason}"})
+        return out
 
     def mark_alternatives(self, claim_ids, reason=None):
         """Record that these claims are competing readings of the same evidence."""
@@ -361,7 +415,7 @@ class Memory:
             considered = [c for c in considered if all(c.values.get(k) == v for k, v in values.items())]
         recorded = [c for c in considered if c.recorded_at <= believed_at]
         believed = [(c, c.holds_at(valid_at)) for c in recorded if c.status_at(believed_at) is Status.ACCEPTED]
-        answer = combine((t for _, t in _same_period(believed)), anything_recorded=bool(recorded))
+        answer = combine((t for _, t in _same_period(believed, valid_at)), anything_recorded=bool(recorded))
         return AnswerResult(answer, tuple(believed), tuple(recorded))
 
     def suggest_identities(self, record=True):
@@ -385,17 +439,19 @@ def _expand(roles, groups):
         yield {role: (refs[0] if len(refs) == 1 else refs) for role, refs in zip(names, choice)}
 
 
-def _same_period(believed):
-    """Drop a FALSE that only comes from a claim about a different period (ADR 0006).
+def _same_period(believed, at):
+    """Count a FALSE only when it bears on the same spell as the claims that cover `at` (ADR 0006).
 
-    A claim says the proposition did not hold outside its own possible period. When another believed claim
-    covers v (it says TRUE or UNKNOWN there) and the two possible periods do not overlap, they describe
-    separate spells: the first claim's FALSE says nothing about the other spell, so it is not counted.
+    A claim says the proposition did not hold before its start or after its end. That disagrees with
+    another believed claim covering `at` (TRUE or UNKNOWN there) only if both are certainly the same spell;
+    otherwise the other claim may describe an earlier or later period, and the FALSE is not counted.
     """
-    covering = [c for c, t in believed if t is not Truth.FALSE]
+    covering = [x for x, t in believed if t is not Truth.FALSE]
+    if not covering:
+        return believed
     return [(c, t) for c, t in believed
             if t is not Truth.FALSE
-            or not any(overlap(possible_period(c.valid), possible_period(x.valid)) is None for x in covering)]
+            or any(same_spell(c.valid, x.valid, false_side(c.valid, at)) for x in covering)]
 
 
 def _has(attrs, prefix):

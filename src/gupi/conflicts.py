@@ -17,7 +17,7 @@ import json
 from dataclasses import dataclass
 
 from gupi import migrations
-from gupi.temporal import certain_period, certainly_false_periods, overlap, possible_period
+from gupi.temporal import certain_period, overlap, possible_period, same_spell
 
 CONTRADICTION = "contradiction"
 DIFFERING = "differing-evidence"
@@ -50,11 +50,14 @@ def _fmt(period):
 
 
 def opposition(a, b):
-    """A period where one claim is certainly true and the other certainly false, or None."""
+    """A period where one claim is certainly true and the other, about the same spell, certainly false."""
     for x, y in ((a, b), (b, a)):
         certain = certain_period(x.valid)
-        for false in certainly_false_periods(y.valid):
-            if (o := overlap(certain, false)) is not None:
+        if y.valid.to_latest is not None and same_spell(y.valid, x.valid, "after"):
+            if (o := overlap(certain, (y.valid.to_latest, None))) is not None:
+                return o
+        if y.valid.from_earliest is not None and same_spell(y.valid, x.valid, "before"):
+            if (o := overlap(certain, (None, y.valid.from_earliest))) is not None:
                 return o
     return None
 

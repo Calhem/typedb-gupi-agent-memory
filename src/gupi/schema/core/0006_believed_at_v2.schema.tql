@@ -1,0 +1,18 @@
+# Phase 3: believed_at ignores supersessions withdrawn by then. A supersession is withdrawn at $t when a
+# rejection or retraction of it recorded by $t has no later acceptance recorded by $t (ties: withdrawn).
+# Must agree with gupi.status (tests/integration/test_corrections.py checks it).
+
+redefine
+  fun believed_at($t: datetime-tz) -> { claim }:
+    match
+      $c isa claim, has recorded-at $r; $r <= $t;
+      review (reviewed: $c), has verdict "accepted", has recorded-at $ra; $ra <= $t;
+      not { review (reviewed: $c), has verdict $v, has recorded-at $rv; $v != "accepted"; $rv >= $ra; $rv <= $t; };
+      not {
+        $s isa supersession, links (superseded: $c), has recorded-at $rs; $rs <= $t;
+        not {
+          review (reviewed: $s), has verdict $w, has recorded-at $rw; $w != "accepted"; $rw <= $t;
+          not { review (reviewed: $s), has verdict "accepted", has recorded-at $rx; $rx > $rw; $rx <= $t; };
+        };
+      };
+    return { $c };
