@@ -1,0 +1,9 @@
+{
+  "_comment": "Domain rules used by conflict detection (gupi.conflicts). Nothing is enforced on write.",
+  "single_valued_attributes": {
+    "employment": ["job-title"]
+  },
+  "one_player_at_a_time": {
+    "reporting": {"per": "report", "single": "manager"}
+  }
+}

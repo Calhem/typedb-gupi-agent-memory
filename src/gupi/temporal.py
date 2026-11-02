@@ -63,3 +63,39 @@ def combine(truths, anything_recorded):
     if Truth.FALSE in truths:
         return Answer.FALSE
     return Answer.UNKNOWN
+
+
+# --- periods, for comparing claims (docs/adr/0006) ---
+# A period is (start, end), half-open; None means unbounded on that side.
+
+def possible_period(vt: ValidTime):
+    """Where the claim could hold at all: from its earliest possible start to its latest possible end."""
+    return vt.from_earliest, vt.to_latest
+
+
+def certain_period(vt: ValidTime):
+    """Where the claim certainly holds, or None if nowhere (an unknown start or end leaves no certainty)."""
+    if vt.from_latest is None or vt.to_earliest is None or vt.from_latest >= vt.to_earliest:
+        return None
+    return vt.from_latest, vt.to_earliest
+
+
+def certainly_false_periods(vt: ValidTime):
+    """Where the claim says the proposition does not hold: before its earliest start, after its latest end."""
+    out = []
+    if vt.from_earliest is not None:
+        out.append((None, vt.from_earliest))
+    if vt.to_latest is not None:
+        out.append((vt.to_latest, None))
+    return out
+
+
+def overlap(a, b):
+    """The overlap of two periods, or None."""
+    if a is None or b is None:
+        return None
+    start = a[0] if b[0] is None else b[0] if a[0] is None else max(a[0], b[0])
+    end = a[1] if b[1] is None else b[1] if a[1] is None else min(a[1], b[1])
+    if start is not None and end is not None and start >= end:
+        return None
+    return start, end

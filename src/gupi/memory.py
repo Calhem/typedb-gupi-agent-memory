@@ -8,7 +8,7 @@ from typedb.driver import TransactionType
 from gupi import ids, migrations, retrieval, typeql
 from gupi.records import VERDICTS, Batch, Claim, proposition_key
 from gupi.status import Status
-from gupi.temporal import Answer, combine
+from gupi.temporal import Answer, Truth, combine, overlap, possible_period
 from gupi.typedb.connection import connect, transaction
 from gupi.typeql import label
 
@@ -302,9 +302,25 @@ class Memory:
             return retrieval.claim(tx, claim_id)
 
     def review_queue(self, at=None, claim_type=None, method=None, limit=None):
-        """Claims awaiting a decision at `at` (default now), oldest first."""
-        from gupi import review  # local: review builds on Memory's results
-        return review.queue(self.all_claims(), at or self.clock(), None, claim_type, method, limit)
+        """Claims awaiting a decision at `at` (default now), oldest first, with conflicts against believed claims."""
+        from gupi import conflicts, review  # local: these modules build on Memory's results
+        at = at or self.clock()
+        claims = self.all_claims()
+        rules = conflicts.load_constraints(self.packs)
+        believed = [c for c in claims if c.status_at(at) is Status.ACCEPTED]
+
+        def against_believed(c):
+            found = conflicts.detect([c] + believed, rules, include=(conflicts.CONTRADICTION, conflicts.DIFFERING))
+            return [x for x in found if c.id in x.claim_ids]
+        return review.queue(claims, at, against_believed, claim_type, method, limit)
+
+    def conflicts(self, at=None, include=None):
+        """Relations between the claims believed at `at` (default now): contradictions, differing evidence, ..."""
+        from gupi import conflicts
+        at = at or self.clock()
+        believed = [c for c in self.all_claims() if c.status_at(at) is Status.ACCEPTED]
+        kinds = include or (conflicts.CONTRADICTION, conflicts.DIFFERING)
+        return conflicts.detect(believed, conflicts.load_constraints(self.packs), include=kinds)
 
     def all_claims(self):
         with transaction(self.driver, self.database, TransactionType.READ) as tx:
@@ -333,8 +349,21 @@ class Memory:
             considered = [c for c in considered if all(c.values.get(k) == v for k, v in values.items())]
         recorded = [c for c in considered if c.recorded_at <= believed_at]
         believed = [(c, c.holds_at(valid_at)) for c in recorded if c.status_at(believed_at) is Status.ACCEPTED]
-        answer = combine((t for _, t in believed), anything_recorded=bool(recorded))
+        answer = combine((t for _, t in _same_period(believed)), anything_recorded=bool(recorded))
         return AnswerResult(answer, tuple(believed), tuple(recorded))
+
+
+def _same_period(believed):
+    """Drop a FALSE that only comes from a claim about a different period (ADR 0006).
+
+    A claim says the proposition did not hold outside its own possible period. When another believed claim
+    covers v (it says TRUE or UNKNOWN there) and the two possible periods do not overlap, they describe
+    separate spells: the first claim's FALSE says nothing about the other spell, so it is not counted.
+    """
+    covering = [c for c, t in believed if t is not Truth.FALSE]
+    return [(c, t) for c, t in believed
+            if t is not Truth.FALSE
+            or not any(overlap(possible_period(c.valid), possible_period(x.valid)) is None for x in covering)]
 
 
 def _has(attrs, prefix):
