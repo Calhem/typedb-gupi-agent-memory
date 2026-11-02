@@ -8,8 +8,9 @@ The owner has no programming background and is learning as we go. Explain new te
 keep steps small, verify each step works before moving on, and stop at each phase gate for review.
 
 ## Status
-Phase 1 merged. Phase 2 done on `feature/phase-2-extraction`, awaiting review (docs/phase-2-report.md).
-Do not start Phase 3 until the owner approves docs/phase-3-plan.md. No distributed agents, packet protocols or dynamic schema
+Phase 1 merged. Phase 2 (`feature/phase-2-extraction`) and Phase 3 (`feature/phase-3-reconciliation`,
+stacked on Phase 2) done, awaiting review (docs/phase-3-report.md). Do not start Phase 4 until the owner
+approves docs/phase-4-plan.md. The live Claude evaluation is deferred until credentials exist. No distributed agents, packet protocols or dynamic schema
 modes yet; keep the code open to them without building them.
 
 ## Rules
@@ -27,6 +28,10 @@ modes yet; keep the code open to them without building them.
   the held-out evaluation repeatedly to tune against it.
 - Extractors return time phrases, never dates; the validator reads them with `gupi.timeexpr`.
 - Generic `statement` claims are provisional; prefer typed claims; no schema evolution from extraction.
+- Never merge identities, resolve conflicts or apply supersessions automatically: suggest, then review.
+- A claim's FALSE outside its period counts only against the same spell (ADR 0006).
+- Keep the extraction benchmarks (fixtures, rules, saved results) unchanged; offline results are not
+  evidence of LLM extraction performance.
 - Claude defaults: `claude-opus-5-5`, effort `medium`, structured output, `fallbacks: "default"`.
 - Secure by default: read-only source connectors, bounded sampling, no secrets in logs or git.
 - Ports: 1734 (TypeDB driver), 8005 (TypeDB HTTP/Studio), bound to 127.0.0.1.

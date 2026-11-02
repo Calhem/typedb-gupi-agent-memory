@@ -6,6 +6,9 @@ database and read back from TypeDB before scoring. Raw results: `rules-v1-dev.js
 
 Reproduce: `uv run python -I -m gupi.evaluation --set heldout --extractor rules`
 
+**These are results of the offline, rule-based extractor. They are not evidence of how an LLM extractor
+performs; the Claude extractor has not been evaluated.**
+
 ## Protocol
 - The held-out set was committed (`814f501`) before any extraction rules existed. The rules were written
   against the development set only, frozen at `7dcbff8`, and the held-out set was then run once. The rules

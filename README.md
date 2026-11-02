@@ -4,8 +4,8 @@ An experimental, open-source semantic memory and context engine for applications
 on [TypeDB](https://typedb.com) 3. GUPI records what sources said, the claims drawn from them, which claims
 were accepted, when each was true and when GUPI knew it, so every answer can be traced to its evidence.
 
-**Status: Phase 2 (text extraction) under review.** Not yet a product: no search, answers or connectors
-yet. See [docs/phase-2-report.md](docs/phase-2-report.md).
+**Status: Phase 3 (reconciliation and review) under review.** Not yet a product: no search, answers or
+connectors yet. See [docs/phase-3-report.md](docs/phase-3-report.md).
 
 ## What works today
 - A core ontology in TypeDB: sources, verbatim observations, typed claims (one per attestation), evidence
@@ -16,6 +16,8 @@ yet. See [docs/phase-2-report.md](docs/phase-2-report.md).
 - Every value is passed to TypeDB as a query parameter, never pasted into query text.
 - Extraction from conversations and text into hypotheses with exact evidence spans: an offline rule-based
   extractor by default, and an optional Claude extractor behind a fail-closed spending ledger.
+- Review: a queue of hypotheses, conflict detection (contradictions vs differing evidence), suggested
+  identities that merge only once accepted, and corrections that can be withdrawn, via the `gupi` CLI.
 
 ## Try it
 Needs Docker and [uv](https://docs.astral.sh/uv/).
@@ -26,6 +28,15 @@ uv sync
 uv run pytest -q                              # unit tests + live tests on disposable gupi-test-* databases
 uv run python -I examples/quickstart.py       # the late-correction example
 uv run python -I -m gupi.evaluation --set dev # offline extraction evaluation
+```
+
+Review from the command line (the database defaults to `$GUPI_DATABASE`):
+
+```bash
+uv run gupi --database demo ingest tests/fixtures/conversations/dev/d2-correction.json --create
+uv run gupi --database demo queue
+uv run gupi --database demo accept <claim-id> --by your-name --reason "checked"
+uv run gupi --database demo conflicts
 ```
 
 Claude extraction is optional: `uv sync --extra claude`, provide `ANTHROPIC_API_KEY` (or an `ant auth login`
