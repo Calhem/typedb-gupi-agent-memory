@@ -1,0 +1,31 @@
+# Phase 4: per-claim status functions, so TypeDB filters candidate claims instead of Python loading all of
+# them. Same rules as gupi.status (tests check they agree).
+
+define
+  # Supersessions of $c in force at $t: recorded by then, and not withdrawn (a rejection or retraction of the
+  # supersession recorded by $t with no later acceptance by $t).
+  fun in_force_supersessions($c: claim, $t: datetime-tz) -> { supersession }:
+    match
+      $s isa supersession, links (superseded: $c), has recorded-at $rs; $rs <= $t;
+      not {
+        review (reviewed: $s), has verdict $w, has recorded-at $rw; $w != "accepted"; $rw <= $t;
+        not { review (reviewed: $s), has verdict "accepted", has recorded-at $rx; $rx > $rw; $rx <= $t; };
+      };
+    return { $s };
+
+  # $c if it is believed at $t: recorded, latest review an acceptance (ties lose), not superseded.
+  fun believed_claim($c: claim, $t: datetime-tz) -> { claim }:
+    match
+      $c has recorded-at $r; $r <= $t;
+      review (reviewed: $c), has verdict "accepted", has recorded-at $ra; $ra <= $t;
+      not { review (reviewed: $c), has verdict $v, has recorded-at $rv; $v != "accepted"; $rv >= $ra; $rv <= $t; };
+      not { let $s in in_force_supersessions($c, $t); };
+    return { $c };
+
+  # $c if it is a hypothesis at $t: recorded, never reviewed by then, not superseded.
+  fun hypothesis_claim($c: claim, $t: datetime-tz) -> { claim }:
+    match
+      $c has recorded-at $r; $r <= $t;
+      not { review (reviewed: $c), has recorded-at $rv; $rv <= $t; };
+      not { let $s in in_force_supersessions($c, $t); };
+    return { $c };

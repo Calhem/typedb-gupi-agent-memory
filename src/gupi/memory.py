@@ -7,8 +7,7 @@ from typedb.driver import TransactionType
 
 from gupi import ids, migrations, retrieval, typeql
 from gupi.records import VERDICTS, Batch, Claim, proposition_key
-from gupi.status import Status
-from gupi.temporal import Answer, Truth, combine, false_side, same_spell
+from gupi.temporal import Answer
 from gupi.typedb.connection import connect, transaction
 from gupi.typeql import label
 
@@ -26,15 +25,18 @@ class IngestReport:
 @dataclass(frozen=True)
 class AnswerResult:
     answer: Answer
-    believed: tuple  # (ClaimView, Truth) for each claim believed at the transaction time
-    considered: tuple  # every claim about the proposition recorded by then, believed or not
+    believed: tuple  # (ClaimView, Truth) for each believed claim whose verdict counted
+    considered: tuple  # every matching claim about the proposition recorded by then, believed or not
+    evaluation: object = None  # gupi.answering.Evaluation: ignored verdicts, assembly, notes
 
 
 class Memory:
-    def __init__(self, driver, database, clock=None, packs=("core", "people"), require_current_schema=True):
+    def __init__(self, driver, database, clock=None, packs=("core", "people"), require_current_schema=True,
+                 constraints=None):
         self.driver = driver
         self.database = database
         self.packs = tuple(packs)
+        self._constraints = constraints  # conflict rules; default: the packs' constraints.json
         if require_current_schema:
             todo = migrations.pending(driver, database, self.packs)
             if todo:
@@ -44,7 +46,7 @@ class Memory:
         self._types = None
 
     @classmethod
-    def open(cls, database, packs=("core",), driver=None, create=False, backup_dir=None, clock=None):
+    def open(cls, database, packs=("core",), driver=None, create=False, backup_dir=None, clock=None, constraints=None):
         """Connect, optionally create the database, and apply pending migrations for the given packs."""
         driver = driver or connect()
         if not driver.databases.contains(database):
@@ -52,7 +54,7 @@ class Memory:
                 raise LookupError(f"database {database!r} does not exist (pass create=True)")
             driver.databases.create(database)
         migrations.migrate(driver, database, packs, backup_dir=backup_dir, clock=clock)
-        return cls(driver, database, clock, packs)
+        return cls(driver, database, clock, packs, constraints=constraints)
 
     # --- schema knowledge, for validating labels before they reach query text ---
 
@@ -302,15 +304,11 @@ class Memory:
     def suggest_supersessions(self, at=None):
         """Suggest corrections among believed claims about the same thing from the same source, newer replacing
         older by when the source SAID them (observed-at), never by arrival order. Nothing is applied."""
-        from gupi import conflicts, identity
+        from gupi import conflicts
         at = at or self.clock()
-        claims = self.all_claims()
-        believed = [c for c in claims if c.status_at(at) is Status.ACCEPTED and c.type != "identity"]
-        groups = identity.equivalents([c for c in claims if c.type == "identity"], at)
-        by_id = {c.id: c for c in believed}
+        found, by_id = self._conflicts_with_views(at, (conflicts.CONTRADICTION, conflicts.DIFFERING))
         out = []
-        for x in conflicts.detect(believed, conflicts.load_constraints(self.packs),
-                                  include=(conflicts.CONTRADICTION, conflicts.DIFFERING), groups=groups):
+        for x in found:
             a, b = (by_id[i] for i in x.claim_ids)
             if x.kind == conflicts.DIFFERING and a.values != b.values:
                 continue  # e.g. two job titles that may be sequential (a promotion): replacing one would lose history
@@ -353,36 +351,106 @@ class Memory:
 
     # --- retrieval ---
 
+    def claims(self, claim_ids):
+        with transaction(self.driver, self.database, TransactionType.READ) as tx:
+            return retrieval.claims_by_ids(tx, claim_ids)
+
+    def find_claim(self, prefix):
+        """The one claim whose id starts with `prefix` (with or without "claim:"), found by TypeDB."""
+        wanted = prefix if ":" in prefix else f"claim:{prefix}"
+        with transaction(self.driver, self.database, TransactionType.READ) as tx:
+            found = [i for i in retrieval.claim_ids_with_prefix(tx, wanted) if i.startswith(wanted)]
+        if len(found) != 1:
+            raise LookupError(f"{'no' if not found else 'more than one'} claim matches {prefix!r}")
+        return self.claim(found[0])
+
+    def identity_claims(self):
+        with transaction(self.driver, self.database, TransactionType.READ) as tx:
+            return retrieval.claims_of_type(tx, "identity")
+
     def claim(self, claim_id):
         with transaction(self.driver, self.database, TransactionType.READ) as tx:
             return retrieval.claim(tx, claim_id)
 
+    def identity_groups(self, at, tx=None):
+        """Referents merged by identity claims accepted at `at` (only accepted identities are read)."""
+        from gupi import identity
+
+        def read(tx):
+            return identity.equivalents(retrieval.claims_by_ids(tx, retrieval.believed_of_type(tx, "identity", at)), at)
+        if tx is not None:
+            return read(tx)
+        with transaction(self.driver, self.database, TransactionType.READ) as tx:
+            return read(tx)
+
+    def constraints(self):
+        """The domain conflict rules for this memory's packs (constraints.json), or those passed in."""
+        from gupi import conflicts
+        if self._constraints is None:
+            self._constraints = conflicts.load_constraints(self.packs)
+        return self._constraints
+
     def review_queue(self, at=None, claim_type=None, method=None, limit=None):
-        """Claims awaiting a decision at `at` (default now), oldest first, with conflicts against believed claims."""
-        from gupi import conflicts, identity, review  # local: these modules build on Memory's results
+        """Claims awaiting a decision at `at` (default now), oldest first, with conflicts against believed claims.
+
+        TypeDB selects and limits the hypotheses; each is compared only with the believed claims that could
+        conflict with it (same proposition, or the same player under a one-at-a-time rule)."""
+        from gupi import conflicts, review
         at = at or self.clock()
-        claims = self.all_claims()
-        rules = conflicts.load_constraints(self.packs)
-        believed = [c for c in claims if c.status_at(at) is Status.ACCEPTED]
-        groups = identity.equivalents([c for c in claims if c.type == "identity"], at)
+        rules = self.constraints()
+        kinds = (conflicts.CONTRADICTION, conflicts.DIFFERING)
+        with transaction(self.driver, self.database, TransactionType.READ) as tx:
+            queued = retrieval.claims_by_ids(tx, retrieval.hypothesis_ids(tx, at, claim_type, method, limit))
+            groups = self.identity_groups(at, tx)
+            related = {}
+            for c in queued:
+                related[c.id] = retrieval.claims_by_ids(tx, self._related_believed(tx, c, at, groups, rules))
 
         def against_believed(c):
-            found = conflicts.detect([c] + believed, rules, include=(conflicts.CONTRADICTION, conflicts.DIFFERING),
-                                     groups=groups)
+            found = conflicts.detect([c] + [x for x in related[c.id] if x.id != c.id], rules, include=kinds, groups=groups)
             return [x for x in found if c.id in x.claim_ids]
-        return review.queue(claims, at, against_believed, claim_type, method, limit)
+        return review.queue(queued, at, against_believed)
+
+    def _related_believed(self, tx, c, at, groups, rules):
+        """Ids of believed claims that could conflict with claim c."""
+        keys = {proposition_key(c.type, combo) for combo in _expand(dict(c.roles), groups)}
+        ids = set(retrieval.believed_among(tx, retrieval.recorded_with_keys(tx, keys, at), at))
+        rule = rules["one_player_at_a_time"].get(c.type)
+        if rule and rule["per"] in c.roles:
+            players = {m for r in c.roles[rule["per"]] for m in groups.get(r, {r})}
+            ids |= set(retrieval.believed_with_player(tx, c.type, rule["per"], players, at))
+        return ids
 
     def conflicts(self, at=None, include=None):
-        """Relations between the claims believed at `at` (default now): contradictions, differing evidence, ..."""
-        from gupi import conflicts, identity
-        at = at or self.clock()
-        claims = self.all_claims()
-        believed = [c for c in claims if c.status_at(at) is Status.ACCEPTED]
-        groups = identity.equivalents([c for c in claims if c.type == "identity"], at)
+        """Relations between the claims believed at `at` (default now): contradictions, differing evidence, ...
+
+        TypeDB finds the groups that can conflict (shared proposition keys, shared players under a
+        one-at-a-time rule, merged identities); pairs are compared only inside each group."""
+        from gupi import conflicts
         kinds = include or (conflicts.CONTRADICTION, conflicts.DIFFERING)
-        return conflicts.detect(believed, conflicts.load_constraints(self.packs), include=kinds, groups=groups)
+        return self._conflicts_with_views(at or self.clock(), kinds)[0]
+
+    def _conflicts_with_views(self, at, kinds):
+        from gupi import conflicts
+        rules = self.constraints()
+        with transaction(self.driver, self.database, TransactionType.READ) as tx:
+            groups = self.identity_groups(at, tx)
+            buckets = [retrieval.believed_among(tx, retrieval.recorded_with_keys(tx, [k], at), at)
+                       for k in retrieval.shared_keys_believed(tx, at)]
+            for claim_type, rule in rules["one_player_at_a_time"].items():
+                for pid in retrieval.shared_players_believed(tx, claim_type, rule["per"], at):
+                    buckets.append(set(retrieval.believed_with_player(tx, claim_type, rule["per"], [pid], at)))
+            for members in {g for g in groups.values() if len(g) > 1}:
+                buckets.append(set(retrieval.believed_involving(tx, members, at)))
+            by_id = {c.id: c for c in retrieval.claims_by_ids(tx, set().union(*buckets) if buckets else set())}
+        found = {}
+        for bucket in buckets:
+            for x in conflicts.detect([by_id[i] for i in sorted(bucket)], rules, include=kinds, groups=groups):
+                found[(x.kind, x.claim_ids)] = x
+        return [found[k] for k in sorted(found)], by_id
 
     def all_claims(self):
+        """Every claim. For small databases, tests and debugging only: retrieval paths never call this."""
         with transaction(self.driver, self.database, TransactionType.READ) as tx:
             return retrieval.all_claims(tx)
 
@@ -401,24 +469,22 @@ class Memory:
         """Did `claim_type(roles)` (optionally with these attribute values) hold at `valid_at`, as believed at
         `believed_at` (default: now)? Returns the answer with the claims behind it.
 
-        Referents that accepted identity claims (as of `believed_at`) say are the same are treated as one.
+        TypeDB selects the claims about the proposition recorded by `believed_at` and decides which are
+        believed. Referents that accepted identity claims say are the same are treated as one.
         """
-        from gupi import identity
+        from gupi.answering import evaluate
         self._check("claim", claim_type)
         believed_at = believed_at or self.clock()
         with transaction(self.driver, self.database, TransactionType.READ) as tx:
-            groups = identity.equivalents(retrieval.claims_of_type(tx, "identity"), believed_at)
-            considered = {}
-            for combo in _expand(roles, groups):
-                for c in retrieval.claims_for_proposition(tx, proposition_key(claim_type, combo)):
-                    considered[c.id] = c
-        considered = sorted(considered.values(), key=lambda c: (c.recorded_at, c.id))
-        if values:
-            considered = [c for c in considered if all(c.values.get(k) == v for k, v in values.items())]
-        recorded = [c for c in considered if c.recorded_at <= believed_at]
-        believed = [(c, c.holds_at(valid_at)) for c in recorded if c.status_at(believed_at) is Status.ACCEPTED]
-        answer = combine((t for _, t in _same_period(believed, valid_at)), anything_recorded=bool(recorded))
-        return AnswerResult(answer, tuple(believed), tuple(recorded))
+            groups = self.identity_groups(believed_at, tx)
+            keys = {proposition_key(claim_type, combo) for combo in _expand(roles, groups)}
+            recorded = retrieval.claims_by_ids(tx, retrieval.recorded_with_keys(tx, keys, believed_at))
+            believed_ids = retrieval.believed_among(tx, [c.id for c in recorded], believed_at)
+        matching = [c for c in recorded if all(c.values.get(k) == v for k, v in (values or {}).items())]
+        bounding = [c for c in recorded if c.id in believed_ids and values and any(k not in c.values for k in values)]
+        believed = [c for c in matching if c.id in believed_ids]
+        result = evaluate(believed, valid_at, anything_recorded=bool(matching or bounding), bounding=bounding)
+        return AnswerResult(result.answer, result.used, tuple(matching), result)
 
     def suggest_identities(self, record=True):
         """Propose identity claims (as hypotheses, never merged until accepted). Returns the suggestions."""
@@ -439,21 +505,6 @@ def _expand(roles, groups):
         options.append([tuple(sorted(c)) for c in itertools.product(*[sorted(groups.get(r, {r})) for r in refs])])
     for choice in itertools.product(*options):
         yield {role: (refs[0] if len(refs) == 1 else refs) for role, refs in zip(names, choice)}
-
-
-def _same_period(believed, at):
-    """Count a FALSE only when it bears on the same spell as the claims that cover `at` (ADR 0006).
-
-    A claim says the proposition did not hold before its start or after its end. That disagrees with
-    another believed claim covering `at` (TRUE or UNKNOWN there) only if both are certainly the same spell;
-    otherwise the other claim may describe an earlier or later period, and the FALSE is not counted.
-    """
-    covering = [x for x, t in believed if t is not Truth.FALSE]
-    if not covering:
-        return believed
-    return [(c, t) for c, t in believed
-            if t is not Truth.FALSE
-            or any(same_spell(c.valid, x.valid, false_side(c.valid, at)) for x in covering)]
 
 
 def _has(attrs, prefix):

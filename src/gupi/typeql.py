@@ -67,6 +67,24 @@ def run(tx, body, params=None):
     return tx.query(given(params) + body, given_rows=rows).resolve()
 
 
+def run_rows(tx, body, rows):
+    """Run `body` once per parameter row in a single query (rows must share names and value types)."""
+    rows = list(rows)
+    if not rows:
+        return None
+    return tx.query(given(rows[0]) + body, given_rows=[{k: to_driver(v) for k, v in r.items()} for r in rows]).resolve()
+
+
+def documents_for(tx, body, rows):
+    answer = run_rows(tx, body, rows)
+    return list(answer.as_concept_documents()) if answer is not None else []
+
+
+def rows_for(tx, body, rows):
+    answer = run_rows(tx, body, rows)
+    return list(answer.as_concept_rows()) if answer is not None else []
+
+
 def documents(tx, body, params=None):
     return list(run(tx, body, params).as_concept_documents())
 
