@@ -1,0 +1,15 @@
+# GUPI core functions. Load with `define` on a fresh database; change with `redefine`.
+
+define
+
+  # Claims GUPI believed at transaction time $t: recorded by then, superseded by nothing recorded by then,
+  # and whose latest review recorded by then is an acceptance. Reviews are historical events, so a claim
+  # rejected and later re-accepted is believed again from the re-acceptance on. If an acceptance and a
+  # rejection/retraction share a timestamp, the claim is not believed (the conservative reading).
+  fun believed_at($t: datetime-tz) -> { claim }:
+    match
+      $c isa claim, has recorded-at $r; $r <= $t;
+      review (reviewed: $c), has verdict "accepted", has recorded-at $ra; $ra <= $t;
+      not { review (reviewed: $c), has verdict $v, has recorded-at $rv; $v != "accepted"; $rv >= $ra; $rv <= $t; };
+      not { supersession (superseded: $c), has recorded-at $rs; $rs <= $t; };
+    return { $c };

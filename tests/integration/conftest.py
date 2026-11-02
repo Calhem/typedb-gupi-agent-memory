@@ -1,7 +1,9 @@
 import uuid
 
 import pytest
+from helpers import Clock
 
+from gupi.memory import Memory
 from gupi.typedb.connection import connect
 
 
@@ -22,4 +24,16 @@ def database(driver):
     name = f"gupi-test-{uuid.uuid4().hex[:8]}"
     driver.databases.create(name)
     yield name
-    driver.databases.get(name).delete()
+    if driver.databases.contains(name):
+        driver.databases.get(name).delete()
+
+
+@pytest.fixture
+def clock():
+    return Clock()
+
+
+@pytest.fixture
+def memory(driver, database, clock):
+    return Memory.open(database, packs=("core", "people"), driver=driver, clock=clock)
+

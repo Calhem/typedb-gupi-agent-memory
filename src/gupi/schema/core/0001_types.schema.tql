@@ -1,26 +1,31 @@
-# GUPI core ontology (Phase 0 draft, verified on TypeDB CE 3.14.1).
+# GUPI core ontology (verified on TypeDB CE 3.14.1).
 #
-# Three separate layers (docs/adr/0001-assertion-modelling.md):
-#   observation  what a source said, verbatim, with when it said it and when we received it
-#   fact         a typed claim about the world (a subtype of the abstract `fact` relation); a hypothesis
-#                until a `review` accepts it. Facts are immutable once inserted.
-#   review / supersession   decisions and corrections, each with its own recorded-at, so history is kept
+# Layers (docs/adr/0001-assertion-modelling.md):
+#   observation   what a source said, verbatim, with when it said it and when GUPI received it
+#   claim         ONE attestation of a typed proposition (a subtype of the abstract `claim` relation),
+#                 backed by its own evidence. Two sources saying the same thing are two claims with the
+#                 same proposition-key. A claim is a hypothesis until a review accepts it. Never mutated.
+#   review, supersession, alternatives   decisions: historical events, each with its own recorded-at
 #
 # Time (docs/adr/0003-temporal-semantics.md):
-#   valid time   when the fact is true in the world: half-open [start, end). Each boundary lies in a window
-#                [*-earliest, *-latest): earliest == latest means exact; an absent bound means unbounded on
-#                that side. No valid-to bounds means the end is UNKNOWN, never "ongoing".
-#   recorded-at  transaction time: when GUPI recorded the fact, review or supersession.
-#   observed-at  when the source produced the observation; received-at when GUPI ingested it.
-#   occurred-at  when an event happened (events are facts too).
+#   valid time    when the claim says the proposition is true: half-open [start, end). Each boundary lies in
+#                 a window [*-earliest, *-latest): earliest == latest means exact; an absent bound means
+#                 unbounded on that side. No end bounds means the end is UNKNOWN, never "ongoing".
+#   recorded-at   transaction time: when GUPI recorded the claim or decision.
+#   observed-at   when the source produced the observation; received-at when GUPI ingested it.
+#   occurred-at-* when an event happened (events are claims too).
 
 define
 
   # identity and labels
   attribute gupi-id, value string;
+  # Identifies what a claim is about (claim type + role players), not what it says, so competing and
+  # corroborating claims about the same thing can be found together.
+  attribute proposition-key, value string;
   attribute label, value string;
   attribute source-kind, value string;
   attribute uri, value string;
+  attribute record-key, value string;
   attribute context-kind, value string;
 
   # evidence
@@ -42,7 +47,7 @@ define
   attribute occurred-at-earliest sub time-point;
   attribute occurred-at-latest sub time-point;
   attribute time-precision, value string @values("instant", "day", "month", "year", "unknown");
-  # Why the end bounds are what they are. "ongoing-at-observation": the source said the fact still held
+  # Why the end bounds are what they are. "ongoing-at-observation": the source said the claim still held
   # when observed, so valid-to-earliest = observed-at and nothing is known after that.
   attribute valid-to-basis, value string @values("stated", "unknown", "ongoing-at-observation");
 
@@ -59,7 +64,7 @@ define
     plays sourcing:source;
 
   entity observation,
-    owns gupi-id @key, owns content, owns content-hash,
+    owns gupi-id @key, owns record-key, owns content, owns content-hash,
     owns observed-at, owns received-at,
     plays sourcing:observed, plays evidence:support, plays containment:member, plays mentioning:container;
 
@@ -82,28 +87,34 @@ define
   relation mentioning, relates container, relates mention;
   relation reference, relates mention, relates referent, owns confidence, owns method;
 
-  # --- facts: every domain claim is a subtype, so role semantics stay native ---
-  relation fact @abstract,
-    owns gupi-id @key,
+  # --- claims: every domain claim type is a subtype, so role semantics stay native ---
+  relation claim @abstract,
+    owns gupi-id @key, owns proposition-key,
     owns recorded-at,
     owns valid-from-earliest, owns valid-from-latest, owns valid-to-earliest, owns valid-to-latest,
     owns time-precision, owns valid-to-basis,
     owns confidence, owns method,
     plays evidence:supported, plays review:reviewed,
     plays supersession:superseded, plays supersession:replacement,
+    plays alternatives:option,
     plays containment:member;
 
-  relation event @abstract, sub fact,
+  relation event @abstract, sub claim,
     owns occurred-at-earliest, owns occurred-at-latest;
 
-  # Two referents are the same thing. A fact, so merges are reviewable and reversible.
-  relation identity sub fact, relates same @card(2..2);
+  # Two referents are the same thing. A claim, so merges are reviewable and reversible.
+  relation identity sub claim, relates same @card(2..2);
 
   relation evidence, relates supported, relates support,
     owns span-start, owns span-end, owns method, owns confidence;
 
+  # A decision about one claim. Never edited: the latest review recorded by time T sets the status at T.
   relation review, relates reviewed,
-    owns verdict, owns recorded-at, owns decided-by, owns reason;
+    owns gupi-id @key, owns verdict, owns recorded-at, owns decided-by, owns reason;
 
   relation supersession, relates superseded, relates replacement,
-    owns recorded-at, owns reason;
+    owns gupi-id @key, owns recorded-at, owns reason;
+
+  # Competing readings of the same evidence (e.g. which "Sam" was meant); at most one is intended.
+  relation alternatives, relates option @card(2..),
+    owns gupi-id @key, owns recorded-at, owns reason;

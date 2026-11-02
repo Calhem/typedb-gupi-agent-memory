@@ -4,7 +4,8 @@ A fact holds on the half-open interval [start, end). Each boundary is only known
 [earliest, latest): earliest == latest means the boundary is exact, and a missing bound means unbounded
 on that side. With no end bounds at all the end is unknown, which is not the same as "still true".
 
-`holds_at` answers with three values: TRUE, FALSE or UNKNOWN.
+`holds_at` answers for one claim with three values: TRUE, FALSE or UNKNOWN. `combine` answers for all the
+claims believed about a proposition, adding NOT_YET_KNOWN and CONTESTED.
 """
 
 from dataclasses import dataclass
@@ -34,3 +35,31 @@ def holds_at(vt: ValidTime, at: datetime) -> Truth:
     started = vt.from_latest is not None and at >= vt.from_latest
     not_ended = vt.to_earliest is not None and at < vt.to_earliest
     return Truth.TRUE if started and not_ended else Truth.UNKNOWN
+
+
+class Answer(Enum):
+    """The answer to "did this hold at valid time v, as GUPI believed at transaction time t?"."""
+
+    TRUE = "true"                    # a believed claim says it held at v
+    FALSE = "false"                  # a believed claim says it did not hold at v
+    UNKNOWN = "unknown"              # claims were recorded by t, but none believed decides v
+    NOT_YET_KNOWN = "not-yet-known"  # nothing about it had been recorded by t
+    CONTESTED = "contested"          # believed claims disagree: some say TRUE, some FALSE
+
+
+def combine(truths, anything_recorded):
+    """Combine the per-claim truths of the claims believed at t about one proposition.
+
+    `anything_recorded` says whether any claim about the proposition (believed or not) had been recorded
+    by t. Absence of a claim never counts as FALSE: GUPI does not assume a closed world.
+    """
+    truths = set(truths)
+    if not anything_recorded:
+        return Answer.NOT_YET_KNOWN
+    if Truth.TRUE in truths and Truth.FALSE in truths:
+        return Answer.CONTESTED
+    if Truth.TRUE in truths:
+        return Answer.TRUE
+    if Truth.FALSE in truths:
+        return Answer.FALSE
+    return Answer.UNKNOWN
