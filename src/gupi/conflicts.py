@@ -80,19 +80,29 @@ def compare(a, b, constraints):
     return Conflict(DIFFERING, ids, "compatible, but with different time bounds or precision")
 
 
-def detect(claims, constraints, include=(CONTRADICTION, DIFFERING, CORROBORATION, SEPARATE)):
-    """All pairwise relations among `claims` (normally those believed at one time), filtered by kind."""
+def detect(claims, constraints, include=(CONTRADICTION, DIFFERING, CORROBORATION, SEPARATE), groups=None):
+    """All pairwise relations among `claims` (normally those believed at one time), filtered by kind.
+
+    `groups` (from gupi.identity.equivalents) makes referents accepted as the same compare as one.
+    """
+    groups = groups or {}
+
+    def canon(roles):
+        return {r: tuple(sorted(min(groups.get(x, {x})) for x in refs)) for r, refs in roles.items()}
+
     claims = [c for c in claims if c.type != "identity"]
+    keys = {c.id: (c.type, sorted(canon(c.roles).items())) for c in claims}
     found = []
     for i, a in enumerate(claims):
         for b in claims[i + 1:]:
             if a.id == b.id:
                 continue
-            if a.proposition_key == b.proposition_key:
+            if keys[a.id] == keys[b.id]:
                 found.append(compare(a, b, constraints))
             elif (rule := constraints["one_player_at_a_time"].get(a.type)) and a.type == b.type:
                 per, single = rule["per"], rule["single"]
-                if a.roles.get(per) == b.roles.get(per) and a.roles.get(single) != b.roles.get(single):
+                ra, rb = canon(a.roles), canon(b.roles)
+                if ra.get(per) == rb.get(per) and ra.get(single) != rb.get(single):
                     both = overlap(certain_period(a.valid), certain_period(b.valid))
                     if both is not None:
                         found.append(Conflict(CONTRADICTION, tuple(sorted((a.id, b.id))),

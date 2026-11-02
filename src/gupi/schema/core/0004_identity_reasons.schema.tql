@@ -1,0 +1,4 @@
+# Phase 3: suggested identity claims carry the reason they were suggested.
+
+define
+  identity owns reason;

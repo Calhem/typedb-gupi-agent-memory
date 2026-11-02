@@ -148,3 +148,7 @@ def claim(tx, claim_id):
 
 def all_claims(tx):
     return _views(typeql.documents(tx, "match $c isa! $t; $t sub claim;" + FETCH))
+
+
+def claims_of_type(tx, claim_type):
+    return _views(typeql.documents(tx, f"match $c isa! $t; $t label {typeql.label(claim_type)};" + FETCH))

@@ -37,8 +37,9 @@ def notes(driver, database, with_status=True):
 
 def test_core_packs_apply_once(driver, database):
     applied = migrations.migrate(driver, database, ["core", "people"])
-    assert applied == ["core/0001_types.schema.tql", "core/0002_functions.schema.tql",
-                       "core/0003_extraction.schema.tql", "people/0001_types.schema.tql"]
+    assert applied == [m.id for m in migrations.discover(["core", "people"])]
+    assert applied[:3] == ["core/0001_types.schema.tql", "core/0002_functions.schema.tql",
+                           "core/0003_extraction.schema.tql"] and applied[-1] == "people/0001_types.schema.tql"
     assert migrations.migrate(driver, database, ["core", "people"]) == []
     Memory.open(database, packs=("core", "people"), driver=driver)  # opening again is a no-op
 
@@ -117,7 +118,8 @@ def test_phase_1_database_with_data_upgrades_to_phase_2(driver, database, tmp_pa
 
     clock.set("2025-02-01")
     applied = migrations.migrate(driver, database, ["core", "people"], backup_dir=tmp_path / "backups", clock=clock)
-    assert applied == ["core/0003_extraction.schema.tql"]
+    later_core = [m.id for m in migrations.discover(["core"])][2:]  # 0003 onwards
+    assert applied == later_core and applied[0] == "core/0003_extraction.schema.tql"
     new = Memory(driver, database, clock)
     view = new.claim(claim.id)
     assert view.evidence[0].quote == "Alice reports to Bob." and view.basis is None

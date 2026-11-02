@@ -303,24 +303,28 @@ class Memory:
 
     def review_queue(self, at=None, claim_type=None, method=None, limit=None):
         """Claims awaiting a decision at `at` (default now), oldest first, with conflicts against believed claims."""
-        from gupi import conflicts, review  # local: these modules build on Memory's results
+        from gupi import conflicts, identity, review  # local: these modules build on Memory's results
         at = at or self.clock()
         claims = self.all_claims()
         rules = conflicts.load_constraints(self.packs)
         believed = [c for c in claims if c.status_at(at) is Status.ACCEPTED]
+        groups = identity.equivalents([c for c in claims if c.type == "identity"], at)
 
         def against_believed(c):
-            found = conflicts.detect([c] + believed, rules, include=(conflicts.CONTRADICTION, conflicts.DIFFERING))
+            found = conflicts.detect([c] + believed, rules, include=(conflicts.CONTRADICTION, conflicts.DIFFERING),
+                                     groups=groups)
             return [x for x in found if c.id in x.claim_ids]
         return review.queue(claims, at, against_believed, claim_type, method, limit)
 
     def conflicts(self, at=None, include=None):
         """Relations between the claims believed at `at` (default now): contradictions, differing evidence, ..."""
-        from gupi import conflicts
+        from gupi import conflicts, identity
         at = at or self.clock()
-        believed = [c for c in self.all_claims() if c.status_at(at) is Status.ACCEPTED]
+        claims = self.all_claims()
+        believed = [c for c in claims if c.status_at(at) is Status.ACCEPTED]
+        groups = identity.equivalents([c for c in claims if c.type == "identity"], at)
         kinds = include or (conflicts.CONTRADICTION, conflicts.DIFFERING)
-        return conflicts.detect(believed, conflicts.load_constraints(self.packs), include=kinds)
+        return conflicts.detect(believed, conflicts.load_constraints(self.packs), include=kinds, groups=groups)
 
     def all_claims(self):
         with transaction(self.driver, self.database, TransactionType.READ) as tx:
@@ -339,18 +343,46 @@ class Memory:
 
     def ask(self, claim_type, roles, valid_at, believed_at=None, values=None):
         """Did `claim_type(roles)` (optionally with these attribute values) hold at `valid_at`, as believed at
-        `believed_at` (default: now)? Returns the answer with the claims behind it."""
+        `believed_at` (default: now)? Returns the answer with the claims behind it.
+
+        Referents that accepted identity claims (as of `believed_at`) say are the same are treated as one.
+        """
+        from gupi import identity
         self._check("claim", claim_type)
-        key = proposition_key(claim_type, roles)
         believed_at = believed_at or self.clock()
         with transaction(self.driver, self.database, TransactionType.READ) as tx:
-            considered = retrieval.claims_for_proposition(tx, key)
+            groups = identity.equivalents(retrieval.claims_of_type(tx, "identity"), believed_at)
+            considered = {}
+            for combo in _expand(roles, groups):
+                for c in retrieval.claims_for_proposition(tx, proposition_key(claim_type, combo)):
+                    considered[c.id] = c
+        considered = sorted(considered.values(), key=lambda c: (c.recorded_at, c.id))
         if values:
             considered = [c for c in considered if all(c.values.get(k) == v for k, v in values.items())]
         recorded = [c for c in considered if c.recorded_at <= believed_at]
         believed = [(c, c.holds_at(valid_at)) for c in recorded if c.status_at(believed_at) is Status.ACCEPTED]
         answer = combine((t for _, t in _same_period(believed)), anything_recorded=bool(recorded))
         return AnswerResult(answer, tuple(believed), tuple(recorded))
+
+    def suggest_identities(self, record=True):
+        """Propose identity claims (as hypotheses, never merged until accepted). Returns the suggestions."""
+        from gupi import identity
+        found = identity.suggest(self)
+        if record and found:
+            identity.record(self, found)
+        return found
+
+
+def _expand(roles, groups):
+    """Every role assignment obtained by swapping referents for ones accepted as the same."""
+    import itertools
+    names = sorted(roles)
+    options = []
+    for role in names:
+        refs = (roles[role],) if isinstance(roles[role], str) else tuple(roles[role])
+        options.append([tuple(sorted(c)) for c in itertools.product(*[sorted(groups.get(r, {r})) for r in refs])])
+    for choice in itertools.product(*options):
+        yield {role: (refs[0] if len(refs) == 1 else refs) for role, refs in zip(names, choice)}
 
 
 def _same_period(believed):
