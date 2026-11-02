@@ -1,0 +1,9 @@
+{
+  "_comment": "Prefer-typed mappings: a generic statement with one of these predicates becomes the typed claim. subject/object name the typed roles the statement's subject and object fill.",
+  "reports to": {"type": "reporting", "subject": "report", "object": "manager"},
+  "works for": {"type": "employment", "subject": "employee", "object": "employer"},
+  "works at": {"type": "employment", "subject": "employee", "object": "employer"},
+  "is employed by": {"type": "employment", "subject": "employee", "object": "employer"},
+  "joined": {"type": "employment", "subject": "employee", "object": "employer"},
+  "manages": {"type": "reporting", "subject": "manager", "object": "report"}
+}
