@@ -1,0 +1,16 @@
+# Local TypeDB for GUPI. Ports avoid TypeDB's defaults (1729, 8000).
+name: typedb-noodlelab-gupi
+
+services:
+  typedb:
+    image: typedb/typedb:3.14.1
+    container_name: gupi-typedb
+    ports:
+      - "127.0.0.1:1734:1729"   # gRPC driver
+      - "127.0.0.1:8005:8000"   # HTTP (TypeDB Studio)
+    volumes:
+      - gupi-typedb-data:/var/lib/typedb/data
+    restart: unless-stopped
+
+volumes:
+  gupi-typedb-data:

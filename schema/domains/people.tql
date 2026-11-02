@@ -1,0 +1,12 @@
+# Example domain schema: people and organisations. Loaded after core.tql; shows how domains extend the core.
+
+define
+  attribute job-title, value string;
+
+  entity person sub referent,
+    plays employment:employee, plays reporting:report, plays reporting:manager;
+  entity organization sub referent,
+    plays employment:employer;
+
+  relation employment sub fact, relates employee, relates employer, owns job-title;
+  relation reporting sub fact, relates report, relates manager;

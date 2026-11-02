@@ -1,0 +1,109 @@
+# GUPI core ontology (Phase 0 draft, verified on TypeDB CE 3.14.1).
+#
+# Three separate layers (docs/adr/0001-assertion-modelling.md):
+#   observation  what a source said, verbatim, with when it said it and when we received it
+#   fact         a typed claim about the world (a subtype of the abstract `fact` relation); a hypothesis
+#                until a `review` accepts it. Facts are immutable once inserted.
+#   review / supersession   decisions and corrections, each with its own recorded-at, so history is kept
+#
+# Time (docs/adr/0003-temporal-semantics.md):
+#   valid time   when the fact is true in the world: half-open [start, end). Each boundary lies in a window
+#                [*-earliest, *-latest): earliest == latest means exact; an absent bound means unbounded on
+#                that side. No valid-to bounds means the end is UNKNOWN, never "ongoing".
+#   recorded-at  transaction time: when GUPI recorded the fact, review or supersession.
+#   observed-at  when the source produced the observation; received-at when GUPI ingested it.
+#   occurred-at  when an event happened (events are facts too).
+
+define
+
+  # identity and labels
+  attribute gupi-id, value string;
+  attribute label, value string;
+  attribute source-kind, value string;
+  attribute uri, value string;
+  attribute context-kind, value string;
+
+  # evidence
+  attribute content, value string;
+  attribute content-hash, value string;
+  attribute span-start, value integer;
+  attribute span-end, value integer;
+  attribute surface-text, value string;
+
+  # time
+  attribute time-point @abstract, value datetime-tz;
+  attribute valid-from-earliest sub time-point;
+  attribute valid-from-latest sub time-point;
+  attribute valid-to-earliest sub time-point;
+  attribute valid-to-latest sub time-point;
+  attribute recorded-at sub time-point;
+  attribute observed-at sub time-point;
+  attribute received-at sub time-point;
+  attribute occurred-at-earliest sub time-point;
+  attribute occurred-at-latest sub time-point;
+  attribute time-precision, value string @values("instant", "day", "month", "year", "unknown");
+  # Why the end bounds are what they are. "ongoing-at-observation": the source said the fact still held
+  # when observed, so valid-to-earliest = observed-at and nothing is known after that.
+  attribute valid-to-basis, value string @values("stated", "unknown", "ongoing-at-observation");
+
+  # decisions
+  attribute confidence, value double @range(0.0..1.0);
+  attribute method, value string;
+  attribute verdict, value string @values("accepted", "rejected", "retracted");
+  attribute decided-by, value string;
+  attribute reason, value string;
+
+  # --- sources and observations ---
+  entity source,
+    owns gupi-id @key, owns label, owns source-kind, owns uri,
+    plays sourcing:source;
+
+  entity observation,
+    owns gupi-id @key, owns content, owns content-hash,
+    owns observed-at, owns received-at,
+    plays sourcing:observed, plays evidence:support, plays containment:member, plays mentioning:container;
+
+  entity context,
+    owns gupi-id @key, owns label, owns context-kind,
+    plays containment:context;
+
+  relation sourcing, relates source, relates observed;
+  relation containment, relates context, relates member @card(0..);
+
+  # --- things memory is about; domain schemas add subtypes ---
+  entity referent @abstract,
+    owns gupi-id @key, owns label,
+    plays reference:referent, plays identity:same;
+
+  entity mention,
+    owns gupi-id @key, owns surface-text, owns span-start, owns span-end,
+    plays mentioning:mention, plays reference:mention;
+
+  relation mentioning, relates container, relates mention;
+  relation reference, relates mention, relates referent, owns confidence, owns method;
+
+  # --- facts: every domain claim is a subtype, so role semantics stay native ---
+  relation fact @abstract,
+    owns gupi-id @key,
+    owns recorded-at,
+    owns valid-from-earliest, owns valid-from-latest, owns valid-to-earliest, owns valid-to-latest,
+    owns time-precision, owns valid-to-basis,
+    owns confidence, owns method,
+    plays evidence:supported, plays review:reviewed,
+    plays supersession:superseded, plays supersession:replacement,
+    plays containment:member;
+
+  relation event @abstract, sub fact,
+    owns occurred-at-earliest, owns occurred-at-latest;
+
+  # Two referents are the same thing. A fact, so merges are reviewable and reversible.
+  relation identity sub fact, relates same @card(2..2);
+
+  relation evidence, relates supported, relates support,
+    owns span-start, owns span-end, owns method, owns confidence;
+
+  relation review, relates reviewed,
+    owns verdict, owns recorded-at, owns decided-by, owns reason;
+
+  relation supersession, relates superseded, relates replacement,
+    owns recorded-at, owns reason;
