@@ -1,0 +1,50 @@
+{"conversations": [
+ {"id": "hr-log", "source": "hr",
+  "messages": [
+   {"key": "w1-1", "at": "2025-01-15T09:00:00Z", "text": "Nora Vance joined Halden as CTO in January 2025."},
+   {"key": "w1-2", "at": "2025-01-15T09:05:00Z", "text": "Ivo Marsh reports to Nora Vance."},
+   {"key": "w1-3", "at": "2025-06-02T10:00:00Z", "text": "Nora Vance left Halden in May 2025."},
+   {"key": "w1-4", "at": "2025-06-02T10:05:00Z", "text": "Since June 2025, Ivo Marsh reports to Leah Ortiz."},
+   {"key": "w1-5", "at": "2025-06-03T08:00:00Z", "text": "Leah Ortiz joined Halden as CTO in June 2025."}
+  ],
+  "gold": {"claims": [
+   {"message": "w1-1", "type": "employment", "roles": {"employee": "Nora Vance", "employer": "Halden"}, "values": {"job-title": "CTO"},
+    "start": ["2025-01-01", "2025-02-01"], "end": null, "ongoing": false},
+   {"message": "w1-2", "type": "reporting", "roles": {"report": "Ivo Marsh", "manager": "Nora Vance"}, "values": {},
+    "start": null, "end": null, "ongoing": true},
+   {"message": "w1-3", "type": "employment", "roles": {"employee": "Nora Vance", "employer": "Halden"}, "values": {},
+    "start": null, "end": ["2025-05-01", "2025-06-01"], "ongoing": false},
+   {"message": "w1-4", "type": "reporting", "roles": {"report": "Ivo Marsh", "manager": "Leah Ortiz"}, "values": {},
+    "start": ["2025-06-01", "2025-07-01"], "end": null, "ongoing": true},
+   {"message": "w1-5", "type": "employment", "roles": {"employee": "Leah Ortiz", "employer": "Halden"}, "values": {"job-title": "CTO"},
+    "start": ["2025-06-01", "2025-07-01"], "end": null, "ongoing": false}
+  ]}},
+ {"id": "team-chat", "source": "chat",
+  "messages": [
+   {"key": "w2-1", "at": "2025-03-10T12:00:00Z", "text": "Ivo Marsh reports to Sam Reed."},
+   {"key": "w2-2", "at": "2025-07-01T12:00:00Z", "text": "Ivo Marsh reports to Leah Ortiz."},
+   {"key": "w2-3", "at": "2025-07-01T12:05:00Z", "text": "Pia Holm works at Halden as a Designer."}
+  ],
+  "gold": {"claims": [
+   {"message": "w2-1", "type": "reporting", "roles": {"report": "Ivo Marsh", "manager": "Sam Reed"}, "values": {},
+    "start": null, "end": null, "ongoing": true, "decision": "rejected"},
+   {"message": "w2-2", "type": "reporting", "roles": {"report": "Ivo Marsh", "manager": "Leah Ortiz"}, "values": {},
+    "start": null, "end": null, "ongoing": true},
+   {"message": "w2-3", "type": "employment", "roles": {"employee": "Pia Holm", "employer": "Halden"}, "values": {"job-title": "Designer"},
+    "start": null, "end": null, "ongoing": true, "decision": "unreviewed"}
+  ]}},
+ {"id": "board-notes", "source": "board",
+  "messages": [
+   {"key": "w3-1", "at": "2025-08-20T15:00:00Z", "text": "Leah Ortiz has reported to Omar Fry since June 2025."},
+   {"key": "w3-2", "at": "2025-08-20T15:05:00Z", "text": "Ivo Marsh stopped reporting to Leah Ortiz in July 2025."},
+   {"key": "w3-3", "at": "2025-08-20T15:10:00Z", "text": "Since March 2025, Nora Vance works at Halden as CTO."}
+  ],
+  "gold": {"claims": [
+   {"message": "w3-1", "type": "reporting", "roles": {"report": "Leah Ortiz", "manager": "Omar Fry"}, "values": {},
+    "start": ["2025-06-01", "2025-07-01"], "end": null, "ongoing": true},
+   {"message": "w3-2", "type": "reporting", "roles": {"report": "Ivo Marsh", "manager": "Leah Ortiz"}, "values": {},
+    "start": null, "end": ["2025-07-01", "2025-08-01"], "ongoing": false},
+   {"message": "w3-3", "type": "employment", "roles": {"employee": "Nora Vance", "employer": "Halden"}, "values": {"job-title": "CTO"},
+    "start": ["2025-03-01", "2025-04-01"], "end": null, "ongoing": true}
+  ]}}
+]}
