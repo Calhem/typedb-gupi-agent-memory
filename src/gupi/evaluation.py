@@ -110,11 +110,16 @@ def score(conversations, extractor, driver=None):
     m_tp = sum((gold_m & pred_m).values())
     gold_by_key = {_key(g): g for g in gold_c}
     matched = [(gold_by_key[_key(p)], p) for p in pred_c if _key(p) in gold_by_key]
-    errors = Counter()
+    errors, missed, spurious = Counter(), [], []
     for g in gold_c:
         if _key(g) not in {_key(p) for p in pred_c}:
-            errors[_classify_miss(g, pred_c)] += 1
-    errors["spurious claim"] += sum(1 for p in pred_c if _key(p) not in gold_by_key)
+            kind = _classify_miss(g, pred_c)
+            errors[kind] += 1
+            missed.append({"message": g["message"], "type": g["type"], "error": kind})
+    for p in pred_c:
+        if _key(p) not in gold_by_key:
+            errors["spurious claim"] += 1
+            spurious.append({"message": p["message"], "type": p["type"], "roles": p["roles"], "values": p["values"]})
     time_ok = 0
     for g, p in matched:
         problems = [side for side in ("start", "end", "ongoing") if g[side] != p[side]]
@@ -136,6 +141,8 @@ def score(conversations, extractor, driver=None):
         "time_correct_of_matched": {"correct": time_ok, "matched": len(matched)},
         "basis": dict(Counter(p["basis"] for p in pred_c)),
         "errors": dict(sorted(errors.items())),
+        "missed": missed,
+        "spurious": spurious,
         "rejected": [list(r) for r in rejected],
         "notes": notes,
     }

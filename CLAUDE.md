@@ -8,8 +8,8 @@ The owner has no programming background and is learning as we go. Explain new te
 keep steps small, verify each step works before moving on, and stop at each phase gate for review.
 
 ## Status
-Phase 1 done on `feature/phase-1-core`, awaiting review (docs/phase-1-report.md). Do not start Phase 2
-until the owner approves docs/phase-2-plan.md. No distributed agents, packet protocols or dynamic schema
+Phase 1 merged. Phase 2 done on `feature/phase-2-extraction`, awaiting review (docs/phase-2-report.md).
+Do not start Phase 3 until the owner approves docs/phase-3-plan.md. No distributed agents, packet protocols or dynamic schema
 modes yet; keep the code open to them without building them.
 
 ## Rules
@@ -21,7 +21,13 @@ modes yet; keep the code open to them without building them.
 - Transaction times come only from GUPI's clock; callers cannot backdate them.
 - Values go into queries only as `given` parameters; only validated labels go into query text (ADR 0004).
 - Schema changes are new numbered migration files; never edit an applied one.
-- An LLM output is a hypothesis, never accepted truth by default.
+- An LLM output is a hypothesis, never accepted truth by default. Extraction never writes reviews.
+- LLM spending goes only through `gupi.budget.Ledger` (fail closed; $10 total, owner decision). Never
+  call the Anthropic API outside `ClaudeExtractor`, never raise the limit without the owner, and never run
+  the held-out evaluation repeatedly to tune against it.
+- Extractors return time phrases, never dates; the validator reads them with `gupi.timeexpr`.
+- Generic `statement` claims are provisional; prefer typed claims; no schema evolution from extraction.
+- Claude defaults: `claude-opus-5-5`, effort `medium`, structured output, `fallbacks: "default"`.
 - Secure by default: read-only source connectors, bounded sampling, no secrets in logs or git.
 - Ports: 1734 (TypeDB driver), 8005 (TypeDB HTTP/Studio), bound to 127.0.0.1.
 - Python runs on the host through uv (Python 3.13). Machine-specific notes: CLAUDE.local.md (git-ignored).
@@ -49,6 +55,9 @@ modes yet; keep the code open to them without building them.
 - Fetching an attribute type that is not in the schema is an error, not null; an absent optional
   attribute on an existing type fetches as null.
 - typedb-driver 3.14.0 prints a harmless SyntaxWarning on import (filtered in pytest).
+- `update $x has attr == $v;` replaces a single-valued attribute; `reduce $s = sum($a);` sums integers.
+- `@key` violations surface at insert time ([CNT9]); event-like records need random ids, not content hashes.
+- Schema introspection: `$t relates $r; $p plays $r;` and `$t owns $a; $a value string;` work.
 
 ## Git
 - `main` holds reviewed states; work happens on `feature/<phase>-<topic>` branches, merged after review.
