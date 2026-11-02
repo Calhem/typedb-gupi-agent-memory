@@ -50,22 +50,22 @@ def test_review_workflow(gupi):
     dana = id_for(queue, "Dana Li.")
     assert "reporting(manager=Elena Petrova, report=Marco Rossi)" in queue and "[explicit]" in queue
 
-    gupi("accept", first, correction, "--by", "callum", "--reason", "matches HR records")
+    gupi("accept", first, correction, "--by", "reviewer-a", "--reason", "matches HR records")
     gupi.clock.set("2025-09-21")
     queue = gupi("queue")
     assert ids_in(queue) == [dana]
     assert "! contradiction" not in queue  # Elena ended in April; Dana from September: sequential
 
     shown = gupi("show", first)
-    assert "status now: accepted" in shown and "accepted by callum: matches HR records" in shown
+    assert "status now: accepted" in shown and "accepted by reviewer-a: matches HR records" in shown
     assert "“Marco Rossi has reported to Elena Petrova since 2023.”" in shown
 
     corrections = gupi("corrections")
     assert f"supersede {first} with {correction}" in corrections
-    out = gupi("supersede", first, correction, "--by", "callum")
+    out = gupi("supersede", first, correction, "--by", "reviewer-a")
     supersession = out.strip().split("(")[-1].rstrip(")")
     gupi.clock.set("2025-09-22")
-    assert "withdrawn" in gupi("unsupersede", supersession, "--by", "callum", "--reason", "mistake")
+    assert "withdrawn" in gupi("unsupersede", supersession, "--by", "reviewer-a", "--reason", "mistake")
     assert "withdrawn" in gupi("show", first) and "status now: accepted" in gupi("show", first)
 
 
@@ -76,7 +76,7 @@ def test_possibly_sequential_values_are_not_suggested_as_corrections(gupi, tmp_p
     path = tmp_path / "promotion.json"
     path.write_text(json.dumps(promotion))
     gupi("ingest", path, "--create")
-    gupi("accept", *ids_in(gupi("queue")), "--by", "callum")
+    gupi("accept", *ids_in(gupi("queue")), "--by", "reviewer-a")
     assert "differing-evidence" in gupi("conflicts") and "possibly sequential" in gupi("conflicts")
     assert "No suggested corrections." in gupi("corrections")
 
