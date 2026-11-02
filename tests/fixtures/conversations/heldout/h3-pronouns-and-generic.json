@@ -1,0 +1,24 @@
+{"id": "h3", "source": "team-chat",
+ "messages": [
+  {"key": "h3-1", "at": "2025-11-03T12:00:00Z", "text": "Kim has worked at Vector since 2022."},
+  {"key": "h3-2", "at": "2025-11-03T12:01:00Z", "text": "Kim lives in Lisbon."},
+  {"key": "h3-3", "at": "2025-11-03T12:02:00Z", "text": "Noah manages Kim."},
+  {"key": "h3-4", "at": "2025-11-03T12:03:00Z", "text": "She also mentors two interns."}
+ ],
+ "gold": {
+  "mentions": [
+   {"message": "h3-1", "text": "Kim", "kind": "person"}, {"message": "h3-1", "text": "Vector", "kind": "organization"},
+   {"message": "h3-2", "text": "Kim", "kind": "person"},
+   {"message": "h3-3", "text": "Noah", "kind": "person"}, {"message": "h3-3", "text": "Kim", "kind": "person"},
+   {"message": "h3-4", "text": "She", "kind": "person"}
+  ],
+  "claims": [
+   {"message": "h3-1", "type": "employment", "roles": {"employee": "Kim", "employer": "Vector"}, "values": {},
+    "start": ["2022-01-01", "2023-01-01"], "end": null, "ongoing": true},
+   {"message": "h3-2", "type": "statement", "roles": {"subject": "Kim"}, "values": {"predicate-text": "lives in", "object-text": "Lisbon"},
+    "start": null, "end": null, "ongoing": true},
+   {"message": "h3-3", "type": "reporting", "roles": {"report": "Kim", "manager": "Noah"}, "values": {},
+    "start": null, "end": null, "ongoing": true},
+   {"message": "h3-4", "type": "statement", "roles": {"subject": "Kim"}, "values": {"predicate-text": "mentors", "object-text": "two interns"},
+    "start": null, "end": null, "ongoing": true}
+  ]}}

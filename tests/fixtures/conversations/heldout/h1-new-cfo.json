@@ -1,0 +1,24 @@
+{"id": "h1", "source": "team-chat",
+ "messages": [
+  {"key": "h1-1", "at": "2025-04-07T09:00:00Z", "text": "Welcome Jonas Berg, who joined Lumen Labs as CFO on 3 March 2025!"},
+  {"key": "h1-2", "at": "2025-04-07T09:02:00Z", "text": "Jonas Berg reports to Mia Chen."},
+  {"key": "h1-3", "at": "2025-08-01T10:00:00Z", "text": "Mia Chen left Lumen Labs last month."},
+  {"key": "h1-4", "at": "2025-08-01T10:05:00Z", "text": "From August 2025 Jonas Berg reports to Omar Haddad."}
+ ],
+ "gold": {
+  "mentions": [
+   {"message": "h1-1", "text": "Jonas Berg", "kind": "person"}, {"message": "h1-1", "text": "Lumen Labs", "kind": "organization"},
+   {"message": "h1-2", "text": "Jonas Berg", "kind": "person"}, {"message": "h1-2", "text": "Mia Chen", "kind": "person"},
+   {"message": "h1-3", "text": "Mia Chen", "kind": "person"}, {"message": "h1-3", "text": "Lumen Labs", "kind": "organization"},
+   {"message": "h1-4", "text": "Jonas Berg", "kind": "person"}, {"message": "h1-4", "text": "Omar Haddad", "kind": "person"}
+  ],
+  "claims": [
+   {"message": "h1-1", "type": "employment", "roles": {"employee": "Jonas Berg", "employer": "Lumen Labs"}, "values": {"job-title": "CFO"},
+    "start": ["2025-03-03", "2025-03-04"], "end": null, "ongoing": false},
+   {"message": "h1-2", "type": "reporting", "roles": {"report": "Jonas Berg", "manager": "Mia Chen"}, "values": {},
+    "start": null, "end": null, "ongoing": true},
+   {"message": "h1-3", "type": "employment", "roles": {"employee": "Mia Chen", "employer": "Lumen Labs"}, "values": {},
+    "start": null, "end": ["2025-07-01", "2025-08-01"], "ongoing": false},
+   {"message": "h1-4", "type": "reporting", "roles": {"report": "Jonas Berg", "manager": "Omar Haddad"}, "values": {},
+    "start": ["2025-08-01", "2025-09-01"], "end": null, "ongoing": true}
+  ]}}
