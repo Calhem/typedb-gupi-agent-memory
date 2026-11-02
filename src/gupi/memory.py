@@ -486,6 +486,16 @@ class Memory:
         result = evaluate(believed, valid_at, anything_recorded=bool(matching or bounding), bounding=bounding)
         return AnswerResult(result.answer, result.used, tuple(matching), result)
 
+    def query(self, question):
+        """Answer a structured question (gupi.query.Question) with citations, temporal context and exclusions."""
+        from gupi import query
+        return query.answer(self, question)
+
+    def query_by_name(self, claim_type, roles_by_name, valid_at, believed_at=None, values=None):
+        """Like query(), with fixed roles given by name; use None for the open role."""
+        from gupi import query
+        return query.by_name(self, claim_type, roles_by_name, valid_at, believed_at, values)
+
     def suggest_identities(self, record=True):
         """Propose identity claims (as hypotheses, never merged until accepted). Returns the suggestions."""
         from gupi import identity
