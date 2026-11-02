@@ -144,3 +144,7 @@ def claim(tx, claim_id):
     found = _views(typeql.documents(
         tx, "match $c isa! $t, has gupi-id == $id; $t sub claim;" + FETCH, {"id": claim_id}))
     return found[0] if found else None
+
+
+def all_claims(tx):
+    return _views(typeql.documents(tx, "match $c isa! $t; $t sub claim;" + FETCH))

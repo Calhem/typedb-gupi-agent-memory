@@ -31,9 +31,10 @@ class AnswerResult:
 
 
 class Memory:
-    def __init__(self, driver, database, clock=None):
+    def __init__(self, driver, database, clock=None, packs=("core", "people")):
         self.driver = driver
         self.database = database
+        self.packs = tuple(packs)
         self.clock = clock or (lambda: datetime.now(timezone.utc))
         self._types = None
 
@@ -46,7 +47,7 @@ class Memory:
                 raise LookupError(f"database {database!r} does not exist (pass create=True)")
             driver.databases.create(database)
         migrations.migrate(driver, database, packs, backup_dir=backup_dir, clock=clock)
-        return cls(driver, database, clock)
+        return cls(driver, database, clock, packs)
 
     # --- schema knowledge, for validating labels before they reach query text ---
 
@@ -214,24 +215,40 @@ class Memory:
 
     def review(self, claim_id, verdict, decided_by, reason=None):
         """Record a review. Repeating the claim's latest decision (same verdict and decider) is a no-op."""
-        if verdict not in VERDICTS:
-            raise ValueError(f"verdict must be one of {VERDICTS}")
+        return self.review_many([(claim_id, verdict)], decided_by, reason)[0]
+
+    def review_many(self, decisions, decided_by, reason=None):
+        """Record several reviews in one transaction (all or none). `decisions` is [(claim id, verdict)].
+
+        Each review is still its own historical event. A claim may appear only once per batch.
+        """
+        if not decided_by:
+            raise ValueError("every decision needs a decided_by")
+        ids_seen = [cid for cid, _ in decisions]
+        if len(set(ids_seen)) != len(ids_seen):
+            raise ValueError("a claim can be reviewed only once per batch")
+        for _, verdict in decisions:
+            if verdict not in VERDICTS:
+                raise ValueError(f"verdict must be one of {VERDICTS}")
         with transaction(self.driver, self.database, TransactionType.WRITE) as tx:
             now = self.clock()
-            view = retrieval.claim(tx, claim_id)
-            if view is None:
-                raise KeyError(claim_id)
-            if view.reviews:
-                latest = view.reviews[-1]
-                if latest.verdict == verdict and latest.decided_by == decided_by:
-                    return latest.id
-            self._check_clock(now, [view.recorded_at] + [r.recorded_at for r in view.reviews])
-            review_id = ids.stable_id("review", claim_id, verdict, now, decided_by)
-            attrs = {"gupi-id": review_id, "verdict": verdict, "recorded-at": now,
-                     "decided-by": decided_by, "reason": reason}
-            _insert(tx, "$r isa review (reviewed: $c)", attrs,
-                    match="$c isa claim, has gupi-id == $claim_id;", params={"claim_id": claim_id})
-            return review_id
+            return [self._review(tx, now, cid, verdict, decided_by, reason) for cid, verdict in decisions]
+
+    def _review(self, tx, now, claim_id, verdict, decided_by, reason):
+        view = retrieval.claim(tx, claim_id)
+        if view is None:
+            raise KeyError(claim_id)
+        if view.reviews:
+            latest = view.reviews[-1]
+            if latest.verdict == verdict and latest.decided_by == decided_by:
+                return latest.id
+        self._check_clock(now, [view.recorded_at] + [r.recorded_at for r in view.reviews])
+        review_id = ids.stable_id("review", claim_id, verdict, now, decided_by)
+        attrs = {"gupi-id": review_id, "verdict": verdict, "recorded-at": now,
+                 "decided-by": decided_by, "reason": reason}
+        _insert(tx, "$r isa review (reviewed: $c)", attrs,
+                match="$c isa claim, has gupi-id == $claim_id;", params={"claim_id": claim_id})
+        return review_id
 
     def supersede(self, old_id, new_id, reason=None):
         """Record that `new_id` replaces `old_id` (a correction). Both claims are kept."""
@@ -283,6 +300,15 @@ class Memory:
     def claim(self, claim_id):
         with transaction(self.driver, self.database, TransactionType.READ) as tx:
             return retrieval.claim(tx, claim_id)
+
+    def review_queue(self, at=None, claim_type=None, method=None, limit=None):
+        """Claims awaiting a decision at `at` (default now), oldest first."""
+        from gupi import review  # local: review builds on Memory's results
+        return review.queue(self.all_claims(), at or self.clock(), None, claim_type, method, limit)
+
+    def all_claims(self):
+        with transaction(self.driver, self.database, TransactionType.READ) as tx:
+            return retrieval.all_claims(tx)
 
     def claims_about(self, referent_id):
         """Every claim involving the referent, with history and evidence, believed or not."""
