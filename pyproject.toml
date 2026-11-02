@@ -9,6 +9,10 @@ dependencies = [
     "typedb-driver==3.14.0",
 ]
 
+[project.optional-dependencies]
+# Real LLM extraction with Anthropic Claude. Not needed for the offline default.
+claude = ["anthropic>=2.4.0"]
+
 [dependency-groups]
 dev = ["pytest>=8"]
 

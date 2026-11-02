@@ -1,7 +1,9 @@
 """Versioned migrations, including migrating a database that already holds data, against the live server."""
 
+import shutil
+
 import pytest
-from helpers import Clock
+from helpers import HR, Clock, observe, record, reports
 from typedb.driver import TransactionType
 
 from gupi import migrations, typeql
@@ -36,7 +38,7 @@ def notes(driver, database, with_status=True):
 def test_core_packs_apply_once(driver, database):
     applied = migrations.migrate(driver, database, ["core", "people"])
     assert applied == ["core/0001_types.schema.tql", "core/0002_functions.schema.tql",
-                       "people/0001_types.schema.tql"]
+                       "core/0003_extraction.schema.tql", "people/0001_types.schema.tql"]
     assert migrations.migrate(driver, database, ["core", "people"]) == []
     Memory.open(database, packs=("core", "people"), driver=driver)  # opening again is a no-op
 
@@ -97,3 +99,27 @@ def test_a_failing_migration_is_not_recorded(driver, database, tmp_path):
     with pytest.raises(Exception):
         migrations.migrate(driver, database, ["broken"], extra_dirs=[pack])
     assert migrations.applied(driver, database) == {}
+
+
+def test_phase_1_database_with_data_upgrades_to_phase_2(driver, database, tmp_path):
+    """Build a database with the Phase 1 core (0001-0002) and data, then apply the real 0003."""
+    phase1 = tmp_path / "core"
+    phase1.mkdir()
+    for f in sorted(migrations.BUILTIN.joinpath("core").glob("000[12]_*.tql")):
+        shutil.copy(f, phase1 / f.name)
+    clock = Clock("2025-01-10")
+    migrations.migrate(driver, database, ["core", "people"], extra_dirs=[phase1], clock=clock)
+    old = Memory(driver, database, clock)
+    obs = observe(HR, "hr-1", "Alice reports to Bob.", "2025-01-05")
+    claim = reports(obs)
+    record(old, [obs], [claim])
+    old.review(claim.id, "accepted", "test")
+
+    clock.set("2025-02-01")
+    applied = migrations.migrate(driver, database, ["core", "people"], backup_dir=tmp_path / "backups", clock=clock)
+    assert applied == ["core/0003_extraction.schema.tql"]
+    new = Memory(driver, database, clock)
+    view = new.claim(claim.id)
+    assert view.evidence[0].quote == "Alice reports to Bob." and view.basis is None
+    assert new.believed_ids(clock()) == {claim.id}
+    assert list((tmp_path / "backups").glob("*.data.typedb"))

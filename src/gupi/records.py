@@ -37,13 +37,26 @@ class Source:
 
 
 @dataclass(frozen=True)
+class Context:
+    """A conversation, document or session that groups observations."""
+
+    id: str
+    kind: str
+    label: str | None = None
+
+
+@dataclass(frozen=True)
 class Observation:
-    """Something a source said, verbatim. `record_key` is the source's own id or offset for it."""
+    """Something a source said, verbatim. `record_key` is the source's own id or offset for it.
+
+    `context_id` (optional) places it in a conversation or document; it is not part of the id.
+    """
 
     source_id: str
     record_key: str
     content: str
     observed_at: datetime | None = None
+    context_id: str | None = None
 
     @property
     def content_hash(self):
@@ -64,6 +77,23 @@ class Referent:
 
     def __post_init__(self):
         label(self.type)
+
+
+@dataclass(frozen=True)
+class Mention:
+    """A span of an observation that names a referent. The surface text must match the span exactly."""
+
+    observation_id: str
+    span_start: int
+    span_end: int
+    surface: str
+    referent_id: str
+    confidence: float | None = None
+    method: str | None = None
+
+    @property
+    def id(self):
+        return ids.stable_id("mention", self.observation_id, self.span_start, self.span_end, self.referent_id, self.method)
 
 
 @dataclass(frozen=True)
@@ -89,9 +119,12 @@ class Claim:
     valid_to_basis: str | None = None
     method: str | None = None
     confidence: float | None = None
+    basis: str | None = None  # "explicit" or "inferred", for extracted claims
 
     def __post_init__(self):
         label(self.type)
+        if self.basis not in (None, "explicit", "inferred"):
+            raise ValueError("basis must be 'explicit' or 'inferred'")
         for name in list(self.roles) + list(self.values):
             label(name)
         if not self.evidence:
@@ -115,6 +148,7 @@ class Claim:
             self.time_precision, self.valid_to_basis,
             sorted((e.observation_id, e.span_start, e.span_end) for e in self.evidence),
             self.method,
+            *([self.basis] if self.basis else []),  # only when set, so Phase 1 ids are unchanged
         )
 
 
@@ -126,3 +160,5 @@ class Batch:
     observations: tuple[Observation, ...] = ()
     referents: tuple[Referent, ...] = ()
     claims: tuple[Claim, ...] = ()
+    contexts: tuple[Context, ...] = ()
+    mentions: tuple[Mention, ...] = ()

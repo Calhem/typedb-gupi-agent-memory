@@ -1,0 +1,24 @@
+{"id": "d1", "source": "team-chat",
+ "messages": [
+  {"key": "d1-1", "at": "2025-03-03T09:00:00Z", "text": "Quick intro: Priya Shah joined Northwind as Head of Data in January 2025."},
+  {"key": "d1-2", "at": "2025-03-03T09:05:00Z", "text": "Priya Shah reports to Tom Okafor."},
+  {"key": "d1-3", "at": "2025-06-10T11:00:00Z", "text": "Tom Okafor left Northwind in May 2025."},
+  {"key": "d1-4", "at": "2025-06-10T11:02:00Z", "text": "Since June 2025, Priya Shah reports to Dana Li."}
+ ],
+ "gold": {
+  "mentions": [
+   {"message": "d1-1", "text": "Priya Shah", "kind": "person"}, {"message": "d1-1", "text": "Northwind", "kind": "organization"},
+   {"message": "d1-2", "text": "Priya Shah", "kind": "person"}, {"message": "d1-2", "text": "Tom Okafor", "kind": "person"},
+   {"message": "d1-3", "text": "Tom Okafor", "kind": "person"}, {"message": "d1-3", "text": "Northwind", "kind": "organization"},
+   {"message": "d1-4", "text": "Priya Shah", "kind": "person"}, {"message": "d1-4", "text": "Dana Li", "kind": "person"}
+  ],
+  "claims": [
+   {"message": "d1-1", "type": "employment", "roles": {"employee": "Priya Shah", "employer": "Northwind"}, "values": {"job-title": "Head of Data"},
+    "start": ["2025-01-01", "2025-02-01"], "end": null, "ongoing": false},
+   {"message": "d1-2", "type": "reporting", "roles": {"report": "Priya Shah", "manager": "Tom Okafor"}, "values": {},
+    "start": null, "end": null, "ongoing": true},
+   {"message": "d1-3", "type": "employment", "roles": {"employee": "Tom Okafor", "employer": "Northwind"}, "values": {},
+    "start": null, "end": ["2025-05-01", "2025-06-01"], "ongoing": false},
+   {"message": "d1-4", "type": "reporting", "roles": {"report": "Priya Shah", "manager": "Dana Li"}, "values": {},
+    "start": ["2025-06-01", "2025-07-01"], "end": null, "ongoing": true}
+  ]}}

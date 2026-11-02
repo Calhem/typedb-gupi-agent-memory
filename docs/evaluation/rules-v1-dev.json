@@ -1,0 +1,41 @@
+{
+  "extractor": "rules:v1",
+  "conversations": 3,
+  "messages": 12,
+  "mentions": {
+    "precision": 1.0,
+    "recall": 0.913,
+    "tp": 21,
+    "predicted": 21,
+    "gold": 23
+  },
+  "claims": {
+    "precision": 1.0,
+    "recall": 0.917,
+    "tp": 11,
+    "predicted": 11,
+    "gold": 12
+  },
+  "time_correct_of_matched": {
+    "correct": 11,
+    "matched": 11
+  },
+  "basis": {
+    "explicit": 11
+  },
+  "errors": {
+    "missed: nothing extracted from the message": 1
+  },
+  "missed": [
+    {
+      "message": "d3-4",
+      "type": "employment",
+      "error": "missed: nothing extracted from the message"
+    }
+  ],
+  "spurious": [],
+  "rejected": [],
+  "notes": [
+    "'September': year 2025 inferred from the observation date"
+  ]
+}

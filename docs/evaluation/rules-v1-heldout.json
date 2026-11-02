@@ -1,0 +1,66 @@
+{
+  "extractor": "rules:v1",
+  "conversations": 3,
+  "messages": 12,
+  "mentions": {
+    "precision": 1.0,
+    "recall": 0.5,
+    "tp": 11,
+    "predicted": 11,
+    "gold": 22
+  },
+  "claims": {
+    "precision": 1.0,
+    "recall": 0.5,
+    "tp": 6,
+    "predicted": 6,
+    "gold": 12
+  },
+  "time_correct_of_matched": {
+    "correct": 6,
+    "matched": 6
+  },
+  "basis": {
+    "explicit": 6
+  },
+  "errors": {
+    "missed: nothing extracted from the message": 6
+  },
+  "missed": [
+    {
+      "message": "h1-1",
+      "type": "employment",
+      "error": "missed: nothing extracted from the message"
+    },
+    {
+      "message": "h1-3",
+      "type": "employment",
+      "error": "missed: nothing extracted from the message"
+    },
+    {
+      "message": "h2-2",
+      "type": "reporting",
+      "error": "missed: nothing extracted from the message"
+    },
+    {
+      "message": "h3-1",
+      "type": "employment",
+      "error": "missed: nothing extracted from the message"
+    },
+    {
+      "message": "h3-3",
+      "type": "reporting",
+      "error": "missed: nothing extracted from the message"
+    },
+    {
+      "message": "h3-4",
+      "type": "statement",
+      "error": "missed: nothing extracted from the message"
+    }
+  ],
+  "spurious": [],
+  "rejected": [],
+  "notes": [
+    "'June': year 2025 inferred from the observation date"
+  ]
+}

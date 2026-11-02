@@ -1,0 +1,24 @@
+{"id": "h2", "source": "hr-notes",
+ "messages": [
+  {"key": "h2-1", "at": "2025-05-12T08:00:00Z", "text": "Lena Fischer is the Product Lead at Orbit."},
+  {"key": "h2-2", "at": "2025-05-12T08:01:00Z", "text": "Lena Fischer's manager is Raj Patel."},
+  {"key": "h2-3", "at": "2025-10-02T14:00:00Z", "text": "Update: Lena Fischer stopped reporting to Raj Patel in June."},
+  {"key": "h2-4", "at": "2025-10-02T14:01:00Z", "text": "Lena Fischer works for Orbit as Head of Product."}
+ ],
+ "gold": {
+  "mentions": [
+   {"message": "h2-1", "text": "Lena Fischer", "kind": "person"}, {"message": "h2-1", "text": "Orbit", "kind": "organization"},
+   {"message": "h2-2", "text": "Lena Fischer", "kind": "person"}, {"message": "h2-2", "text": "Raj Patel", "kind": "person"},
+   {"message": "h2-3", "text": "Lena Fischer", "kind": "person"}, {"message": "h2-3", "text": "Raj Patel", "kind": "person"},
+   {"message": "h2-4", "text": "Lena Fischer", "kind": "person"}, {"message": "h2-4", "text": "Orbit", "kind": "organization"}
+  ],
+  "claims": [
+   {"message": "h2-1", "type": "employment", "roles": {"employee": "Lena Fischer", "employer": "Orbit"}, "values": {"job-title": "Product Lead"},
+    "start": null, "end": null, "ongoing": true},
+   {"message": "h2-2", "type": "reporting", "roles": {"report": "Lena Fischer", "manager": "Raj Patel"}, "values": {},
+    "start": null, "end": null, "ongoing": true},
+   {"message": "h2-3", "type": "reporting", "roles": {"report": "Lena Fischer", "manager": "Raj Patel"}, "values": {},
+    "start": null, "end": ["2025-06-01", "2025-07-01"], "ongoing": false},
+   {"message": "h2-4", "type": "employment", "roles": {"employee": "Lena Fischer", "employer": "Orbit"}, "values": {"job-title": "Head of Product"},
+    "start": null, "end": null, "ongoing": true}
+  ]}}
