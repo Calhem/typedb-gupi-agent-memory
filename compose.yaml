@@ -1,5 +1,5 @@
-# Local TypeDB for GUPI. Ports avoid TypeDB's defaults (1729, 8000).
-name: typedb-noodlelab-gupi
+# Local TypeDB for GUPI, reachable only from this machine. Ports avoid TypeDB's defaults (1729, 8000).
+name: gupi
 
 services:
   typedb:

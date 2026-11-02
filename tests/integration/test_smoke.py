@@ -3,8 +3,8 @@
 import pytest
 from typedb.driver import TransactionType
 
-from noodle_memory.typedb import embedding
-from noodle_memory.typedb.connection import rows, transaction
+from gupi.typedb import embedding
+from gupi.typedb.connection import rows, transaction
 
 pytestmark = pytest.mark.integration
 

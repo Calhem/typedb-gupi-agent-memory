@@ -2,7 +2,7 @@ import uuid
 
 import pytest
 
-from noodle_memory.typedb.connection import connect
+from gupi.typedb.connection import connect
 
 
 @pytest.fixture(scope="session")

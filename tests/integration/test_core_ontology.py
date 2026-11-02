@@ -10,9 +10,9 @@ from datetime import datetime, timezone
 import pytest
 from typedb.driver import TransactionType
 
-from noodle_memory.temporal import Truth, ValidTime, holds_at
-from noodle_memory.typedb import schema
-from noodle_memory.typedb.connection import rows, transaction
+from gupi.temporal import Truth, ValidTime, holds_at
+from gupi.typedb import schema
+from gupi.typedb.connection import rows, transaction
 
 pytestmark = pytest.mark.integration
 

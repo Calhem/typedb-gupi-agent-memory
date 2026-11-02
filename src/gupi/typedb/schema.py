@@ -4,7 +4,7 @@ from pathlib import Path
 
 from typedb.driver import TransactionType
 
-from noodle_memory.typedb.connection import transaction
+from gupi.typedb.connection import transaction
 
 SCHEMA_DIR = Path(__file__).resolve().parents[3] / "schema"
 

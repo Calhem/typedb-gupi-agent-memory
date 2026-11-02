@@ -17,7 +17,7 @@ Findings (2026-11-02):
 
 ## Decision
 - Store each embedding **in TypeDB** as a string attribute: little-endian float32, base64
-  (`noodle_memory/typedb/embedding.py`), with the model name and dimension stored beside it.
+  (`gupi/typedb/embedding.py`), with the model name and dimension stored beside it.
 - Compute similarity **exactly in Python** over vectors read from TypeDB, after structured filters have
   narrowed the candidates (source, context, type, time). No second vector store.
 - Keep retrieval behind one function boundary so a native implementation can replace it when a released

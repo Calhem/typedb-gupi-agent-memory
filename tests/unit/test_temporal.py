@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 
-from noodle_memory.temporal import Truth, ValidTime, holds_at
+from gupi.temporal import Truth, ValidTime, holds_at
 
 
 def d(y, m, day=1):

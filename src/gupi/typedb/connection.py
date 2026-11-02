@@ -2,7 +2,8 @@
 
 Settings come from environment variables so no credentials live in code:
 GUPI_TYPEDB_ADDRESS (default 127.0.0.1:1734), GUPI_TYPEDB_USERNAME, GUPI_TYPEDB_PASSWORD
-(defaults are the local Community Edition admin account).
+(defaults are TypeDB Community Edition's documented local admin account; set real values for any
+server that is not a local development instance).
 """
 
 import os

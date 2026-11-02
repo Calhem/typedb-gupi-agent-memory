@@ -10,7 +10,7 @@ import uuid
 sys.path.insert(0, "src")
 from typedb.driver import TransactionType  # noqa: E402
 
-from noodle_memory.typedb.connection import connect, rows, transaction  # noqa: E402
+from gupi.typedb.connection import connect, rows, transaction  # noqa: E402
 
 SCHEMA_PROBES = {
     "vector value type (PR #8014 syntax)": 'define attribute emb, value vector(3, "float32");',

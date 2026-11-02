@@ -1,6 +1,6 @@
 # Project notes for AI coding agents
 
-Project: **GUPI** (`typedb-noodlelab-GUPI`, Python package `noodle_memory`): a semantic memory and
+Project: **GUPI** (`typedb-gupi-agent-memory`, Python package `gupi`): a semantic memory and
 context engine on TypeDB 3. Noodlelab is the owner's umbrella name for experimental projects.
 
 ## Who this is for
@@ -19,7 +19,8 @@ docs/phase-1-plan.md. No UI, connector framework or leaderboard work before the 
 - An LLM output is a hypothesis, never accepted truth by default.
 - Secure by default: read-only source connectors, bounded sampling, no secrets in logs or git.
 - Ports: 1734 (TypeDB driver), 8005 (TypeDB HTTP/Studio), bound to 127.0.0.1.
-- Python runs on the host through uv (Python 3.13).
+- Python runs on the host through uv (Python 3.13). Machine-specific notes: CLAUDE.local.md (git-ignored).
+- This repository is public: never commit secrets, local paths or personal data.
 
 ## Checks (run before every commit)
 - `docker compose up -d`, then `uv run pytest -q` (live tests skip if TypeDB is down; say so if they did).

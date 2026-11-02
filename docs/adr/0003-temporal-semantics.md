@@ -23,7 +23,7 @@ Observation time and asserted time are separate: a note written in November can 
 - No end bounds = **end unknown**. It does not mean "still true".
 - "Still the case" in a source = `valid-to-earliest` set to that observation's `observed-at`
   (`valid-to-basis "ongoing-at-observation"`). It proves the fact held until then, nothing after.
-- `holds_at(fact, t)` is three-valued: TRUE, FALSE, UNKNOWN (`noodle_memory/temporal.py`).
+- `holds_at(fact, t)` is three-valued: TRUE, FALSE, UNKNOWN (`gupi/temporal.py`).
 - All times are `datetime-tz`, stored in UTC.
 
 ## Transaction time

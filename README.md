@@ -20,8 +20,8 @@ uv run python -I scripts/probe_vectors.py   # which vector syntax the server acc
 - `schema/core.tql`: core ontology (sources, observations, facts, evidence, reviews, time).
 - `schema/functions.tql`: TypeQL functions (`believed_at`).
 - `schema/domains/`: example domain schemas that extend the core.
-- `src/noodle_memory/`: Python package (connection, schema loading, embeddings, valid-time logic).
+- `src/gupi/`: Python package (connection, schema loading, embeddings, valid-time logic).
 - `docs/adr/`: architecture decisions.
 
 ## Licence
-Apache-2.0 (to be added with the first release).
+Apache-2.0: see [LICENSE](LICENSE).
