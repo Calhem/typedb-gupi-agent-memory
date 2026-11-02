@@ -312,6 +312,8 @@ class Memory:
         for x in conflicts.detect(believed, conflicts.load_constraints(self.packs),
                                   include=(conflicts.CONTRADICTION, conflicts.DIFFERING), groups=groups):
             a, b = (by_id[i] for i in x.claim_ids)
+            if x.kind == conflicts.DIFFERING and a.values != b.values:
+                continue  # e.g. two job titles that may be sequential (a promotion): replacing one would lose history
             said = {c.id: max((e.observed_at for e in c.evidence if e.observed_at), default=None) for c in (a, b)}
             sources = {c.id: {e.source_id for e in c.evidence} for c in (a, b)}
             if None in said.values() or said[a.id] == said[b.id] or not (sources[a.id] & sources[b.id]):
