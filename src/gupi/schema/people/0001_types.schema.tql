@@ -8,5 +8,5 @@ define
   entity organization sub referent,
     plays employment:employer;
 
-  relation employment sub fact, relates employee, relates employer, owns job-title;
-  relation reporting sub fact, relates report, relates manager;
+  relation employment sub claim, relates employee, relates employer, owns job-title;
+  relation reporting sub claim, relates report, relates manager;
