@@ -496,6 +496,18 @@ class Memory:
         from gupi import query
         return query.by_name(self, claim_type, roles_by_name, valid_at, believed_at, values)
 
+    def explore(self, referent_id, depth=2, believed_at=None, valid_at=None, max_nodes=50):
+        from gupi import explore
+        return explore.explore(self, referent_id, depth, believed_at, valid_at, max_nodes)
+
+    def follow(self, referent_id, steps, valid_at, believed_at=None):
+        from gupi import explore
+        return explore.follow(self, referent_id, steps, valid_at, believed_at)
+
+    def history(self, referent_id, believed_at=None):
+        from gupi import explore
+        return explore.history(self, referent_id, believed_at)
+
     def suggest_identities(self, record=True):
         """Propose identity claims (as hypotheses, never merged until accepted). Returns the suggestions."""
         from gupi import identity
