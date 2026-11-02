@@ -11,7 +11,7 @@ from gupi.temporal import Truth, ValidTime, holds_at
 CORE_ATTRIBUTES = {
     "gupi-id", "proposition-key", "recorded-at", "valid-from-earliest", "valid-from-latest",
     "valid-to-earliest", "valid-to-latest", "time-precision", "valid-to-basis", "confidence", "method",
-    "occurred-at-earliest", "occurred-at-latest",
+    "occurred-at-earliest", "occurred-at-latest", "extraction-basis",
 }
 
 
@@ -50,6 +50,12 @@ class ClaimView:
     supersedes: tuple[str, ...]
     alternatives: tuple[str, ...]
     evidence: tuple[EvidenceView, ...] = field(default=())
+    basis: str | None = None
+
+    @property
+    def provisional(self):
+        """Generic `statement` claims are provisional: typed claims are preferred."""
+        return self.type == "statement"
 
     def status_at(self, t) -> Status:
         return status_at(self.recorded_at, self.reviews, [at for _, at in self.superseded_by], t)
@@ -112,6 +118,7 @@ def _view(doc):
         supersedes=tuple(sorted({s["id"] for s in doc["supersedes"]})),
         alternatives=tuple(sorted({o["id"] for o in doc["alternatives"]} - {a["gupi-id"]})),
         evidence=evidence,
+        basis=a.get("extraction-basis"),
     )
 
 

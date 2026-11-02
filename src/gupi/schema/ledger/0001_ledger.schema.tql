@@ -1,0 +1,20 @@
+# The LLM usage and cost ledger. Lives in its own database (default `gupi-ledger`), shared by every run, so
+# a new memory database cannot reset the budget. Money is stored in micro-dollars (integer) to avoid
+# rounding. See gupi.budget.
+
+define
+  attribute ledger-id, value string;
+  attribute limit-microusd, value integer;
+  attribute reserved-microusd, value integer;
+  attribute actual-microusd, value integer;
+  attribute input-tokens, value integer;
+  attribute output-tokens, value integer;
+  attribute llm-model, value string;
+  attribute call-purpose, value string;
+  attribute call-outcome, value string @values("reserved", "settled", "failed-before-send", "failed-unknown-usage");
+  attribute ledger-at, value datetime-tz;
+
+  entity spending-limit, owns ledger-id @key, owns limit-microusd, owns ledger-at;
+  entity llm-call,
+    owns ledger-id @key, owns llm-model, owns call-purpose, owns reserved-microusd, owns actual-microusd,
+    owns input-tokens, owns output-tokens, owns call-outcome, owns ledger-at;

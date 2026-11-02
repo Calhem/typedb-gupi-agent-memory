@@ -1,0 +1,34 @@
+# Phase 2: extraction. Adds the provisional generic claim, extraction provenance and an unclassified referent.
+
+define
+  # How a claim relates to its source text: "explicit" = the quoted span states it,
+  # "inferred" = an extractor concluded it from the text. Only set on extracted claims.
+  attribute extraction-basis, value string @values("explicit", "inferred");
+  attribute predicate-text, value string;
+  attribute object-text, value string;
+  attribute model-name, value string;
+  attribute prompt-version, value string;
+  attribute prompt-hash, value string;
+  attribute run-report, value string;
+
+  claim owns extraction-basis;
+
+  # PROVISIONAL generic claim, for statements no typed claim type covers. Its subjects and objects are
+  # referents (so identity rules apply), it needs evidence like every claim, and it carries the same
+  # valid-time bounds. Typed claims are preferred whenever the schema has one (gupi.extraction.prefer_typed).
+  relation statement sub claim,
+    relates subject @card(1..), relates object @card(0..),
+    owns predicate-text, owns object-text;
+  referent plays statement:subject, plays statement:object;
+
+  # A referent whose kind the extractor could not determine. A fixed type, not schema evolution.
+  entity unclassified sub referent;
+
+  # One extraction pass over some observations, and what it produced.
+  entity extraction-run,
+    owns gupi-id @key, owns method, owns model-name, owns prompt-version, owns prompt-hash,
+    owns recorded-at, owns run-report,
+    plays extraction-output:run;
+  relation extraction-output, relates run, relates output @card(0..);
+  claim plays extraction-output:output;
+  mention plays extraction-output:output;

@@ -76,10 +76,14 @@ class Memory:
             now = self.clock()
             for s in batch.sources:
                 self._ingest_source(tx, s, report)
+            for c in batch.contexts:
+                self._ingest_context(tx, c, report)
             for o in batch.observations:
                 self._ingest_observation(tx, o, now, report)
             for r in batch.referents:
                 self._ingest_referent(tx, r, report)
+            for m in batch.mentions:
+                self._ingest_mention(tx, m, report)
             self._before_claims(tx)
             for c in batch.claims:
                 self._ingest_claim(tx, c, now, report)
@@ -108,18 +112,53 @@ class Memory:
         _insert(tx, "$s isa source", attrs)
         report.created.append(s.id)
 
+    def _ingest_context(self, tx, c, report):
+        existing = self._type_of(tx, c.id)
+        if existing:
+            if existing != "context":
+                raise ConflictError(f"{c.id} exists as a {existing}, not a context")
+            report.existing.append(c.id)
+            return
+        _insert(tx, "$c isa context", {"gupi-id": c.id, "context-kind": c.kind, "label": c.label})
+        report.created.append(c.id)
+
     def _ingest_observation(self, tx, o, now, report):
         if self._type_of(tx, o.id):
             report.existing.append(o.id)
             return
         if self._type_of(tx, o.source_id) != "source":
             raise ValueError(f"observation {o.record_key!r} refers to unknown source {o.source_id!r}")
+        if o.context_id is not None and self._type_of(tx, o.context_id) != "context":
+            raise ValueError(f"observation {o.record_key!r} refers to unknown context {o.context_id!r}")
         attrs = {"gupi-id": o.id, "record-key": o.record_key, "content": o.content,
                  "content-hash": o.content_hash, "observed-at": o.observed_at, "received-at": now}
         _insert(tx, "$o isa observation", attrs,
                 match="$s isa source, has gupi-id == $source_id;", params={"source_id": o.source_id},
                 extra="sourcing (source: $s, observed: $o);")
+        if o.context_id is not None:
+            typeql.run(tx, "match $o isa observation, has gupi-id == $oid; $c isa context, has gupi-id == $cid; "
+                           "insert containment (context: $c, member: $o);", {"oid": o.id, "cid": o.context_id})
         report.created.append(o.id)
+
+    def _ingest_mention(self, tx, m, report):
+        if self._type_of(tx, m.id):
+            report.existing.append(m.id)
+            return
+        docs = typeql.documents(tx, 'match $o isa observation, has gupi-id == $id; fetch { "content": $o.content };',
+                                {"id": m.observation_id})
+        if not docs:
+            raise ValueError(f"mention cites unknown observation {m.observation_id!r}")
+        if docs[0]["content"][m.span_start:m.span_end] != m.surface:
+            raise ValueError(f"mention {m.surface!r} does not match the observation text at {m.span_start}..{m.span_end}")
+        if self._type_of(tx, m.referent_id) not in self.types()["referent"]:
+            raise ValueError(f"mention refers to unknown referent {m.referent_id!r}")
+        attrs = {"gupi-id": m.id, "surface-text": m.surface, "span-start": m.span_start, "span-end": m.span_end}
+        ref_has, ref_params = _has({"confidence": m.confidence, "method": m.method}, "r")
+        _insert(tx, "$m isa mention", attrs,
+                match="$o isa observation, has gupi-id == $oid; $x isa referent, has gupi-id == $rid;",
+                params={"oid": m.observation_id, "rid": m.referent_id, **ref_params},
+                extra=f"mentioning (container: $o, mention: $m); reference (mention: $m, referent: $x){ref_has};")
+        report.created.append(m.id)
 
     def _ingest_referent(self, tx, r, report):
         existing = self._type_of(tx, r.id)
@@ -159,7 +198,7 @@ class Memory:
             "valid-from-earliest": vt.from_earliest, "valid-from-latest": vt.from_latest,
             "valid-to-earliest": vt.to_earliest, "valid-to-latest": vt.to_latest,
             "time-precision": c.time_precision, "valid-to-basis": c.valid_to_basis,
-            "method": c.method, "confidence": c.confidence, **c.values,
+            "method": c.method, "confidence": c.confidence, "extraction-basis": c.basis, **c.values,
         }
         has, has_params = _has(attrs, "a")
         statements = [f"$c isa {label(c.type)} ({links}){has};"]
