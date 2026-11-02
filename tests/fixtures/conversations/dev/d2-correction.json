@@ -1,0 +1,24 @@
+{"id": "d2", "source": "hr-notes",
+ "messages": [
+  {"key": "d2-1", "at": "2025-02-01T10:00:00Z", "text": "Marco Rossi works at Brightline as a Senior Engineer."},
+  {"key": "d2-2", "at": "2025-02-01T10:01:00Z", "text": "Marco Rossi has reported to Elena Petrova since 2023."},
+  {"key": "d2-3", "at": "2025-09-15T16:00:00Z", "text": "Correction: Marco Rossi stopped reporting to Elena Petrova in April 2025."},
+  {"key": "d2-4", "at": "2025-09-20T09:00:00Z", "text": "Marco Rossi is a Staff Engineer at Brightline."}
+ ],
+ "gold": {
+  "mentions": [
+   {"message": "d2-1", "text": "Marco Rossi", "kind": "person"}, {"message": "d2-1", "text": "Brightline", "kind": "organization"},
+   {"message": "d2-2", "text": "Marco Rossi", "kind": "person"}, {"message": "d2-2", "text": "Elena Petrova", "kind": "person"},
+   {"message": "d2-3", "text": "Marco Rossi", "kind": "person"}, {"message": "d2-3", "text": "Elena Petrova", "kind": "person"},
+   {"message": "d2-4", "text": "Marco Rossi", "kind": "person"}, {"message": "d2-4", "text": "Brightline", "kind": "organization"}
+  ],
+  "claims": [
+   {"message": "d2-1", "type": "employment", "roles": {"employee": "Marco Rossi", "employer": "Brightline"}, "values": {"job-title": "Senior Engineer"},
+    "start": null, "end": null, "ongoing": true},
+   {"message": "d2-2", "type": "reporting", "roles": {"report": "Marco Rossi", "manager": "Elena Petrova"}, "values": {},
+    "start": ["2023-01-01", "2024-01-01"], "end": null, "ongoing": true},
+   {"message": "d2-3", "type": "reporting", "roles": {"report": "Marco Rossi", "manager": "Elena Petrova"}, "values": {},
+    "start": null, "end": ["2025-04-01", "2025-05-01"], "ongoing": false},
+   {"message": "d2-4", "type": "employment", "roles": {"employee": "Marco Rossi", "employer": "Brightline"}, "values": {"job-title": "Staff Engineer"},
+    "start": null, "end": null, "ongoing": true}
+  ]}}

@@ -1,0 +1,24 @@
+{"id": "d3", "source": "team-chat",
+ "messages": [
+  {"key": "d3-1", "at": "2025-10-01T09:00:00Z", "text": "Sam joined Acme in September."},
+  {"key": "d3-2", "at": "2025-10-01T09:01:00Z", "text": "Alice is learning Rust."},
+  {"key": "d3-3", "at": "2025-10-01T09:02:00Z", "text": "Alice now reports to Sam."},
+  {"key": "d3-4", "at": "2025-10-01T09:03:00Z", "text": "He used to work at Initech."}
+ ],
+ "gold": {
+  "mentions": [
+   {"message": "d3-1", "text": "Sam", "kind": "person"}, {"message": "d3-1", "text": "Acme", "kind": "organization"},
+   {"message": "d3-2", "text": "Alice", "kind": "person"},
+   {"message": "d3-3", "text": "Alice", "kind": "person"}, {"message": "d3-3", "text": "Sam", "kind": "person"},
+   {"message": "d3-4", "text": "He", "kind": "person"}, {"message": "d3-4", "text": "Initech", "kind": "organization"}
+  ],
+  "claims": [
+   {"message": "d3-1", "type": "employment", "roles": {"employee": "Sam", "employer": "Acme"}, "values": {},
+    "start": ["2025-09-01", "2025-10-01"], "end": null, "ongoing": false},
+   {"message": "d3-2", "type": "statement", "roles": {"subject": "Alice"}, "values": {"predicate-text": "is learning", "object-text": "Rust"},
+    "start": null, "end": null, "ongoing": true},
+   {"message": "d3-3", "type": "reporting", "roles": {"report": "Alice", "manager": "Sam"}, "values": {},
+    "start": null, "end": null, "ongoing": true},
+   {"message": "d3-4", "type": "employment", "roles": {"employee": "Sam", "employer": "Initech"}, "values": {},
+    "start": null, "end": null, "ongoing": false}
+  ]}}
