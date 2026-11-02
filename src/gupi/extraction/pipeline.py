@@ -63,6 +63,8 @@ def extract(memory, extractor, observations, packs=("core", "people")):
             continue
         raw = extractor.extract(ExtractionRequest(obs.content, obs.observed_at, schema))
         found = validate(raw, obs, schema, scopes.get(obs.id, obs.id), extractor.method)
+        if isinstance(raw, dict) and raw.get("problem"):
+            found.rejected.append(("output", raw["problem"]))
         memory.ingest(Batch(referents=tuple(found.referents), mentions=tuple(found.mentions),
                             claims=tuple(found.claims)))
         _record_run(memory, extractor, rid, found)

@@ -98,10 +98,14 @@ def referent_id(scope, kind, surface):
 
 
 def _span(text, quote, start, end):
-    """The (start, end) of `quote` in `text`: the given span if it matches, else its single occurrence."""
+    """The (start, end) of `quote` in `text`: the given span if it matches, else its first occurrence.
+
+    LLMs are unreliable at character offsets, so a quote without a valid span is located in the text; it must
+    still appear there exactly.
+    """
     if isinstance(start, int) and isinstance(end, int) and 0 <= start <= end <= len(text) and text[start:end] == quote:
         return start, end
-    if quote and text.count(quote) == 1:
+    if quote and quote in text:
         i = text.index(quote)
         return i, i + len(quote)
     return None
