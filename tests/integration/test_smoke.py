@@ -3,7 +3,7 @@
 import pytest
 from typedb.driver import TransactionType
 
-from gupi.typedb import embedding
+from gupi import embedding
 from gupi.typedb.connection import rows, transaction
 
 pytestmark = pytest.mark.integration

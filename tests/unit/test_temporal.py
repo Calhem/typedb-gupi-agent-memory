@@ -45,3 +45,14 @@ def test_month_precision_start():
     assert holds_at(vt, d(2025, 5)) is Truth.FALSE
     assert holds_at(vt, d(2025, 6, 10)) is Truth.UNKNOWN
     assert holds_at(vt, d(2025, 7, 2)) is Truth.TRUE
+
+
+def test_combine_keeps_the_answers_apart():
+    from gupi.temporal import Answer, combine
+
+    assert combine([], anything_recorded=False) is Answer.NOT_YET_KNOWN
+    assert combine([], anything_recorded=True) is Answer.UNKNOWN
+    assert combine([Truth.UNKNOWN], anything_recorded=True) is Answer.UNKNOWN
+    assert combine([Truth.FALSE, Truth.UNKNOWN], anything_recorded=True) is Answer.FALSE
+    assert combine([Truth.TRUE, Truth.UNKNOWN], anything_recorded=True) is Answer.TRUE
+    assert combine([Truth.TRUE, Truth.FALSE], anything_recorded=True) is Answer.CONTESTED
