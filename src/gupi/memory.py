@@ -508,6 +508,11 @@ class Memory:
         from gupi import explore
         return explore.history(self, referent_id, believed_at)
 
+    def search(self, text, k=5, believed_at=None):
+        """Keyword search over source text received by `believed_at` (the text-only baseline)."""
+        from gupi import search
+        return search.search(self, text, k, believed_at)
+
     def suggest_identities(self, record=True):
         """Propose identity claims (as hypotheses, never merged until accepted). Returns the suggestions."""
         from gupi import identity
