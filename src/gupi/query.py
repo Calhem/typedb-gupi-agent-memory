@@ -81,10 +81,15 @@ SUPPORT = {Answer.TRUE: {"true"}, Answer.FALSE: {"false"}, Answer.CONTESTED: {"t
            Answer.UNKNOWN: {"unknown"}, Answer.NOT_YET_KNOWN: set()}
 
 
-def resolve(tx, name, groups):
-    """Referent groups whose label is exactly `name` (accepted identities merged)."""
-    ids = sorted({r.get("id").get_string() for r in typeql.concept_rows(
-        tx, "match $x isa referent, has label == $n, has gupi-id $id;", {"n": name})})
+def resolve(tx, name, groups, at):
+    """Referent groups whose label is exactly `name` and that GUPI knew about at `at` (mentioned in an
+    observation received by then, or created without any mention), with accepted identities merged.
+    Referents first mentioned later are invisible to an as-of question."""
+    ids = sorted({r.get("id").get_string() for r in typeql.concept_rows(tx, """
+        match $x isa referent, has label == $n, has gupi-id $id;
+              { reference (mention: $m, referent: $x); mentioning (container: $o, mention: $m);
+                $o has received-at $r; $r <= $at; }
+              or { not { reference (mention: $m2, referent: $x); }; };""", {"n": name, "at": at})})
     out = []
     for i in ids:
         g = frozenset(groups.get(i, {i}))
@@ -215,7 +220,7 @@ def by_name(memory, claim_type, roles_by_name, valid_at, believed_at=None, value
     t = believed_at or memory.clock()
     with transaction(memory.driver, memory.database, TransactionType.READ) as tx:
         groups = memory.identity_groups(t, tx)
-        resolved = {r: (resolve(tx, n, groups) if n is not None else [None]) for r, n in roles_by_name.items()}
+        resolved = {r: (resolve(tx, n, groups, t) if n is not None else [None]) for r, n in roles_by_name.items()}
     missing = [roles_by_name[r] for r, gs in resolved.items() if not gs]
     if missing:
         q = Question(claim_type, {}, valid_at, t, values or {})

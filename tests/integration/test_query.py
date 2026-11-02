@@ -72,3 +72,20 @@ def test_names_unknown_and_ambiguous(memory, world):
     memory.ingest(Batch(referents=(Referent("p:bob-2", "person", "Bob"),)))  # a second, unmerged "Bob"
     ambiguous = memory.query_by_name("reporting", {"report": "Alice", "manager": "Bob"}, utc("2025-01-15"))
     assert ambiguous.answer is Answer.UNKNOWN and ambiguous.ambiguous == ["Bob"]
+
+
+def test_names_are_resolved_as_of_the_belief_time(memory, clock):
+    """A referent first mentioned after the belief time must not leak into an as-of answer."""
+    from gupi.extraction.pipeline import extract
+    from gupi.extraction.rules import RuleExtractor
+    from gupi.records import Context, Observation
+    ctx = Context("conv:z", "conversation")
+    early = Observation(HR.id, "z-1", "Ann Kay reports to Ben Ross.", utc("2025-01-10"), ctx.id)
+    late = Observation(HR.id, "z-2", "Cleo Park reports to Ben Ross.", utc("2025-06-10"), ctx.id)
+    for obs in (early, late):
+        clock.set(obs.observed_at.isoformat()[:16])
+        memory.ingest(Batch((HR,), (obs,), contexts=(ctx,)))
+        extract(memory, RuleExtractor(), [obs])
+    before = memory.query_by_name("reporting", {"report": "Cleo Park", "manager": "Ben Ross"}, utc("2025-01-15"),
+                                  believed_at=utc("2025-03-01"))
+    assert before.answer is Answer.NOT_YET_KNOWN and before.steps == ["no referent named 'Cleo Park'"]
