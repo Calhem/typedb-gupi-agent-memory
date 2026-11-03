@@ -1,7 +1,7 @@
 # Annotation guidelines, draft v0 (two-document trial)
 
-Date: 2026-11-03. Status: **draft v0, revision 1. Provisional; accepted for further review, not approved
-for freezing.**
+Date: 2026-11-03. Status: **draft v0, revision 2. Provisional; approved for external review, not approved for
+freezing.**
 - **Scope:** these guidelines are for the two-document trial only (README.md in this folder).
 - **Changes:** they are expected to change after the trial, and are frozen only before the eight-document
   mini-pilot.
@@ -16,6 +16,14 @@ for freezing.**
 - Continuation is limited to questions about recorded knowledge (§13.2).
 - Evidence sets separate essential items from context (§13.1).
 - Example 4 is revised, and Example 7 is new.
+
+**Revision 2 (after the owner's second review):**
+- The blanket rule that actual-frame questions stay `insufficient` after a recorded termination is
+  replaced. Statements now record their evidence standing (§8.1), and an actual-frame conclusion is reached
+  by weighing standing, scope and timing (§12.4).
+- Document type alone never establishes authority.
+- A new inference, `closed-list`, is added.
+- Examples 4 and 7 are revised, and Example 8 is new.
 
 ## 0. About these guidelines
 **Who they are for:** the people who write and annotate the trial's documents, questions and answers. You
@@ -308,6 +316,37 @@ Every statement says **whose** assertion it is (`asserted_by`) and **how it reac
 - **The author's own stance** towards a report ("Joaquín says he is leaving, which I doubt") is a separate
   statement by the author, `direct`, linked with `contradicts` or `doubts`.
 
+### 8.1 Evidence standing
+Attribution says how a statement reached the document. **Standing** says what kind of evidence it is about
+the world. Each statement records a `standing`, and a one-line `standing_reason`.
+
+| Standing | Use when | Example |
+|---|---|---|
+| `authoritative-record` | the source is **shown by the documents** to be responsible for keeping this kind of fact, and the record covers the entity and the time in question | Tallis's own office announcing that a Tallis employee has left; a staff list the documents describe as the contractor's official, current register |
+| `direct-observation` | the source reports what it saw, did or experienced itself, at or near the time | "I met Joaquín on site this morning"; "we finished the boreholes on Friday" |
+| `reported` | a second-hand account: someone reports what another person said or did | "Joaquín told me he is leaving"; minutes recording a departure announced by someone else |
+| `plan` | an intention, schedule or announcement of something not yet happened | "Joaquín is back as site lead from next Monday" (before Monday) |
+| `unverified` | a rumour, an unattributed claim, a hedged (`possible`) statement, or a claim the documents give no basis for | "I hear Ravi's back at Tallis" |
+
+Rules:
+- **Document type alone never establishes authority.**
+  - A register, table, official-looking memo or the minutes are not authoritative just because of what they
+    are.
+  - Authority needs a reason **from the documents**:
+    - the source's stated responsibility (the employer for employment, the board for its own decisions)
+    - a document describing itself as the official or current record for that scope
+    - an established practice described in the documents
+  - Write the reason in `standing_reason`. Without one, the standing is at most `reported` or
+    `direct-observation`.
+- **Authority has a scope.** A record is authoritative only for what it is responsible for. The
+  contractor's register is authoritative for who the contractor employs, not for who sat on the Authority's
+  board.
+- **Authority has a date.** A record is authoritative as of its own date. Its standing for later times
+  weakens with the gap, unless the documents show it is kept current.
+- **Standing is not truth.** An authoritative record can be wrong, and a correction can overturn it (§11).
+  Standing describes the evidence, not the outcome.
+- **When unsure between two standings,** choose the weaker one and give `confidence: medium`.
+
 ## 9. Judgements: what you believe happened
 A `judgement` records your view of what actually happened, held or was the case. It is **yours**, and it
 must say what it rests on.
@@ -404,15 +443,16 @@ A question can ask two different things, and the gold must say which.
 | Frame | Asks | Typical wording | What can answer it |
 |---|---|---|---|
 | `recorded` | what the records show, or had shown by the `as_of` date | "According to the project records ...", "What had been reported about ...", "Was ... recorded as ..." | what the documents state, and what follows from them, including the last recorded state persisting until a recorded change (`continuation`, §13.2) |
-| `actual` | what was actually the case in the world | "Was Joaquín actually site lead on 1 April?" | only what sources state or imply about that time, and inferences that do not depend on the absence of a record. The absence of a recorded change never establishes the actual state. |
+| `actual` | what was actually the case in the world | "Was Joaquín actually site lead on 1 April?" | evidence whose standing, scope and timing justify a conclusion about that time (§12.4). The mere absence of a recorded change does not establish the actual state, but evidence of sufficient reliability and scope may. |
 | `unspecified` | the wording does not make the frame clear | "Was Joaquín site lead on 1 April?" | both readings are annotated (§12.2), and both are acceptable |
 
 Rules:
 - **A recorded-knowledge answer is not a claim about the world.**
   - "The records show he stepped down on 10 March, and no return before 27 April is recorded" is a
     complete, correct recorded-frame answer.
-  - The same facts give an actual-frame answer of `insufficient`, unless something else establishes the
-    actual state. The recorded state goes in the answer's `explanation`.
+  - Whether the same facts also answer the actual-frame question depends on the evidence's standing, scope
+    and timing (§12.4). When they do not, the answer is `insufficient`, and the recorded state goes in the
+    answer's `explanation`.
 - **Authors should prefer clear wording** (`recorded` or `actual`). They keep `unspecified` only where an
   everyday question would naturally be asked that way, which is useful for testing how systems qualify
   their answers.
@@ -420,7 +460,8 @@ Rules:
   - `stated` in the recorded frame means the records state it.
   - `stated` in the actual frame means a source asserts it, with commitment `certain` or `probable`, about
     the time asked.
-  - A `continuation` inference supports only recorded-frame answers.
+  - A `continuation` inference always supports recorded-frame answers. It supports an actual-frame answer
+    only when §12.4 justifies it.
 
 ### 12.2 Each `answer` records
 An annotator writes one answer per frame the question asks about. For `unspecified` questions, that means
@@ -437,7 +478,7 @@ two answers: one `recorded` and one `actual`.
 | `stated` | at least one available source states (or clearly implies, §6) the value for the time asked, with commitment `certain` or `probable`; and no available source states otherwise, unless an explicit correction or later update settles it |
 | `inferred` | no source states it for the time asked, but it follows from stated material by one or more named reasoning steps allowed in this frame (§13.2); and no available source states otherwise |
 | `disputed` | available sources state incompatible values, and nothing in the documents settles which is right |
-| `insufficient` | relevant material is available, but it does not support any value in this frame: only silence, only hedged (`possible`) or rumoured statements, evidence that stops short of the time asked, or (actual frame) only the absence of a recorded change |
+| `insufficient` | relevant material is available, but it does not support any value in this frame: only silence, only hedged (`possible`) or `unverified` statements, evidence that stops short of the time asked, or (actual frame) evidence whose standing, scope or timing does not justify a conclusion (§12.4) |
 | `not-yet-available` | as of the knowledge date, no available segment says anything relevant, although later documents do |
 
 - **`inference`:** required when the status is `inferred`.
@@ -450,6 +491,9 @@ two answers: one `recorded` and one `actual`.
 - **`question_problem`:** set it if the question itself is ambiguous or rests on a false assumption. Say
   why, and answer the most reasonable reading.
 - **`alternatives`** and **`ambiguity`:** see §12.3.
+- **`justification`:** required for an actual-frame answer reached under §12.4. It is one or two sentences
+  naming the evidence's standing, its scope and the time gap, and why together they justify, or fail to
+  justify, the conclusion.
 
 ### 12.3 Preserving legitimate ambiguity
 Some questions have more than one defensible answer under these guidelines. The gold keeps them; it does
@@ -482,6 +526,41 @@ not pick one.
 - An answer resting on a plan ("was the survey delivered by 30 June?", when only a plan to deliver by then
   is stated) is `insufficient`, with the plan listed as a rejected candidate's reason.
 
+### 12.4 Reaching an actual-world conclusion
+An actual-frame answer may rest on evidence that does not speak about the exact time asked, provided its
+reliability and scope justify the conclusion. There is no blanket rule in either direction. Weigh these
+five things, in this order, and record them in `justification`:
+1. **Standing (§8.1).**
+   - `authoritative-record` and `direct-observation` can support a conclusion.
+   - `reported` can, if corroborated or uncontradicted and from a source in a position to know.
+   - `plan` supports only the plan, never that it happened.
+   - `unverified` supports nothing on its own.
+2. **Scope.** Does the evidence cover this entity, this kind of fact and this period?
+   - A record that states it is complete for its scope (a current staff list "of all survey staff") is
+     evidence about everyone it omits. Use the inference `closed-list`.
+   - A record that does not state that it is complete is evidence only about what it contains.
+3. **Timing.** How far is the time asked from the evidence? Consider:
+   - whether the gap is bracketed by later evidence (a later source implying the state still held, or had
+     not resumed)
+   - whether the kind of state changes often (a meeting's chair) or rarely (an employer)
+   - whether the documents would have been likely to record a change in that period
+4. **Corroboration.** Independent sources pointing the same way strengthen the conclusion. Repeats and
+   forwards do not (§8).
+5. **Contrary evidence.** Any statement pointing the other way, even `unverified`, is listed as
+   counter-evidence and weighed.
+   - Contrary evidence of equal or higher standing gives `disputed`.
+   - Weaker contrary evidence lowers your confidence.
+
+**Outcomes:**
+- **Justified:** a value with status `inferred` (inference `continuation`, `closed-list` or
+  `combination`), with its justification and confidence.
+- **Not justified:** `insufficient`, with the recorded state in `explanation`.
+- **Borderline:** when two careful annotators could reasonably differ, keep both readings (§12.3). The main
+  answer is the one you find better supported; the other is an alternative, with ambiguity `evidence`.
+
+These rules are a judgement about evidence, not a calculation. The trial measures whether annotators apply
+them consistently.
+
 ## 13. Evidence
 ### 13.1 Recording evidence
 - Every `stated`, `inferred` or `disputed` answer lists its evidence as **sets**.
@@ -513,14 +592,14 @@ When the status is `inferred`, name each step:
 | `date-calculation` | arithmetic on stated dates | "two weeks after 3 March" |
 | `reference` | the answer depends on resolving a role reference or pronoun | "the site lead" on 5 March means Joaquín |
 | `consequence` | an event implies a state | "appointed site lead on 2 January" gives site lead from 2 January |
+| `closed-list` | a record that states it is complete for its scope omits the entity, so the state did not hold for it (§12.4) | a staff list "of all current survey staff, 1 October", issued by Tallis, does not include Ravi |
 | `other` | describe it | |
 
 **`continuation` is a default, not an observation.**
-- It supports answers in the `recorded` frame only: "the records show no change".
-- In the `actual` frame it never establishes an answer on its own. The answer is `insufficient`, with the
-  recorded state in `explanation`. A continuation-based value may be added as an alternative only when other
-  evidence narrows the gap, for example a later source implying the state still held (Example 4).
-- Always name the last recorded state, its time, and the period with no recorded change.
+- **In the `recorded` frame** it always supports an answer: "the records show no change".
+- **In the `actual` frame** it supports an answer only when the evidence's standing, scope and timing
+  justify it (§12.4). Otherwise the answer is `insufficient`, with the recorded state in `explanation`.
+- Always name the last recorded state, its time and standing, and the period with no recorded change.
 
 ### 13.3 Rejected candidates
 Reasons:
@@ -605,7 +684,8 @@ statement    id, segment, spans [[start, end]], kind, description, predicate_tex
              participants [{role, entity | time | value | statement}],
              polarity: affirmed | negated, conveyed: stated | implied, commitment, modality,
              event_time (time), holds_from (time), holds_until (time), holds_at [time], due (time),
-             asserted_by (entity), attribution, via [entity]
+             asserted_by (entity), attribution, via [entity],
+             standing: authoritative-record | direct-observation | reported | plan | unverified, standing_reason
 link         id, type, from (statement), to (statement), marked: stated | inferred
 judgement    id, about, kind, participants [...], times {event_time, holds_from, holds_until, holds_at},
              belief, based_on [statement], against [statement], reasoning, inference [type], explanation
@@ -615,6 +695,7 @@ answer       id, question, annotator, frame: recorded | actual, value {text, ent
              inference [type], explanation, evidence [[{segment, spans, statements}]],
              context [{segment, spans, statements}], counter_evidence [{segment, spans, statements}],
              alternatives [{value, status, inference, why}], ambiguity: none | wording | evidence | frame,
+             justification, sides [{side, value, forms [text]}] (disputed answers),
              rejected_candidates [{value, reason}], annotator_view, question_problem
 adjudication id, items [record ids from each annotator], field, outcome, cause, guideline_change, note
 ```
@@ -736,18 +817,26 @@ The JSON below is abbreviated: offsets, ids of obvious records and some fields a
   - Evidence: one set, {st-12}.
   - Context: the 20 April email, which shows that the recorded return is later than 1 April.
 - **"Was Joaquín actually site lead on 1 April 2026?"** (`actual`)
-  - Main answer: status `insufficient`.
-    - The explanation gives the recorded state: stepped down on 10 March, with no return recorded before
-      27 April.
-    - No source says anything about 1 April itself. A short return and a second departure in between would
-      have gone unrecorded.
-  - Alternative: `no`, status `inferred` (inference `combination`), ambiguity `evidence`.
-    - Why it is defensible: "back as site lead from next Monday" (20 April) implies he was not site lead in
-      the period just before 27 April. Together with the 10 March departure, a careful reader may take that
-      to cover 1 April.
-    - Its evidence set is {st-12, the 20 April email}. Both items are essential.
-  - The gold keeps both. Neither the documents nor these guidelines settle the question, so it is not forced
-    into a single answer.
+  - **Standings:**
+    - st-12 is `reported`. The minutes record a departure announced to the meeting, and the documents do not
+      show that the minutes are the contractor's record of appointments.
+    - The 20 April email's implication that he is not site lead *now* is `direct-observation`: Wen, the
+      contractor's commercial manager, is describing the contractor's own current staffing.
+  - **Weighing (§12.4):**
+    - two independent sources, consistent with each other
+    - the period from 10 March to 20 April is bracketed: ended at the start, not yet resumed at the end
+    - a site lead rarely changes twice in a month
+    - no contrary evidence
+  - **Main answer:** `no`, status `inferred` (inferences `continuation` and `combination`), confidence
+    `medium`.
+    - Evidence: one set, {st-12, the 20 April email}. Both items are essential.
+    - Justification: "Departure reported on 10 March; the contractor's manager implies he was still not site
+      lead on 20 April; nothing contrary in between."
+  - **Alternative:** `insufficient`, ambiguity `evidence`.
+    - Why it is defensible: the departure is second-hand, and a brief return in between would have gone
+      unrecorded.
+  - The gold keeps both. Under the revision 1 rule this question was `insufficient` by default. It is now
+    weighed on the evidence.
 - **"Was Joaquín site lead on 1 April 2026?"** (`unspecified`; ambiguity `frame`)
   - The gold holds both of the answers above.
   - Under the scoring rubric, an answer must either say which reading it gives ("the records show ...") or
@@ -800,28 +889,65 @@ The JSON below is abbreviated: offsets, ids of obvious records and some fields a
   - No document available by 1 May mentions the survey's progress. Status: `not-yet-available`.
   - The later email exists but is not usable as of 1 May.
 
-### Example 7: a termination with nothing recorded afterwards (§10, §12.1)
+### Example 7: a termination with nothing recorded afterwards (§8.1, §10, §12.4)
 > Email from Tallis Ground Survey Ltd's office, 1 July 2026: "Ravi Lindqvist left Tallis on 30 June. Please
 > send survey queries to the office address."
 >
 > The documents end in July 2026. No later document mentions Ravi.
 
+- **Standing:** `authoritative-record`.
+  - `standing_reason`: Ravi's own employer is announcing his departure, and redirecting his work to its
+    office.
+  - The email's being "from the office" is not the reason. The employer's responsibility for its own staff
+    is.
 - **"According to the documents, was Ravi working for Tallis on 1 October 2026?"** (`recorded`)
   - Value: `no`.
   - Status: `inferred`, inference `continuation`.
   - Evidence: one set, {the 1 July email}.
   - Explanation: recorded as leaving on 30 June; no return is recorded.
-- **"Was Ravi actually working for Tallis on 1 October 2026?"** (`actual`)
-  - Status: `insufficient`, ambiguity `none`.
-  - The documents say nothing about October. The absence of a recorded return does not establish that he
-    did not return.
-  - Rejected candidate: `no` stated as fact, reason `other` (rests only on the absence of a record).
-  - Unlike Example 4, nothing narrows the gap, so there is no alternative.
 - **"Was Ravi working for Tallis on 15 July 2026?"** (`actual`)
-  - Also `insufficient`, by the same rule, however unlikely a return within two weeks seems.
-  - An annotator who thinks a return very unlikely says so in `annotator_view`.
-  - This case is listed in the review checklist (review-checklist-v0.md, C4): reviewers are asked whether
-    the rule is too strict.
+  - **Weighing (§12.4):**
+    - authoritative standing
+    - a gap of two weeks
+    - an employer, which changes rarely
+    - queries redirected away from him
+    - no contrary evidence
+  - **Main answer:** `no`, status `inferred` (inference `continuation`), confidence `high`.
+  - Justification: "The employer announced his departure on 1 July; a return within two weeks is
+    implausible, and nothing suggests one."
+- **"Was Ravi actually working for Tallis on 1 October 2026?"** (`actual`)
+  - **Weighing:** the standing is the same, but the gap is three months, and the documents end in July, so
+    a return would not have been recorded in them.
+  - **Main answer:** `insufficient`, with the recorded state in the explanation.
+  - **Alternative:** `no`, status `inferred` (inference `continuation`), ambiguity `evidence`.
+    - Why it is defensible: a departure announced by the employer usually lasts. A careful reader may accept
+      three months.
+  - The two questions differ only in timing. That is the point: the rule weighs evidence; it is not a
+    blanket rule.
+
+### Example 8: what makes a record authoritative (§8.1, §12.4)
+> Email from Tallis's office, 2 October 2026: "Attached is our current register of all survey staff, as at
+> 1 October." The register lists six names, not including Ravi Lindqvist.
+> Attendance list in the minutes of 5 October 2026: eight names, not including Ravi Lindqvist.
+> Chat message from Wen Abara, 6 October 2026: "someone said Ravi's back at Tallis?"
+
+- **The register:** `authoritative-record`.
+  - `standing_reason`: issued by the employer, and describing itself as complete ("all survey staff") and
+    current ("as at 1 October").
+  - "Was Ravi actually working for Tallis as survey staff on 1 October?": `no`, status `inferred`,
+    inference `closed-list`, confidence `high`.
+  - Evidence: {the register email}. The 1 July email is context.
+  - The scope matters. The register is evidence only about **survey** staff. It says nothing about whether
+    Ravi held some other role at Tallis.
+- **The attendance list:** `direct-observation`, of who attended. It does not state that it is a list of
+  Tallis staff, or that it is complete for any such scope.
+  - Ravi's absence from it is not evidence about his employment.
+  - It is a list, and it appears in the minutes, but neither of those makes it authoritative.
+- **The chat:** `unverified` ("someone said", with a question mark).
+  - It is listed as counter-evidence. It does not create a dispute, because it is much weaker than the
+    register.
+  - It does not lower the confidence below `high` for 1 October: written on 6 October, it hints at a return
+    after the register's date, not on it. An annotator who reads it otherwise records `medium` and a note.
 
 ## 17. For the primary author: writing documents and questions
 These guidelines are for annotation, but the trial's author also writes the documents. To keep them
@@ -852,7 +978,9 @@ These are recorded in the trial report, not decided now:
 - whether the suggested role names are enough
 - the range conventions for vague time words
 - whether `continuation` answers should have their own status
-- whether the strict actual-frame rule (§12.1, Example 7) should allow short gaps or bracketed periods
+- whether annotators weigh standing, scope and timing consistently for actual-frame answers (§12.4,
+  Examples 4, 7 and 8)
+- whether the five standings (§8.1) can be told apart consistently, especially `authoritative-record`
 - whether authors and annotators classify question frames consistently
 - whether alternatives are added consistently, or too freely
 - how `unresolvable` questions are scored in M1
