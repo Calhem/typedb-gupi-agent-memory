@@ -662,6 +662,8 @@ Your confidence in your own annotation, not the source's certainty:
 - One file per document per annotator: `<document>.<annotator>.jsonl`.
 - For the questions: `questions.jsonl`, plus `answers.<annotator>.jsonl` per annotator.
 - One `adjudication.jsonl` after the meeting.
+- **Spreadsheets:** annotators may instead fill in the spreadsheet template in `annotation-template/`.
+  It converts to these files by fixed rules (its README). JSON Lines remains the canonical format.
 
 **Fields.**
 - Every record has `id` (unique within its file, prefixed by type: `seg-`, `ent-`, `men-`, `tim-`, `st-`,
