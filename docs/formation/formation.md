@@ -59,10 +59,17 @@ Once approved:
 - **Repeating a formation** writes nothing new. Ingestion skips existing records, a repeated identical review
   is a no-op, and an existing run is not recorded again.
 
-## Durable review
-`form()` decides and forms in one call, keeping its decisions only in a run report. For durable candidates
-and reviewer decisions that survive restarts, use the candidate store (`gupi.formation.store`,
-candidate-store.md). It applies the same policy.
+## Which pathway to use
+**For new deployments, use the candidate store** (`gupi.formation.store`, candidate-store.md). It applies
+this same policy, and its candidates and reviewer decisions are durable, append-only and survive restarts.
+
+**`form()` is the legacy pathway.** It is kept for existing callers. It decides and forms in one call,
+keeping decisions only in a run report.
+
+**The two are never mixed.**
+- `form()` refuses candidates that are in the store.
+- `store.submit` refuses candidates that `form()` already formed.
+- Both fail with an error naming the other path.
 
 ## Limits
 - **Answers do not yet use the new fields.** v1 and v2 answer a hedged or reported claim as they would a

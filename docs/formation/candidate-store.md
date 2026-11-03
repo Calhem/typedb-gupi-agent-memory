@@ -1,6 +1,9 @@
 # The candidate store (core/0012)
 
 Date: 2026-11-03.
+
+**This is the preferred formation pathway for new deployments.** The legacy `form()` path is kept, and the
+two are never mixed (formation.md).
 - **Code:** `gupi.formation.store`.
 - **Tests:** `tests/integration/test_candidate_store.py`, against TypeDB 3.14.1.
 - **Decision:** option C of candidate-persistence.md, approved.
@@ -92,6 +95,6 @@ not split into attributes, so it survives changes to extraction logic exactly as
 | S3 | Correction targets are found by proposition key within one conversation | corrections across conversations are `missing` |
 | S4 | `pending` reads every stored candidate | linear in the store's size; fine for a prototype |
 | S5 | A formed candidate's status stays `formed` | even if its claim is later retracted; the claim's reviews carry that |
-| S6 | Two formation paths exist | `form()` (no store) and the store. Using both on the same candidates writes the same claim (idempotent), but only the store records decisions durably. Use one per deployment. |
+| S6 | Two formation paths exist | `form()` (legacy, no store) and the store (preferred). They are now **refused** if used on the same candidates, in either order, so they cannot overlap silently. Use the store for new deployments. |
 | S7 | Reviewer identity is a plain string | there is no authentication |
 | S8 | The same name in one conversation is one referent | audit H9, deferred |
