@@ -4,8 +4,8 @@ An experimental, open-source semantic memory and context engine for applications
 on [TypeDB](https://typedb.com) 3. GUPI records what sources said, the claims drawn from them, which claims
 were accepted, when each was true and when GUPI knew it, so every answer can be traced to its evidence.
 
-**Status: Phase 4 (structured retrieval) under review.** Not yet a product: no natural-language questions,
-embeddings or connectors yet. See [docs/phase-4-report.md](docs/phase-4-report.md).
+**Status: Phase 5 (offline evidence-retrieval evaluation) under review.** Not yet a product. See
+[docs/phase-5-report.md](docs/phase-5-report.md).
 
 ## What works today
 - A core ontology in TypeDB: sources, verbatim observations, typed claims (one per attestation), evidence
@@ -18,6 +18,9 @@ embeddings or connectors yet. See [docs/phase-4-report.md](docs/phase-4-report.m
   extractor by default, and an optional Claude extractor behind a fail-closed spending ledger.
 - Review: a queue of hypotheses, conflict detection (contradictions vs differing evidence), suggested
   identities that merge only once accepted, and corrections that can be withdrawn, via the `gupi` CLI.
+- Optional local embeddings (`uv sync --extra embeddings`; BAAI/bge-small-en-v1.5 on the CPU) stored in
+  TypeDB, and keyword / embedding / structured / hybrid evidence retrieval, evaluated offline on LoCoMo and
+  LongMemEval (retrieval only, not official scores; datasets are not included: see docs/datasets.md).
 - Structured retrieval: questions with an open role ("who was the CTO in March?") answered as of any
   belief time, with citations, the claims excluded and why, and explicit unknowns; multi-hop exploration;
   history on both time axes; keyword search over source text as the baseline. Filtering runs in TypeDB.
