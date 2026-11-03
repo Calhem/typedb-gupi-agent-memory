@@ -1,6 +1,9 @@
 # Memory Formation Engine: plan for milestones 6B-6D
 
-Date: 2026-11-03. Status: **proposal, for approval before 6B starts.**
+Date: 2026-11-03. Status: **direction approved (2026-11-03).**
+- **6B:** done; see rules-v2.md and ../evaluation/phase-6b-extraction.md.
+- **6C:** at a design checkpoint (6c-design-checkpoint.md); its schema is awaiting decision.
+- **6D:** remains provisional.
 
 **Each milestone:**
 - is on the formation branch
