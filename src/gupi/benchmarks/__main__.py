@@ -31,6 +31,8 @@ def main(argv=None):
     p.add_argument("--systems", nargs="+", default=common.CONFIG["systems"])
     p.add_argument("--no-embeddings", action="store_true", help="offline mode without the embeddings extra")
     p.add_argument("--limit", type=int, help="only the first N questions (smoke tests)")
+    p.add_argument("--embedding-subset", action="store_true",
+                   help="LongMemEval held-out: only the pre-registered embedding subset (benchmarks/config.json)")
     p.add_argument("--keep", action="store_true", help="keep the database afterwards")
     p.add_argument("--json", help="write results here")
     args = p.parse_args(argv)
@@ -58,6 +60,9 @@ def main(argv=None):
             timings["observations"] = len(observations)
         else:
             data = longmemeval.load(args.split)
+            if args.embedding_subset:
+                wanted = set(next(a["embedding_subset"] for a in common.CONFIG["amendments"] if "embedding_subset" in a))
+                data = [q for q in data if q["question_id"] in wanted]
             by_context = longmemeval.ingest(memory, clock, data)
             timings["ingest_seconds"] = time.perf_counter() - t0
             print(f"ingested {sum(map(len, by_context.values()))} turns", file=sys.stderr, flush=True)
@@ -90,6 +95,7 @@ def main(argv=None):
         timings["peak_python_rss_bytes"] = common.peak_rss_bytes()
         result = {
             "dataset": args.dataset, "split": args.split, "questions": len(qs), "systems": args.systems,
+            "embedding_subset": args.embedding_subset,
             "embeddings": embedder is not None,
             "config_sha256": hashlib.sha256((common.ROOT / "benchmarks" / "config.json").read_bytes()).hexdigest(),
             "note": "Evidence retrieval only; not an official LoCoMo or LongMemEval score.",
