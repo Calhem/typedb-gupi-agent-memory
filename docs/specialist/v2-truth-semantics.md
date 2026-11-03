@@ -1,6 +1,7 @@
 # Truth semantics v2 (revised twice): truth table and decisions
 
-Date: 2026-11-03. Status: **proposal; directions approved, not implemented.** The second revision adopts the
+Date: 2026-11-03. Status: **directions approved; implemented in `gupi.answering_v2`, selected with
+`semantics="v2"`; v1 is the default.** Phase 4 under v2: docs/evaluation/phase-4-v2.md. The second revision adopts the
 owner's decisions on Q1-Q8 (§5), including the clarifications on Q3 and Q6 and the requirement that
 explicit negations are represented independently of termination dates.
 
@@ -205,7 +206,21 @@ What the rows show:
 |---|---|---|---|
 | Q9 | Competing *start* statements with disjoint windows ("joined January" vs "joined March", no end between them): what about February? | (a) UNKNOWN, a start window covering the hull of both; (b) CONTESTED, as for ends (Q2); (c) PRESUMED from the earlier start, with a conflict flagged | **(a)**, with a conflict flagged. Under Q1 a start is not negative evidence, so the March statement does not directly deny February; CONTESTED needs direct negative evidence. Not needed for R1-R23. |
 
-## 6. Compatibility
+## 6. Implementation notes
+These are rules the specification leaves implicit. They do not change any row of §4.
+- **Which start is "later" than a termination:** a start whose window's earliest bound is not before the
+  termination's earliest bound.
+- **"Statements about the same boundary"** are consecutive starts, or consecutive ends, after sorting all
+  boundaries by window (earliest bound, then latest).
+- **Competing ends (Q2):** CONTESTED from the earlier end's latest bound to the later end's earliest bound.
+- **Q9 (open):** the provisional rule (a) is implemented, and every affected answer says so in its
+  explanation. It changes Phase 4 question q01 (phase-4-v2.md).
+- **Bounding claims** (value-filtered questions) contribute only terminations and negations, as in v1.
+- **Open-role questions** rank PRESUMED after TRUE when combining candidates.
+- **v1 and negations:** v1 cannot express negation, so it reports believed negations as excluded.
+- **Interval questions** (§3, Q7) are not implemented. Questions are asked at an instant.
+
+## 7. Compatibility
 - **v1 stays available and the default** until v2 is accepted and implemented. Every result records its
   semantics version.
 - **Committed results:** Phase 2-5 results are v1 and unchanged. Under v2, the Phase 4 benchmark's `q01` would

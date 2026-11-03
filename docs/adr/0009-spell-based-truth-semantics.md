@@ -1,6 +1,7 @@
 # ADR 0009: Spell-based truth semantics (v2)
 
-Status: **proposed; directions approved (2026-11-03); not accepted, not implemented.** The owner approved
+Status: **proposed; directions approved (2026-11-03); implemented behind `semantics="v2"` on branch
+`feature/v2-temporal-semantics`; not accepted.** v1 remains the default. The owner approved
 the directions for Q1-Q8, with clarifications on Q3 and Q6 and a requirement that explicit negations are
 independent of termination dates. Until this ADR is accepted, ADR 0003, ADR 0006 and ADR 0007 describe the
 behaviour in force (v1).
