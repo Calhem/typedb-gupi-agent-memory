@@ -216,6 +216,8 @@ during ingestion.
      guidelines' statuses. For example, a system's PRESUMED against an `inferred` gold, or FALSE by explicit
      negation against FALSE by continuation, are scored apart. The mapping is written before any held-out
      run and applied to all systems alike.
+     The draft is authoring-trial/scoring-rubric-v0.md. It is deterministic, uses no LLM judge, and gives full
+     credit only with all essential evidence.
    - error classes
 
    It is written **without reference to GUPI's schema** and reviewed by the owner. A draft (v0) is tried in

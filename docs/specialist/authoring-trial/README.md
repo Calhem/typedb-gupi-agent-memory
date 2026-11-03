@@ -13,8 +13,12 @@ The trial does not test GUPI, and no system is run on its data. It sets no M1 th
 provisional until reviewed (m1-protocol.md §2).
 
 ## Prerequisite: annotation guidelines, draft v0
-The guidelines are in guidelines-v0.md, with a bias audit in bias-audit-v0.md. They are for the owner's
-review.
+The guidelines are in guidelines-v0.md (revision 1), with:
+- a bias audit, in bias-audit-v0.md
+- a deterministic scoring rubric, in scoring-rubric-v0.md
+- an independent-review checklist, in review-checklist-v0.md
+
+All are provisional: accepted for further review, and not approved for freezing.
 - They are **implementation-neutral** (owner condition, 2026-11-03). Their categories are not derived from
   GUPI's schema, TypeQL, ADR 0009 or any system's truth classification.
   - Answers carry their own statuses: `stated`, `inferred`, `disputed`, `insufficient` and
