@@ -32,3 +32,24 @@ NOT_YET_KNOWN. Median time per question: structured about 0.02 s, keyword about 
 - Remaining citation imprecision: for an open question answered CONTESTED (q05) the result also cites an
   undecided candidate's claim. Left as measured.
 - 15 questions is a behavioural check, not a statistical estimate.
+
+## Under answer semantics v2 (added 2026-11-03)
+The same frozen benchmark was rerun with the structured system under answer semantics v2 (docs/adr/0009).
+The questions, gold answers and scoring are unchanged, and v1 remains the default.
+
+| Configuration | v1 | v2 |
+|---|---|---|
+| gold claims | 15/15 | 13/15 |
+| rule-extracted | 15/15 | 13/15 |
+
+Both changed answers are more cautious, not confident errors:
+- **q01** ("Did Nora Vance work at Halden in mid-March 2025?") becomes **UNKNOWN**.
+  - w1-1 ("joined ... in January 2025") supports employment on 15 March.
+  - w3-3 ("Since March 2025 ...") dates a competing start too imprecisely to say whether it was before or
+    after 15 March (Q9).
+  - The known issue about reading "since" as a start applies (docs/known-issues.md).
+- **q03** ("Did Leah Ortiz work at Halden in mid-May 2025?") becomes **UNKNOWN**, because a start in June is
+  not evidence of falsity in May (Q1).
+
+Under v2, q05's citations match the gold exactly. Abstention is 6/6 and there are no unsupported
+assertions. Details, every changed answer and raw results: phase-4-v2.md and retrieval-v2.json.
