@@ -13,13 +13,15 @@ The trial does not test GUPI, and no system is run on its data. It sets no M1 th
 provisional until reviewed (m1-protocol.md §2).
 
 ## Prerequisite: annotation guidelines, draft v0
-The guidelines are in guidelines-v0.md (revision 1), with:
+The guidelines are in guidelines-v0.md (revision 2), with:
 - a bias audit, in bias-audit-v0.md
 - the primary scoring protocol (a common structured answer contract), in scoring-protocol-v0.md
 - an experimental secondary metric for free-text answers, in scoring-nl-experimental-v0.md
+- a spreadsheet annotation template, in annotation-template/ (JSON Lines remains the canonical format)
 - an independent-review checklist, in review-checklist-v0.md
 
-All are provisional: accepted for further review, and not approved for freezing.
+The guidelines and checklist are approved for external review. Everything stays provisional, and the
+scoring protocol is not frozen.
 - They are **implementation-neutral** (owner condition, 2026-11-03). Their categories are not derived from
   GUPI's schema, TypeQL, ADR 0009 or any system's truth classification.
   - Answers carry their own statuses: `stated`, `inferred`, `disputed`, `insufficient` and
