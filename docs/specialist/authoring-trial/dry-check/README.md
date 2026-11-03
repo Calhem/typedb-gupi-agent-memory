@@ -34,7 +34,7 @@ changes. To repeat by hand:
 |---|---|---|
 | D1 | The guidelines said "one file per document", but entities, judgements and links between statements in different documents belong to no single document. | **Fixed:** they go in `shared.<annotator>.jsonl` (guidelines §15; template README). |
 | D2 | The order of record rows across documents cannot survive splitting into per-document files. | **Documented:** row order carries no information. Order within an owner (evidence sets, alternatives) is kept. |
-| D3 | The guidelines do not say whether a statement's **standing** is judged for its original asserter or for the record as it reaches the reader. Hana's own statement about her role, reported in minutes, could be `direct-observation` (her) or `reported` (the minutes). | **Not changed;** left for the trial and the reviewer. The dry check used the asserter's position, with the attribution showing the transmission. Listed in the reviewer's core questions. |
+| D3 | The guidelines did not say whether a statement's **standing** is judged for its original asserter or for the record as it reaches the reader. | **Resolved by the owner** (guidelines revision 3, §8.1-§8.2): standing describes the underlying assertion and its originating source. The record's limits are tracked separately in `transmission`. The dry check now records Hana's statement as `direct-observation`, transmission `transcribed`. |
 | D4 | One phrase ("Joaquín is back as site lead from next Monday") carries two statements: a plan, and an implied current negation. The format allows this (overlapping spans), but the guidelines do not show it. | **Not changed.** It works; the trial will show whether annotators find it. |
 
 ## What a dry check cannot show

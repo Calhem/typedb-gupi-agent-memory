@@ -16,9 +16,8 @@ Concrete suggestions help most.
 4. **Evidence standing** (§8.1).
    - Could you tell the five standings apart?
    - Is "document type alone never establishes authority" workable?
-   - Open point: should a statement's standing be judged for its **original speaker**, or for the **record
-     as it reaches the reader**? For example, Hana's own statement about her role, as reported in the
-     minutes.
+   - Standing is judged for the **originating source**, and the record's limits are tracked separately
+     (§8.2). Is that workable, for example for Hana's own statement as transcribed in the minutes?
 5. **Weighing** (§12.4). Would two careful people reach the same actual-world answers using the weighing
    procedure, for example for Passage D? What would make it more consistent, without becoming a blanket
    rule?

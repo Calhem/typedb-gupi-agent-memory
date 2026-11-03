@@ -21,10 +21,12 @@ RECORDS = {  # sheet -> record name, in output order
 }
 CHILDREN = ("participants", "answer_evidence", "answer_sides", "answer_alternatives", "rejected_candidates")
 SHEETS = tuple(RECORDS) + CHILDREN
-LISTS = {"aliases", "holds_at", "via", "based_on", "against", "inference", "value_forms", "items", "statements"}
+LISTS = {"aliases", "holds_at", "via", "based_on", "against", "inference", "value_forms", "items", "statements",
+         "transmission"}
 INTS = {"start", "end", "set", "alt"}
 CONFIDENCE = {"high", "medium", "low"}
 INFERENCES = {"continuation", "combination", "date-calculation", "reference", "consequence", "closed-list", "other"}
+TRANSMISSION = {"forwarded", "transcribed", "paraphrased", "excerpted", "authenticity-unclear"}
 STATUSES = {"stated", "inferred", "disputed", "insufficient", "not-yet-available"}
 ENUMS = {
     ("documents", "kind"): None,
@@ -126,10 +128,11 @@ def check(sheets, base=None):
                 allowed = ENUMS.get((name, col))
                 if col == "confidence":
                     allowed = CONFIDENCE
-                if col == "inference":
-                    bad = [v for v in value.split(";") if v not in INFERENCES]
+                if col in ("inference", "transmission"):
+                    known = INFERENCES if col == "inference" else TRANSMISSION
+                    bad = [v for v in value.split(";") if v not in known]
                     if bad:
-                        errors.append(f"{at}: inference {';'.join(bad)} is not allowed")
+                        errors.append(f"{at}: {col} {';'.join(bad)} is not allowed")
                 elif allowed and value not in allowed:
                     errors.append(f"{at}: {col} '{value}' is not allowed")
                 target = REFS.get((name, col))

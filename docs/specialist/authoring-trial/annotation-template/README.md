@@ -38,7 +38,7 @@ and they convert to it by the fixed rules below. Where they disagree, the JSON L
 | `entities` | entity | `aliases` is a `;` list |
 | `mentions` | mention | `reference`: name, pronoun, role-reference, description; `resolved`: stated, inferred, unresolved |
 | `times` | time expression | `anchor`: explicit, document-date, other-time, inferred, unresolvable |
-| `statements` | statement | allowed values below; `holds_at` and `via` are `;` lists |
+| `statements` | statement | allowed values below; `holds_at`, `via` and `transmission` are `;` lists |
 | `participants` | participant of a statement or judgement | `owner` is the statement's or judgement's id; `filler_kind`: entity, time, value, statement; `filler` is an id, or the literal value |
 | `links` | link | `type` and `marked` as in guidelines §11 |
 | `judgements` | judgement | `based_on`, `against` and `inference` are `;` lists; participants go in `participants` |
@@ -60,6 +60,7 @@ and they convert to it by the fixed rules below. Where they disagree, the JSON L
 | `statements.modality` | actual, planned, required, permitted, requested, conditional, hypothetical, question |
 | `statements.attribution` | direct, reported, quoted, forwarded, rumour, unattributed |
 | `statements.standing` | authoritative-record, direct-observation, reported, plan, unverified |
+| `statements.transmission` (a `;` list) | forwarded, transcribed, paraphrased, excerpted, authenticity-unclear |
 | `links.type` | corroborates, contradicts, corrects, retracts, updates, refines, repeats, resumes, fulfils, cancels, depends-on, doubts |
 | `links.marked` | stated, inferred |
 | `judgements.belief` | happened, did-not-happen, uncertain, sources-disagree |

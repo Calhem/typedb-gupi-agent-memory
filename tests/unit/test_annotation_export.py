@@ -32,12 +32,14 @@ def test_template_headers_match_the_dry_check_sheets():
 def test_problems_are_reported_not_guessed():
     s = copy.deepcopy(sheets())
     s["statements"][1][0]["standing"] = "official"
+    s["statements"][1][1]["transmission"] = "transcribed;rumoured"
     s["mentions"][1][0]["entity"] = "ent-nobody"
     s["mentions"][1][1]["start"] = "0"
     next(r for r in s["answer_evidence"][1] if r["kind"] == "essential")["set"] = "3"
     s["answer_sides"][1].pop()
     errors = "\n".join(export.check(s, DRY))
     assert "standing 'official' is not allowed" in errors
+    assert "transmission rumoured is not allowed" in errors
     assert "entity ent-nobody is not an id in entities" in errors
     assert "text does not match the document" in errors
     assert "must be numbered 1, 2, ... without gaps" in errors

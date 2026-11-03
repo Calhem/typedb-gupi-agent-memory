@@ -1,6 +1,6 @@
 # Annotation guidelines, draft v0 (two-document trial)
 
-Date: 2026-11-03. Status: **draft v0, revision 2. Provisional; approved for external review, not approved for
+Date: 2026-11-03. Status: **draft v0, revision 3. Provisional; approved for external review, not approved for
 freezing.**
 - **Scope:** these guidelines are for the two-document trial only (README.md in this folder).
 - **Changes:** they are expected to change after the trial, and are frozen only before the eight-document
@@ -17,6 +17,11 @@ freezing.**
 - Continuation is limited to questions about recorded knowledge (§13.2).
 - Evidence sets separate essential items from context (§13.1).
 - Example 4 is revised, and Example 7 is new.
+
+**Revision 3 (owner's clarification):**
+- Standing describes the underlying assertion and its originating source.
+- The record that carries it is tracked separately (§8.2: `transmission`).
+- Forwarding never creates an independent attestation.
 
 **Revision 2 (after the owner's second review):**
 - The blanket rule that actual-frame questions stay `insufficient` after a recorded termination is
@@ -314,18 +319,25 @@ Every statement says **whose** assertion it is (`asserted_by`) and **how it reac
   - Annotate it once, where it originally appears.
   - If the original is not in the documents, annotate it where it first appears.
   - Record later repetitions as `link` type `repeats`. Repetitions never count as corroboration.
+  - Forwarding never creates an independent attestation (§8.2).
 - **The author's own stance** towards a report ("Joaquín says he is leaving, which I doubt") is a separate
   statement by the author, `direct`, linked with `contradicts` or `doubts`.
 
 ### 8.1 Evidence standing
-Attribution says how a statement reached the document. **Standing** says what kind of evidence it is about
-the world. Each statement records a `standing`, and a one-line `standing_reason`.
+**Standing describes the underlying assertion and its originating source.**
+- Judge it as if you heard the assertion from its originating source (`asserted_by`) directly: what kind
+  of evidence is it about the world, and is that source in a position to know?
+- Each statement records a `standing`, and a one-line `standing_reason`.
+
+**The record through which the assertion reaches the reader is tracked separately** (§8.2): its
+attribution, its `via` chain, and its transmission limits. A weak record does not change the standing of
+the assertion it carries; it is weighed separately (§12.4).
 
 | Standing | Use when | Example |
 |---|---|---|
 | `authoritative-record` | the source is **shown by the documents** to be responsible for keeping this kind of fact, and the record covers the entity and the time in question | Tallis's own office announcing that a Tallis employee has left; a staff list the documents describe as the contractor's official, current register |
 | `direct-observation` | the source reports what it saw, did or experienced itself, at or near the time | "I met Joaquín on site this morning"; "we finished the boreholes on Friday" |
-| `reported` | a second-hand account: someone reports what another person said or did | "Joaquín told me he is leaving"; minutes recording a departure announced by someone else |
+| `reported` | the originating source passes on something it did not itself witness, or its position to know is not shown | minutes stating that Joaquín stepped down, where whoever announced it is not identified; "the crane firm says the contract is off", when the firm's source is not given |
 | `plan` | an intention, schedule or announcement of something not yet happened | "Joaquín is back as site lead from next Monday" (before Monday) |
 | `unverified` | a rumour, an unattributed claim, a hedged (`possible`) statement, or a claim the documents give no basis for | "I hear Ravi's back at Tallis" |
 
@@ -347,6 +359,33 @@ Rules:
 - **Standing is not truth.** An authoritative record can be wrong, and a correction can overturn it (§11).
   Standing describes the evidence, not the outcome.
 - **When unsure between two standings,** choose the weaker one and give `confidence: medium`.
+- **Unidentified originating source.** If the originating source cannot be identified, record the earliest
+  identifiable source as `asserted_by` and say so in `note`. The standing is then at most `reported`.
+- **Examples:**
+  - "Joaquín told me he is leaving" is Joaquín's own plan: standing `plan`, `asserted_by` Joaquín. That it
+    reached the document through Ravi is transmission, not standing.
+  - Hana's own statement about her role, recorded in minutes, is `direct-observation`. The minutes are a
+    transcription (§8.2).
+
+### 8.2 Transmission: the record that carries the assertion
+Each statement records how the record carrying it limits what the reader can rely on:
+- `attribution` and `via` (§8): how it reached the document, and through whom
+- **`transmission`:** a `;` list of known limitations, empty if none:
+
+  | Value | Meaning |
+  |---|---|
+  | `forwarded` | it reaches the reader inside a forwarded or quoted earlier message |
+  | `transcribed` | someone else wrote it down, as in minutes or notes |
+  | `paraphrased` | it is given in someone else's words, not quoted |
+  | `excerpted` | only part of the original is shown, so context may be missing |
+  | `authenticity-unclear` | the record's origin cannot be checked: unsigned, unknown sender, a missing attachment, an unverifiable copy |
+
+- **`transmission_note`:** one line, when the limitation needs explaining.
+
+**Forwarding never creates an independent attestation.**
+- A forwarded, quoted, transcribed or re-sent copy is the same assertion by the same originating source.
+- It is linked to the original with `repeats` (§8), and never counts as corroboration (§11, §12.4).
+- Only a different originating source, in a position to know, can corroborate.
 
 ## 9. Judgements: what you believe happened
 A `judgement` records your view of what actually happened, held or was the case. It is **yours**, and it
@@ -536,6 +575,8 @@ five things, in this order, and record them in `justification`:
    - `reported` can, if corroborated or uncontradicted and from a source in a position to know.
    - `plan` supports only the plan, never that it happened.
    - `unverified` supports nothing on its own.
+   - Then weigh the transmission (§8.2). A transcribed, paraphrased, excerpted or authenticity-unclear
+     record can lower your confidence in what the assertion said, without changing its standing.
 2. **Scope.** Does the evidence cover this entity, this kind of fact and this period?
    - A record that states it is complete for its scope (a current staff list "of all survey staff") is
      evidence about everyone it omits. Use the inference `closed-list`.
@@ -690,7 +731,9 @@ statement    id, segment, spans [[start, end]], kind, description, predicate_tex
              polarity: affirmed | negated, conveyed: stated | implied, commitment, modality,
              event_time (time), holds_from (time), holds_until (time), holds_at [time], due (time),
              asserted_by (entity), attribution, via [entity],
-             standing: authoritative-record | direct-observation | reported | plan | unverified, standing_reason
+             standing: authoritative-record | direct-observation | reported | plan | unverified, standing_reason,
+             transmission [forwarded | transcribed | paraphrased | excerpted | authenticity-unclear],
+             transmission_note
 link         id, type, from (statement), to (statement), marked: stated | inferred
 judgement    id, about, kind, participants [...], times {event_time, holds_from, holds_until, holds_at},
              belief, based_on [statement], against [statement], reasoning, inference [type], explanation
@@ -796,6 +839,10 @@ The JSON below is abbreviated: offsets, ids of obvious records and some fields a
     9 May.
   - For Ravi's own knowledge, it was available on 2 May.
 - **Modality** is `planned`: nobody reports that Joaquín actually left.
+- **Standing and transmission** (§8.1, §8.2):
+  - The underlying assertion is Joaquín's statement of his own plan: standing `plan`.
+  - The record is Ravi's paraphrase, forwarded by Wen: transmission `paraphrased;forwarded`.
+  - Wen's forward adds no attestation of its own.
 
 ### Example 4: negation, termination and reinstatement (§10)
 > Minutes, 3 March 2026: "Hana Osei confirmed she is not the safety adviser for the quay works; that remains
@@ -823,8 +870,9 @@ The JSON below is abbreviated: offsets, ids of obvious records and some fields a
   - Context: the 20 April email, which shows that the recorded return is later than 1 April.
 - **"Was Joaquín actually site lead on 1 April 2026?"** (`actual`)
   - **Standings:**
-    - st-12 is `reported`. The minutes record a departure announced to the meeting, and the documents do not
-      show that the minutes are the contractor's record of appointments.
+    - st-12 is `reported`: its originating source is the minutes. Whoever announced the departure to the
+      meeting is not identified, and the documents do not show that the minutes are the contractor's record
+      of appointments. Its transmission is `transcribed`.
     - The 20 April email's implication that he is not site lead *now* is `direct-observation`: Wen, the
       contractor's commercial manager, is describing the contractor's own current staffing.
   - **Weighing (§12.4):**
