@@ -1,0 +1,55 @@
+{
+  "server": "TypeDB CE 3.14.1",
+  "generation": {
+    "model": "BAAI/bge-small-en-v1.5",
+    "dimension": 384,
+    "short (10 words)": {
+      "texts_per_second": 176.9
+    },
+    "medium (80 words)": {
+      "texts_per_second": 23.0
+    },
+    "long (400 words)": {
+      "texts_per_second": 8.6
+    },
+    "stored_vector_chars": 2048
+  },
+  "scaling": [
+    {
+      "vectors": 1000,
+      "write_vectors_per_second": 143.0,
+      "fetch_from_typedb_seconds": 0.066,
+      "numpy_cosine_seconds": 0.0084,
+      "pure_python_cosine_seconds": 0.028,
+      "same_top10": true,
+      "database_bytes": 24137728
+    },
+    {
+      "vectors": 5000,
+      "write_vectors_per_second": 311.0,
+      "fetch_from_typedb_seconds": 0.337,
+      "numpy_cosine_seconds": 0.046,
+      "pure_python_cosine_seconds": 0.151,
+      "same_top10": true,
+      "database_bytes": 35426304
+    },
+    {
+      "vectors": 20000,
+      "write_vectors_per_second": 300.3,
+      "fetch_from_typedb_seconds": 1.282,
+      "numpy_cosine_seconds": 0.2262,
+      "pure_python_cosine_seconds": 0.564,
+      "same_top10": true,
+      "database_bytes": 144195584
+    },
+    {
+      "vectors": 50000,
+      "write_vectors_per_second": 285.7,
+      "fetch_from_typedb_seconds": 4.757,
+      "numpy_cosine_seconds": 0.505,
+      "pure_python_cosine_seconds": 1.595,
+      "same_top10": true,
+      "database_bytes": 365629440
+    }
+  ]
+}
