@@ -241,8 +241,8 @@ def _time(t, text, observed_at, notes, readings_out=None):
         if normalise(phrase) not in normalise(text):
             notes.append(f"time phrase {phrase!r} is not in the source text; {side} left unknown")
             continue
-        where = normalise(text).find(normalise(phrase))
-        reading = timeexpr.read(phrase, observed_at, timeexpr.direction(text, where if where >= 0 else None))
+        found = re.search(r"\s+".join(map(re.escape, phrase.split())), text, re.I)  # position in the original text
+        reading = timeexpr.read(phrase, observed_at, timeexpr.direction(text, found.start() if found else None))
         if reading is None:
             notes.append(f"time phrase {phrase!r} could not be read, or its year is ambiguous; {side} left unknown")
             if readings_out is not None:

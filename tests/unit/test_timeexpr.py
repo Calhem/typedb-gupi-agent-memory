@@ -117,3 +117,15 @@ def test_explicit_and_inferred_dates_are_distinguished():
 def test_unresolvable_statements_are_left_unread():
     for text, phrase in (("June looks tight.", "June"), ("We had planned to finish in June.", "in June")):
         assert read(phrase, OBS, direction(text, text.index(phrase))) is None
+
+
+def test_tense_is_read_at_the_phrase_in_the_original_text():
+    """Spacing and line breaks before the phrase must not shift where the tense is read."""
+    from types import SimpleNamespace as NS
+
+    from gupi.extraction.contract import _time
+    text = "Ana met us; the cutover" + " " * 30 + "report is due in June."  # "met" is past, "due" is nearest
+    notes, readings = [], []
+    vt, _, _ = _time({"end": "in June"}, text, OBS, notes, readings)
+    assert vt.to_earliest == d(2026, 6)  # "due": the coming June, not last June
+    assert readings[0]["explicit"] is False
