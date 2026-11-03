@@ -8,9 +8,9 @@ The owner has no programming background and is learning as we go. Explain new te
 keep steps small, verify each step works before moving on, and stop at each phase gate for review.
 
 ## Status
-Phase 1 merged. Phase 2 (`feature/phase-2-extraction`) and Phase 3 (`feature/phase-3-reconciliation`,
-stacked on Phase 2) done, awaiting review (docs/phase-3-report.md). Do not start Phase 4 until the owner
-approves docs/phase-4-plan.md. The live Claude evaluation is deferred until credentials exist. No distributed agents, packet protocols or dynamic schema
+Phases 1-3 merged. Phase 4 (`feature/phase-4-retrieval`) done, awaiting review (docs/phase-4-report.md).
+Do not start Phase 5 until the owner approves docs/phase-5-plan.md. Everything runs offline: no
+credentials, paid services, embeddings or LLM question answering until the owner decides otherwise. No distributed agents, packet protocols or dynamic schema
 modes yet; keep the code open to them without building them.
 
 ## Rules
@@ -29,7 +29,12 @@ modes yet; keep the code open to them without building them.
 - Extractors return time phrases, never dates; the validator reads them with `gupi.timeexpr`.
 - Generic `statement` claims are provisional; prefer typed claims; no schema evolution from extraction.
 - Never merge identities, resolve conflicts or apply supersessions automatically: suggest, then review.
-- A claim's FALSE outside its period counts only against the same spell (ADR 0006).
+- A claim's FALSE outside its period counts only against the same spell (ADR 0006); start and end
+  from different claims are assembled into one spell, labelled (ADR 0007).
+- Retrieval filters in TypeDB (believed_claim / hypothesis_claim functions, candidate queries); never add a
+  retrieval path that loads all claims (`all_claims()` is for tests; a test enforces this).
+- As-of questions use only what GUPI knew at the belief time, including which names existed.
+- The retrieval benchmark (tests/fixtures/retrieval) is frozen: report first runs unchanged, never tune to it.
 - Keep the extraction benchmarks (fixtures, rules, saved results) unchanged; offline results are not
   evidence of LLM extraction performance.
 - Claude defaults: `claude-opus-5-5`, effort `medium`, structured output, `fallbacks: "default"`.
@@ -63,6 +68,10 @@ modes yet; keep the code open to them without building them.
 - `update $x has attr == $v;` replaces a single-valued attribute; `reduce $s = sum($a);` sums integers.
 - `@key` violations surface at insert time ([CNT9]); event-like records need random ids, not content hashes.
 - Schema introspection: `$t relates $r; $p plays $r;` and `$t owns $a; $a value string;` work.
+- Functions taking a concept argument (`fun f($c: claim, $t: datetime-tz) -> { claim }`) are evaluated per
+  candidate when called as `let $x in f($c, $t);`; they can be called inside `not { }` and nested.
+- `-> bool` is not a valid return type (use a stream function). `contains` is case-insensitive;
+  `like "(?i)..."` works; `reduce $n = count groupby $k; match $n > 1;` filters groups.
 
 ## Git
 - `main` holds reviewed states; work happens on `feature/<phase>-<topic>` branches, merged after review.

@@ -4,8 +4,8 @@ An experimental, open-source semantic memory and context engine for applications
 on [TypeDB](https://typedb.com) 3. GUPI records what sources said, the claims drawn from them, which claims
 were accepted, when each was true and when GUPI knew it, so every answer can be traced to its evidence.
 
-**Status: Phase 3 (reconciliation and review) under review.** Not yet a product: no search, answers or
-connectors yet. See [docs/phase-3-report.md](docs/phase-3-report.md).
+**Status: Phase 4 (structured retrieval) under review.** Not yet a product: no natural-language questions,
+embeddings or connectors yet. See [docs/phase-4-report.md](docs/phase-4-report.md).
 
 ## What works today
 - A core ontology in TypeDB: sources, verbatim observations, typed claims (one per attestation), evidence
@@ -18,6 +18,9 @@ connectors yet. See [docs/phase-3-report.md](docs/phase-3-report.md).
   extractor by default, and an optional Claude extractor behind a fail-closed spending ledger.
 - Review: a queue of hypotheses, conflict detection (contradictions vs differing evidence), suggested
   identities that merge only once accepted, and corrections that can be withdrawn, via the `gupi` CLI.
+- Structured retrieval: questions with an open role ("who was the CTO in March?") answered as of any
+  belief time, with citations, the claims excluded and why, and explicit unknowns; multi-hop exploration;
+  history on both time axes; keyword search over source text as the baseline. Filtering runs in TypeDB.
 
 ## Try it
 Needs Docker and [uv](https://docs.astral.sh/uv/).
@@ -38,6 +41,21 @@ uv run gupi --database demo queue
 uv run gupi --database demo accept <claim-id> --by your-name --reason "checked"
 uv run gupi --database demo conflicts
 ```
+
+Structured questions from Python:
+
+```python
+from datetime import datetime, timezone
+from gupi.memory import Memory
+
+memory = Memory.open("demo", packs=("core", "people"))
+result = memory.query_by_name("reporting", {"report": "Marco Rossi", "manager": None},
+                              valid_at=datetime(2025, 3, 1, tzinfo=timezone.utc))
+print(result.answer, result.binding, [c.quote for c in result.citations], result.excluded)
+```
+
+Benchmarks (offline): `uv run python -I -m gupi.retrieval_eval` (structured vs keyword retrieval) and
+`uv run python -I scripts/benchmark_performance.py` (latency and throughput).
 
 Claude extraction is optional: `uv sync --extra claude`, provide `ANTHROPIC_API_KEY` (or an `ant auth login`
 profile), then `--extractor claude`. Every call is reserved against a spending limit before it is sent.
