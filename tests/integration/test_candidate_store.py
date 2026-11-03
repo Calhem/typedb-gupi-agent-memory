@@ -236,3 +236,14 @@ def test_pending_review_survives_process_restarts(memory, database):
     shown = process(database, "show", cid)                     # process 4: the full history is durable
     assert shown["status"] == "formed" and shown["decisions"] == [["review", "formation:v1"], ["formed", "reviewer-a"]]
     assert store.get(memory, cid).payload == shown["payload"] and len(memory.all_claims()) == 1
+
+
+def test_an_altered_payload_is_detected_on_reading(memory, clock):
+    _, cset, _ = say(memory, clock, "m1", "I think Alice Grey works at Acme Labs.", "2025-06-01T09:00")
+    cid = cset.candidates[0].id
+    tampered = store.get(memory, cid).payload.replace("probable", "certain")
+    with transaction(memory.driver, memory.database, TransactionType.WRITE) as tx:
+        typeql.run(tx, "match $c isa memory-candidate, has gupi-id == $id; update $c has candidate-payload == $p;",
+                   {"id": cid, "p": tampered})
+    with pytest.raises(ValueError, match="does not match its payload"):
+        store.get(memory, cid)

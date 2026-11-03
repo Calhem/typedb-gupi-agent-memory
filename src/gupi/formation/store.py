@@ -251,6 +251,8 @@ fetch {
 def _stored(doc):
     a = doc["attrs"]
     cset = from_dict(json.loads(a["candidate-payload"]))
+    if cset.candidates[0].id != a["gupi-id"]:  # the id is a hash of the content: an altered payload shows
+        raise ValueError(f"stored candidate {a['gupi-id']} does not match its payload (it was altered)")
     decisions = sorted((DecisionRecord(d["gupi-id"], d["formation-outcome"], d["decided-by"], d["reason"],
                                        parse_datetime(d["recorded-at"])) for d in doc["decisions"]),
                        key=lambda d: (d.at, d.id))
