@@ -7,7 +7,8 @@ freezing.**
   mini-pilot.
 - **Companion documents:**
   - bias-audit-v0.md: the bias audit
-  - scoring-rubric-v0.md: how answers are scored
+  - scoring-protocol-v0.md: how answers are scored (primary: a common structured answer contract)
+  - scoring-nl-experimental-v0.md: an experimental secondary metric for free-text answers
   - review-checklist-v0.md: the checklist for an independent reviewer
 
 **Revision 1 (after the owner's first review):**
@@ -571,7 +572,7 @@ them consistently.
   - If two independent sources would each be enough, list **two** sets.
 - Keep each set minimal: nothing in it can be removed without the answer losing its support. Every item in
   a set is therefore **essential**: the scoring gives full evidence credit only when all the essential items
-  of at least one set are cited (scoring-rubric-v0.md §4).
+  of at least one set are cited (scoring-protocol-v0.md §4.3).
 - **Context:** material that helps but is not needed goes in a separate `context` list. Examples: the email
   showing a return came later, or a passage that confirms a name. It is never required for full credit.
 - **Sets per frame:** an answer in the `actual` frame and one in the `recorded` frame may need different
@@ -839,9 +840,8 @@ The JSON below is abbreviated: offsets, ids of obvious records and some fields a
     weighed on the evidence.
 - **"Was Joaquín site lead on 1 April 2026?"** (`unspecified`; ambiguity `frame`)
   - The gold holds both of the answers above.
-  - Under the scoring rubric, an answer must either say which reading it gives ("the records show ...") or
-    say that the actual state is unknown. An unqualified, certain "no" is marked as unsupported certainty
-    (scoring-rubric-v0.md §3).
+  - Systems state which reading they answer. An answer that does not is scored against both readings, and
+    the lower score counts (scoring-protocol-v0.md §4.2).
 - **"Was Joaquín site lead on 4 May 2026?"** (`actual`)
   - Status: `insufficient`. Only a plan to return on 27 April is reported; nothing reports that he did.
   - Rejected candidate: `yes`, reason `plan-only`.
