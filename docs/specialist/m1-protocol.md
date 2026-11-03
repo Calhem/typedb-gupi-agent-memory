@@ -1,147 +1,285 @@
 # M1 evaluation-methodology pilot: protocol for approval
 
-Date: 2026-11-03. Status: **proposal for final approval; nothing built.**
+Date: 2026-11-03. Status: **proposal for approval. No harness, baseline or dataset has been built.**
 
-**M1 is a pilot of the evaluation method, not evidence of competitive differentiation. Its results must not
-be used for external product claims.** It tests whether the method can tell the hypotheses apart, at small
-scale, before any formation engine is built.
+**M1 is a pilot of the evaluation method, not a competitive benchmark. Its results must not be used for
+external product claims.** It checks that the method can separate the hypotheses below, at small scale,
+before the Memory Formation Engine is built.
 
-## Two questions, kept apart
-- **Methodology (M):** does GUPI's knowledge-management method (claims as attestations, review status,
-  bitemporal answers, conflict classes, explicit unknowns) make answers more reliable than text retrieval
-  over the same material?
-- **TypeDB (T):** does implementing that method in TypeDB improve correctness, integrity, query
-  expressiveness, maintainability or performance compared with other implementations of *the same method*?
-
-A positive M result says nothing about T, and vice versa.
-
-## The five hypotheses
-| Id | Hypothesis (null in brackets) | Compares | Primary metric |
-|---|---|---|---|
-| **M-H1** | With identical gold claims, GUPI's method gives more correct answers and fewer unsupported confident answers than text retrieval on temporal, as-of, conflict and abstention questions [no difference] | S-gold (method over gold claims) vs best text system's **evidence sufficiency@10** and its rule-reader score | Correct answers per family; unsupported confident answers |
-| **M-H2** | Under injected extraction errors, the method's safeguards (review status, conflict classes, explicit unknowns) reduce unsupported confident answers compared with the same claims answered without them [no difference] | S-noisy with safeguards vs S-noisy with safeguards disabled (every claim treated as accepted, no conflict check) | Unsupported confident answers per error class |
-| **T-H1** | Correctness: typed n-ary TypeDB (R3) answers more questions correctly than the same method over Python objects (R1), naive binary triples (R2) and PostgreSQL (R4), with the same claims [no difference] | R1, R2, R3, R4 | Correct answers, by family (n-ary families separately) |
-| **T-H2** | Integrity: R3 rejects or flags more injected structural errors at write time than R1, R2 and R4 given equal validation effort [no difference] | R1-R4 under error injection; R1 and R4 get the same Python validator; R4 also gets SQL constraints | Errors rejected at write; errors flagged later; errors silently stored |
-| **T-H3** | Expressiveness, maintainability, performance: R3 needs less query code and less change effort per question family, at acceptable latency [R3 is not simpler, or is too slow] | R1-R4 | Lines and tokens of retrieval/query code per family; files changed to add one new claim type and one new question family; latency p50/p95; ingestion throughput |
-
-Expected outcomes, stated in advance: **T-H1 is likely null.** R1, R3 and R4 run the same Python answering
-logic over the same claims, so differences can only come from candidate selection bugs. R2 (naive binary
-triples) should lose on n-ary questions. That loss is a property of the *modelling choice*, achievable in
-any store with reification, not of TypeDB. The TypeDB-specific evidence will come from T-H2 and T-H3.
-
-## Systems
-- **Text (R0):** keyword, embedding (local bge-small), hybrid; each reports evidence sufficiency@k (all gold
-  evidence, including corrections, in the top k), plus a rule reader as a lower bound.
-- **S-gold / S-noisy:** GUPI's method over gold claims, and over gold claims with injected errors.
-- **R1** Python objects in memory · **R2** naive binary triples (subject, predicate, object; n-ary facts split
-  into pairs) stored in TypeDB · **R3** GUPI typed n-ary TypeDB · **R4** PostgreSQL relational, evaluation-only
-  (range types; run by the harness in its own container; never a GUPI dependency).
-- All systems ingest the same documents (text systems) or the same claims (structured systems); all are
-  offline and use no paid calls; inference budget: none beyond the local embedding model.
-
-## Error injection (for M-H2 and T-H2)
-Applied to gold claims at fixed rates (5%, 15%, 30%), each class separately, seeded and recorded:
-1. role inversion (approver and requester swapped)
-2. wrong player type (an organisation in a person role)
-3. missing required role
-4. dropped negation ("no longer" becomes ongoing)
-5. hearsay stored as an assertion
-6. plan stored as a fact
-7. wrong year
-8. false identity merge
-9. duplicate from a non-independent source
-
-Classes 2-3 are structural, which a schema can catch; the others are plausible, which no schema can catch.
-
-## Success criteria and stop conditions
-Small pilot, so every rate gets a 95% bootstrap interval; "better" means the interval of the difference
-excludes zero.
-
-| Hypothesis | Counts as support | Stop or reconsider if |
+## 1. What is being attributed to what
+| Source of a difference | Measured by varying | Attributable to |
 |---|---|---|
-| M-H1 | S-gold beats text sufficiency@10 on temporal, as-of, conflict and abstention families; at most 1 unsupported confident answer per 50 questions | S-gold does not beat text **sufficiency@10**: a good text system plus a strong reader would likely match GUPI; reconsider the specialist claim |
-| M-H2 | Safeguards cut unsupported confident answers by at least half for at least 4 of the 7 plausible error classes | Safeguards help on fewer than 2 classes: the method's reliability claim rests on extraction quality alone |
-| T-H1 | R3 > R1/R4 (unlikely) | R1 ≈ R3 ≈ R4 (expected): TypeDB adds no correctness; positioning must rest on T-H2/T-H3 or on the method |
-| T-H2 | R3 rejects or flags at least 90% of structural errors (classes 2-3) with no extra validation code, where R1 needs explicit code for the same | R4 with constraints matches R3: no integrity advantage over PostgreSQL |
-| T-H3 | R3 needs at least 30% less query code across families, with no worse change effort, and latency within 2× of R4 | R3 is not simpler than R4, or is more than 5× slower: TypeDB's practical advantage is not shown |
+| Extraction quality | gold claims vs error-injected claims (vs real extraction, later) | the extractor, not GUPI's representation |
+| Representation | Python objects vs flat triples vs typed TypeDB vs PostgreSQL, with identical claims | the modelling choice (typed n-ary or not) and the store |
+| Retrieval and reasoning | text retrieval vs GUPI's bitemporal answering over the same sources | GUPI's **application logic** |
 
-Overall stop rule: if M-H1 fails, do not build the formation engine before revisiting the direction. If M-H1
-holds but T-H1 to T-H3 all fail, continue the method but describe TypeDB as an implementation choice, not
-the source of advantage.
+Rule: an improvement is attributed to **TypeDB** only when it appears between implementations that run the
+**same application logic over the same claims** and differ only in store and representation. Equal answer
+accuracy does not mean equal engineering value: integrity, query complexity, change effort and running cost
+are measured separately (H2, H3, H5).
 
-## Dataset-generation protocol
-**Roles.**
-- *Implementer:* writes code and the development split only.
-- *Held-out author(s):* proposed: the owner, and ideally one outside reviewer. They write the held-out
-  documents, gold and questions, which the implementer never sees before the frozen run.
-- *Second annotator:* double-annotates 20% of gold.
+## 2. The five hypotheses
+Each is stated as a falsifiable claim with its null in brackets. "Better" always means the 95% bootstrap
+interval of the difference excludes zero; with about 48 held-out questions, small effects will be
+inconclusive, and that will be reported as inconclusive.
 
-**Steps.**
-1. **Guidelines first.** One committed document fixes the domain scope, document kinds, question families
-   and quotas, gold formats, answer-kind definitions (including PRESUMED under answer semantics v2), the
-   scoring and partial-credit table, and the error-injection classes. It is frozen before any data is
-   written.
-2. **World script, per split.** The author writes a dated timeline in a neutral spreadsheet or YAML:
-   - 3 organisations (client, vendor, subcontractor), 40-60 people
-   - roles and responsibilities
-   - decisions with participants and conditions
-   - deadlines and their changes
-   - dependencies
-   - status reports by authors of differing authority
-   - corrections that arrive late
-   - rumours that are never confirmed
-   - facts never stated outright
+### H1: Methodology improves answer reliability  *(application logic)*
+**Claim:** over the same source documents, GUPI's method (claims as attestations, review status, explicit
+unknowns, citations) gives fewer unsupported confident answers and more correct answers than text
+retrieval. [no difference]
+- **Baselines:** keyword, embedding, hybrid over the original documents. Each is scored two ways: (a) a
+  transparent rule reader (a lower bound), and (b) **evidence sufficiency@10**: the share of questions whose
+  top 10 passages contain *all* gold evidence, including later corrections (a reader-independent upper bound
+  on what a good reader could do).
+- **Systems:** S-gold (GUPI over gold claims; upper-bound diagnostic) and S-noisy (GUPI over error-injected
+  claims).
+- **Primary metric:** unsupported confident answers (TRUE, FALSE or CONTESTED where gold is UNKNOWN or
+  NOT_YET_KNOWN) per 100 questions.
+- **Secondary:** correctness by question family; citation precision and recall; abstention precision and
+  recall.
+- **Success:** S-gold beats the best text system's sufficiency@10 on correctness in the non-retrieval
+  families, and S-noisy (15% errors) has at most half the unsupported confident answers of the hybrid
+  rule reader.
+- **Failure:** S-gold does not beat text sufficiency@10.
+- **Stop / reconsider:** on failure, do not build the formation engine before revisiting the direction:
+  a good text system with a strong reader would likely match GUPI.
+- **Can conclude:** whether the method, given good claims, adds reliability that text retrieval cannot reach
+  even with a perfect reader. **Cannot conclude:** anything about real extraction, competitors, or TypeDB.
+
+### H2: Typed n-ary relationships improve correctness or integrity  *(modelling choice, plus TypeDB enforcement)*
+**Claim:** with identical claims, typed n-ary representation answers multi-party questions more correctly and
+admits fewer invalid structures than simpler representations. [no difference]
+- **Baselines:**
+  - R1: Python objects with the same Python validator.
+  - R2: flat subject-predicate-object triples (multi-party facts split into pairs, with no claim identity).
+  - R2r: reified triples (a claim node with role edges). This separates *n-ary modelling* from *any store*.
+  - R4: PostgreSQL relational with constraints.
+- **System:** R3 (GUPI typed TypeDB).
+- **Primary metrics:** correctness on the n-ary families (decisions with approvers and conditions,
+  responsibility assignments, obligations); errors stored silently under structural error injection.
+- **Secondary:** errors rejected at write, by error class; errors flagged later by conflict detection.
+- **Success:** R3 beats R2 on n-ary correctness, **and** R3 rejects at least 90% of structural errors
+  (wrong player type, missing role) with no extra validation code, where R1 and R2 need explicit code.
+- **Failure:** R3 is no better than R2r and R4 on either metric.
+- **Stop / reconsider:** if R2r and R4 match R3, the benefit belongs to n-ary *modelling*, achievable in any
+  store; describe TypeDB's role as convenience, not capability.
+- **Can conclude:** whether typed n-ary modelling matters for these questions, and how much integrity comes
+  from the database versus application code. **Cannot conclude:** that schema typing catches *plausible*
+  errors (role inversion, hearsay), which it cannot by design. Those are measured, not assumed.
+
+### H3: TypeDB improves query expressiveness and maintainability  *(TypeDB-specific)*
+**Claim:** implementing the same question families and the same change requests takes less, simpler and
+less error-prone code with R3 than with R1, R2r and R4. [no difference, or R3 is worse]
+- **Baselines:** R1, R2r, R4.
+- **Primary metric:** retrieval and query code per question family: non-blank, non-comment lines and
+  tokens, plus the number of joins or traversal steps.
+- **Secondary:**
+  - **change effort** for two scripted change requests (add a claim type with four roles; add a question
+    family needing a three-hop traversal): files and lines changed, and tests broken
+  - defects found by the shared test suite during implementation
+- **Success:** R3 needs at least 30% less query code across families, and no more change effort than the
+  best alternative.
+- **Failure:** R3 needs as much code as R4, or more.
+- **Stop / reconsider:** if R4 is as concise, TypeDB's expressiveness advantage is not shown; weigh it only
+  against H5's costs.
+- **Can conclude:** relative implementation complexity *for this pilot, written by one implementer*.
+  **Cannot conclude:** general productivity. A single implementer familiar with TypeDB biases this measure,
+  so the protocol fixes the change requests in advance and reports this limitation.
+
+### H4: GUPI handles temporal change, contradiction and correction more reliably  *(application logic)*
+**Claim:** on questions about changing state, out-of-order corrections, conflicting sources and historical
+reconstruction, GUPI's bitemporal logic answers more correctly, and mislabels fewer contested or unknown
+cases as definite, than (a) text retrieval and (b) the same claims answered by a naive policy (latest
+observed claim wins, no review status, no conflict classes). [no difference]
+- **Baselines:** text systems (as in H1); S-naive, the same gold claims under a latest-wins policy.
+- **Systems:** S-gold, S-noisy (GUPI, answer semantics v2 if approved, otherwise v1; reported as such).
+- **Primary metrics:** correctness on the temporal families (point-in-time, as-of, history, corrections,
+  conflicts); contested and unknown cases answered as definite.
+- **Secondary:** valid-time and transaction-time accuracy separately; contradiction detection precision
+  and recall; correct classification (contradiction vs differing evidence).
+- **Success:** S-gold beats S-naive and text sufficiency@10 on the temporal families, with at most 1
+  contested or unknown case per 50 answered as definite.
+- **Failure:** S-naive matches S-gold.
+- **Stop / reconsider:** if S-naive matches S-gold, the bitemporal machinery adds nothing on these questions;
+  the dataset may lack the phenomena, or the logic may not matter. Review the dataset first, then the logic.
+- **Can conclude:** whether GUPI's temporal logic matters on these phenomena. **Cannot conclude:** that it
+  is implemented in TypeDB: today most of it runs in Python (see review.md). H2 and H3 cover the database.
+
+### H5: The added complexity and cost are justified  *(TypeDB-specific, weighed against H1-H4)*
+**Claim:** R3's costs over the simplest adequate alternative (R1, or R4 when persistence and concurrency are
+needed) are justified by its measured benefits in H1-H4. [costs exceed benefits]
+- **Costs measured:**
+  - latency (p50 and p95 per question family)
+  - ingestion throughput
+  - peak memory
+  - database size
+  - new runtime dependencies
+  - operational steps (services to run, migrations)
+  - lines of infrastructure code
+  - known TypeDB limitations hit (logged)
+- **Benefits:** the measured H2-H4 differences attributable to R3.
+- **Success:** R3's latency is within 2× of R4's at the pilot's scale, its ingestion is adequate for a
+  10,000-document corpus in under an hour (extrapolated, stated as such), and at least one of H2 or H3
+  succeeds.
+- **Failure:** R3 is more than 5× slower than R4 with no H2 or H3 success.
+- **Stop / reconsider:** on failure, keep the method (if H1 and H4 hold) and treat the store as replaceable.
+  Plan whether to keep TypeDB on its non-performance merits, or to build on PostgreSQL.
+- **Can conclude:** whether TypeDB's costs are proportionate at pilot scale. **Cannot conclude:**
+  production-scale performance.
+
+**Expected outcomes, stated before any data exists:**
+- R1, R3 and R4 should give nearly identical answers on H1/H4 questions, because they run the same logic
+  over the same claims.
+- R2 should lose on the n-ary families; R2r should not.
+- TypeDB-specific evidence can therefore only come from H2's integrity results, H3 and H5.
+
+## 3. Systems and baselines (evaluation-only; not built until approved)
+| Id | System | Input | Notes |
+|---|---|---|---|
+| T-kw / T-em / T-hy | keyword, embedding (local bge-small), hybrid | documents | rule reader + sufficiency@10 |
+| R1 | Python objects | claims | same answering code as GUPI; same validator |
+| R2 | flat SPO triples | claims (multi-party facts split into pairs) | stored in TypeDB as generic triples |
+| R2r | reified triples | claims (claim node + role edges) | separates modelling from store |
+| R3 | GUPI typed n-ary | claims | the system under test |
+| R4 | PostgreSQL relational | claims | range types; constraints; **evaluation-only**: own container under a separate compose profile, a `psycopg` evaluation dependency group; never imported by `gupi` |
+| S-naive | latest-observed-wins over claims | claims | for H4 |
+
+All systems get the same source material, or the same claims. No paid calls. The inference budget is the
+local embedding model only, timed. Gold-claim results are labelled **upper-bound diagnostic** wherever they
+appear.
+
+## 4. Controlled extraction-error injection
+Applied to gold claims, one class at a time, at 5%, 15% and 30%, seeded and logged:
+
+| Class | Example | Catchable by schema? |
+|---|---|---|
+| Incorrect roles: inversion | approver and requester swapped | no |
+| Incorrect roles: wrong player type | an organisation as approver | yes |
+| Incorrect roles: missing role | approval without approver | yes |
+| Mistaken identity | two people with the same name merged; a role reference ("the CFO") linked to the wrong person | no |
+| Missing negation | "no longer responsible" stored as ongoing | no |
+| False temporal interpretation | wrong year; plan dated as done; end taken as start | no |
+| Unsupported assertion | rumour or hearsay stored as an asserted claim; a claim with no supporting span | partly (span check) |
+| Non-independent corroboration | a forwarded copy counted as a second source | no |
+
+Metrics per class: rejected at write; flagged (conflict, review); stored silently; answers changed;
+unsupported confident answers caused.
+
+## 5. Dataset
+**Size and split:** about 40 documents and 80 questions in total:
+- *Development* (visible to the implementer): 16 documents, 32 questions.
+- *Held-out* (never visible during implementation): 24 documents, 48 questions.
+
+**Coverage required in each split:**
+- three organisations (client, vendor, subcontractor), 25-40 people
+- organisational relationships and responsibilities
+- multi-party decisions and approvals with conditions
+- project dependencies and obligations
+- changing deadlines and statuses
+- conflicting evidence from sources of different authority
+- corrections that arrive out of chronological order
+- historical reconstruction
+- unknown and contested answers
+- negative controls
+
+**Question families and quotas (per split, as a share of questions):**
+
+| Family | Share |
+|---|---|
+| Straightforward retrieval (negative controls: verbatim wording, which document said X, details never structured) | **at least 20%** |
+| Point-in-time state | 10-15% |
+| As known at a time (transaction time) | 10-15% |
+| History and corrections | 10-15% |
+| n-ary detail (who approved, on whose behalf, under what condition) | 10-15% |
+| Multi-hop (dependencies, reporting chains) | 5-10% |
+| Conflicting reports | 5-10% |
+| Unknown or contested (gold UNKNOWN, NOT_YET_KNOWN or CONTESTED) | at least 10% |
+
+**Neutral format:** plain-text documents with metadata only (id, date, author, author role, kind,
+reply-to/forward-of). Kinds: meeting minutes, email threads with quoting and forwards, status tables, chat
+with typos and pronouns, an announcement, a contract summary. No document contains structured or
+TypeDB-shaped facts. Gold claims, world state and answers live in separate files that no system reads
+during ingestion.
+
+## 6. Authoring protocol and independence
+1. **Guidelines first.** One document fixes:
+   - domain scope and document kinds
+   - question families and quotas
+   - gold formats
+   - answer-kind definitions (including PRESUMED, only if v2 is approved)
+   - scoring, including partial credit (e.g. UNKNOWN answered where gold is PRESUMED; CONTESTED vs FALSE)
+   - error classes
+
+   It is written **without reference to GUPI's schema**, reviewed by the owner and frozen before any
+   data is written.
+2. **Roles.**
+   - The **implementer** writes only the development split and the code.
+   - **Held-out authors** (proposed: the owner, and ideally one outside reviewer) write the held-out world,
+     documents, gold and questions from the guidelines alone, without reading GUPI's code or schema.
+   - A **second annotator** independently annotates 20% of each split's gold.
+3. **World script.** Each split starts from a dated timeline of organisations, people, roles, decisions,
+   deadlines, dependencies and reports, written in a neutral spreadsheet. It is the source of truth for
+   world-state gold and is never ingested.
+4. **Documents.** Written from the world script in natural prose, by the split's author. They include:
    - irrelevant chatter
-
-   The world script is the source of truth for world-state gold and is never ingested.
-3. **Documents.** Plain text with metadata only (id, date, author, author role, kind, reply-to/forward-of):
-   minutes, email threads with quoting and forwards, status tables, chat with typos and pronouns, an
-   announcement, a contract summary. No sentence is written to fit GUPI's schema or rule patterns.
-   Development: about 25 documents; held-out: about 25, from different scenario threads.
-4. **Gold, per document:**
-   - claims with roles, values, modality, assertor and quoted time phrases
-   - support level for each (document, claim) pair
+   - facts implied but never stated
+   - pronouns and role references
+   - duplicates and forwards
+   - unconfirmed rumours
+   - late corrections
+5. **Gold, per document:**
+   - claims with roles, values, modality (asserted, reported, planned, negated) and assertor
+   - quoted time phrases, with explicit vs inferred dates
+   - support level per (document, claim)
    - salience
-   - a reviewer's acceptance and its timing
+   - reviewer acceptance and its time
 
-   Written by the document's author, double-annotated on 20%, with agreement reported (role-filled-claim F1;
-   Cohen's kappa for support and acceptance). Disagreements are adjudicated and logged.
-5. **Questions:** about 50 per split, from fixed families with quotas, at several belief times:
-   - point-in-time state
-   - as known at a time
-   - history and corrections
-   - n-ary detail
-   - multi-hop dependencies
-   - conflicting reports
-   - support versus rumour
-   - abstention
-   - **at least 20% negative controls** where text retrieval should win (verbatim wording, which document
-     said something, details never extracted)
+   Agreement on the double-annotated 20% is reported (role-filled-claim F1; Cohen's kappa for support and
+   acceptance). Disagreements are adjudicated and logged.
+6. **Questions and answers.** Written by the split's author from the world script and documents, each with
+   a gold answer kind, binding, evidence documents and the rule used. Answers are fixed **before** any system
+   is run on that split.
+7. **Freezing and access.**
+   - The development split is committed when complete.
+   - The held-out split stays **outside the repository and outside the implementer's access** (owner's
+     storage); only a SHA-256 manifest of its files is committed, before implementation starts.
+   - After the harness and all systems are frozen at a tagged commit, the owner runs or releases the held-out
+     split once.
+   - Results and the split are then committed. Any amendment must be recorded before the held-out run, as in
+     Phase 5.
 
-   Each has a gold answer kind, binding, evidence documents and the rule it was judged by.
-6. **Freezing.** The development split is committed when written. The held-out split stays **outside the
-   repository** (owner's storage); only its SHA-256 manifest is committed, before implementation starts. It
-   is delivered once, after the harness and all systems are frozen at a tagged commit, and is committed after
-   the run with the results.
-7. **Bias safeguards:**
-   - different authors for development and held-out
-   - questions written without reading the code
-   - negative-control quota
-   - text systems scored with sufficiency@k, not only a weak reader
-   - gold-claim rows labelled "upper-bound diagnostic"
-   - counts reported with intervals
-   - any amendment recorded before the held-out run, as in Phase 5
-8. **Licence:** synthetic content written for GUPI, released with the repository (Apache-2.0) after the run;
-   no real organisations or people.
+## 7. Preventing tailoring to TypeDB (bias controls)
+- Held-out authors work from domain guidelines, not GUPI's schema. The guidelines are reviewed for
+  TypeDB-shaped wording before freezing.
+- At least 20% of questions are straightforward retrieval, where text should win, and are scored as such.
+- Some phenomena are deliberately awkward for GUPI's model:
+  - free-text detail
+  - numbers in tables
+  - facts never stated outright
+  - long verbatim clauses
+  - role references
+- **Schema coverage** is reported: the share of gold facts that GUPI's existing claim types can express.
+  Uncovered facts count against structured systems; they are never dropped.
+- Text systems are scored with sufficiency@10, so a weak rule reader cannot manufacture a structured
+  advantage.
+- Gold-claim rows are labelled upper-bound diagnostics; error-injected rows are reported beside them.
+- One implementer writing R1, R2r, R3 and R4 is a bias (familiarity with TypeDB). It is mitigated by:
+  - one shared answering module for all
+  - a shared test suite
+  - change requests fixed in advance
+  - an outside review of the R4 schema before the run, if a reviewer is available
+- Counts and intervals are reported, not just rates; inconclusive results are reported as inconclusive.
 
-## Deliverables of M1
-Frozen guidelines; development split; held-out manifest; harness; R0-R4 and S-gold/S-noisy systems; one
-held-out run; a report that answers each hypothesis as supported, not supported, or inconclusive, labelled
-as a methodology pilot.
+## 8. Overall stop conditions
+- H1 or H4 fails: revisit the specialist direction before building the formation engine.
+- H1 and H4 hold, but H2, H3 and H5 fail: continue the method, and describe TypeDB as an implementation
+  choice, not the source of advantage.
+- Gold agreement below F1 0.8 or kappa 0.6: fix the guidelines and re-annotate before trusting any result.
 
-## Decisions needed to start M1
-1. Approve the five hypotheses, metrics and stop conditions above (or amend the thresholds).
-2. Confirm who authors the held-out split and second annotations, and the time available.
-3. Approve PostgreSQL as an evaluation-only container for R4 (a separate compose profile; a `psycopg`
-   evaluation-only dependency group).
-4. Approve answer-semantics v2 for M1 (see joined-spell-analysis.md), with v1 preserved for past results.
+## 9. Decisions needed to start M1
+1. Approve the five hypotheses, metrics, thresholds and stop conditions (or amend them).
+2. Confirm the held-out authors and second annotator, and the time available.
+3. Confirm PostgreSQL as an evaluation-only container (separate compose profile; `psycopg` in an evaluation
+   dependency group; never imported by `gupi`).
+4. Decide whether M1 uses answer semantics v2 (joined-spell-analysis.md) or v1, so that the guidelines'
+   answer kinds can be frozen.
