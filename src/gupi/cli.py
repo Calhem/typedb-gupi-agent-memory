@@ -48,7 +48,7 @@ def _short(cid):
 def _describe(c, labels):
     roles = ", ".join(f"{r}={'/'.join(labels.get(x, x) for x in refs)}" for r, refs in c.roles.items())
     values = "".join(f" {k}={v!r}" for k, v in c.values.items() if k != "reason")
-    return f"{c.type}({roles}){values}"
+    return f"{'NOT ' if c.polarity == 'negative' else ''}{c.type}({roles}){values}"
 
 
 def _period(c):

@@ -211,7 +211,8 @@ class Memory:
             "valid-from-earliest": vt.from_earliest, "valid-from-latest": vt.from_latest,
             "valid-to-earliest": vt.to_earliest, "valid-to-latest": vt.to_latest,
             "time-precision": c.time_precision, "valid-to-basis": c.valid_to_basis,
-            "method": c.method, "confidence": c.confidence, "extraction-basis": c.basis, **c.values,
+            "method": c.method, "confidence": c.confidence, "extraction-basis": c.basis,
+            "polarity": "negative" if c.polarity == "negative" else None, **c.values,
         }
         has, has_params = _has(attrs, "a")
         statements = [f"$c isa {label(c.type)} ({links}){has};"]

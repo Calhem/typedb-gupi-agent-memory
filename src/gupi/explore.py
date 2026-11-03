@@ -120,7 +120,8 @@ def history(memory, referent_id, believed_at=None):
     entries = []
     for c in views.values():
         period = _period(c)
-        what = f"{c.type} " + ", ".join(f"{r}={'/'.join(v)}" for r, v in c.roles.items())
+        what = ("NOT " if c.polarity == "negative" else "") + f"{c.type} " + ", ".join(
+            f"{r}={'/'.join(v)}" for r, v in c.roles.items())
         for ev in claim_history(c):
             entries.append(HistoryEntry(ev.at, ev.kind, c.id, f"{what}: {ev.detail}", period))
         for s in c.supersessions:

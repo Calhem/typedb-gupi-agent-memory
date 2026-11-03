@@ -169,6 +169,10 @@ def answer(memory, q: Question):
 
     bindings, notes = [], []
     for group, claims in candidates:
+        for c in claims:
+            if c.polarity == "negative" and c.id in believed_ids:
+                excluded.append((c.id, "an explicit negation, which answer semantics v1 cannot express"))
+        claims = [c for c in claims if c.polarity != "negative"]
         matching = [c for c in claims if all(c.values.get(k) == v for k, v in q.values.items())]
         bounding = [c for c in claims if c.id in believed_ids and q.values and any(k not in c.values for k in q.values)]
         if not matching and not bounding:
