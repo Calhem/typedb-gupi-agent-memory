@@ -1,0 +1,39 @@
+# Candidate store (docs/formation/candidate-persistence.md, option C; docs/formation/candidate-store.md).
+# Additive only: new types and new `plays`; nothing existing changes. Applied after core/0011.
+#
+# - memory-candidate: one extracted memory candidate, kept as its exact canonical gupi.candidate JSON. It is
+#   NOT a claim: it is never believed and never answered from.
+# - candidate-of: the observation it came from, with the exact passage span.
+# - formation-decision: append-only. Each decision is a new relation, with its outcome, decider, reason and
+#   time; the latest one is the candidate's current status, and earlier ones are never altered.
+# - formed-into: the claim formed from it, if any.
+# - correction-suggestion: what a stated correction may correct. It has zero, one or several target claims,
+#   and is never applied.
+# Rolling back means restoring the pre-migration export (docs/adr/0004).
+
+define
+  attribute ir-version, value string;
+  attribute candidate-payload, value string;
+  attribute formation-outcome, value string @values("formed", "withheld", "review", "rejected");
+  attribute target-resolution, value string @values("resolved", "missing", "ambiguous");
+
+  entity memory-candidate,
+    owns gupi-id @key, owns ir-version, owns candidate-payload, owns method, owns recorded-at,
+    owns proposition-key;
+
+  relation candidate-of, relates candidate, relates observation, owns span-start, owns span-end;
+  memory-candidate plays candidate-of:candidate;
+  observation plays candidate-of:observation;
+
+  relation formation-decision, relates decided,
+    owns gupi-id @key, owns formation-outcome, owns decided-by, owns reason, owns recorded-at;
+  memory-candidate plays formation-decision:decided;
+
+  relation formed-into, relates candidate, relates claim;
+  memory-candidate plays formed-into:candidate;
+  claim plays formed-into:claim;
+
+  relation correction-suggestion, relates suggested-by, relates target @card(0..),
+    owns gupi-id @key, owns target-resolution, owns reason, owns recorded-at;
+  memory-candidate plays correction-suggestion:suggested-by;
+  claim plays correction-suggestion:target;

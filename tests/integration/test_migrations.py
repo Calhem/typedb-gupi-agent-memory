@@ -145,7 +145,8 @@ def test_polarity_migration_keeps_existing_claims_and_stores_negations(driver, d
         before = retrieval.all_claims(tx)
 
     assert migrations.migrate(driver, database, ["core", "people"]) == [
-        "core/0010_polarity.schema.tql", "core/0011_claim_provenance.schema.tql"]
+        "core/0010_polarity.schema.tql", "core/0011_claim_provenance.schema.tql",
+        "core/0012_candidate_store.schema.tql"]
     with transaction(driver, database, TransactionType.READ) as tx:
         after = retrieval.all_claims(tx)
     assert after == before and after[0].polarity == "positive"
@@ -178,3 +179,24 @@ def test_claim_provenance_from_core_0011_round_trips_without_changing_plain_clai
         ("lower-bound", "probable", "reported", "candidate:0123")
     assert asserted == {formed.id: "p:sam-lee"} and formed_from == {"candidate:0123": formed.id}
     assert not ({"valid-from-basis", "commitment", "attribution-mode", "candidate-id"} & set(f.values))
+
+
+def test_core_0012_migrates_a_populated_0011_database_without_changing_claims(driver, database, tmp_path):
+    """The candidate store is applied after 0011, to a database that already holds claims with provenance."""
+    old_core = tmp_path / "core"
+    old_core.mkdir()
+    for m in migrations.discover(["core"]):
+        if m.path.name < "0012":
+            shutil.copy(m.path, old_core / m.path.name)
+    migrations.migrate(driver, database, ["core", "people"], extra_dirs=[old_core])
+    memory = Memory(driver, database, Clock("2025-03-01"), ("core", "people"), require_current_schema=False)
+    o = observe(HR, "o1", "Alice reports to Bob.", "2025-03-01")
+    plain, formed = reports(o), reports(o, commitment="probable", candidate_id="candidate:0123")
+    record(memory, [o], [plain, formed])
+    with transaction(driver, database, TransactionType.READ) as tx:
+        before = retrieval.all_claims(tx)
+    assert migrations.migrate(driver, database, ["core", "people"]) == ["core/0012_candidate_store.schema.tql"]
+    with transaction(driver, database, TransactionType.READ) as tx:
+        assert retrieval.all_claims(tx) == before
+        assert typeql.concept_rows(tx, "match entity $t; $t label memory-candidate;")
+    Memory(driver, database, Clock("2025-03-02"), ("core", "people"))  # opens without pending migrations

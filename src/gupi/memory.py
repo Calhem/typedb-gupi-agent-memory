@@ -80,26 +80,30 @@ class Memory:
 
     def ingest(self, batch: Batch) -> IngestReport:
         """Record a batch in one transaction. Re-ingesting the same batch creates nothing new."""
+        with transaction(self.driver, self.database, TransactionType.WRITE) as tx:
+            return self.ingest_in(tx, batch, self.clock())
+
+    def ingest_in(self, tx, batch, now, report=None):
+        """Record a batch inside the caller's write transaction, so that it commits, or fails, together with
+        other writes (the candidate store, gupi.formation.store)."""
         for r in batch.referents:
             self._check("referent", r.type)
         for c in batch.claims:
             self._check("claim", c.type)
-        report = IngestReport()
-        with transaction(self.driver, self.database, TransactionType.WRITE) as tx:
-            now = self.clock()
-            for s in batch.sources:
-                self._ingest_source(tx, s, report)
-            for c in batch.contexts:
-                self._ingest_context(tx, c, report)
-            for r in batch.referents:
-                self._ingest_referent(tx, r, report)
-            for o in batch.observations:
-                self._ingest_observation(tx, o, now, report)
-            for m in batch.mentions:
-                self._ingest_mention(tx, m, report)
-            self._before_claims(tx)
-            for c in batch.claims:
-                self._ingest_claim(tx, c, now, report)
+        report = report if report is not None else IngestReport()
+        for s in batch.sources:
+            self._ingest_source(tx, s, report)
+        for c in batch.contexts:
+            self._ingest_context(tx, c, report)
+        for r in batch.referents:
+            self._ingest_referent(tx, r, report)
+        for o in batch.observations:
+            self._ingest_observation(tx, o, now, report)
+        for m in batch.mentions:
+            self._ingest_mention(tx, m, report)
+        self._before_claims(tx)
+        for c in batch.claims:
+            self._ingest_claim(tx, c, now, report)
         return report
 
     def ingest_many(self, batches):
