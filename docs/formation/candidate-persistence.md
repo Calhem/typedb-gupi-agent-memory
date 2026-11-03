@@ -1,6 +1,6 @@
 # Candidate persistence: assessment and recommendation (for approval)
 
-Date: 2026-11-03. Status: **recommendation only. Nothing is implemented; core/0012 is not applied.**
+Date: 2026-11-03. Status: **option C approved and implemented.** See candidate-store.md.
 
 ## What exists today
 Each formation run is stored as an `extraction-run` (method `formation:v1`) whose `run-report` is a JSON

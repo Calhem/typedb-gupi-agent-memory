@@ -59,9 +59,14 @@ Once approved:
 - **Repeating a formation** writes nothing new. Ingestion skips existing records, a repeated identical review
   is a no-op, and an existing run is not recorded again.
 
+## Durable review
+`form()` decides and forms in one call, keeping its decisions only in a run report. For durable candidates
+and reviewer decisions that survive restarts, use the candidate store (`gupi.formation.store`,
+candidate-store.md). It applies the same policy.
+
 ## Limits
 - **Answers do not yet use the new fields.** v1 and v2 answer a hedged or reported claim as they would a
   certain, direct one. The commitment and attribution are stored and can be cited, but are not weighed.
-- **Candidates are not stored** (core/0012). A withheld or review candidate exists only in the run report's
-  decision list. To approve one later, re-run its extraction (which is deterministic) and pass the approval.
+- **`form()` does not store candidates.** A withheld or review candidate exists only in the run report's
+  decision list. The candidate store keeps them durably.
 - **The asserter is created as a person** scoped to the observation, like any participant.
