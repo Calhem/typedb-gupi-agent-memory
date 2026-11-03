@@ -177,3 +177,10 @@ def test_unsupported_and_malformed_input_is_rejected_not_guessed():
                               {"employment": frozenset({"job-title"})})
     cset, report = RulesV2().extract(Observation("src:t", "k", "Lina Hart reports to Sam Ode.", SAID), schema=no_reporting)
     assert cset.candidates == () and "not available" in report.rejected[0][1]
+
+
+def test_an_unparsed_domain_sentence_is_reported_not_dropped_silently():
+    """Found by the 6C adversarial run: a 'since' correction with a trailing 'not March' matched no pattern and
+    was not reported either, because 'worked' was missing from the domain verbs."""
+    cset, report = extract("Correction: Lina Hart has worked at Corbel since April 2025, not March.")
+    assert cset.candidates == () and "no supported pattern" in report.rejected[0][1]

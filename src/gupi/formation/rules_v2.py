@@ -59,7 +59,7 @@ PATTERNS = [
      "actual"),
 ]
 KINDS = {"employee": "person", "employer": "organization", "report": "person", "manager": "person"}
-DOMAIN_VERB = re.compile(r"\b(?:joined|left|works?|working|reports?|reporting|reported|hired|promoted|rejoined)\b")
+DOMAIN_VERB = re.compile(r"\b(?:joined|left|works?|worked|working|reports?|reporting|reported|hired|promoted|rejoined|manages?)\b")
 
 # Leading cues, removed in order before the patterns are tried; each is recorded on the candidate.
 CORRECTION = re.compile(r"Correction(?: to [^:]+)?:\s*")
