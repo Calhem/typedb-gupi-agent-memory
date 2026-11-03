@@ -205,3 +205,16 @@ def test_only_the_formation_pathway_touches_memory_or_typedb():
     forbidden = {m for m in imported if m.startswith(("typedb", "gupi.memory", "gupi.typedb", "gupi.extraction",
                                                       "gupi.migrations", "gupi.retrieval"))}
     assert imported and not forbidden
+
+
+def test_a_correction_cue_without_a_named_target_still_needs_review():
+    """Found by the 6C development demonstration: the extractor names no target when the earlier statement
+    was a different kind of boundary, but the passage still says it is a correction."""
+    from gupi.formation.form import decide
+    text = "Correction: Nora Vance left Halden in May 2025."
+    _, c = employment(text, [month(text, "May 2025", "end", 2025, 5)])
+    d = decide(c, [], {})
+    assert (d.outcome, "could not be identified" in d.reason) == ("review", True)
+    assert decide(c, [], {c.id: "reviewer-a"}).outcome == "formed"
+    _, plain = employment(JOINED, [month(JOINED, "March 2025", "start", 2025, 3)])
+    assert decide(plain, [], {}).outcome == "formed"

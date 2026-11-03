@@ -22,7 +22,7 @@ Each candidate gets exactly one decision:
 | modality other than `actual` (planned, hypothetical, ...) | **withheld** | a plan is never answered as a fact |
 | repeats another candidate in the same observation (a forwarded or quoted copy) | **withheld** | not an independent attestation |
 | time that a valid time cannot express ("was CTO in March") | **withheld** | no invented bounds |
-| hedged (`probable`, `possible`, `unknown`), rumour, or a stated correction, with no reviewer approval | **review** | needs an explicit decision |
+| hedged (`probable`, `possible`, `unknown`), rumour, or a stated correction, with no reviewer approval. This includes a passage that opens with a correction cue whose target the extractor could not name. | **review** | needs an explicit decision |
 | the same, approved by a named reviewer | **formed**, accepted by that reviewer | the uncertainty is kept on the claim (`commitment`) |
 | otherwise: an asserted actual condition or event | **formed**, accepted by the policy | |
 

@@ -18,6 +18,7 @@ report records every decision, so rejected and withheld candidates stay distingu
 """
 
 import json
+import re
 from dataclasses import dataclass, field
 
 from typedb.driver import TransactionType
@@ -31,6 +32,7 @@ from gupi.records import Batch, Claim, Evidence, Mention, Referent
 from gupi.typedb.connection import transaction
 
 POLICY = "formation:v1"
+CORRECTION_CUE = re.compile(r"\s*(?:correction|erratum|update to my last|to correct)\b", re.I)
 OUTCOMES = ("formed", "withheld", "review", "rejected")
 
 
@@ -79,6 +81,8 @@ def decide(candidate, issues, approvals):
         needs.append("unattributed hearsay")
     if any(r.kind in ("corrects", "retracts") for r in candidate.relations):
         needs.append("a stated correction")
+    elif CORRECTION_CUE.match(candidate.passage.text):
+        needs.append("a stated correction whose target could not be identified")  # the passage still says so
     if needs and candidate.id not in approvals:
         return Decision(candidate.id, "review", "needs a review decision before forming: " + ", ".join(needs))
     if needs:
