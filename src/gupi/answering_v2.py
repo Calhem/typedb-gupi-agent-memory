@@ -48,6 +48,7 @@ class _Boundary:
     claims: tuple    # every claim stating this boundary
     sharp: tuple     # the claims that set `hi` (cited for terminations) or `lo` (for starts' joins)
     competing: bool = False   # statements about the same boundary with disjoint windows (Q2, Q9)
+    rivals: tuple = ()        # for a competing start: every start statement in its group (Q9)
 
 
 def classify(believed, at, anything_recorded, bounding=()):
@@ -65,6 +66,7 @@ def classify(believed, at, anything_recorded, bounding=()):
     negative = [c for c in claims if c.polarity == "negative"]
     starts, ends, notes = _merge_all([b for c in positive if (b := _start(c))],
                                      [b for c in claims if c.polarity != "negative" and (b := _end(c))])
+    notes = list(notes)
 
     pos = [c for c in positive if _covers(c, at)]
     neg_negations = [c for c in negative if _covers(c, at)]
@@ -75,6 +77,22 @@ def classify(believed, at, anything_recorded, bounding=()):
         others = sorted({c.id for c in neg_negations} | {i for e in neg_terminations for i in e.sharp})
         return _result(Answer.CONTESTED, "conflict", [c.id for c in pos] + others, notes,
                        f"CONTESTED: {_ids(pos)} say it held at {_d(at)}, and {', '.join(others)} that it did not.")
+    disputed = _competing_starts(starts, ends, positive, pos, at)
+    if disputed:
+        support, against, imprecise = disputed
+        if support and against:
+            return _result(Answer.CONTESTED, "conflict", support + against, notes,
+                           f"CONTESTED: the start date is disputed. {', '.join(support)} place(s) the start before "
+                           f"{_d(at)} with the period continuing past it, while {', '.join(against)} date(s) the start "
+                           f"of the same period after {_d(at)}. Neither start is preferred.")
+        if support and imprecise:
+            return _result(Answer.UNKNOWN, "window", support + imprecise, notes,
+                           f"UNKNOWN: the start date is disputed. {', '.join(support)} place(s) the start before "
+                           f"{_d(at)}, but the date given by {', '.join(imprecise)} is too imprecise to say whether it "
+                           f"was before or after {_d(at)}. The true start is not assumed to lie between them.")
+        if support:
+            notes.append(f"the start date is disputed ({', '.join(_window_text(s) for s in starts if s.rivals)}); "
+                         f"every account places the start by {_d(at)}, and none is preferred")
     if pos:
         spans = [c for c in pos if _span(c) and _span(c)[0] <= at < _span(c)[1]]
         kind = "direct-span" if spans else "direct-point"
@@ -143,8 +161,8 @@ def _end(c):
 def _merge_all(starts, ends):
     """Merge statements about the same boundary: consecutive boundaries of one kind, with none of the
     other kind between them (Q6). Overlapping windows narrow to their intersection; the claims that set the
-    narrowed latest bound are the ones cited. Disjoint ones compete: for ends that is Q2 (kept apart, and
-    CONTESTED between them); for starts it is the provisional Q9 rule, below."""
+    narrowed latest bound are the ones cited. Disjoint ones compete and are kept apart, each claim with its
+    own window: for ends that is Q2 (CONTESTED between them); for starts, Q9 (_competing_starts)."""
     order = sorted(starts + ends, key=lambda b: (b.lo, b.hi, b.kind != "end"))
     groups, notes = [], []
     for b in order:
@@ -165,11 +183,8 @@ def _merge_all(starts, ends):
         elif g[0].kind == "end":
             merged += [_Boundary("end", b.lo, b.hi, b.claims, b.sharp, competing=True) for b in g]  # Q2
         else:
-            # Q9 (open; provisional rule): competing start statements give one start somewhere in the hull
-            # of their windows, so instants between them are UNKNOWN, and the conflict is noted.
-            merged.append(_Boundary("start", min(b.lo for b in g), max(b.hi for b in g), claims, claims, True))
-            notes.append(f"competing start statements {', '.join(claims)}: the start is taken to lie anywhere "
-                         "between them (Q9, provisional rule)")
+            group = tuple(b.claims[0] for b in g)
+            merged += [_Boundary("start", b.lo, b.hi, b.claims, b.sharp, True, group) for b in g]  # Q9
     return [b for b in merged if b.kind == "start"], [b for b in merged if b.kind == "end"], notes
 
 
@@ -178,6 +193,38 @@ def _terminated(end, starts, at):
     have begun? A start counts as later when its earliest bound is not before the end's earliest bound."""
     later = [s.lo for s in starts if s.lo >= end.lo]
     return end.hi <= at < min(later, default=HIGH)
+
+
+def _competing_starts(starts, ends, positive, pos, at):
+    """Q9: start statements about the same period that disagree (disjoint windows, no end between them).
+
+    Each is judged on its own, with its own window, for the instant `at`:
+    - supports: it certainly started by `at`, and the period is evidenced to continue past it (a later end,
+      point or span with no termination between), or a claim directly covers `at`
+    - contradicts: its whole window is after `at`, i.e. it dates the start of the same period later
+    - imprecise: its window contains `at`
+    - silent: it started by `at`, but nothing shows the period continuing
+    Returns (supporting, contradicting, imprecise) claim ids, or None when there is no such dispute or nothing
+    supports the state (then the ordinary rules apply, so a start alone is still never negative, Q1). The
+    true start is never assumed to lie between the dates, and neither date is preferred."""
+    rivals = [s for s in starts if s.rivals]
+    if not rivals:
+        return None
+    support, against, imprecise = [], [], []
+    for s in rivals:
+        if at < s.lo:
+            against.append(s.claims[0])
+        elif at < s.hi:
+            imprecise.append(s.claims[0])
+        elif pos or _joined([s], ends, positive, at):
+            support.append(s.claims[0])
+    if not support:
+        return None
+    return sorted(support), sorted(against), sorted(imprecise)
+
+
+def _window_text(s):
+    return f"{s.claims[0]}: start in [{_d(s.lo)}, {_d(s.hi)})"
 
 
 def _between_competing_ends(ends, at):

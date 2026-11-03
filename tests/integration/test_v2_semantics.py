@@ -86,3 +86,39 @@ def test_v2_answers_an_explicit_negation_within_its_own_time_only(memory, clock)
     assert r.answer is Answer.FALSE and r.bindings[0].basis.kind == "negation"
     assert [x.verdict for x in r.citations] == ["negative"]
     assert memory.ask("reporting", ROLES, utc("2025-05-01"), semantics="v2").answer is Answer.UNKNOWN
+
+
+def test_disputed_start_dates_through_belief_time_and_a_correction(memory, clock):
+    """Q9 claim by claim: each start keeps its own window, provenance and belief time."""
+    sources = [
+        ("2025-01-20", observe(HR, "hr-j", "Alice started reporting to Bob in January 2025.", "2025-01-20"), month("2025-01")),
+        ("2025-09-01", observe(CHAT, "c-s", "Alice still reports to Bob.", "2025-09-01"), None),
+        ("2025-10-01", observe(HR, "hr-m", "Since March 2025, Alice reports to Bob.", "2025-10-01"), month("2025-03")),
+    ]
+    made = []
+    for when, obs, start in sources:
+        valid = ValidTime(*start) if start else ValidTime(to_earliest=utc(when))
+        c = reports(obs, valid=valid)
+        clock.set(when)
+        record(memory, [obs], [c])
+        memory.review(c.id, "accepted", "reviewer")
+        made.append(c)
+    jan, still, mar = made
+    clock.set("2025-11-01")
+    memory.supersede(jan.id, mar.id, reason="started in March, not January", decided_by="reviewer")
+    names = {jan.id: "jan", still.id: "still", mar.id: "mar"}
+
+    def check(valid, believed):
+        r = ask(memory, valid, believed)
+        return r.answer, r.evaluation.basis.kind, sorted(names[i] for i in r.evaluation.basis.claims)
+
+    assert check("2025-02-15", "2025-09-15") == (Answer.PRESUMED, "joined-spell", ["jan", "still"])
+    assert check("2025-02-15", "2025-10-15") == (Answer.CONTESTED, "conflict", ["jan", "mar"])
+    assert check("2025-03-15", "2025-10-15") == (Answer.UNKNOWN, "window", ["jan", "mar"])
+    r = ask(memory, "2025-06-15", "2025-10-15")
+    assert r.answer is Answer.PRESUMED and "start date is disputed" in r.evaluation.explanation
+    assert check("2025-02-15", "2025-11-15") == (Answer.UNKNOWN, "no-coverage", [])  # after the correction
+    cited = memory.query(Question("reporting", ROLES, utc("2025-02-15"), utc("2025-10-15"), semantics="v2")).citations
+    assert sorted((x.quote, x.said_at) for x in cited) == [
+        ("Alice started reporting to Bob in January 2025.", utc("2025-01-20")),
+        ("Since March 2025, Alice reports to Bob.", utc("2025-10-01"))]

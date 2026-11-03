@@ -34,13 +34,46 @@ def test_competing_end_statements_are_contested_between_them_q2():
     assert at(claims, d(2024, 6, 15)) == (Answer.FALSE, "termination-continuing", ("left-may",))
 
 
-def test_competing_start_statements_use_the_provisional_q9_rule_and_say_so():
-    joined_mar = c("joined-mar", ValidTime(d(2024, 3), d(2024, 4)))
-    claims = [JOINED, joined_mar, STILL_SEP]
-    r = classify(claims, d(2024, 2, 15), True)
-    assert (r.answer, r.basis.kind) == (Answer.UNKNOWN, "window")
-    assert "Q9, provisional rule" in r.explanation and r.notes
-    assert at(claims, d(2024, 5)) == (Answer.PRESUMED, "joined-spell", ("joined", "joined-mar", "still-sep"))
+# Q9: start statements about the same period that disagree, each judged on its own (spec §1.3)
+JAN = c("jan", ValidTime(d(2025, 1), d(2025, 2)))            # "joined in January 2025"
+MAR = c("mar", ValidTime(d(2025, 3), d(2025, 4)))            # "joined in March 2025"
+STILL = c("still", ValidTime(to_earliest=d(2025, 9)))        # "still works there" on 1 September
+DISPUTE = [JAN, MAR, STILL]
+
+
+def test_two_start_dates_that_both_establish_the_state_give_it_and_disclose_the_dispute():
+    r = classify(DISPUTE, d(2025, 6, 15), True)
+    assert (r.answer, r.basis.kind, r.basis.claims) == (Answer.PRESUMED, "joined-spell", ("mar", "still"))
+    assert "start date is disputed" in r.explanation and "none is preferred" in r.explanation
+    direct = c("mar-still", ValidTime(d(2025, 3), d(2025, 4), to_earliest=d(2025, 9)))
+    r = classify([JAN, direct], d(2025, 6, 15), True)
+    assert (r.answer, r.basis.kind) == (Answer.TRUE, "direct-span") and "start date is disputed" in r.explanation
+
+
+def test_two_start_dates_that_straddle_the_instant_are_contested():
+    assert at(DISPUTE, d(2025, 2, 15)) == (Answer.CONTESTED, "conflict", ("jan", "mar"))
+
+
+def test_an_imprecise_month_that_may_fall_after_the_instant_gives_unknown():
+    r = classify(DISPUTE, d(2025, 3, 15), True)
+    assert (r.answer, r.basis.kind, r.basis.claims) == (Answer.UNKNOWN, "window", ("jan", "mar"))
+    assert "too imprecise" in r.explanation and "not assumed to lie between" in r.explanation
+
+
+def test_disputed_starts_never_make_an_earlier_time_false():
+    assert at(DISPUTE, d(2024, 12, 15)) == (Answer.UNKNOWN, "no-coverage", ())  # Q1 still holds
+
+
+def test_neither_start_is_preferred_whatever_the_order():
+    for when in (d(2025, 2, 15), d(2025, 3, 15), d(2025, 6, 15)):
+        assert at(DISPUTE, when) == at(list(reversed(DISPUTE)), when)
+
+
+def test_once_a_correction_supersedes_one_start_the_other_stands_alone():
+    """The belief cutoff removes a superseded claim before classification (ADR 0006)."""
+    assert at([MAR, STILL], d(2025, 2, 15)) == (Answer.UNKNOWN, "no-coverage", ())
+    r = classify([MAR, STILL], d(2025, 6, 15), True)
+    assert r.answer is Answer.PRESUMED and not r.notes
 
 
 def test_bounding_claims_only_contribute_negative_evidence():
