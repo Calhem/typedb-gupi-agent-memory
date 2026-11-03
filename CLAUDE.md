@@ -8,7 +8,7 @@ The owner has no programming background and is learning as we go. Explain new te
 keep steps small, verify each step works before moving on, and stop at each phase gate for review.
 
 ## Status
-Phases 1-4 merged. Phase 5 (`feature/phase-5-evaluation`) done, awaiting review (docs/phase-5-report.md).
+Phases 1-5 merged. Open items: docs/known-issues.md (LoCoMo non-commercial licence unresolved; vector-search limits).
 Specialist direction (owner, 2026-11-03): a memory engine for complex, evolving, contradictory knowledge;
 see docs/specialist/ (on its own branch). Offline only: no credentials or paid services; local embeddings
 are optional. Stop for review before implementing the Memory Formation Engine. No distributed agents, packet protocols or dynamic schema

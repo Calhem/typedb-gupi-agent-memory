@@ -12,7 +12,8 @@ the checksums below. Only ids, aggregate scores and checksums are committed.
 Checked 2026-11-03. LongMemEval's checksums match the Hugging Face LFS hashes; LoCoMo's file matches the
 GitHub blob hash. `longmemeval_m_cleaned.json` (2.7 GB) was not downloaded.
 
-**Licence conditions.** LoCoMo is CC BY-NC 4.0: non-commercial research use with attribution (Maharana
+**Licence conditions** (see also docs/known-issues.md: LoCoMo's non-commercial terms are an unresolved
+compliance consideration). LoCoMo is CC BY-NC 4.0: non-commercial research use with attribution (Maharana
 et al., 2024, "Evaluating Very Long-Term Conversational Memory of LLM Agents"); its content must not be
 redistributed here. GUPI uses it as an open-source research experiment; any commercial use needs a separate
 review. LongMemEval is MIT (Wu et al., 2024, "LongMemEval: Benchmarking Chat Assistants on Long-Term

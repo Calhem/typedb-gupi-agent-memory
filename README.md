@@ -75,5 +75,9 @@ Set `GUPI_TYPEDB_ADDRESS`, `GUPI_TYPEDB_USERNAME` and `GUPI_TYPEDB_PASSWORD` for
   `migrations.py`, `embedding.py`.
 - `docs/adr/`: architecture decisions. `tests/unit`, `tests/integration` (live TypeDB).
 
+## Known issues
+See [docs/known-issues.md](docs/known-issues.md): LoCoMo's non-commercial licence is an unresolved
+compliance consideration, and vector search is exact and linear in the number of vectors.
+
 ## Licence
 Apache-2.0: see [LICENSE](LICENSE). GUPI is an independent Noodlelab experiment.
