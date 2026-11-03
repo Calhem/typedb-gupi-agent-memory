@@ -1,9 +1,11 @@
 # Truth semantics v2 (revised twice): truth table and decisions
 
 Date: 2026-11-03. Status: **directions approved; implemented in `gupi.answering_v2`, selected with
-`semantics="v2"`; v1 is the default.** Phase 4 under v2: docs/evaluation/phase-4-v2.md. The second revision adopts the
-owner's decisions on Q1-Q8 (§5), including the clarifications on Q3 and Q6 and the requirement that
-explicit negations are represented independently of termination dates.
+`semantics="v2"`; v1 is the default.** Phase 4 under v2: docs/evaluation/phase-4-v2.md.
+
+The second revision adopts the owner's decisions on Q1-Q8 (§5), including the clarifications on Q3 and Q6,
+and the requirement that explicit negations are represented independently of termination dates. Q9 was
+decided later, claim by claim (§5).
 
 The conditions from the first review still hold:
 - no global outcome precedence
@@ -42,7 +44,7 @@ For a question about one proposition, an instant v (or an interval [a, b)) and a
      - If their windows overlap, they are compatible. The boundary lies in the intersection, so the
        uncertainty narrows (R20, R23).
      - If their windows are disjoint, the statements compete. For ends, the instants between them are
-       CONTESTED (Q2). For starts, see open question Q9.
+       CONTESTED (Q2). For starts, each is judged on its own (Q9, §5).
    - **A termination stays effective** until a documented reinstatement or correction (Q3).
      - A correction removes it at step 1.
      - A reinstatement (a later stated start) ends its negative coverage where the reinstatement *may* have
@@ -201,10 +203,27 @@ What the rows show:
 | Q7 | Interval modes | **All three** (at / throughout / at some time in); each M1 question states its mode. |
 | Q8 | Source authority | **None in v2**: CONTESTED stays contested; authority is a separate, explicit policy later. |
 
-### Open question (new, from the Q6 work)
-| # | Question | Options | Recommendation |
-|---|---|---|---|
-| Q9 | Competing *start* statements with disjoint windows ("joined January" vs "joined March", no end between them): what about February? | (a) UNKNOWN, a start window covering the hull of both; (b) CONTESTED, as for ends (Q2); (c) PRESUMED from the earlier start, with a conflict flagged | **(a)**, with a conflict flagged. Under Q1 a start is not negative evidence, so the March statement does not directly deny February; CONTESTED needs direct negative evidence. Not needed for R1-R23. |
+| Q9 | Competing *start* statements with disjoint windows ("joined January" vs "since March", no end between them) | **Claim by claim** (owner decision, 2026-11-03), as below. |
+
+**Q9 in detail.**
+- **Each start claim stands alone:** it keeps its own window, precision, provenance and belief time, and is
+  judged for the instant asked:
+  - **supports:** it certainly started by then, and the period is evidenced to continue past it (a later end,
+    point or span, with no termination between), or a claim directly covers the instant
+  - **contradicts:** its whole window is after the instant, so it dates the start of that same period later
+  - **imprecise:** its window contains the instant
+  - **silent:** it started by then, but nothing shows the period continuing
+- **The outcome:**
+  - Something supports and something contradicts: **CONTESTED**.
+  - Something supports and something is imprecise: **UNKNOWN**, because the date is too imprecise to decide.
+  - All support: **that state** (TRUE or PRESUMED by the table in §2), with the disputed start disclosed in
+    the explanation.
+  - Nothing supports: the **ordinary rules**. So a start alone is still never negative evidence (Q1), even
+    when it competes.
+- **Never assumed:** the true start is never assumed to lie between the dates, and neither date is preferred.
+
+The Q9 decision replaces the earlier provisional rule, which put the start anywhere between the
+statements.
 
 ## 6. Implementation notes
 These are rules the specification leaves implicit. They do not change any row of §4.
@@ -213,8 +232,14 @@ These are rules the specification leaves implicit. They do not change any row of
 - **"Statements about the same boundary"** are consecutive starts, or consecutive ends, after sorting all
   boundaries by window (earliest bound, then latest).
 - **Competing ends (Q2):** CONTESTED from the earlier end's latest bound to the later end's earliest bound.
-- **Q9 (open):** the provisional rule (a) is implemented, and every affected answer says so in its
-  explanation. It changes Phase 4 question q01 (phase-4-v2.md).
+- **Q9:** implemented as decided (§5). It is tested for:
+  - two start dates that both establish the state
+  - two dates that straddle the instant
+  - an imprecise month that may fall after the instant
+  - a correction that supersedes one start
+  - belief-time reconstruction
+
+  Phase 4 question q01 is the imprecise-month case (phase-4-v2.md).
 - **Bounding claims** (value-filtered questions) contribute only terminations and negations, as in v1.
 - **Open-role questions** rank PRESUMED after TRUE when combining candidates.
 - **v1 and negations:** v1 cannot express negation, so it reports believed negations as excluded.

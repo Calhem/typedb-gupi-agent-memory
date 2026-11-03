@@ -13,7 +13,7 @@
       "unsupported_assertions": 0,
       "citation_precision": 0.833,
       "citation_recall": 0.833,
-      "median_seconds": 0.0176,
+      "median_seconds": 0.0216,
       "rows": [
         {
           "id": "q01",
@@ -152,7 +152,7 @@
       "unsupported_assertions": 4,
       "citation_precision": 0.667,
       "citation_recall": 0.556,
-      "median_seconds": 0.0034,
+      "median_seconds": 0.0036,
       "rows": [
         {
           "id": "q01",
@@ -302,7 +302,7 @@
       "unsupported_assertions": 0,
       "citation_precision": 0.833,
       "citation_recall": 0.833,
-      "median_seconds": 0.0178,
+      "median_seconds": 0.0211,
       "rows": [
         {
           "id": "q01",
@@ -441,7 +441,7 @@
       "unsupported_assertions": 4,
       "citation_precision": 0.667,
       "citation_recall": 0.556,
-      "median_seconds": 0.0034,
+      "median_seconds": 0.0035,
       "rows": [
         {
           "id": "q01",

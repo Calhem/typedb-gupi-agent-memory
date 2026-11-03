@@ -66,8 +66,22 @@ cannot express an explicit negation at all.
 10. **No source authority in v2 (Q8).** CONTESTED stays contested; authority is a later, explicit policy.
 11. **Versioned semantics:** `ask` and `query` take an answer-semantics version. v1 remains available, and is
     the default until this ADR is accepted. Every result records the version that produced it.
-12. **Still open:** Q9, competing start statements with disjoint windows (recommendation in
-    v2-truth-semantics.md §5).
+12. **Competing start statements (Q9),** decided by the owner on 2026-11-03, are judged claim by claim.
+    - **Each start claim stands alone:** it keeps its own window, precision, provenance and belief time, and
+      is judged for the instant asked:
+      - **supports:** it certainly started by then, and the period is evidenced to continue past it
+      - **contradicts:** its whole window is after the instant, so it dates the start of that same period
+        later
+      - **imprecise:** its window contains the instant
+      - **silent:** it started by then, but nothing shows the period continuing
+    - **The outcome:**
+      - Something supports and something contradicts: **CONTESTED**.
+      - Something supports and something is imprecise: **UNKNOWN**, because the date is too imprecise to
+        decide.
+      - All support: **that state**, disclosing the disputed start.
+      - Nothing supports: the **ordinary rules**, so a start alone is still never negative (Q1).
+    - **Never assumed:** the true start is never assumed to lie between the dates, and neither date is
+      preferred.
 
 ## Consequences
 - **Supersedes, on acceptance:** ADR 0007's spell-assembly section and ADR 0006's same-spell rule (both kept
