@@ -1,9 +1,10 @@
 # Memory Formation Engine (Phase 6)
 
-Status: **Phase 6A (foundations) and 6B (offline candidate extraction) done on
-`feature/phase-6-memory-formation`; 6C is at a design checkpoint; not merged.**
-- Nothing here changes how GUPI ingests, extracts or answers today.
-- The new package `gupi.formation` is used by no other code, and stores nothing.
+Status: **6A (foundations), 6B (offline candidate extraction) and 6C (the minimal formation pathway, with
+core/0011) done on `feature/phase-6-memory-formation`; not merged.** core/0012 (candidate storage) is not
+implemented.
+- **Unchanged:** the existing ingestion, `rules:v1` and answer semantics v1 and v2.
+- **Opt-in:** formation is a separate pathway (`gupi.formation.form`), used only when called.
 
 | Document | Contents |
 |---|---|
@@ -15,3 +16,5 @@ Status: **Phase 6A (foundations) and 6B (offline candidate extraction) done on
 | [6c-design-checkpoint.md](6c-design-checkpoint.md) | 6C: the minimum fields to form candidates into claims; a revised schema (0011 claim provenance, 0012 candidate store) for decision |
 
 6B results: ../evaluation/phase-6b-extraction.md.
+| [formation.md](formation.md) | 6C: the formation pathway and its policy (`formation:v1`) |
+| [6c-dev-demo.md](6c-dev-demo.md) | 6C: the development-only end-to-end demonstration (not a benchmark) |

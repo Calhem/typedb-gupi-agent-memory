@@ -2,7 +2,7 @@
 
 Date: 2026-11-03. Status: **direction approved (2026-11-03).**
 - **6B:** done; see rules-v2.md and ../evaluation/phase-6b-extraction.md.
-- **6C:** at a design checkpoint (6c-design-checkpoint.md); its schema is awaiting decision.
+- **6C:** done as a minimal pathway with core/0011 (formation.md); core/0012 is deferred.
 - **6D:** remains provisional.
 
 **Each milestone:**
