@@ -1,0 +1,11 @@
+id,segment,start,end,text,entity,reference,resolved,note,confidence
+men-1,seg-ex4-a,56,65,Hana Osei,ent-hana,name,stated,,
+men-2,seg-ex4-a,76,79,she,ent-hana,pronoun,stated,,
+men-3,seg-ex4-a,144,158,the contractor,ent-contractor,role-reference,inferred,'the contractor' is Oskarsen & Vey from the project context,
+men-4,seg-ex4-b,57,70,Joaquín Ferro,ent-joaquin,name,stated,,
+men-5,seg-ex4-c,6,15,Wen Abara,ent-wen,name,stated,,
+men-6,seg-ex4-c,55,62,Joaquín,ent-joaquin,name,stated,,
+men-7,seg-ex5-a,26,32,Tallis,ent-tallis,name,stated,,
+men-8,seg-ex5-b,72,74,we,ent-tallis,pronoun,inferred,Ravi writes for Tallis,
+men-9,seg-ex5-d,0,13,Joaquín Ferro,ent-joaquin,name,stated,,
+men-10,seg-ex8-b,40,44,Ravi,ent-ravi,name,stated,,

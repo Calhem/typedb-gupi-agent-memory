@@ -1,0 +1,6 @@
+id,question,annotator,frame,value_text,value_entity,value_forms,status,inference,explanation,justification,ambiguity,annotator_view,question_problem,note,confidence
+an-1,q-1,dry,recorded,no,,no,inferred,continuation,recorded as stepping down on 10 March; no return before 27 April recorded,,none,,,,high
+an-2,q-2,dry,actual,no,,no,inferred,continuation;combination,departure reported 10 March; on 20 April the contractor implies he is not yet back,reported departure plus a direct statement by the contractor's manager bracket the period; a site lead rarely changes twice in a month; nothing contrary,evidence,,,,medium
+an-3,q-3,dry,actual,9 February 2026,,2026-02-09;9 February 2026;9 Feb 2026,stated,,the subcontractor corrected the minutes,,none,,,,high
+an-4,q-4,dry,actual,,,,disputed,,"unsigned table says complete; the site lead says two boreholes outstanding, same day",,evidence,leans towards the site lead's more specific report,,,high
+an-5,q-5,dry,actual,no,,no,inferred,closed-list,"not on the employer's complete, current register of survey staff","authoritative, complete and current for survey staff on the date asked; the rumour is weaker and about a later time",none,,,,high

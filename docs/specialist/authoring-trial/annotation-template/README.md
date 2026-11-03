@@ -97,10 +97,13 @@ get identical files.
 5. **Output files:**
    - the source-layer sheets become `<document>.<annotator>.jsonl` (one file per document, by each row's
      document or segment)
+   - entities, judgements, and links between statements in different documents become
+     `shared.<annotator>.jsonl`
    - questions become `questions.jsonl`
    - answers become `answers.<annotator>.jsonl`
    - adjudication becomes `adjudication.jsonl`
-   - Within a file, records appear in sheet order, then row order.
+   - Within a file, records appear in sheet order, then row order. The order of record rows across documents carries no
+     information, and is not preserved. Child rows keep their order within their owner.
 6. **Checks during conversion:**
    - every referenced id exists
    - every enumerated value is allowed
@@ -109,5 +112,11 @@ get identical files.
 
    Errors are listed, and nothing is guessed.
 
-A converter that applies these rules can be written once the template is approved. It has not been
-written, so as not to build tooling ahead of the review.
+**The converter** is `scripts/annotation_export.py` (standard library only):
+
+    python -I scripts/annotation_export.py <sheets folder> <output folder> --annotator <name>
+
+It applies these rules, plus a reverse conversion, and refuses to write anything unless the sheets pass
+every check and the round trip loses nothing. It also checks each mention's and time's text against the
+document at its offsets, when the document files are present. The dry check (../dry-check/) shows it on the
+guidelines' examples.

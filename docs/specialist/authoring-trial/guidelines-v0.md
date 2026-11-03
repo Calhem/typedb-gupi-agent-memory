@@ -660,6 +660,8 @@ Your confidence in your own annotation, not the source's certainty:
 **Containers.**
 - Files are JSON Lines: one JSON object per line, each with a `record` field naming its type.
 - One file per document per annotator: `<document>.<annotator>.jsonl`.
+- Entities, judgements and links between statements in different documents belong to no single document.
+  They go in one `shared.<annotator>.jsonl` per annotator (a gap found by the template dry check).
 - For the questions: `questions.jsonl`, plus `answers.<annotator>.jsonl` per annotator.
 - One `adjudication.jsonl` after the meeting.
 - **Spreadsheets:** annotators may instead fill in the spreadsheet template in `annotation-template/`.

@@ -1,0 +1,11 @@
+answer,kind,set,side,segment,spans,statements,note
+an-1,essential,1,,seg-ex4-b,57-127,st-12,
+an-1,context,,,seg-ex4-c,55-100,st-14,
+an-2,essential,1,,seg-ex4-b,57-127,st-12,
+an-2,essential,1,,seg-ex4-c,55-100,st-15,
+an-3,essential,1,,seg-ex5-b,72-112,st-21,
+an-3,counter,,,seg-ex5-a,26-62,st-20,
+an-4,essential,1,A,seg-ex5-c,38-58,st-22,
+an-4,essential,2,B,seg-ex5-d,29-71,st-23,
+an-5,essential,1,,seg-ex8-a,60-130,st-30,
+an-5,counter,,,seg-ex8-b,27-62,st-31,

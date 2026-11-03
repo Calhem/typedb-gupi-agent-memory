@@ -1,0 +1,10 @@
+id,document,start,end,author,author_role_text,written,available_from,relation,related,note,confidence
+seg-ex4-a,doc-ex4-a,0,160,ent-minutes-author,minute-taker,tim-3mar,tim-3mar,original,,no circulation date stated; meeting date used,
+seg-ex4-b,doc-ex4-b,0,129,ent-minutes-author,,tim-17mar,tim-17mar,original,,no circulation date stated; meeting date used,
+seg-ex4-c,doc-ex4-c,0,102,ent-wen,,tim-20apr,tim-20apr,original,,,
+seg-ex5-a,doc-ex5-a,0,64,ent-minutes-author,,tim-10feb,tim-10feb,original,,,
+seg-ex5-b,doc-ex5-b,0,114,ent-ravi,,tim-12feb,tim-12feb,original,,,
+seg-ex5-c,doc-ex5-c,0,59,ent-table-author,,tim-30jun-t,tim-30jun-t,original,,table's 'as of' date,
+seg-ex5-d,doc-ex5-d,0,73,ent-joaquin,,tim-30jun-c,tim-30jun-c,original,,,
+seg-ex8-a,doc-ex8-a,0,238,ent-tallis,,tim-2oct,tim-2oct,original,,,
+seg-ex8-b,doc-ex8-b,0,63,ent-wen,,tim-6oct,tim-6oct,original,,,

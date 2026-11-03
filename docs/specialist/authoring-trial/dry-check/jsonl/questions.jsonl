@@ -1,0 +1,5 @@
+{"record": "question", "about_time": {"text": "1 April 2026", "from": "2026-04-01", "to": "2026-04-02", "mode": "at"}, "id": "q-1", "text": "According to the project records, was Joaquín site lead on 1 April 2026?", "answer_type": "yes-no", "frame": "recorded"}
+{"record": "question", "about_time": {"text": "1 April 2026", "from": "2026-04-01", "to": "2026-04-02", "mode": "at"}, "id": "q-2", "text": "Was Joaquín actually site lead on 1 April 2026?", "answer_type": "yes-no", "frame": "actual"}
+{"record": "question", "about_time": {}, "id": "q-3", "text": "When did Tallis start on site?", "answer_type": "date", "frame": "actual"}
+{"record": "question", "about_time": {"text": "30 June 2026", "from": "2026-06-30", "to": "2026-07-01", "mode": "at"}, "id": "q-4", "text": "Was the soil survey complete on 30 June 2026?", "answer_type": "yes-no", "frame": "actual"}
+{"record": "question", "about_time": {"text": "1 October 2026", "from": "2026-10-01", "to": "2026-10-02", "mode": "at"}, "id": "q-5", "text": "Was Ravi working for Tallis as survey staff on 1 October 2026?", "answer_type": "yes-no", "frame": "actual"}

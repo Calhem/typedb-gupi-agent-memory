@@ -1,0 +1,15 @@
+{"record": "entity", "id": "ent-hana", "kind": "person", "name": "Hana Osei", "aliases": ["Hana"]}
+{"record": "entity", "id": "ent-joaquin", "kind": "person", "name": "Joaquín Ferro", "aliases": ["Joaquín", "Joaquin Ferro"]}
+{"record": "entity", "id": "ent-wen", "kind": "person", "name": "Wen Abara", "aliases": ["Wen"]}
+{"record": "entity", "id": "ent-ravi", "kind": "person", "name": "Ravi Lindqvist", "aliases": ["Ravi"]}
+{"record": "entity", "id": "ent-contractor", "kind": "organisation", "name": "Oskarsen & Vey Engineering", "aliases": ["the contractor", "O&V"]}
+{"record": "entity", "id": "ent-tallis", "kind": "organisation", "name": "Tallis Ground Survey Ltd", "aliases": ["Tallis"]}
+{"record": "entity", "id": "ent-authority", "kind": "organisation", "name": "Brindle Harbour Authority", "aliases": ["the Authority"]}
+{"record": "entity", "id": "ent-minutes-author", "kind": "person", "name": "unidentified minute-taker"}
+{"record": "entity", "id": "ent-table-author", "kind": "other", "name": "unidentified author of the status table"}
+{"record": "entity", "id": "ent-soil-survey", "kind": "deliverable", "name": "soil survey"}
+{"record": "entity", "id": "ent-quay-safety", "kind": "other", "name": "safety adviser for the quay works"}
+{"record": "link", "id": "ln-1", "type": "resumes", "from": "st-14", "to": "st-13", "marked": "stated"}
+{"record": "link", "id": "ln-2", "type": "corrects", "from": "st-21", "to": "st-20", "marked": "stated", "note": "'Correction to the minutes'"}
+{"record": "link", "id": "ln-3", "type": "contradicts", "from": "st-23", "to": "st-22", "marked": "inferred", "note": "same day, neither refers to the other"}
+{"record": "judgement", "id": "jd-1", "about": "Joaquín was not site lead between 10 March and 20 April", "kind": "state", "holds_from": "tim-10mar", "holds_until": "tim-27apr", "belief": "happened", "based_on": ["st-12", "st-15"], "reasoning": "inferred", "inference": ["continuation", "combination"], "explanation": "departure reported; still not site lead on 20 April; nothing contrary", "confidence": "medium", "participants": [{"role": "holder", "entity": "ent-joaquin"}, {"role": "position", "value": "site lead"}, {"role": "time", "time": "tim-20apr"}]}

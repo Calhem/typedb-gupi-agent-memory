@@ -1,0 +1,2 @@
+id,about,kind,event_time,holds_from,holds_until,holds_at,belief,based_on,against,reasoning,inference,explanation,note,confidence
+jd-1,Joaquín was not site lead between 10 March and 20 April,state,,tim-10mar,tim-27apr,,happened,st-12;st-15,,inferred,continuation;combination,departure reported; still not site lead on 20 April; nothing contrary,,medium

@@ -1,0 +1,5 @@
+id,type,from,to,marked,note,confidence
+ln-1,resumes,st-14,st-13,stated,,
+ln-2,corrects,st-21,st-20,stated,'Correction to the minutes',
+ln-3,contradicts,st-23,st-22,inferred,"same day, neither refers to the other",
+ln-4,depends-on,st-13,st-12,inferred,the end of the state is implied by the event,

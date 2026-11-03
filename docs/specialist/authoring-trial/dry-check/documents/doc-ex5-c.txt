@@ -1,0 +1,3 @@
+Status as of 30 June 2026
+Item,Status
+Soil survey,complete

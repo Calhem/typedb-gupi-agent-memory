@@ -1,0 +1,10 @@
+id,kind,title,file,note
+doc-ex4-a,minutes,"Minutes of the North Quay project meeting, 3 March 2026",documents/doc-ex4-a.txt,
+doc-ex4-b,minutes,"Minutes of the North Quay project meeting, 17 March 2026",documents/doc-ex4-b.txt,
+doc-ex4-c,email,From: Wen Abara,documents/doc-ex4-c.txt,
+doc-ex5-a,minutes,"Minutes, 10 February 2026",documents/doc-ex5-a.txt,
+doc-ex5-b,email,From: Ravi Lindqvist,documents/doc-ex5-b.txt,
+doc-ex5-c,table,Status as of 30 June 2026,documents/doc-ex5-c.txt,
+doc-ex5-d,chat,"Joaquín Ferro, 30 June 2026: survey still has two boreholes outstanding.",documents/doc-ex5-d.txt,
+doc-ex8-a,email,From: Tallis Ground Survey Ltd office,documents/doc-ex8-a.txt,
+doc-ex8-b,chat,"Wen Abara, 6 October 2026: someone said Ravi's back at Tallis?",documents/doc-ex8-b.txt,

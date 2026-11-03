@@ -1,0 +1,6 @@
+id,text,answer_type,about_time,about_from,about_to,mode,as_of,frame,note
+q-1,"According to the project records, was Joaquín site lead on 1 April 2026?",yes-no,1 April 2026,2026-04-01,2026-04-02,at,,recorded,
+q-2,Was Joaquín actually site lead on 1 April 2026?,yes-no,1 April 2026,2026-04-01,2026-04-02,at,,actual,
+q-3,When did Tallis start on site?,date,,,,,,actual,
+q-4,Was the soil survey complete on 30 June 2026?,yes-no,30 June 2026,2026-06-30,2026-07-01,at,,actual,
+q-5,Was Ravi working for Tallis as survey staff on 1 October 2026?,yes-no,1 October 2026,2026-10-01,2026-10-02,at,,actual,
