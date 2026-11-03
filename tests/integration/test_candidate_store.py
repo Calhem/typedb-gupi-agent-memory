@@ -262,3 +262,20 @@ def test_the_store_and_the_legacy_form_path_are_never_mixed_silently(memory, clo
     with pytest.raises(ValueError, match="already formed by form"):
         store.submit(memory, legacy, lset)
     assert store.get(memory, lset.candidates[0].id) is None
+
+
+def test_an_equal_timestamp_decision_fails_and_changes_nothing(memory, clock):
+    """A decision at the same instant as the previous one would make the order ambiguous: it is refused, and
+    the refused approval forms nothing."""
+    _, cset, _ = say(memory, clock, "m1", "I think Alice Grey works at Acme Labs.", "2025-06-01T09:00")
+    cid = cset.candidates[0].id
+    before = store.get(memory, cid)
+    with pytest.raises(ValueError, match="clock has not advanced"):
+        store.review(memory, cid, "approve", "reviewer-a")          # same instant as the policy's decision
+    after = store.get(memory, cid)
+    assert after.decisions == before.decisions and after.status == "review" and after.claim_id is None
+    assert claims(memory) == [] and [s.candidate.id for s in store.pending(memory)] == [cid]
+    with transaction(memory.driver, memory.database, TransactionType.READ) as tx:
+        assert typeql.concept_rows(tx, "match $m isa mention;") == []   # no referent mentions written either
+    clock.set("2025-06-01T09:01")
+    assert store.review(memory, cid, "approve", "reviewer-a").outcome == "formed"
