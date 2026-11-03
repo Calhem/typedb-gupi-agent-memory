@@ -11,7 +11,7 @@ comfortable reading careful prose about business documents. No programming knowl
 1. **guidelines-v0.md**, the annotation guidelines. Read up to §15; stop before the worked examples
    (§16).
 2. **The practice task** (Part 1 below), before reading §16.
-3. **guidelines-v0.md §16-§18,** then **scoring-rubric-v0.md**.
+3. **guidelines-v0.md §16-§18,** then **scoring-protocol-v0.md** and **scoring-nl-experimental-v0.md**.
 4. **Sections A-H** of this checklist.
 5. Only then, **bias-audit-v0.md,** and section I. It is read last so that its findings do not steer yours.
 

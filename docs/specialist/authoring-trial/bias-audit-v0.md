@@ -1,7 +1,7 @@
 # Bias audit of the annotation guidelines, draft v0
 
 Date: 2026-11-03. Status: **revision 1, provisional**, together with guidelines-v0.md (revision 1) and
-scoring-rubric-v0.md. Revision 1 updates B8 and adds B14-B16, which come from the question frames and the
+scoring-protocol-v0.md. Revision 1 updates B8 and adds B14-B16, which come from the question frames and the
 scoring rubric.
 
 ## Question asked
@@ -72,7 +72,7 @@ directions. That is the intended outcome of an independent gold, and the coverag
    only strong remedy for author familiarity.
 2. **Continuation questions:** answered in revision 1 by the question frames (B8). Still open: whether the
    strict actual-frame rule is right (review-checklist-v0.md, C4).
-3. **A status rubric:** drafted as scoring-rubric-v0.md (B7). Still to be reviewed, and later written into
+3. **A status rubric:** drafted as scoring-protocol-v0.md (B7). Still to be reviewed, and later written into
    the M1 protocol.
 4. **Trial measurements to add to the report:**
    - implied statements, facts that appear only in tables, and pronoun and role references (B6)

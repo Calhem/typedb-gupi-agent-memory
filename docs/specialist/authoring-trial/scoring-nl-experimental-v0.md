@@ -1,6 +1,17 @@
-# Scoring rubric for natural-language answers, draft v0
+# Experimental secondary metric: scoring natural-language answers, draft v0
 
-Date: 2026-11-03. Status: **provisional draft for review. Not frozen; no scorer has been built.**
+Date: 2026-11-03. Status: **experimental, and potentially brittle. Not the primary score. Provisional;
+not frozen; no scorer has been built.**
+
+> **Why it is experimental.** This method reads free-text answers with fixed word lists and a
+> first-sentence rule. Paraphrases, unusual phrasing, and the order in which a system writes can change its
+> score without changing what it means. It is therefore kept only as a secondary measure, reported
+> separately and never combined with the primary score. The primary score is the structured answer
+> contract in scoring-protocol-v0.md.
+>
+> **What it is applied to.** In the trial and M1 it scores only the optional `natural_language_answer`
+> field of the contract (scoring-protocol-v0.md §8). Where this document says "the primary score" or
+> "reported per system", read "this experimental metric".
 
 **What it scores.** This rubric scores any system that answers the trial's questions in ordinary English.
 It is applied against gold written to guidelines-v0.md.

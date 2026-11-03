@@ -15,7 +15,8 @@ provisional until reviewed (m1-protocol.md §2).
 ## Prerequisite: annotation guidelines, draft v0
 The guidelines are in guidelines-v0.md (revision 1), with:
 - a bias audit, in bias-audit-v0.md
-- a deterministic scoring rubric, in scoring-rubric-v0.md
+- the primary scoring protocol (a common structured answer contract), in scoring-protocol-v0.md
+- an experimental secondary metric for free-text answers, in scoring-nl-experimental-v0.md
 - an independent-review checklist, in review-checklist-v0.md
 
 All are provisional: accepted for further review, and not approved for freezing.
