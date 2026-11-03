@@ -123,6 +123,12 @@ class Claim:
     confidence: float | None = None
     basis: str | None = None  # "explicit" or "inferred", for extracted claims
     polarity: str = "positive"  # "negative": the claim states the proposition did NOT hold over `valid`
+    # provenance from memory formation (core/0011); each is None unless the claim was formed from a candidate
+    valid_from_basis: str | None = None   # "stated" or "lower-bound" ("since March")
+    commitment: str | None = None         # the source's commitment: certain, probable, possible, unknown
+    attribution_mode: str | None = None   # direct, reported, quoted, forwarded, rumour, unattributed
+    asserted_by: str | None = None        # referent id of who made the assertion, when not the author
+    candidate_id: str | None = None       # the gupi.candidate/1 id it was formed from
 
     def __post_init__(self):
         label(self.type)
@@ -140,6 +146,12 @@ class Claim:
     def players(self):
         return expand_roles(self.roles)
 
+    def _provenance(self):
+        fields = {"valid-from-basis": self.valid_from_basis, "commitment": self.commitment,
+                  "attribution-mode": self.attribution_mode, "asserted-by": self.asserted_by,
+                  "candidate-id": self.candidate_id}
+        return {k: v for k, v in fields.items() if v is not None}
+
     @property
     def proposition_key(self):
         return proposition_key(self.type, self.roles)
@@ -155,6 +167,7 @@ class Claim:
             self.method,
             *([self.basis] if self.basis else []),  # only when set, so Phase 1 ids are unchanged
             *(["negative"] if self.polarity == "negative" else []),  # likewise, so positive ids are unchanged
+            *([p] if (p := self._provenance()) else []),  # likewise: only claims formed from candidates
         )
 
 

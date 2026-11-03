@@ -42,3 +42,33 @@ Items the owner has asked to keep visible until they are resolved. Last updated 
   to record "held at least since" without a start. **Do not** change the frozen Phase 4 benchmark, its gold
   claims or its scoring to fix it.
 - **Owner:** project owner; to be picked up when the Memory Formation Engine starts.
+
+## Known limitations: memory formation and the candidate store (Phase 6)
+These are recorded at the Phase 6 merge (docs/formation/candidate-store.md). None changes how GUPI answers
+existing data. They matter when formation is used.
+
+- **S7, unauthenticated reviewer identities.** A reviewer is a plain string passed by the caller. Nothing
+  checks who approved or rejected a candidate, so an approval proves only what the caller claimed. Do not
+  treat a recorded reviewer as an authenticated identity.
+- **S8, name-based entity conflation within one conversation.** Participants are referents scoped to their
+  conversation or document. Two different people with the same name in the same conversation become one
+  referent, and their claims are merged. Across conversations and sources, nothing is merged (only explicit
+  identity decisions merge). Fixing this needs identity resolution, which is out of scope.
+- **S1, malformed candidates are not stored.** `store.submit` reports structurally invalid candidates, but
+  does not keep them, so extractor errors are not durable.
+- **S2, suggestions can go stale.** Correction suggestions reflect memory at the moment each decision was
+  recorded. A claim added later is not reflected until the candidate is decided again.
+- **S3, correction targets are found within one conversation only.** They are found by proposition key, so a
+  correction of a claim from another conversation is recorded as `missing`.
+- **S4, `pending` reads every stored candidate.** It is linear in the size of the store, which is acceptable
+  for a prototype.
+- **S5, a formed candidate's status stays `formed`** even if its claim is later retracted. The claim's own
+  reviews carry the retraction.
+- **S6, two formation pathways.** The candidate store is preferred for new deployments, and `form()` is
+  legacy. Using both on the same candidates is refused, in either order.
+- **Also:**
+  - **v1 answers are not qualified.** Only v2 carries the evidential qualification.
+  - **The asserter is always created as a person.**
+  - **`rules:v2`'s narrow coverage** is documented in docs/formation/rules-v2.md and
+    docs/evaluation/phase-6b-extraction.md.
+

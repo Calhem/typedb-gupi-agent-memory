@@ -32,6 +32,7 @@ class AnswerResult:
     considered: tuple  # every matching claim about the proposition recorded by then, believed or not
     evaluation: object = None  # v1: gupi.answering.Evaluation; v2: gupi.answering_v2.Classification
     semantics: str = "v1"      # under v2, `believed` pairs each deciding claim with its contribution
+    qualification: object = None  # v2: gupi.qualification.Qualification, the evidential standing (separate)
 
 
 class Memory:
@@ -79,26 +80,30 @@ class Memory:
 
     def ingest(self, batch: Batch) -> IngestReport:
         """Record a batch in one transaction. Re-ingesting the same batch creates nothing new."""
+        with transaction(self.driver, self.database, TransactionType.WRITE) as tx:
+            return self.ingest_in(tx, batch, self.clock())
+
+    def ingest_in(self, tx, batch, now, report=None):
+        """Record a batch inside the caller's write transaction, so that it commits, or fails, together with
+        other writes (the candidate store, gupi.formation.store)."""
         for r in batch.referents:
             self._check("referent", r.type)
         for c in batch.claims:
             self._check("claim", c.type)
-        report = IngestReport()
-        with transaction(self.driver, self.database, TransactionType.WRITE) as tx:
-            now = self.clock()
-            for s in batch.sources:
-                self._ingest_source(tx, s, report)
-            for c in batch.contexts:
-                self._ingest_context(tx, c, report)
-            for r in batch.referents:
-                self._ingest_referent(tx, r, report)
-            for o in batch.observations:
-                self._ingest_observation(tx, o, now, report)
-            for m in batch.mentions:
-                self._ingest_mention(tx, m, report)
-            self._before_claims(tx)
-            for c in batch.claims:
-                self._ingest_claim(tx, c, now, report)
+        report = report if report is not None else IngestReport()
+        for s in batch.sources:
+            self._ingest_source(tx, s, report)
+        for c in batch.contexts:
+            self._ingest_context(tx, c, report)
+        for r in batch.referents:
+            self._ingest_referent(tx, r, report)
+        for o in batch.observations:
+            self._ingest_observation(tx, o, now, report)
+        for m in batch.mentions:
+            self._ingest_mention(tx, m, report)
+        self._before_claims(tx)
+        for c in batch.claims:
+            self._ingest_claim(tx, c, now, report)
         return report
 
     def ingest_many(self, batches):
@@ -216,10 +221,18 @@ class Memory:
             "valid-to-earliest": vt.to_earliest, "valid-to-latest": vt.to_latest,
             "time-precision": c.time_precision, "valid-to-basis": c.valid_to_basis,
             "method": c.method, "confidence": c.confidence, "extraction-basis": c.basis,
-            "polarity": "negative" if c.polarity == "negative" else None, **c.values,
+            "polarity": "negative" if c.polarity == "negative" else None,
+            "valid-from-basis": c.valid_from_basis, "commitment": c.commitment,
+            "attribution-mode": c.attribution_mode, "candidate-id": c.candidate_id, **c.values,
         }
         has, has_params = _has(attrs, "a")
         statements = [f"$c isa {label(c.type)} ({links}){has};"]
+        if c.asserted_by is not None:
+            if self._type_of(tx, c.asserted_by) not in self.types()["referent"]:
+                raise ValueError(f"claim names unknown asserter {c.asserted_by!r}")
+            match.append("$asserter isa referent, has gupi-id == $asserter_id;")
+            params["asserter_id"] = c.asserted_by
+            statements.append("assertion (asserter: $asserter, asserted: $c);")
         params.update(has_params)
         for head, span, prefix in evidence:
             span_has, span_params = _has(span, prefix)
@@ -502,7 +515,10 @@ class Memory:
         if semantics == "v2":
             r = classify(believed, valid_at, anything, bounding=bounding)
             deciding = tuple((c, contribution(c, valid_at, r.basis.kind)) for c in recorded if c.id in r.basis.claims)
-            return AnswerResult(r.answer, deciding, tuple(matching), r, "v2")
+            from gupi.qualification import qualify
+            with transaction(self.driver, self.database, TransactionType.READ) as tx:
+                q = qualify(tx, r.answer, deciding)
+            return AnswerResult(r.answer, deciding, tuple(matching), r, "v2", q)
         positive = [c for c in believed if c.polarity != "negative"]  # v1 cannot express negation
         result = evaluate(positive, valid_at, anything_recorded=anything,
                           bounding=[c for c in bounding if c.polarity != "negative"])
