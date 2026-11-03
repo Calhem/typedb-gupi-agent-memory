@@ -49,6 +49,7 @@ class Binding:
     notes: tuple = ()
     basis: object = None             # v2: gupi.answering_v2.Basis (kind and deciding claims)
     explanation: str | None = None   # v2: why this answer, in words
+    qualification: object = None     # v2: gupi.qualification.Qualification (evidential standing, separate)
 
 
 @dataclass
@@ -60,6 +61,7 @@ class Result:
     temporal: dict                   # valid time, belief time, and the assumptions used
     steps: list                      # what was retrieved, in order
     ambiguous: list = field(default_factory=list)  # names that matched several unmerged referents
+    qualification: object = None     # v2: the evidential standing of the overall answer (separate dimension)
 
     @property
     def binding(self):
@@ -177,7 +179,7 @@ def answer(memory, q: Question):
     bindings, notes = [], []
     for group, claims in candidates:
         if q.semantics == "v2":
-            binding = _binding_v2(q, group, claims, believed_ids, labels)
+            binding = _binding_v2(memory, q, group, claims, believed_ids, labels)
             if binding:
                 bindings.append(binding)
                 notes += binding.notes
@@ -208,24 +210,40 @@ def answer(memory, q: Question):
         steps.append(f"open role {open_role!r}: {len(bindings)} candidate(s)")
 
     overall = _overall(bindings, open_role, anything=bool(recorded))
+    qualification = None
+    if q.semantics == "v2":
+        from gupi.qualification import qualify
+        deciding = [(c, cite_role) for b in bindings if b.answer is overall and b.qualification
+                    for c, cite_role in _deciding_views(b, recorded)]
+        with transaction(memory.driver, memory.database, TransactionType.READ) as tx:
+            qualification = qualify(tx, overall, deciding)
     temporal = {"valid_at": q.valid_at, "believed_at": t, "semantics": q.semantics, "assumptions": sorted(set(notes)),
                 "bounds": {b.label or "answer": [f"{c.claim_id}: {c.verdict}" for c in b.citations] for b in bindings}}
-    return Result(q, overall, bindings, excluded, temporal, steps)
+    return Result(q, overall, bindings, excluded, temporal, steps, qualification=qualification)
 
 
-def _binding_v2(q, group, claims, believed_ids, labels):
+def _binding_v2(memory, q, group, claims, believed_ids, labels):
     """One candidate's answer under v2 (docs/adr/0009): the deciding claims are cited with what each contributes."""
     from gupi.answering_v2 import classify, contribution
+    from gupi.qualification import qualify
     matching = [c for c in claims if all(c.values.get(k) == v for k, v in q.values.items())]
     bounding = [c for c in claims if c.id in believed_ids and q.values and any(k not in c.values for k in q.values)]
     if not matching and not bounding:
         return None
     r = classify([c for c in matching if c.id in believed_ids], q.valid_at, True, bounding)
     by_id = {c.id: c for c in claims}
-    cites = [x for cid in r.basis.claims if cid in by_id
-             for x in _cite(by_id[cid], contribution(by_id[cid], q.valid_at, r.basis.kind))]
+    deciding = [(by_id[cid], contribution(by_id[cid], q.valid_at, r.basis.kind)) for cid in r.basis.claims if cid in by_id]
+    cites = [x for c, role in deciding for x in _cite(c, role)]
+    with transaction(memory.driver, memory.database, TransactionType.READ) as tx:
+        qual = qualify(tx, r.answer, deciding)
     label = ", ".join(sorted({labels.get(p) or p for p in group})) if group else None
-    return Binding(tuple(sorted(group)), label, r.answer, tuple(dict.fromkeys(cites)), r.notes, r.basis, r.explanation)
+    return Binding(tuple(sorted(group)), label, r.answer, tuple(dict.fromkeys(cites)), r.notes, r.basis, r.explanation,
+                   qual)
+
+
+def _deciding_views(binding, recorded):
+    by_id = {c.id: c for c in recorded}
+    return [(by_id[s.claim_id], s.contribution) for s in binding.qualification.supports if s.claim_id in by_id]
 
 
 def _overall(bindings, open_role, anything):

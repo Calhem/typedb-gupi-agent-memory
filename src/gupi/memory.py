@@ -32,6 +32,7 @@ class AnswerResult:
     considered: tuple  # every matching claim about the proposition recorded by then, believed or not
     evaluation: object = None  # v1: gupi.answering.Evaluation; v2: gupi.answering_v2.Classification
     semantics: str = "v1"      # under v2, `believed` pairs each deciding claim with its contribution
+    qualification: object = None  # v2: gupi.qualification.Qualification, the evidential standing (separate)
 
 
 class Memory:
@@ -510,7 +511,10 @@ class Memory:
         if semantics == "v2":
             r = classify(believed, valid_at, anything, bounding=bounding)
             deciding = tuple((c, contribution(c, valid_at, r.basis.kind)) for c in recorded if c.id in r.basis.claims)
-            return AnswerResult(r.answer, deciding, tuple(matching), r, "v2")
+            from gupi.qualification import qualify
+            with transaction(self.driver, self.database, TransactionType.READ) as tx:
+                q = qualify(tx, r.answer, deciding)
+            return AnswerResult(r.answer, deciding, tuple(matching), r, "v2", q)
         positive = [c for c in believed if c.polarity != "negative"]  # v1 cannot express negation
         result = evaluate(positive, valid_at, anything_recorded=anything,
                           bounding=[c for c in bounding if c.polarity != "negative"])
