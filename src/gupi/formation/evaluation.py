@@ -114,6 +114,74 @@ def score(data, outputs):
             "rows": rows}
 
 
+CONVERSATIONS = DATA.parents[1] / "conversations"
+
+
+def conversations(split):
+    """Messages of the Phase 2 conversation fixtures (written before rules:v2), with their gold claims."""
+    for path in sorted((CONVERSATIONS / split).glob("*.json")):
+        conv = json.loads(path.read_text())
+        gold = conv["gold"]["claims"]
+        for m in conv["messages"]:
+            when = datetime.fromisoformat(m["at"].replace("Z", "+00:00"))
+            yield conv["id"], Observation("src:" + conv["id"], m["key"], m["text"], when), \
+                [g for g in gold if g["message"] == m["key"]]
+
+
+def score_conversations(split, extract):
+    """Claim-level precision and recall on a Phase 2 split. `extract(observation, prior)` returns
+    [(type, {role: surface}, polarity)]. Phase 2 gold has no polarity (all positive) and encodes "since" as
+    a start, so only type, participants and polarity are compared."""
+    expected = extracted = matched = 0
+    misses, false_positives, threads = [], [], {}
+    for conv, obs, gold in conversations(split):
+        got = extract(obs, threads.setdefault(conv, []))
+        want = [(g["type"], {r: s.casefold() for r, s in g["roles"].items()}, "positive") for g in gold]
+        got = [(ty, {r: s.casefold() for r, s in roles.items()}, pol) for ty, roles, pol in got]
+        expected, extracted = expected + len(want), extracted + len(got)
+        free = list(range(len(got)))
+        for w in want:
+            j = next((j for j in free if got[j] == w), None)
+            if j is None:
+                misses.append(f"{obs.record_key}: {w[0]}{sorted(w[1].items())}")
+            else:
+                free.remove(j)
+                matched += 1
+        false_positives += [f"{obs.record_key}: {got[j][0]}{sorted(got[j][1].items())}" for j in free]
+    return {"split": split, "expected": expected, "extracted": extracted, "matched": matched,
+            "precision": round(matched / extracted, 3) if extracted else None,
+            "recall": round(matched / expected, 3) if expected else None,
+            "misses": misses, "false_positives": false_positives}
+
+
+def rules_v2_claims(extractor):
+    def extract(obs, prior):
+        cset, _ = extractor.extract(obs, prior=tuple(prior))
+        prior.append(cset)
+        return [(c.claim_type, {p.role: p.surface for p in c.participants}, c.polarity) for c in cset.candidates]
+    return extract
+
+
+def rules_v1_claims():
+    """rules:v1 through the existing contract validator, for comparison only (no TypeDB)."""
+    from gupi.extraction.contract import SchemaInfo, validate
+    from gupi.extraction.pipeline import ExtractionRequest
+    from gupi.extraction.rules import RuleExtractor
+    person, org = frozenset({"person"}), frozenset({"organization"})
+    schema = SchemaInfo(frozenset({"person", "organization"}),
+                        {"employment": {"employee": person, "employer": org}, "reporting": {"report": person, "manager": person},
+                         "statement": {"subject": person, "object": person | org}},
+                        {"employment": frozenset({"job-title"})})
+
+    def extract(obs, prior):
+        raw = RuleExtractor().extract(ExtractionRequest(obs.content, obs.observed_at, schema))
+        out = validate(raw, obs, schema, "scope", "rules:v1")
+        surface = {m.referent_id: m.surface for m in out.mentions}
+        return [(c.type, {r: surface[v if isinstance(v, str) else v[0]] for r, v in c.roles.items()}, "positive")
+                for c in out.claims if c.type != "statement"]
+    return extract
+
+
 def _brief(x):
     return f"{x['type']}({', '.join(f'{r}={s}' for r, s in sorted(x['roles'].items()))}){' NOT' if x['polarity'] == 'negative' else ''}"
 
@@ -130,8 +198,14 @@ def main(argv=None):
           f"correct rejections {result['correct_rejections']}/{result['empty_passages']}")
     for f, v in result["fields"].items():
         print(f"  {f:12} {v['correct']}/{v['of']} of matched")
+    conv = {f"{name}/{split}": score_conversations(split, fn())
+            for split in ("heldout", "dev") for name, fn in (("rules:v2", lambda: rules_v2_claims(RulesV2())),
+                                                            ("rules:v1", rules_v1_claims))}
+    for k, v in conv.items():
+        print(f"Phase 2 {k:16} precision {v['matched']}/{v['extracted']} = {v['precision']}  "
+              f"recall {v['matched']}/{v['expected']} = {v['recall']}")
     if args.json:
-        Path(args.json).write_text(json.dumps(result, indent=2) + "\n")
+        Path(args.json).write_text(json.dumps({"frozen_set": result, "phase_2_conversations": conv}, indent=2) + "\n")
 
 
 if __name__ == "__main__":

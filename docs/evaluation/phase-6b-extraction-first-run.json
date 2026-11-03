@@ -1,0 +1,654 @@
+{
+  "frozen_set": {
+    "passages": 32,
+    "expected": 31,
+    "extracted": 30,
+    "matched": 30,
+    "precision": 1.0,
+    "recall": 0.968,
+    "correct_rejections": 5,
+    "empty_passages": 5,
+    "fields": {
+      "times": {
+        "correct": 12,
+        "of": 30
+      },
+      "modality": {
+        "correct": 30,
+        "of": 30
+      },
+      "commitment": {
+        "correct": 30,
+        "of": 30
+      },
+      "attribution": {
+        "correct": 30,
+        "of": 30
+      },
+      "asserted_by": {
+        "correct": 30,
+        "of": 30
+      },
+      "relations": {
+        "correct": 30,
+        "of": 30
+      }
+    },
+    "rows": [
+      {
+        "id": "p01",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p02",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": [
+          {
+            "field": "times",
+            "expected": [
+              [
+                "holds-since",
+                "2023"
+              ]
+            ],
+            "got": [
+              [
+                "holds-at",
+                "has worked"
+              ],
+              [
+                "holds-since",
+                "2023"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p03",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": [
+          {
+            "field": "times",
+            "expected": [
+              [
+                "holds-since",
+                "last spring"
+              ]
+            ],
+            "got": [
+              [
+                "holds-at",
+                "has been reporting"
+              ],
+              [
+                "holds-since",
+                "last spring"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p04",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p05",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p06",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": [
+          {
+            "field": "times",
+            "expected": [],
+            "got": [
+              [
+                "holds-at",
+                "no longer works"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p07",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": [
+          {
+            "field": "times",
+            "expected": [],
+            "got": [
+              [
+                "holds-at",
+                "reports"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p08",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p09",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p10",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": [
+          {
+            "field": "times",
+            "expected": [],
+            "got": [
+              [
+                "holds-at",
+                "does not report"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p11",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": [
+          {
+            "field": "times",
+            "expected": [
+              [
+                "holds-since",
+                "april 2025"
+              ]
+            ],
+            "got": [
+              [
+                "holds-at",
+                "has reported"
+              ],
+              [
+                "holds-since",
+                "april 2025"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p12",
+        "expected": 2,
+        "extracted": 2,
+        "matched": 2,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": [
+          {
+            "field": "times",
+            "expected": [
+              [
+                "holds-since",
+                "april 2025"
+              ]
+            ],
+            "got": [
+              [
+                "holds-at",
+                "has reported"
+              ],
+              [
+                "holds-since",
+                "april 2025"
+              ]
+            ]
+          },
+          {
+            "field": "times",
+            "expected": [
+              [
+                "holds-since",
+                "april 2025"
+              ]
+            ],
+            "got": [
+              [
+                "holds-at",
+                "has reported"
+              ],
+              [
+                "holds-since",
+                "april 2025"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p13",
+        "expected": 0,
+        "extracted": 0,
+        "matched": 0,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p14",
+        "expected": 0,
+        "extracted": 0,
+        "matched": 0,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p15",
+        "expected": 0,
+        "extracted": 0,
+        "matched": 0,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p16",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p17",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p18",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": [
+          {
+            "field": "times",
+            "expected": [],
+            "got": [
+              [
+                "holds-at",
+                "works"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p19",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": [
+          {
+            "field": "times",
+            "expected": [],
+            "got": [
+              [
+                "holds-at",
+                "reports"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p20",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": [
+          {
+            "field": "times",
+            "expected": [],
+            "got": [
+              [
+                "start",
+                "later this year"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p21",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p22",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": [
+          {
+            "field": "times",
+            "expected": [],
+            "got": [
+              [
+                "holds-at",
+                "isn't"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p23",
+        "expected": 2,
+        "extracted": 2,
+        "matched": 2,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": [
+          {
+            "field": "times",
+            "expected": [
+              [
+                "holds-since",
+                "2024"
+              ]
+            ],
+            "got": [
+              [
+                "holds-at",
+                "has been"
+              ],
+              [
+                "holds-since",
+                "2024"
+              ]
+            ]
+          },
+          {
+            "field": "times",
+            "expected": [],
+            "got": [
+              [
+                "holds-at",
+                "reports"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p24",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p25",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p26",
+        "expected": 0,
+        "extracted": 0,
+        "matched": 0,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p27",
+        "expected": 0,
+        "extracted": 0,
+        "matched": 0,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p28",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": [
+          {
+            "field": "times",
+            "expected": [],
+            "got": [
+              [
+                "start",
+                "smarch 2025"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p29",
+        "expected": 2,
+        "extracted": 2,
+        "matched": 2,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": [
+          {
+            "field": "times",
+            "expected": [],
+            "got": [
+              [
+                "holds-at",
+                "reports"
+              ]
+            ]
+          },
+          {
+            "field": "times",
+            "expected": [],
+            "got": [
+              [
+                "holds-at",
+                "reports"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p30",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": [
+          {
+            "field": "times",
+            "expected": [
+              [
+                "start",
+                "march 2025"
+              ]
+            ],
+            "got": [
+              [
+                "holds-at",
+                "has been reporting"
+              ],
+              [
+                "start",
+                "march 2025"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "p31",
+        "expected": 1,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [],
+        "field_errors": []
+      },
+      {
+        "id": "p32",
+        "expected": 2,
+        "extracted": 1,
+        "matched": 1,
+        "false_positives": [],
+        "misses": [
+          "employment(employee=he, employer=arnholt systems)"
+        ],
+        "field_errors": []
+      }
+    ]
+  },
+  "phase_2_conversations": {
+    "rules:v2/heldout": {
+      "split": "heldout",
+      "expected": 12,
+      "extracted": 5,
+      "matched": 5,
+      "precision": 1.0,
+      "recall": 0.417,
+      "misses": [
+        "h1-1: employment[('employee', 'jonas berg'), ('employer', 'lumen labs')]",
+        "h2-1: employment[('employee', 'lena fischer'), ('employer', 'orbit')]",
+        "h2-2: reporting[('manager', 'raj patel'), ('report', 'lena fischer')]",
+        "h2-3: reporting[('manager', 'raj patel'), ('report', 'lena fischer')]",
+        "h3-2: statement[('subject', 'kim')]",
+        "h3-3: reporting[('manager', 'noah'), ('report', 'kim')]",
+        "h3-4: statement[('subject', 'kim')]"
+      ],
+      "false_positives": []
+    },
+    "rules:v1/heldout": {
+      "split": "heldout",
+      "expected": 12,
+      "extracted": 5,
+      "matched": 5,
+      "precision": 1.0,
+      "recall": 0.417,
+      "misses": [
+        "h1-1: employment[('employee', 'jonas berg'), ('employer', 'lumen labs')]",
+        "h1-3: employment[('employee', 'mia chen'), ('employer', 'lumen labs')]",
+        "h2-2: reporting[('manager', 'raj patel'), ('report', 'lena fischer')]",
+        "h3-1: employment[('employee', 'kim'), ('employer', 'vector')]",
+        "h3-2: statement[('subject', 'kim')]",
+        "h3-3: reporting[('manager', 'noah'), ('report', 'kim')]",
+        "h3-4: statement[('subject', 'kim')]"
+      ],
+      "false_positives": []
+    },
+    "rules:v2/dev": {
+      "split": "dev",
+      "expected": 12,
+      "extracted": 8,
+      "matched": 8,
+      "precision": 1.0,
+      "recall": 0.667,
+      "misses": [
+        "d1-1: employment[('employee', 'priya shah'), ('employer', 'northwind')]",
+        "d2-4: employment[('employee', 'marco rossi'), ('employer', 'brightline')]",
+        "d3-2: statement[('subject', 'alice')]",
+        "d3-4: employment[('employee', 'sam'), ('employer', 'initech')]"
+      ],
+      "false_positives": []
+    },
+    "rules:v1/dev": {
+      "split": "dev",
+      "expected": 12,
+      "extracted": 10,
+      "matched": 10,
+      "precision": 1.0,
+      "recall": 0.833,
+      "misses": [
+        "d3-2: statement[('subject', 'alice')]",
+        "d3-4: employment[('employee', 'sam'), ('employer', 'initech')]"
+      ],
+      "false_positives": []
+    }
+  }
+}
