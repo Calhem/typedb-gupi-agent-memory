@@ -172,3 +172,102 @@ def all_claims(tx):
 
 def claims_of_type(tx, claim_type):
     return _views(typeql.documents(tx, f"match $c isa! $t; $t label {typeql.label(claim_type)};" + FETCH))
+
+
+# --- server-side filtering (Phase 4): TypeDB selects the candidates; only those are fetched ---
+
+def claims_by_ids(tx, claim_ids):
+    """Full views for these claims, in one query."""
+    ids = sorted(set(claim_ids))
+    if not ids:
+        return []
+    return _views(typeql.documents_for(tx, "match $c isa! $t, has gupi-id == $id; $t sub claim;" + FETCH,
+                                       [{"id": i} for i in ids]))
+
+
+def _ids(rows, var="cid"):
+    return sorted({r.get(var).get_string() for r in rows})
+
+
+def believed_among(tx, claim_ids, at):
+    """Which of these claims TypeDB's believed_claim says are believed at `at`."""
+    ids = sorted(set(claim_ids))
+    if not ids:
+        return set()
+    return set(_ids(typeql.rows_for(
+        tx, "match $c isa claim, has gupi-id == $id, has gupi-id $cid; let $b in believed_claim($c, $at);",
+        [{"id": i, "at": at} for i in ids])))
+
+
+def recorded_with_keys(tx, keys, at):
+    """Ids of claims with any of these proposition keys recorded by `at`."""
+    keys = sorted(set(keys))
+    if not keys:
+        return []
+    return _ids(typeql.rows_for(
+        tx, "match $c isa claim, has proposition-key == $k, has gupi-id $cid, has recorded-at $r; $r <= $at;",
+        [{"k": k, "at": at} for k in keys]))
+
+
+def believed_of_type(tx, claim_type, at):
+    return _ids(typeql.concept_rows(
+        tx, f"match $c isa {typeql.label(claim_type)}, has gupi-id $cid; let $b in believed_claim($c, $at);", {"at": at}))
+
+
+def hypothesis_ids(tx, at, claim_type=None, method=None, limit=None):
+    """Hypotheses at `at`, oldest first, selected and limited by TypeDB."""
+    body = f"match $c isa {typeql.label(claim_type or 'claim')}, has gupi-id $cid, has recorded-at $r; "
+    params = {"at": at}
+    if method:
+        body += "$c has method == $m; "
+        params["m"] = method
+    body += "let $h in hypothesis_claim($c, $at); sort $r, $cid;"
+    if limit:
+        body += f" limit {int(limit)};"
+    seen, out = set(), []
+    for r in typeql.concept_rows(tx, body, params):
+        cid = r.get("cid").get_string()
+        if cid not in seen:
+            seen.add(cid)
+            out.append(cid)
+    return out
+
+
+def believed_involving(tx, referent_ids, at, claim_type="claim"):
+    """Believed claims (of a type) in which any of these referents plays a role."""
+    ids = sorted(set(referent_ids))
+    if not ids:
+        return []
+    return _ids(typeql.rows_for(
+        tx, f"match $p has gupi-id == $rid; $c isa {typeql.label(claim_type)}, links ($p), has gupi-id $cid; "
+            "let $b in believed_claim($c, $at);",
+        [{"rid": r, "at": at} for r in ids]))
+
+
+def believed_with_player(tx, claim_type, role, referent_ids, at):
+    ids = sorted(set(referent_ids))
+    if not ids:
+        return []
+    return _ids(typeql.rows_for(
+        tx, f"match $p has gupi-id == $rid; $c isa {typeql.label(claim_type)}, links ({typeql.label(role)}: $p), "
+            "has gupi-id $cid; let $b in believed_claim($c, $at);",
+        [{"rid": r, "at": at} for r in ids]))
+
+
+def shared_keys_believed(tx, at):
+    """Proposition keys with two or more claims believed at `at` (TypeDB groups and counts)."""
+    rows = typeql.concept_rows(tx, "match $c isa claim, has proposition-key $k; let $b in believed_claim($c, $at); "
+                                   "reduce $n = count groupby $k; match $n > 1;", {"at": at})
+    return sorted({r.get("k").get_string() for r in rows})
+
+
+def shared_players_believed(tx, claim_type, role, at):
+    """Referents playing `role` in two or more believed claims of `claim_type` (for one-at-a-time rules)."""
+    rows = typeql.concept_rows(
+        tx, f"match $c isa {typeql.label(claim_type)}, links ({typeql.label(role)}: $p); $p has gupi-id $pid; "
+            "let $b in believed_claim($c, $at); reduce $n = count groupby $pid; match $n > 1;", {"at": at})
+    return sorted({r.get("pid").get_string() for r in rows})
+
+
+def claim_ids_with_prefix(tx, prefix):
+    return _ids(typeql.concept_rows(tx, "match $c isa claim, has gupi-id $cid; $cid contains $p;", {"p": prefix}))

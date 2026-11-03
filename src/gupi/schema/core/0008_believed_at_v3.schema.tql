@@ -1,0 +1,8 @@
+# Phase 4: believed_at is defined through believed_claim, so there is one definition of "believed".
+
+redefine
+  fun believed_at($t: datetime-tz) -> { claim }:
+    match
+      $c isa claim;
+      let $b in believed_claim($c, $t);
+    return { $b };

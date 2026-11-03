@@ -37,12 +37,8 @@ def _labels(memory):
             tx, 'match $x isa referent; fetch { "id": $x.gupi-id, "label": $x.label };')}
 
 
-def _resolve(claims, text):
-    wanted = text if ":" in text else f"claim:{text}"
-    found = [c for c in claims if c.id.startswith(wanted)]
-    if len(found) != 1:
-        raise CliError(f"{'no' if not found else 'more than one'} claim matches {text!r}")
-    return found[0]
+def _resolve(memory, text):
+    return memory.find_claim(text)
 
 
 def _short(cid):
@@ -86,8 +82,7 @@ def cmd_queue(memory, args, out):
 
 
 def cmd_show(memory, args, out):
-    claims = memory.all_claims()
-    c = _resolve(claims, args.claim)
+    c = _resolve(memory, args.claim)
     labels = _labels(memory)
     now = memory.clock()
     print(f"{c.id}\n  {_describe(c, labels)}\n  {_period(c)}\n  status now: {c.status_at(now).value}"
@@ -103,8 +98,7 @@ def cmd_show(memory, args, out):
 
 
 def cmd_decide(memory, args, out):
-    claims = memory.all_claims()
-    targets = [_resolve(claims, x) for x in args.claims]
+    targets = [_resolve(memory, x) for x in args.claims]
     memory.review_many([(c.id, args.verdict) for c in targets], args.by, args.reason)
     for c in targets:
         print(f"{args.verdict}: {_short(c.id)}", file=out)
@@ -125,7 +119,7 @@ def cmd_identities(memory, args, out):
         print(f"{len(memory.suggest_identities())} new suggestion(s) recorded as hypotheses.", file=out)
     labels = _labels(memory)
     now = memory.clock()
-    for c in (c for c in memory.all_claims() if c.type == "identity"):
+    for c in memory.identity_claims():
         a, b = c.roles["same"]
         print(f"{_short(c.id)}  {labels.get(a, a)} = {labels.get(b, b)}  [{c.status_at(now).value}]  "
               f"{c.values.get('reason', '')}", file=out)
@@ -140,8 +134,7 @@ def cmd_corrections(memory, args, out):
 
 
 def cmd_supersede(memory, args, out):
-    claims = memory.all_claims()
-    old, new = _resolve(claims, args.old), _resolve(claims, args.new)
+    old, new = _resolve(memory, args.old), _resolve(memory, args.new)
     sid = memory.supersede(old.id, new.id, reason=args.reason, decided_by=args.by)
     print(f"{_short(old.id)} superseded by {_short(new.id)} ({sid})", file=out)
 

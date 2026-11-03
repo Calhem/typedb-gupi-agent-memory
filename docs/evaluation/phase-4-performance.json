@@ -1,0 +1,97 @@
+{
+  "server": "TypeDB CE 3.14.1",
+  "results": [
+    {
+      "people": 100,
+      "claims": 300,
+      "observations": 300,
+      "ingest_seconds": 2.11,
+      "claims_per_second": 142.0,
+      "review_seconds": 0.73,
+      "decisions": 268,
+      "median_seconds": {
+        "ask x20": 0.0861,
+        "query open role x10": 0.0542,
+        "review_queue(limit=20)": 0.0646,
+        "review_queue, Phase 3 way": 0.8528,
+        "conflicts()": 0.1289,
+        "conflicts, Phase 3 way": 0.0871,
+        "keyword search": 0.0241,
+        "explore depth 2": 0.0162
+      },
+      "conflicts_found": 61,
+      "queue_items": 20,
+      "explore_nodes": 22,
+      "same_results_as_phase_3": true
+    },
+    {
+      "people": 200,
+      "claims": 600,
+      "observations": 600,
+      "ingest_seconds": 3.97,
+      "claims_per_second": 151.1,
+      "review_seconds": 1.12,
+      "decisions": 539,
+      "median_seconds": {
+        "ask x20": 0.0848,
+        "query open role x10": 0.0518,
+        "review_queue(limit=20)": 0.0756,
+        "review_queue, Phase 3 way": 6.0682,
+        "conflicts()": 0.2765,
+        "conflicts, Phase 3 way": 0.2239,
+        "keyword search": 0.04,
+        "explore depth 2": 0.0179
+      },
+      "conflicts_found": 128,
+      "queue_items": 20,
+      "explore_nodes": 26,
+      "same_results_as_phase_3": true
+    },
+    {
+      "people": 500,
+      "claims": 1500,
+      "observations": 1500,
+      "ingest_seconds": 9.48,
+      "claims_per_second": 158.2,
+      "review_seconds": 2.5,
+      "decisions": 1330,
+      "median_seconds": {
+        "ask x20": 0.0839,
+        "query open role x10": 0.0529,
+        "review_queue(limit=20)": 0.0847,
+        "review_queue, Phase 3 way": null,
+        "conflicts()": 0.6184,
+        "conflicts, Phase 3 way": null,
+        "keyword search": 0.0898,
+        "explore depth 2": 0.0194
+      },
+      "conflicts_found": 307,
+      "queue_items": 20,
+      "explore_nodes": 29,
+      "same_results_as_phase_3": null
+    },
+    {
+      "people": 2000,
+      "claims": 6000,
+      "observations": 6000,
+      "ingest_seconds": 38.19,
+      "claims_per_second": 157.1,
+      "review_seconds": 9.32,
+      "decisions": 5343,
+      "median_seconds": {
+        "ask x20": 0.086,
+        "query open role x10": 0.0539,
+        "review_queue(limit=20)": 0.1965,
+        "review_queue, Phase 3 way": null,
+        "conflicts()": 2.6039,
+        "conflicts, Phase 3 way": null,
+        "keyword search": 0.4259,
+        "explore depth 2": 0.0178
+      },
+      "conflicts_found": 1231,
+      "queue_items": 20,
+      "explore_nodes": 22,
+      "same_results_as_phase_3": null
+    }
+  ]
+}

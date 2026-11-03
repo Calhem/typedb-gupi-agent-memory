@@ -29,19 +29,44 @@ class Suggestion:
     evidence: tuple  # Evidence records (one mention of each referent)
 
 
-def _referents(tx):
-    """Referents with their kind, label, the contexts they are mentioned in, and one mention each."""
-    found = {}
-    for d in typeql.documents(tx, """
-            match $x isa! $k; $k sub referent; $x has gupi-id $id;
-            fetch { "id": $id, "kind": $k, "label": $x.label,
-                    "mentions": [ match reference (mention: $m, referent: $x); mentioning (container: $o, mention: $m);
-                                  fetch { "obs": $o.gupi-id, "start": $m.span-start, "end": $m.span-end,
-                                          "contexts": [ match containment (context: $c, member: $o); fetch { "c": $c.gupi-id }; ] }; ] };"""):
-        contexts = {c["c"] for m in d["mentions"] for c in m["contexts"]}
-        found[d["id"]] = {"kind": d["kind"]["label"], "label": d["label"] or "", "contexts": contexts,
-                          "mention": d["mentions"][0] if d["mentions"] else None}
-    return found
+REFERENT_FETCH = """
+    fetch { "id": $x.gupi-id, "kind": $k, "label": $x.label,
+            "mentions": [ match reference (mention: $m, referent: $x); mentioning (container: $o, mention: $m);
+                          fetch { "obs": $o.gupi-id, "start": $m.span-start, "end": $m.span-end,
+                                  "contexts": [ match containment (context: $c, member: $o); fetch { "c": $c.gupi-id }; ] }; ] };"""
+
+
+def _shape(d):
+    contexts = {c["c"] for m in d["mentions"] for c in m["contexts"]}
+    return d["id"], {"kind": d["kind"]["label"], "label": d["label"] or "", "contexts": contexts,
+                     "mention": d["mentions"][0] if d["mentions"] else None}
+
+
+def _candidate_groups(tx):
+    """Small groups of referents that might be the same, found by TypeDB rather than by comparing all pairs:
+    referents sharing an exact label, and single-word names with full names starting with them in the same
+    conversation."""
+    groups = []
+    labels = [r.get("l").get_string() for r in typeql.concept_rows(
+        tx, "match $x isa! $k, has label $l; $k sub referent; reduce $n = count groupby $l; match $n > 1;")]
+    for label in labels:
+        groups.append(dict(_shape(d) for d in typeql.documents(
+            tx, "match $x isa! $k, has label == $l; $k sub referent;" + REFERENT_FETCH, {"l": label})))
+    singles = [dict([_shape(d)]) for d in typeql.documents(
+        tx, 'match $x isa! $k, has label $l; $k sub referent; $l like "^[^ ]+$";' + REFERENT_FETCH)]
+    for single in singles:
+        (sid, s), = single.items()
+        for context in s["contexts"]:
+            found = dict(_shape(d) for d in typeql.documents(tx, """
+                match $c isa context, has gupi-id == $cid; containment (context: $c, member: $o);
+                      mentioning (container: $o, mention: $m); reference (mention: $m, referent: $x);
+                      $x isa! $k, has label $l; $k sub referent; $l contains $first;""" + REFERENT_FETCH,
+                {"cid": context, "first": s["label"]}))
+            found = {i: r for i, r in found.items()
+                     if i != sid and normalise(r["label"]).startswith(normalise(s["label"]) + " ")}
+            if found:
+                groups.append({sid: s, **found})
+    return groups
 
 
 def _already_considered(tx):
@@ -56,29 +81,39 @@ def _already_considered(tx):
 
 def suggest(memory):
     with transaction(memory.driver, memory.database, TransactionType.READ) as tx:
-        refs = _referents(tx)
+        groups = _candidate_groups(tx)
         seen = _already_considered(tx)
-    out = []
-    ids = sorted(refs)
-    for i, a in enumerate(ids):
-        for b in ids[i + 1:]:
-            ra, rb = refs[a], refs[b]
-            if ra["kind"] != rb["kind"] or ra["kind"] == "unclassified" or (a, b) in seen:
-                continue
-            if not ra["mention"] or not rb["mention"]:
-                continue  # without a mention there is no evidence to show a reviewer
-            la, lb = normalise(ra["label"]), normalise(rb["label"])
-            shared = ra["contexts"] & rb["contexts"]
-            if la == lb and not shared:
-                score, reason = 0.7, f"same name {ra['label']!r} in different conversations"
-            elif shared and (la.split()[:1] == lb.split()[:1]) and (len(la.split()) == 1) != (len(lb.split()) == 1):
-                short, full = sorted((ra["label"], rb["label"]), key=lambda n: (len(n.split()), n))
-                score, reason = 0.6, f"{short!r} and {full!r}: first name matches a full name in the same conversation"
-            else:
-                continue
-            evidence = tuple(Evidence(r["mention"]["obs"], r["mention"]["start"], r["mention"]["end"]) for r in (ra, rb))
-            out.append(Suggestion(a, b, ra["kind"], score, reason, evidence))
+    out, done = [], set()
+    for refs in groups:
+        ids = sorted(refs)
+        for i, a in enumerate(ids):
+            for b in ids[i + 1:]:
+                if (a, b) in done:
+                    continue
+                done.add((a, b))
+                suggestion = _pair(a, b, refs[a], refs[b], seen)
+                if suggestion:
+                    out.append(suggestion)
     return out
+
+
+def _pair(a, b, ra, rb, seen):
+    """A suggestion for referents a and b, or None."""
+    if ra["kind"] != rb["kind"] or ra["kind"] == "unclassified" or (a, b) in seen:
+        return None
+    if not ra["mention"] or not rb["mention"]:
+        return None  # without a mention there is no evidence to show a reviewer
+    la, lb = normalise(ra["label"]), normalise(rb["label"])
+    shared = ra["contexts"] & rb["contexts"]
+    if la == lb and not shared:
+        score, reason = 0.7, f"same name {ra['label']!r} in different conversations"
+    elif shared and la.split()[:1] == lb.split()[:1] and (len(la.split()) == 1) != (len(lb.split()) == 1):
+        short, full = sorted((ra["label"], rb["label"]), key=lambda n: (len(n.split()), n))
+        score, reason = 0.6, f"{short!r} and {full!r}: first name matches a full name in the same conversation"
+    else:
+        return None
+    evidence = tuple(Evidence(r["mention"]["obs"], r["mention"]["start"], r["mention"]["end"]) for r in (ra, rb))
+    return Suggestion(a, b, ra["kind"], score, reason, evidence)
 
 
 def record(memory, suggestions):

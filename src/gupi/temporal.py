@@ -103,12 +103,29 @@ def false_side(vt: ValidTime, at):
 def same_spell(c: ValidTime, x: ValidTime, side):
     """Does claim c's FALSE on `side` really bear on claim x, i.e. are they certainly the same spell?
 
-    "after": x certainly started before c's end window, so x continuing past c's end disagrees with c.
-    "before": x certainly lasted past c's start window, so x holding before c's start disagrees with c.
+    "after": x certainly started before c ended, so x continuing past c's end disagrees with c.
+    "before": x certainly lasted past c's start, so x holding before c's start disagrees with c.
     Otherwise x may be a different spell (an earlier or later period), and c's FALSE says nothing about it.
+    A window's latest value is exclusive (the start lies before it); an exact bound is the point itself.
     """
     if side == "after":
-        return x.from_latest is not None and c.to_earliest is not None and x.from_latest < c.to_earliest
+        if x.from_latest is None or c.to_earliest is None:
+            return False
+        window = x.from_earliest != x.from_latest
+        return x.from_latest < c.to_earliest or (window and x.from_latest == c.to_earliest)
     if side == "before":
-        return x.to_earliest is not None and c.from_latest is not None and x.to_earliest > c.from_latest
+        if x.to_earliest is None or c.from_latest is None:
+            return False
+        window = c.from_earliest != c.from_latest
+        return x.to_earliest > c.from_latest or (window and x.to_earliest == c.from_latest)
     return False
+
+
+def started_by(vt: ValidTime, at):
+    """Certainly started by `at` and not certainly ended before it."""
+    return vt.from_latest is not None and vt.from_latest <= at and (vt.to_latest is None or vt.to_latest > at)
+
+
+def not_ended_by(vt: ValidTime, at):
+    """Certainly not ended by `at` and not certainly started after it."""
+    return vt.to_earliest is not None and vt.to_earliest > at and (vt.from_earliest is None or vt.from_earliest <= at)
