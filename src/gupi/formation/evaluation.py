@@ -1,6 +1,7 @@
 """Scoring candidate extraction against the frozen Phase 6B set (tests/fixtures/formation/eval-v1.json).
 
     uv run python -I -m gupi.formation.evaluation [--json PATH]
+    uv run python -I scripts/evaluate_formation.py [--json PATH]   # adds the rules:v1 comparison
 
 **Matching.** A candidate matches an expected one when the claim type, every role's participant (by surface
 text, case-insensitive) and the polarity agree. Matching is one-to-one and greedy, in order.
@@ -162,31 +163,12 @@ def rules_v2_claims(extractor):
     return extract
 
 
-def rules_v1_claims():
-    """rules:v1 through the existing contract validator, for comparison only (no TypeDB)."""
-    from gupi.extraction.contract import SchemaInfo, validate
-    from gupi.extraction.pipeline import ExtractionRequest
-    from gupi.extraction.rules import RuleExtractor
-    person, org = frozenset({"person"}), frozenset({"organization"})
-    schema = SchemaInfo(frozenset({"person", "organization"}),
-                        {"employment": {"employee": person, "employer": org}, "reporting": {"report": person, "manager": person},
-                         "statement": {"subject": person, "object": person | org}},
-                        {"employment": frozenset({"job-title"})})
-
-    def extract(obs, prior):
-        raw = RuleExtractor().extract(ExtractionRequest(obs.content, obs.observed_at, schema))
-        out = validate(raw, obs, schema, "scope", "rules:v1")
-        surface = {m.referent_id: m.surface for m in out.mentions}
-        return [(c.type, {r: surface[v if isinstance(v, str) else v[0]] for r, v in c.roles.items()}, "positive")
-                for c in out.claims if c.type != "statement"]
-    return extract
-
-
 def _brief(x):
     return f"{x['type']}({', '.join(f'{r}={s}' for r, s in sorted(x['roles'].items()))}){' NOT' if x['polarity'] == 'negative' else ''}"
 
 
-def main(argv=None):
+def main(argv=None, extra=None):
+    """`extra`: more conversation scores to report alongside (scripts/evaluate_formation.py adds rules:v1)."""
     from gupi.formation.rules_v2 import RulesV2
     parser = argparse.ArgumentParser(description="Score rules:v2 candidate extraction on the frozen 6B set.")
     parser.add_argument("--json", help="write the full results to this file")
@@ -198,9 +180,8 @@ def main(argv=None):
           f"correct rejections {result['correct_rejections']}/{result['empty_passages']}")
     for f, v in result["fields"].items():
         print(f"  {f:12} {v['correct']}/{v['of']} of matched")
-    conv = {f"{name}/{split}": score_conversations(split, fn())
-            for split in ("heldout", "dev") for name, fn in (("rules:v2", lambda: rules_v2_claims(RulesV2())),
-                                                            ("rules:v1", rules_v1_claims))}
+    conv = {f"rules:v2/{split}": score_conversations(split, rules_v2_claims(RulesV2())) for split in ("heldout", "dev")}
+    conv.update(extra or {})
     for k, v in conv.items():
         print(f"Phase 2 {k:16} precision {v['matched']}/{v['extracted']} = {v['precision']}  "
               f"recall {v['matched']}/{v['expected']} = {v['recall']}")

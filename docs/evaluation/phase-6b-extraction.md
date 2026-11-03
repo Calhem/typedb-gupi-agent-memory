@@ -2,7 +2,7 @@
 
 Date: 2026-11-03. Offline; no TypeDB, no LLM. Reproduce with:
 
-    uv run python -I -m gupi.formation.evaluation
+    uv run python -I scripts/evaluate_formation.py   (adds the rules:v1 comparison to python -m gupi.formation.evaluation)
 
 Raw results: `phase-6b-extraction-first-run.json`.
 
