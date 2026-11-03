@@ -1,0 +1,22 @@
+# Claim provenance from memory formation (docs/formation/6c-design-checkpoint.md §4). Additive only: new
+# attributes and one new relation; no existing type, attribute or data changes. A claim without these is as
+# before, and its id and proposition key are unchanged. Rolling back means restoring the pre-migration
+# export (docs/adr/0004), safe only while no claim carries these.
+#
+# - valid-from-basis: "stated" (a stated start) or "lower-bound" (e.g. "since March": the state certainly held
+#   from the latest bound; when it began is not stated). Absent: no start information.
+# - commitment: how strongly the SOURCE committed ("probably" is probable). Not GUPI's belief.
+# - attribution-mode: how the assertion reached the source; `assertion` names who made it.
+# - candidate-id: the memory candidate (gupi.candidate/1) a claim was formed from. Candidates are not stored
+#   yet (core/0012, not approved), so this is a reference only.
+
+define
+  attribute valid-from-basis, value string @values("stated", "lower-bound");
+  attribute commitment, value string @values("certain", "probable", "possible", "unknown");
+  attribute attribution-mode, value string @values("direct", "reported", "quoted", "forwarded", "rumour", "unattributed");
+  attribute candidate-id, value string;
+  claim owns valid-from-basis, owns commitment, owns attribution-mode, owns candidate-id;
+
+  relation assertion, relates asserter, relates asserted;
+  referent plays assertion:asserter;
+  claim plays assertion:asserted;

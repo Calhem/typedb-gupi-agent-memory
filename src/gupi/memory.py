@@ -216,10 +216,18 @@ class Memory:
             "valid-to-earliest": vt.to_earliest, "valid-to-latest": vt.to_latest,
             "time-precision": c.time_precision, "valid-to-basis": c.valid_to_basis,
             "method": c.method, "confidence": c.confidence, "extraction-basis": c.basis,
-            "polarity": "negative" if c.polarity == "negative" else None, **c.values,
+            "polarity": "negative" if c.polarity == "negative" else None,
+            "valid-from-basis": c.valid_from_basis, "commitment": c.commitment,
+            "attribution-mode": c.attribution_mode, "candidate-id": c.candidate_id, **c.values,
         }
         has, has_params = _has(attrs, "a")
         statements = [f"$c isa {label(c.type)} ({links}){has};"]
+        if c.asserted_by is not None:
+            if self._type_of(tx, c.asserted_by) not in self.types()["referent"]:
+                raise ValueError(f"claim names unknown asserter {c.asserted_by!r}")
+            match.append("$asserter isa referent, has gupi-id == $asserter_id;")
+            params["asserter_id"] = c.asserted_by
+            statements.append("assertion (asserter: $asserter, asserted: $c);")
         params.update(has_params)
         for head, span, prefix in evidence:
             span_has, span_params = _has(span, prefix)

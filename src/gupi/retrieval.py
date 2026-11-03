@@ -12,6 +12,7 @@ CORE_ATTRIBUTES = {
     "gupi-id", "proposition-key", "recorded-at", "valid-from-earliest", "valid-from-latest",
     "valid-to-earliest", "valid-to-latest", "time-precision", "valid-to-basis", "confidence", "method",
     "occurred-at-earliest", "occurred-at-latest", "extraction-basis", "polarity",
+    "valid-from-basis", "commitment", "attribution-mode", "candidate-id",
 }
 
 
@@ -64,6 +65,10 @@ class ClaimView:
     basis: str | None = None
     supersessions: tuple[SupersessionView, ...] = field(default=())  # where this claim is the one replaced
     polarity: str = "positive"  # "negative" for an explicit negation (core/0010)
+    valid_from_basis: str | None = None   # core/0011, for claims formed from candidates
+    commitment: str | None = None
+    attribution_mode: str | None = None
+    candidate_id: str | None = None
 
     @property
     def provisional(self):
@@ -141,6 +146,8 @@ def _view(doc):
         basis=a.get("extraction-basis"),
         supersessions=supersessions,
         polarity=a.get("polarity", "positive"),
+        valid_from_basis=a.get("valid-from-basis"), commitment=a.get("commitment"),
+        attribution_mode=a.get("attribution-mode"), candidate_id=a.get("candidate-id"),
     )
 
 
@@ -177,6 +184,26 @@ def claims_of_type(tx, claim_type):
 
 
 # --- server-side filtering (Phase 4): TypeDB selects the candidates; only those are fetched ---
+
+def asserters(tx, claim_ids):
+    """{claim id: asserter referent id} for claims with a recorded assertion (core/0011)."""
+    ids = sorted(set(claim_ids))
+    if not ids:
+        return {}
+    rows = typeql.rows_for(tx, "match $c isa claim, has gupi-id == $id, has gupi-id $cid; "
+                               "assertion (asserter: $a, asserted: $c); $a has gupi-id $aid;", [{"id": i} for i in ids])
+    return {r.get("cid").get_string(): r.get("aid").get_string() for r in rows}
+
+
+def claim_ids_formed_from(tx, candidate_ids):
+    """{candidate id: claim id} for claims formed from these candidates (core/0011)."""
+    ids = sorted(set(candidate_ids))
+    if not ids:
+        return {}
+    rows = typeql.rows_for(tx, "match $c isa claim, has candidate-id == $k, has gupi-id $cid; $c has candidate-id $kid;",
+                           [{"k": k} for k in ids])
+    return {r.get("kid").get_string(): r.get("cid").get_string() for r in rows}
+
 
 def claims_by_ids(tx, claim_ids):
     """Full views for these claims, in one query."""
