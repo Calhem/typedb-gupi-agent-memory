@@ -193,10 +193,10 @@ def test_round_trip_through_json_keeps_ids():
 
 def test_only_the_formation_pathway_touches_memory_or_typedb():
     """Candidates stay separate from memory: every module of the package except form.py (the explicit
-    formation pathway, 6C) imports nothing that can write it."""
+    formation pathway) and store.py (the candidate store, core/0012) imports nothing that can write it."""
     src = Path(__file__).resolve().parents[2] / "src/gupi/formation"
     imported = set()
-    for path in sorted(set(src.glob("*.py")) - {src / "form.py"}):
+    for path in sorted(set(src.glob("*.py")) - {src / "form.py", src / "store.py"}):
         for node in ast.walk(ast.parse(path.read_text())):
             if isinstance(node, ast.ImportFrom):
                 imported.add(node.module or "")
