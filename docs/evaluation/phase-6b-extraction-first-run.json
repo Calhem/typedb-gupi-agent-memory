@@ -604,6 +604,21 @@
       ],
       "false_positives": []
     },
+    "rules:v2/dev": {
+      "split": "dev",
+      "expected": 12,
+      "extracted": 8,
+      "matched": 8,
+      "precision": 1.0,
+      "recall": 0.667,
+      "misses": [
+        "d1-1: employment[('employee', 'priya shah'), ('employer', 'northwind')]",
+        "d2-4: employment[('employee', 'marco rossi'), ('employer', 'brightline')]",
+        "d3-2: statement[('subject', 'alice')]",
+        "d3-4: employment[('employee', 'sam'), ('employer', 'initech')]"
+      ],
+      "false_positives": []
+    },
     "rules:v1/heldout": {
       "split": "heldout",
       "expected": 12,
@@ -619,21 +634,6 @@
         "h3-2: statement[('subject', 'kim')]",
         "h3-3: reporting[('manager', 'noah'), ('report', 'kim')]",
         "h3-4: statement[('subject', 'kim')]"
-      ],
-      "false_positives": []
-    },
-    "rules:v2/dev": {
-      "split": "dev",
-      "expected": 12,
-      "extracted": 8,
-      "matched": 8,
-      "precision": 1.0,
-      "recall": 0.667,
-      "misses": [
-        "d1-1: employment[('employee', 'priya shah'), ('employer', 'northwind')]",
-        "d2-4: employment[('employee', 'marco rossi'), ('employer', 'brightline')]",
-        "d3-2: statement[('subject', 'alice')]",
-        "d3-4: employment[('employee', 'sam'), ('employer', 'initech')]"
       ],
       "false_positives": []
     },
