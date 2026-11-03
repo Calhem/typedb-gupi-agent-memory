@@ -1,8 +1,21 @@
 # Annotation guidelines, draft v0 (two-document trial)
 
-Date: 2026-11-03. Status: **draft v0, for the owner's review.** These guidelines are for the two-document
-trial only (README.md in this folder). They are expected to change after the trial, and are frozen only
-before the eight-document mini-pilot. The bias audit is in bias-audit-v0.md.
+Date: 2026-11-03. Status: **draft v0, revision 1. Provisional; accepted for further review, not approved
+for freezing.**
+- **Scope:** these guidelines are for the two-document trial only (README.md in this folder).
+- **Changes:** they are expected to change after the trial, and are frozen only before the eight-document
+  mini-pilot.
+- **Companion documents:**
+  - bias-audit-v0.md: the bias audit
+  - scoring-rubric-v0.md: how answers are scored
+  - review-checklist-v0.md: the checklist for an independent reviewer
+
+**Revision 1 (after the owner's first review):**
+- Questions now state whether they ask about recorded knowledge or about actual conditions (§12.1).
+- Legitimate ambiguity is kept in the gold as alternatives (§12.3).
+- Continuation is limited to questions about recorded knowledge (§13.2).
+- Evidence sets separate essential items from context (§13.1).
+- Example 4 is revised, and Example 7 is new.
 
 ## 0. About these guidelines
 **Who they are for:** the people who write and annotate the trial's documents, questions and answers. You
@@ -37,6 +50,8 @@ on.
    disagreement in the judgement layer (§9), not by editing the statement.
 3. **Silence is not denial.** That a document does not mention something never means it did not happen.
    Only an explicit statement is a negation (§10).
+   - **What is recorded is not the same as what happened.** That no reinstatement, correction or change was
+     recorded tells you what the records show. It does not establish what happened in reality (§12.1).
 4. **Do not upgrade certainty.** "I think", "probably", "apparently" and "rumour has it" stay hedged.
    Never strengthen a hedged statement because it turned out to be true elsewhere.
 5. **Do not force a decision.** When evidence is ambiguous, conflicting or missing, say so with the
@@ -381,18 +396,48 @@ The primary author writes the questions (README.md, Scope). Both annotators answ
   - **`at-some-time`:** at any moment within it
 - **`as_of`:** the knowledge date. The answer may use only segments available by then. If absent, use all
   documents.
+- **`frame`:** whether the question asks about recorded knowledge or about actual conditions (§12.1).
 
-**Each `answer` records:**
+### 12.1 Recorded knowledge versus actual conditions
+A question can ask two different things, and the gold must say which.
+
+| Frame | Asks | Typical wording | What can answer it |
+|---|---|---|---|
+| `recorded` | what the records show, or had shown by the `as_of` date | "According to the project records ...", "What had been reported about ...", "Was ... recorded as ..." | what the documents state, and what follows from them, including the last recorded state persisting until a recorded change (`continuation`, §13.2) |
+| `actual` | what was actually the case in the world | "Was Joaquín actually site lead on 1 April?" | only what sources state or imply about that time, and inferences that do not depend on the absence of a record. The absence of a recorded change never establishes the actual state. |
+| `unspecified` | the wording does not make the frame clear | "Was Joaquín site lead on 1 April?" | both readings are annotated (§12.2), and both are acceptable |
+
+Rules:
+- **A recorded-knowledge answer is not a claim about the world.**
+  - "The records show he stepped down on 10 March, and no return before 27 April is recorded" is a
+    complete, correct recorded-frame answer.
+  - The same facts give an actual-frame answer of `insufficient`, unless something else establishes the
+    actual state. The recorded state goes in the answer's `explanation`.
+- **Authors should prefer clear wording** (`recorded` or `actual`). They keep `unspecified` only where an
+  everyday question would naturally be asked that way, which is useful for testing how systems qualify
+  their answers.
+- **The statuses mean the same in both frames,** but what counts as support differs.
+  - `stated` in the recorded frame means the records state it.
+  - `stated` in the actual frame means a source asserts it, with commitment `certain` or `probable`, about
+    the time asked.
+  - A `continuation` inference supports only recorded-frame answers.
+
+### 12.2 Each `answer` records
+An annotator writes one answer per frame the question asks about. For `unspecified` questions, that means
+two answers: one `recorded` and one `actual`.
+- **`frame`:** `recorded` or `actual`.
 - **`value`:** the answer, as text and, where it is an entity, the entity id. For a yes-no question,
   `yes` or `no`. Leave it empty when the status is `insufficient` or `not-yet-available`.
-- **`status`:** how well the documents support the value. Choose exactly one:
+  - **`value.forms`:** the accepted surface forms, used by the scorer to recognise the value: names and
+    aliases, and date formats.
+- **`status`:** how well the documents support the value in this frame. Choose exactly one:
 
 | Status | Use when |
 |---|---|
 | `stated` | at least one available source states (or clearly implies, §6) the value for the time asked, with commitment `certain` or `probable`; and no available source states otherwise, unless an explicit correction or later update settles it |
-| `inferred` | no source states it for the time asked, but it follows from stated material by one or more named reasoning steps (§13.2); and no available source states otherwise |
+| `inferred` | no source states it for the time asked, but it follows from stated material by one or more named reasoning steps allowed in this frame (§13.2); and no available source states otherwise |
 | `disputed` | available sources state incompatible values, and nothing in the documents settles which is right |
-| `insufficient` | relevant material is available, but it does not support any value: only silence, only hedged (`possible`) or rumoured statements, or evidence that stops short of the time asked |
+| `insufficient` | relevant material is available, but it does not support any value in this frame: only silence, only hedged (`possible`) or rumoured statements, evidence that stops short of the time asked, or (actual frame) only the absence of a recorded change |
 | `not-yet-available` | as of the knowledge date, no available segment says anything relevant, although later documents do |
 
 - **`inference`:** required when the status is `inferred`.
@@ -404,6 +449,29 @@ The primary author writes the questions (README.md, Scope). Both annotators answ
 - **`confidence`:** see §14.3.
 - **`question_problem`:** set it if the question itself is ambiguous or rests on a false assumption. Say
   why, and answer the most reasonable reading.
+- **`alternatives`** and **`ambiguity`:** see §12.3.
+
+### 12.3 Preserving legitimate ambiguity
+Some questions have more than one defensible answer under these guidelines. The gold keeps them; it does
+not pick one.
+- **`ambiguity`:**
+
+  | Value | Meaning |
+  |---|---|
+  | `none` | one defensible answer |
+  | `wording` | the question can reasonably be read in two ways |
+  | `evidence` | the documents reasonably support more than one reading |
+  | `frame` | the frame is unspecified, and the two frames give different answers |
+
+- **`alternatives`:** other defensible answers, each with a value, a status, any inference, and a sentence
+  saying why it is defensible.
+  - The main answer is the one the annotator finds best supported.
+  - Alternatives are not wrong answers; rejected candidates are (§13.3).
+- **When to add an alternative.** Ask: would a careful reader who follows these guidelines give it, and
+  could you not show them to be wrong from the documents? If so, add it. If you are merely unsure of your
+  own reading, use `confidence` instead.
+- **At adjudication,** the outcome `both-acceptable` (§14.2) turns the second annotator's answer into an
+  alternative.
 
 **Rules:**
 - A `no` needs either an explicit negation, or a reasoned inference whose type you name. Silence alone
@@ -422,8 +490,14 @@ The primary author writes the questions (README.md, Scope). Both annotators answ
 - **A set is sufficient on its own.**
   - If an answer needs two sources together (one gives the role, another the date), both go in **one** set.
   - If two independent sources would each be enough, list **two** sets.
-- Keep each set minimal: nothing in it can be removed without the answer losing its support.
-- For `disputed` answers, give a set for each side.
+- Keep each set minimal: nothing in it can be removed without the answer losing its support. Every item in
+  a set is therefore **essential**: the scoring gives full evidence credit only when all the essential items
+  of at least one set are cited (scoring-rubric-v0.md §4).
+- **Context:** material that helps but is not needed goes in a separate `context` list. Examples: the email
+  showing a return came later, or a passage that confirms a name. It is never required for full credit.
+- **Sets per frame:** an answer in the `actual` frame and one in the `recorded` frame may need different
+  sets.
+- For `disputed` answers, give a set for each side. Both sides together are the essential evidence.
 - List **counter-evidence** too: material that points the other way, even if it does not overturn the
   answer.
 
@@ -432,15 +506,19 @@ When the status is `inferred`, name each step:
 
 | Inference | Meaning | Example |
 |---|---|---|
-| `continuation` | a state reported at one time is taken to persist until a reported change. State the last time it was reported and that no later change is reported in the available documents. | "Joaquín stepped down on 10 March; nothing reports his return before the 20 April email, so he was not site lead on 1 April." |
+| `continuation` | (recorded frame only) a state reported at one time is taken to persist in the records until a reported change. State the last time it was reported and that no later change is reported in the available documents. | "Joaquín stepped down on 10 March, and no return before 27 April is recorded, so the records show him not site lead on 1 April." |
 | `combination` | two or more statements together give the answer | the minutes name the approver; an email gives the date it took effect |
 | `date-calculation` | arithmetic on stated dates | "two weeks after 3 March" |
 | `reference` | the answer depends on resolving a role reference or pronoun | "the site lead" on 5 March means Joaquín |
 | `consequence` | an event implies a state | "appointed site lead on 2 January" gives site lead from 2 January |
 | `other` | describe it | |
 
-`continuation` is a default, not an observation. It must be labelled as such. Scoring may treat it
-separately from `stated` answers.
+**`continuation` is a default, not an observation.**
+- It supports answers in the `recorded` frame only: "the records show no change".
+- In the `actual` frame it never establishes an answer on its own. The answer is `insufficient`, with the
+  recorded state in `explanation`. A continuation-based value may be added as an alternative only when other
+  evidence narrows the gap, for example a later source implying the state still held (Example 4).
+- Always name the last recorded state, its time, and the period with no recorded change.
 
 ### 13.3 Rejected candidates
 Reasons:
@@ -529,9 +607,12 @@ statement    id, segment, spans [[start, end]], kind, description, predicate_tex
 link         id, type, from (statement), to (statement), marked: stated | inferred
 judgement    id, about, kind, participants [...], times {event_time, holds_from, holds_until, holds_at},
              belief, based_on [statement], against [statement], reasoning, inference [type], explanation
-question     id, text, answer_type, about_time {time or period, mode}, as_of (date)
-answer       id, question, annotator, value {text, entity}, status, inference [type], explanation,
-             evidence [[{segment, spans, statements}]], counter_evidence [{segment, spans, statements}],
+question     id, text, answer_type, about_time {time or period, mode}, as_of (date),
+             frame: recorded | actual | unspecified
+answer       id, question, annotator, frame: recorded | actual, value {text, entity, forms [text]}, status,
+             inference [type], explanation, evidence [[{segment, spans, statements}]],
+             context [{segment, spans, statements}], counter_evidence [{segment, spans, statements}],
+             alternatives [{value, status, inference, why}], ambiguity: none | wording | evidence | frame,
              rejected_candidates [{value, reason}], annotator_view, question_problem
 adjudication id, items [record ids from each annotator], field, outcome, cause, guideline_change, note
 ```
@@ -564,6 +645,12 @@ All are fictional. The trial's own documents must use a different world, so that
 leak answers.
 
 The JSON below is abbreviated: offsets, ids of obvious records and some fields are left out.
+
+**Frames in the examples.**
+- Questions not marked with a frame are in the `actual` frame.
+- Their answers rest on statements about the time asked, so the `recorded` frame would give the same
+  answer.
+- Examples 4 and 7 show questions where the two frames differ.
 
 ### Example 1: a multi-party decision with a condition (§4, §5)
 > Minutes, 12 May 2026: "The project board, chaired by Mirela Tanaka, approved the revised drainage design
@@ -640,14 +727,31 @@ The JSON below is abbreviated: offsets, ids of obvious records and some fields a
 | ln-1 | the reinstatement after the termination | `resumes`, from st-14 to st-13 |
 
 **Questions:**
-- **"Was Joaquín site lead on 1 April 2026?"**
+- **"According to the project records, was Joaquín site lead on 1 April 2026?"** (`recorded`)
   - Value: `no`.
-  - Status: `inferred`, inference `continuation`. He stepped down on 10 March, and nothing reports a return
-    before 27 April.
-  - Evidence: one set, {st-12}. The annotator also checks that no available document reports a return before
-    1 April: the 20 April email reports a return from 27 April, which is later.
-  - Note: no source states that he was not site lead on 1 April. This is a default, labelled as such.
-- **"Was Joaquín site lead on 4 May 2026?"**
+  - Status: `inferred`, inference `continuation`. He is recorded as stepping down on 10 March, and no return
+    before 27 April is recorded.
+  - Evidence: one set, {st-12}.
+  - Context: the 20 April email, which shows that the recorded return is later than 1 April.
+- **"Was Joaquín actually site lead on 1 April 2026?"** (`actual`)
+  - Main answer: status `insufficient`.
+    - The explanation gives the recorded state: stepped down on 10 March, with no return recorded before
+      27 April.
+    - No source says anything about 1 April itself. A short return and a second departure in between would
+      have gone unrecorded.
+  - Alternative: `no`, status `inferred` (inference `combination`), ambiguity `evidence`.
+    - Why it is defensible: "back as site lead from next Monday" (20 April) implies he was not site lead in
+      the period just before 27 April. Together with the 10 March departure, a careful reader may take that
+      to cover 1 April.
+    - Its evidence set is {st-12, the 20 April email}. Both items are essential.
+  - The gold keeps both. Neither the documents nor these guidelines settle the question, so it is not forced
+    into a single answer.
+- **"Was Joaquín site lead on 1 April 2026?"** (`unspecified`; ambiguity `frame`)
+  - The gold holds both of the answers above.
+  - Under the scoring rubric, an answer must either say which reading it gives ("the records show ...") or
+    say that the actual state is unknown. An unqualified, certain "no" is marked as unsupported certainty
+    (scoring-rubric-v0.md §3).
+- **"Was Joaquín site lead on 4 May 2026?"** (`actual`)
   - Status: `insufficient`. Only a plan to return on 27 April is reported; nothing reports that he did.
   - Rejected candidate: `yes`, reason `plan-only`.
   - An annotator who thinks the return almost certainly happened writes that in `annotator_view`, and the
@@ -694,6 +798,29 @@ The JSON below is abbreviated: offsets, ids of obvious records and some fields a
   - No document available by 1 May mentions the survey's progress. Status: `not-yet-available`.
   - The later email exists but is not usable as of 1 May.
 
+### Example 7: a termination with nothing recorded afterwards (§10, §12.1)
+> Email from Tallis Ground Survey Ltd's office, 1 July 2026: "Ravi Lindqvist left Tallis on 30 June. Please
+> send survey queries to the office address."
+>
+> The documents end in July 2026. No later document mentions Ravi.
+
+- **"According to the documents, was Ravi working for Tallis on 1 October 2026?"** (`recorded`)
+  - Value: `no`.
+  - Status: `inferred`, inference `continuation`.
+  - Evidence: one set, {the 1 July email}.
+  - Explanation: recorded as leaving on 30 June; no return is recorded.
+- **"Was Ravi actually working for Tallis on 1 October 2026?"** (`actual`)
+  - Status: `insufficient`, ambiguity `none`.
+  - The documents say nothing about October. The absence of a recorded return does not establish that he
+    did not return.
+  - Rejected candidate: `no` stated as fact, reason `other` (rests only on the absence of a record).
+  - Unlike Example 4, nothing narrows the gap, so there is no alternative.
+- **"Was Ravi working for Tallis on 15 July 2026?"** (`actual`)
+  - Also `insufficient`, by the same rule, however unlikely a return within two weeks seems.
+  - An annotator who thinks a return very unlikely says so in `annotator_view`.
+  - This case is listed in the review checklist (review-checklist-v0.md, C4): reviewers are asked whether
+    the rule is too strict.
+
 ## 17. For the primary author: writing documents and questions
 These guidelines are for annotation, but the trial's author also writes the documents. To keep them
 realistic and fair to every kind of system:
@@ -723,4 +850,7 @@ These are recorded in the trial report, not decided now:
 - whether the suggested role names are enough
 - the range conventions for vague time words
 - whether `continuation` answers should have their own status
+- whether the strict actual-frame rule (§12.1, Example 7) should allow short gaps or bracketed periods
+- whether authors and annotators classify question frames consistently
+- whether alternatives are added consistently, or too freely
 - how `unresolvable` questions are scored in M1
