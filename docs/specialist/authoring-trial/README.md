@@ -13,18 +13,17 @@ The trial does not test GUPI, and no system is run on its data. It sets no M1 th
 provisional until reviewed (m1-protocol.md §2).
 
 ## Prerequisite: annotation guidelines, draft v0
-The guidelines in m1-protocol.md §6.1 are written first, without reference to GUPI's schema, and reviewed by
-the owner.
+The guidelines are in guidelines-v0.md, with a bias audit in bias-audit-v0.md. They are for the owner's
+review.
+- They are **implementation-neutral** (owner condition, 2026-11-03). Their categories are not derived from
+  GUPI's schema, TypeQL, ADR 0009 or any system's truth classification.
+  - Answers carry their own statuses: `stated`, `inferred`, `disputed`, `insufficient` and
+    `not-yet-available`.
+  - Each answer also carries its evidence sets.
+- Mapping the gold onto GUPI v1, the v2 proposal or any other representation happens only in the coverage
+  check, after the freeze. It never changes the gold.
 - For the trial they are **draft v0**. The trial is expected to change them; they are frozen only before the
   mini-pilot.
-- The answer kinds follow the proposed v2 semantics (v2-truth-semantics.md), also as a draft:
-  - TRUE, PRESUMED, FALSE, CONTESTED, UNKNOWN and NOT_YET_KNOWN
-  - a basis for every answer, which separates FALSE from an explicit negation from FALSE from a
-    continuing termination
-  - an interval mode for every question
-
-  Whether authors can apply these distinctions consistently is one of the things the trial measures.
-- The guidelines are not written yet. Writing them is the next step after the owner's go-ahead.
 
 ## Scope
 **World script:**
@@ -81,6 +80,8 @@ it is recorded in the time log's notes.
    - GUPI v1 as it is today
    - the v2 proposal
    - the guidelines' gold format
+
+   Each mapping is written after the freeze, and is lossy where the categories differ (bias-audit-v0.md, B1).
 
    Anything that cannot be expressed is logged in `limitations.csv`. Authors log the limitations they notice
    while writing in the same file.

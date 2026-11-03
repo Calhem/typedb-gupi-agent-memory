@@ -210,11 +210,12 @@ during ingestion.
    - domain scope and document kinds
    - question families and quotas
    - gold formats
-   - answer-kind definitions (including PRESUMED and interval modes, only if v2 and ADR 0009 are approved;
-     see v2-truth-semantics.md)
-   - scoring, including partial credit (e.g. UNKNOWN answered where gold is PRESUMED; CONTESTED vs FALSE)
-   - the basis of each answer (v2-truth-semantics.md §2), so that FALSE from an explicit negation and FALSE
-     from a continuing termination are scored apart
+   - answer statuses and evidence sets defined independently of any system (draft:
+     authoring-trial/guidelines-v0.md, which is not derived from GUPI's schema or ADR 0009)
+   - scoring, including partial credit, through a fixed mapping from each system's output onto the
+     guidelines' statuses. For example, a system's PRESUMED against an `inferred` gold, or FALSE by explicit
+     negation against FALSE by continuation, are scored apart. The mapping is written before any held-out
+     run and applied to all systems alike.
    - error classes
 
    It is written **without reference to GUPI's schema** and reviewed by the owner. A draft (v0) is tried in
@@ -290,8 +291,8 @@ during ingestion.
 2. Confirm the held-out authors and second annotator, and the time available.
 3. Confirm PostgreSQL as an evaluation-only container (separate compose profile; `psycopg` in an evaluation
    dependency group; never imported by `gupi`).
-4. Decide whether M1 uses answer semantics v2 (v2-truth-semantics.md, ADR 0009) or v1, so that the
-   guidelines' answer kinds can be frozen. The Q1-Q8 directions were approved on 2026-11-03; the trial uses
-   v2's answer kinds as a draft.
+4. Decide whether GUPI runs in M1 with answer semantics v2 (v2-truth-semantics.md, ADR 0009) or v1. The
+   Q1-Q8 directions were approved on 2026-11-03. This no longer blocks the guidelines, which are neutral
+   (authoring-trial/guidelines-v0.md); it decides only how GUPI's outputs are mapped onto the gold statuses.
 5. Review the two-document trial's report before the mini-pilot starts. The success thresholds stay
    provisional until reviewed; the trial does not set them.
