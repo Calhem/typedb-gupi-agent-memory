@@ -82,10 +82,12 @@ class Extraction:
     claims: list = field(default_factory=list)
     rejected: list = field(default_factory=list)   # (what, reason)
     notes: list = field(default_factory=list)      # assumptions and conversions
+    times: list = field(default_factory=list)      # per claim and bound: phrase, explicit or inferred, assumption
 
     def report(self):
         return {"mentions": len(self.mentions), "claims": len(self.claims),
-                "rejected": [{"item": w, "reason": r} for w, r in self.rejected], "notes": self.notes}
+                "rejected": [{"item": w, "reason": r} for w, r in self.rejected], "notes": self.notes,
+                "times": self.times}
 
 
 def normalise(text):
@@ -147,7 +149,7 @@ def validate(raw, observation, schema: SchemaInfo, scope, method):
 
     for i, c in enumerate(raw.get("claims") or []):
         try:
-            out.claims.append(_claim(c, text, observation, schema, by_mention, method, out.notes))
+            out.claims.append(_claim(c, text, observation, schema, by_mention, method, out.notes, out.times))
         except ValueError as e:
             out.rejected.append((f"claim {i} ({c.get('type') if isinstance(c, dict) else '?'})", str(e)))
     return out
@@ -161,7 +163,7 @@ def _confidence(value):
     return float(value)
 
 
-def _claim(c, text, observation, schema, by_mention, method, notes):
+def _claim(c, text, observation, schema, by_mention, method, notes, times=None):
     if not isinstance(c, dict):
         raise ValueError("claim is not an object")
     claim_type = c.get("type")
@@ -217,16 +219,20 @@ def _claim(c, text, observation, schema, by_mention, method, notes):
             if c.get("object_text"):
                 values["object-text"] = str(c["object_text"]).strip()
 
-    valid, precision, to_basis = _time(c.get("time") or {}, text, observation.observed_at, notes)
-    return Claim(
+    readings = []
+    valid, precision, to_basis = _time(c.get("time") or {}, text, observation.observed_at, notes, readings)
+    claim = Claim(
         claim_type, {r: tuple(v) if len(v) > 1 else v[0] for r, v in roles.items()},
         evidence=(Evidence(observation.id, *span),), valid=valid, values=values,
         time_precision=precision, valid_to_basis=to_basis, method=method,
         confidence=_confidence(c.get("confidence")), basis=basis,
     )
+    if times is not None:
+        times += [{"claim": claim.id, **r} for r in readings]
+    return claim
 
 
-def _time(t, text, observed_at, notes):
+def _time(t, text, observed_at, notes, readings_out=None):
     readings = {}
     for side in ("start", "end"):
         phrase = t.get(side)
@@ -235,12 +241,18 @@ def _time(t, text, observed_at, notes):
         if normalise(phrase) not in normalise(text):
             notes.append(f"time phrase {phrase!r} is not in the source text; {side} left unknown")
             continue
-        reading = timeexpr.read(phrase, observed_at)
+        found = re.search(r"\s+".join(map(re.escape, phrase.split())), text, re.I)  # position in the original text
+        reading = timeexpr.read(phrase, observed_at, timeexpr.direction(text, found.start() if found else None))
         if reading is None:
-            notes.append(f"time phrase {phrase!r} could not be read; {side} left unknown")
+            notes.append(f"time phrase {phrase!r} could not be read, or its year is ambiguous; {side} left unknown")
+            if readings_out is not None:
+                readings_out.append({"bound": side, "phrase": phrase, "read": False})
             continue
         if reading.assumption:
             notes.append(f"{phrase!r}: {reading.assumption}")
+        if readings_out is not None:
+            readings_out.append({"bound": side, "phrase": phrase, "read": True, "explicit": reading.explicit,
+                                 "assumption": reading.assumption})
         readings[side] = reading
     start, end = readings.get("start"), readings.get("end")
     vt = ValidTime(start and start.earliest, start and start.latest, end and end.earliest, end and end.latest)

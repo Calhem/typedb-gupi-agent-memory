@@ -104,3 +104,19 @@ def test_referents_are_scoped_to_their_conversation(memory):
     result = extract(memory, FixtureExtractor({TEXT: output(reporting())[TEXT]}), [MSG, msg2])
     alices = {memory.claim(c).roles["report"][0] for c in result.claims}
     assert len(alices) == 2  # same name, two conversations: not merged
+
+
+def test_run_report_distinguishes_explicit_and_inferred_dates(ingested):
+    """The extraction run records, per claim and bound, whether the date was stated or inferred."""
+    import json
+    from gupi import typeql
+    from gupi.typedb.connection import transaction
+    from typedb.driver import TransactionType
+    text = "Alice has reported to Bob since March 2024. She is learning Rust."  # March 2024: explicit
+    result = extract(ingested, FixtureExtractor(output(reporting())), [MSG])
+    with transaction(ingested.driver, ingested.database, TransactionType.READ) as tx:
+        (doc,) = typeql.documents(tx, 'match $r isa extraction-run; fetch { "report": $r.run-report };')
+    times = json.loads(doc["report"])["times"]
+    assert times == [{"claim": result.claims[0], "bound": "start", "phrase": "March 2024", "read": True,
+                      "explicit": True, "assumption": None}]
+    assert text == MSG.content  # source text preserved verbatim

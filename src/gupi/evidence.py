@@ -67,7 +67,8 @@ def time_window(question, asked_at):
     if asked_at is None:
         return None
     for m in TIME_PHRASE.finditer(question):
-        reading = timeexpr.read(m.group(1) or m.group(2), asked_at)
+        # Phase 5's frozen configuration resolved a month without a year to the past; kept for reproducibility.
+        reading = timeexpr.read(m.group(1) or m.group(2), asked_at, direction="past")
         if reading:
             return reading.earliest, reading.latest
     return None
