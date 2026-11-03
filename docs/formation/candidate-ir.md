@@ -72,10 +72,10 @@ list means the set is structurally sound, which says nothing about whether it is
   value; confidence between 0 and 1.
 - **Time:**
   - at most one `start`, one `end` and one `holds-since`
-  - every phrase has a window, the right way round
+  - every phrase has a window, the right way round, unless it is unread (§6)
   - the start is not entirely after the end
   - no `since-as-start`
-- **Relations:** each target is a candidate in the set, or a claim id.
+- **Relations:** each target is a candidate (in this set, or an earlier one; §6) or a claim id.
 - **Against the schema, if given** (`SchemaInfo`, as the extraction contract uses):
   - the claim type exists and is not `identity`
   - each role exists, and the participant's kind may play it
@@ -105,7 +105,14 @@ This is the rule a later formation step will use. It is defined and tested now, 
 
 A test checks this. The frozen Phase 4 benchmark is unchanged.
 
-## 6. Versioning
+## 6. Clarifications in Phase 6B (same version: no field or meaning changed)
+- **Relation targets** may name a candidate from **another** set (an earlier observation in the same thread),
+  as well as a candidate in this set or a claim. A set cannot check that such a target exists, so the
+  formation step (6C) must.
+- **An unread time phrase** (e.g. "last spring") may be kept with no window, provided its precision is
+  `unknown`. Its wording is preserved, and it adds no bound to the valid time.
+
+## 7. Versioning
 - `gupi.candidate/1` is this document.
 - Any change to the fields or their meanings is a new version. The validator accepts only its own version.
 - Stored candidates (6B) carry their version, so old ones can be read or migrated deliberately.

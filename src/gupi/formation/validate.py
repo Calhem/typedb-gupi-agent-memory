@@ -87,8 +87,8 @@ def _candidate(c, where, text, observation_id, known, schema, bad):
         _enum(where, "relation-marked", r.marked, ("stated", "inferred"), bad)
         if r.target == c.id:
             bad(where, "relation", "a candidate cannot relate to itself")
-        elif r.target not in known and not r.target.startswith("claim:"):
-            bad(where, "relation", f"relation target {r.target!r} is neither a candidate in this set nor a claim id")
+        elif r.target not in known and not r.target.startswith(("claim:", "candidate:")):
+            bad(where, "relation", f"relation target {r.target!r} is neither a candidate nor a claim id")
     if schema is not None:
         _schema(c, where, schema, bad)
 
@@ -103,8 +103,8 @@ def _times(c, where, text, bad):
         _enum(where, "precision", t.precision, PRECISIONS, bad)
         if not _within(t.start, t.end, c.passage.start, c.passage.end) or text[t.start:t.end] != t.phrase:
             bad(where, "time", f"time phrase {t.phrase!r} does not match the passage at its offsets")
-        if t.earliest is None and t.latest is None:
-            bad(where, "time", f"time phrase {t.phrase!r} has no window")
+        if t.earliest is None and t.latest is None and t.precision != "unknown":
+            bad(where, "time", f"time phrase {t.phrase!r} has no window (allowed only with precision 'unknown')")
         if t.earliest is not None and t.latest is not None and t.earliest > t.latest:
             bad(where, "time", f"time phrase {t.phrase!r} has its window the wrong way round")
         if t.kind == "start" and SINCE_BEFORE.search(text[max(0, t.start - 12):t.start]):
@@ -157,7 +157,7 @@ def valid_time(candidate):
     A holds-at over a coarser window ("was CTO in March") says only that it held at some instant in it, which
     a valid time cannot express: Unmappable.
     """
-    by = {t.kind: t for t in candidate.times}
+    by = {t.kind: t for t in candidate.times if t.earliest is not None or t.latest is not None}  # unread: no bound
     fe = fl = te = tl = None
     basis = "unknown"
     if "start" in by and "holds-since" in by:
@@ -168,7 +168,7 @@ def valid_time(candidate):
         fl = by["holds-since"].latest
     if "end" in by:
         te, tl, basis = by["end"].earliest, by["end"].latest, "stated"
-    held = [t for t in candidate.times if t.kind == "holds-at"]
+    held = [t for t in candidate.times if t.kind == "holds-at" and t.earliest is not None]
     for t in held:
         if t.earliest != t.latest:
             raise Unmappable(f"{t.phrase!r} says only that it held at some instant in a window")

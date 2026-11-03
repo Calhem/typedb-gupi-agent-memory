@@ -159,7 +159,8 @@ def test_correction_relationships_name_a_candidate_or_an_existing_claim():
     earlier = dataclasses.replace(c, relations=())
     later = dataclasses.replace(c, basis="inferred", relations=(Relation("corrects", earlier.id),))
     assert codes(o, earlier, later) == []
-    assert codes(o, dataclasses.replace(c, relations=(Relation("corrects", c.id),))) == ["relation"]  # an id cannot name itself: this target is unknown
+    # a candidate from an earlier observation's set is a legitimate target, though this set cannot check it
+    assert codes(o, dataclasses.replace(c, relations=(Relation("corrects", "candidate:0123"),))) == []
 
 
 # --- the set: version, observation, schema, serialisation, separation from memory ---------------------
