@@ -16,6 +16,9 @@ class ConflictError(Exception):
     """Incoming data contradicts what is stored under the same id (e.g. a referent with another type)."""
 
 
+SEMANTICS = ("v1", "v2")  # answer semantics; v1 is the default until ADR 0009 is accepted
+
+
 @dataclass
 class IngestReport:
     created: list[str] = field(default_factory=list)
@@ -27,7 +30,8 @@ class AnswerResult:
     answer: Answer
     believed: tuple  # (ClaimView, Truth) for each believed claim whose verdict counted
     considered: tuple  # every matching claim about the proposition recorded by then, believed or not
-    evaluation: object = None  # gupi.answering.Evaluation: ignored verdicts, assembly, notes
+    evaluation: object = None  # v1: gupi.answering.Evaluation; v2: gupi.answering_v2.Classification
+    semantics: str = "v1"      # under v2, `believed` pairs each deciding claim with its contribution
 
 
 class Memory:
@@ -211,7 +215,8 @@ class Memory:
             "valid-from-earliest": vt.from_earliest, "valid-from-latest": vt.from_latest,
             "valid-to-earliest": vt.to_earliest, "valid-to-latest": vt.to_latest,
             "time-precision": c.time_precision, "valid-to-basis": c.valid_to_basis,
-            "method": c.method, "confidence": c.confidence, "extraction-basis": c.basis, **c.values,
+            "method": c.method, "confidence": c.confidence, "extraction-basis": c.basis,
+            "polarity": "negative" if c.polarity == "negative" else None, **c.values,
         }
         has, has_params = _has(attrs, "a")
         statements = [f"$c isa {label(c.type)} ({links}){has};"]
@@ -470,14 +475,19 @@ class Memory:
             docs = typeql.documents(tx, 'match let $c in believed_at($at); fetch { "id": $c.gupi-id };', {"at": at})
         return {d["id"] for d in docs}
 
-    def ask(self, claim_type, roles, valid_at, believed_at=None, values=None):
+    def ask(self, claim_type, roles, valid_at, believed_at=None, values=None, semantics="v1"):
         """Did `claim_type(roles)` (optionally with these attribute values) hold at `valid_at`, as believed at
         `believed_at` (default: now)? Returns the answer with the claims behind it.
 
         TypeDB selects the claims about the proposition recorded by `believed_at` and decides which are
         believed. Referents that accepted identity claims say are the same are treated as one.
+
+        `semantics` is "v1" (ADR 0003, 0006, 0007; the default) or "v2" (ADR 0009, proposed).
         """
         from gupi.answering import evaluate
+        from gupi.answering_v2 import classify, contribution
+        if semantics not in SEMANTICS:
+            raise ValueError(f"semantics must be one of {SEMANTICS}")
         self._check("claim", claim_type)
         believed_at = believed_at or self.clock()
         with transaction(self.driver, self.database, TransactionType.READ) as tx:
@@ -488,7 +498,14 @@ class Memory:
         matching = [c for c in recorded if all(c.values.get(k) == v for k, v in (values or {}).items())]
         bounding = [c for c in recorded if c.id in believed_ids and values and any(k not in c.values for k in values)]
         believed = [c for c in matching if c.id in believed_ids]
-        result = evaluate(believed, valid_at, anything_recorded=bool(matching or bounding), bounding=bounding)
+        anything = bool(matching or bounding)
+        if semantics == "v2":
+            r = classify(believed, valid_at, anything, bounding=bounding)
+            deciding = tuple((c, contribution(c, valid_at, r.basis.kind)) for c in recorded if c.id in r.basis.claims)
+            return AnswerResult(r.answer, deciding, tuple(matching), r, "v2")
+        positive = [c for c in believed if c.polarity != "negative"]  # v1 cannot express negation
+        result = evaluate(positive, valid_at, anything_recorded=anything,
+                          bounding=[c for c in bounding if c.polarity != "negative"])
         return AnswerResult(result.answer, result.used, tuple(matching), result)
 
     def query(self, question):
@@ -496,10 +513,10 @@ class Memory:
         from gupi import query
         return query.answer(self, question)
 
-    def query_by_name(self, claim_type, roles_by_name, valid_at, believed_at=None, values=None):
+    def query_by_name(self, claim_type, roles_by_name, valid_at, believed_at=None, values=None, semantics="v1"):
         """Like query(), with fixed roles given by name; use None for the open role."""
         from gupi import query
-        return query.by_name(self, claim_type, roles_by_name, valid_at, believed_at, values)
+        return query.by_name(self, claim_type, roles_by_name, valid_at, believed_at, values, semantics)
 
     def explore(self, referent_id, depth=2, believed_at=None, valid_at=None, max_nodes=50):
         from gupi import explore

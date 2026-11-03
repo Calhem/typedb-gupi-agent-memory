@@ -1,0 +1,8 @@
+# Explicit negation (docs/adr/0009, Q4): a claim may state that its proposition did not hold, over its own
+# valid time. Only negations carry the attribute; a claim without it is positive, so existing claims, their
+# ids and their proposition keys are unchanged. Additive only: rolling back means restoring the
+# pre-migration export (docs/adr/0004), which is safe only while no negated claim has been recorded.
+
+define
+  attribute polarity, value string @values("negative");
+  claim owns polarity;

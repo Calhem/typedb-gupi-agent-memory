@@ -122,11 +122,14 @@ class Claim:
     method: str | None = None
     confidence: float | None = None
     basis: str | None = None  # "explicit" or "inferred", for extracted claims
+    polarity: str = "positive"  # "negative": the claim states the proposition did NOT hold over `valid`
 
     def __post_init__(self):
         label(self.type)
         if self.basis not in (None, "explicit", "inferred"):
             raise ValueError("basis must be 'explicit' or 'inferred'")
+        if self.polarity not in ("positive", "negative"):
+            raise ValueError("polarity must be 'positive' or 'negative'")
         for name in list(self.roles) + list(self.values):
             label(name)
         if not self.evidence:
@@ -151,6 +154,7 @@ class Claim:
             sorted((e.observation_id, e.span_start, e.span_end) for e in self.evidence),
             self.method,
             *([self.basis] if self.basis else []),  # only when set, so Phase 1 ids are unchanged
+            *(["negative"] if self.polarity == "negative" else []),  # likewise, so positive ids are unchanged
         )
 
 

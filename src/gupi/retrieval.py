@@ -11,7 +11,7 @@ from gupi.temporal import Truth, ValidTime, holds_at
 CORE_ATTRIBUTES = {
     "gupi-id", "proposition-key", "recorded-at", "valid-from-earliest", "valid-from-latest",
     "valid-to-earliest", "valid-to-latest", "time-precision", "valid-to-basis", "confidence", "method",
-    "occurred-at-earliest", "occurred-at-latest", "extraction-basis",
+    "occurred-at-earliest", "occurred-at-latest", "extraction-basis", "polarity",
 }
 
 
@@ -63,6 +63,7 @@ class ClaimView:
     evidence: tuple[EvidenceView, ...] = field(default=())
     basis: str | None = None
     supersessions: tuple[SupersessionView, ...] = field(default=())  # where this claim is the one replaced
+    polarity: str = "positive"  # "negative" for an explicit negation (core/0010)
 
     @property
     def provisional(self):
@@ -139,6 +140,7 @@ def _view(doc):
         evidence=evidence,
         basis=a.get("extraction-basis"),
         supersessions=supersessions,
+        polarity=a.get("polarity", "positive"),
     )
 
 

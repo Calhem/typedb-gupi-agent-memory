@@ -1,0 +1,580 @@
+[
+  {
+    "config": "gold",
+    "semantics": "v2",
+    "structured": {
+      "accuracy": 0.867,
+      "correct": 13,
+      "questions": 15,
+      "abstention": {
+        "correct": 6,
+        "of": 6
+      },
+      "unsupported_assertions": 0,
+      "citation_precision": 0.833,
+      "citation_recall": 0.833,
+      "median_seconds": 0.0216,
+      "rows": [
+        {
+          "id": "q01",
+          "gold": "TRUE",
+          "got": "UNKNOWN",
+          "correct": false,
+          "cited": [
+            "w1-1",
+            "w3-3"
+          ]
+        },
+        {
+          "id": "q02",
+          "gold": "CONTESTED",
+          "got": "CONTESTED",
+          "correct": true,
+          "cited": [
+            "w1-3",
+            "w3-3"
+          ]
+        },
+        {
+          "id": "q03",
+          "gold": "FALSE",
+          "got": "UNKNOWN",
+          "correct": false,
+          "cited": []
+        },
+        {
+          "id": "q04",
+          "gold": "TRUE (Nora Vance)",
+          "got": "TRUE (Nora Vance)",
+          "correct": true,
+          "cited": [
+            "w3-3"
+          ]
+        },
+        {
+          "id": "q05",
+          "gold": "CONTESTED",
+          "got": "CONTESTED",
+          "correct": true,
+          "cited": [
+            "w1-3",
+            "w3-3"
+          ]
+        },
+        {
+          "id": "q06",
+          "gold": "UNKNOWN",
+          "got": "UNKNOWN",
+          "correct": true,
+          "cited": []
+        },
+        {
+          "id": "q07",
+          "gold": "UNKNOWN",
+          "got": "UNKNOWN",
+          "correct": true,
+          "cited": []
+        },
+        {
+          "id": "q08",
+          "gold": "UNKNOWN",
+          "got": "UNKNOWN",
+          "correct": true,
+          "cited": []
+        },
+        {
+          "id": "q09",
+          "gold": "FALSE",
+          "got": "FALSE",
+          "correct": true,
+          "cited": [
+            "w3-2"
+          ]
+        },
+        {
+          "id": "q10",
+          "gold": "TRUE",
+          "got": "TRUE",
+          "correct": true,
+          "cited": [
+            "w3-1"
+          ]
+        },
+        {
+          "id": "q11",
+          "gold": "NOT_YET_KNOWN",
+          "got": "NOT_YET_KNOWN",
+          "correct": true,
+          "cited": []
+        },
+        {
+          "id": "q12",
+          "gold": "FALSE",
+          "got": "FALSE",
+          "correct": true,
+          "cited": [
+            "w1-3"
+          ]
+        },
+        {
+          "id": "q13",
+          "gold": "TRUE (Omar Fry)",
+          "got": "TRUE (Omar Fry)",
+          "correct": true,
+          "cited": [
+            "w3-1"
+          ]
+        },
+        {
+          "id": "q14",
+          "gold": "NOT_YET_KNOWN",
+          "got": "NOT_YET_KNOWN",
+          "correct": true,
+          "cited": []
+        },
+        {
+          "id": "q15",
+          "gold": "UNKNOWN",
+          "got": "UNKNOWN",
+          "correct": true,
+          "cited": []
+        }
+      ]
+    },
+    "keyword": {
+      "accuracy": 0.333,
+      "correct": 5,
+      "questions": 15,
+      "abstention": {
+        "correct": 2,
+        "of": 6
+      },
+      "unsupported_assertions": 4,
+      "citation_precision": 0.667,
+      "citation_recall": 0.556,
+      "median_seconds": 0.0036,
+      "rows": [
+        {
+          "id": "q01",
+          "gold": "TRUE",
+          "got": "FALSE",
+          "correct": false,
+          "cited": [
+            "w1-3"
+          ]
+        },
+        {
+          "id": "q02",
+          "gold": "CONTESTED",
+          "got": "FALSE",
+          "correct": false,
+          "cited": [
+            "w1-3"
+          ]
+        },
+        {
+          "id": "q03",
+          "gold": "FALSE",
+          "got": "TRUE",
+          "correct": false,
+          "cited": [
+            "w1-5"
+          ]
+        },
+        {
+          "id": "q04",
+          "gold": "TRUE (Nora Vance)",
+          "got": "TRUE (Leah Ortiz)",
+          "correct": false,
+          "cited": [
+            "w1-5"
+          ]
+        },
+        {
+          "id": "q05",
+          "gold": "CONTESTED",
+          "got": "TRUE (Leah Ortiz)",
+          "correct": false,
+          "cited": [
+            "w1-5"
+          ]
+        },
+        {
+          "id": "q06",
+          "gold": "UNKNOWN",
+          "got": "TRUE",
+          "correct": false,
+          "cited": [
+            "w1-2"
+          ]
+        },
+        {
+          "id": "q07",
+          "gold": "UNKNOWN",
+          "got": "TRUE",
+          "correct": false,
+          "cited": [
+            "w2-1"
+          ]
+        },
+        {
+          "id": "q08",
+          "gold": "UNKNOWN",
+          "got": "TRUE",
+          "correct": false,
+          "cited": [
+            "w2-3"
+          ]
+        },
+        {
+          "id": "q09",
+          "gold": "FALSE",
+          "got": "FALSE",
+          "correct": true,
+          "cited": [
+            "w3-2"
+          ]
+        },
+        {
+          "id": "q10",
+          "gold": "TRUE",
+          "got": "TRUE",
+          "correct": true,
+          "cited": [
+            "w3-1"
+          ]
+        },
+        {
+          "id": "q11",
+          "gold": "NOT_YET_KNOWN",
+          "got": "NOT_YET_KNOWN",
+          "correct": true,
+          "cited": []
+        },
+        {
+          "id": "q12",
+          "gold": "FALSE",
+          "got": "FALSE",
+          "correct": true,
+          "cited": [
+            "w1-3"
+          ]
+        },
+        {
+          "id": "q13",
+          "gold": "TRUE (Omar Fry)",
+          "got": "FALSE",
+          "correct": false,
+          "cited": [
+            "w3-2"
+          ]
+        },
+        {
+          "id": "q14",
+          "gold": "NOT_YET_KNOWN",
+          "got": "NOT_YET_KNOWN",
+          "correct": true,
+          "cited": []
+        },
+        {
+          "id": "q15",
+          "gold": "UNKNOWN",
+          "got": "TRUE",
+          "correct": false,
+          "cited": [
+            "w1-2"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "config": "rules",
+    "semantics": "v2",
+    "structured": {
+      "accuracy": 0.867,
+      "correct": 13,
+      "questions": 15,
+      "abstention": {
+        "correct": 6,
+        "of": 6
+      },
+      "unsupported_assertions": 0,
+      "citation_precision": 0.833,
+      "citation_recall": 0.833,
+      "median_seconds": 0.0211,
+      "rows": [
+        {
+          "id": "q01",
+          "gold": "TRUE",
+          "got": "UNKNOWN",
+          "correct": false,
+          "cited": [
+            "w1-1",
+            "w3-3"
+          ]
+        },
+        {
+          "id": "q02",
+          "gold": "CONTESTED",
+          "got": "CONTESTED",
+          "correct": true,
+          "cited": [
+            "w1-3",
+            "w3-3"
+          ]
+        },
+        {
+          "id": "q03",
+          "gold": "FALSE",
+          "got": "UNKNOWN",
+          "correct": false,
+          "cited": []
+        },
+        {
+          "id": "q04",
+          "gold": "TRUE (Nora Vance)",
+          "got": "TRUE (Nora Vance)",
+          "correct": true,
+          "cited": [
+            "w3-3"
+          ]
+        },
+        {
+          "id": "q05",
+          "gold": "CONTESTED",
+          "got": "CONTESTED",
+          "correct": true,
+          "cited": [
+            "w1-3",
+            "w3-3"
+          ]
+        },
+        {
+          "id": "q06",
+          "gold": "UNKNOWN",
+          "got": "UNKNOWN",
+          "correct": true,
+          "cited": []
+        },
+        {
+          "id": "q07",
+          "gold": "UNKNOWN",
+          "got": "UNKNOWN",
+          "correct": true,
+          "cited": []
+        },
+        {
+          "id": "q08",
+          "gold": "UNKNOWN",
+          "got": "UNKNOWN",
+          "correct": true,
+          "cited": []
+        },
+        {
+          "id": "q09",
+          "gold": "FALSE",
+          "got": "FALSE",
+          "correct": true,
+          "cited": [
+            "w3-2"
+          ]
+        },
+        {
+          "id": "q10",
+          "gold": "TRUE",
+          "got": "TRUE",
+          "correct": true,
+          "cited": [
+            "w3-1"
+          ]
+        },
+        {
+          "id": "q11",
+          "gold": "NOT_YET_KNOWN",
+          "got": "NOT_YET_KNOWN",
+          "correct": true,
+          "cited": []
+        },
+        {
+          "id": "q12",
+          "gold": "FALSE",
+          "got": "FALSE",
+          "correct": true,
+          "cited": [
+            "w1-3"
+          ]
+        },
+        {
+          "id": "q13",
+          "gold": "TRUE (Omar Fry)",
+          "got": "TRUE (Omar Fry)",
+          "correct": true,
+          "cited": [
+            "w3-1"
+          ]
+        },
+        {
+          "id": "q14",
+          "gold": "NOT_YET_KNOWN",
+          "got": "NOT_YET_KNOWN",
+          "correct": true,
+          "cited": []
+        },
+        {
+          "id": "q15",
+          "gold": "UNKNOWN",
+          "got": "UNKNOWN",
+          "correct": true,
+          "cited": []
+        }
+      ]
+    },
+    "keyword": {
+      "accuracy": 0.333,
+      "correct": 5,
+      "questions": 15,
+      "abstention": {
+        "correct": 2,
+        "of": 6
+      },
+      "unsupported_assertions": 4,
+      "citation_precision": 0.667,
+      "citation_recall": 0.556,
+      "median_seconds": 0.0035,
+      "rows": [
+        {
+          "id": "q01",
+          "gold": "TRUE",
+          "got": "FALSE",
+          "correct": false,
+          "cited": [
+            "w1-3"
+          ]
+        },
+        {
+          "id": "q02",
+          "gold": "CONTESTED",
+          "got": "FALSE",
+          "correct": false,
+          "cited": [
+            "w1-3"
+          ]
+        },
+        {
+          "id": "q03",
+          "gold": "FALSE",
+          "got": "TRUE",
+          "correct": false,
+          "cited": [
+            "w1-5"
+          ]
+        },
+        {
+          "id": "q04",
+          "gold": "TRUE (Nora Vance)",
+          "got": "TRUE (Leah Ortiz)",
+          "correct": false,
+          "cited": [
+            "w1-5"
+          ]
+        },
+        {
+          "id": "q05",
+          "gold": "CONTESTED",
+          "got": "TRUE (Leah Ortiz)",
+          "correct": false,
+          "cited": [
+            "w1-5"
+          ]
+        },
+        {
+          "id": "q06",
+          "gold": "UNKNOWN",
+          "got": "TRUE",
+          "correct": false,
+          "cited": [
+            "w1-2"
+          ]
+        },
+        {
+          "id": "q07",
+          "gold": "UNKNOWN",
+          "got": "TRUE",
+          "correct": false,
+          "cited": [
+            "w2-1"
+          ]
+        },
+        {
+          "id": "q08",
+          "gold": "UNKNOWN",
+          "got": "TRUE",
+          "correct": false,
+          "cited": [
+            "w2-3"
+          ]
+        },
+        {
+          "id": "q09",
+          "gold": "FALSE",
+          "got": "FALSE",
+          "correct": true,
+          "cited": [
+            "w3-2"
+          ]
+        },
+        {
+          "id": "q10",
+          "gold": "TRUE",
+          "got": "TRUE",
+          "correct": true,
+          "cited": [
+            "w3-1"
+          ]
+        },
+        {
+          "id": "q11",
+          "gold": "NOT_YET_KNOWN",
+          "got": "NOT_YET_KNOWN",
+          "correct": true,
+          "cited": []
+        },
+        {
+          "id": "q12",
+          "gold": "FALSE",
+          "got": "FALSE",
+          "correct": true,
+          "cited": [
+            "w1-3"
+          ]
+        },
+        {
+          "id": "q13",
+          "gold": "TRUE (Omar Fry)",
+          "got": "FALSE",
+          "correct": false,
+          "cited": [
+            "w3-2"
+          ]
+        },
+        {
+          "id": "q14",
+          "gold": "NOT_YET_KNOWN",
+          "got": "NOT_YET_KNOWN",
+          "correct": true,
+          "cited": []
+        },
+        {
+          "id": "q15",
+          "gold": "UNKNOWN",
+          "got": "TRUE",
+          "correct": false,
+          "cited": [
+            "w1-2"
+          ]
+        }
+      ]
+    }
+  }
+]

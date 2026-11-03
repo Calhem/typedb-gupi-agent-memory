@@ -45,6 +45,7 @@ class Answer(Enum):
     UNKNOWN = "unknown"              # claims were recorded by t, but none believed decides v
     NOT_YET_KNOWN = "not-yet-known"  # nothing about it had been recorded by t
     CONTESTED = "contested"          # believed claims disagree: some say TRUE, some FALSE
+    PRESUMED = "presumed"            # v2 only (docs/adr/0009): inside a period joined from different claims
 
 
 def combine(truths, anything_recorded):

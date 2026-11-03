@@ -140,10 +140,11 @@ def _ingest_gold(memory, obs, context, gold_claims):
     return [c.id for c in claims]
 
 
-def structured(memory, q):
+def structured(memory, q, semantics="v1"):
     started = time.perf_counter()
     r = memory.query_by_name(q["type"], q["roles"], _utc(q["valid_at"]),
-                             _utc(q["believed_at"]) if q.get("believed_at") else NOW, q.get("values") or None)
+                             _utc(q["believed_at"]) if q.get("believed_at") else NOW, q.get("values") or None,
+                             semantics)
     return {"answer": r.answer, "binding": r.binding, "observations": [c.observation_id for c in r.citations],
             "seconds": time.perf_counter() - started}
 
@@ -198,7 +199,7 @@ def score(questions, outputs, key_of):
             "rows": rows}
 
 
-def run(config, driver=None):
+def run(config, driver=None, semantics="v1"):
     driver = driver or connect()
     world, questions = load()
     db = f"gupi-eval-retrieval-{uuid.uuid4().hex[:8]}"
@@ -206,8 +207,8 @@ def run(config, driver=None):
     memory = Memory.open(db, packs=("core", "people"), driver=driver, create=True, clock=clock)
     try:
         key_of = build(memory, clock, world, config)
-        return {"config": config,
-                "structured": score(questions, {q["id"]: structured(memory, q) for q in questions}, key_of),
+        return {"config": config, "semantics": semantics,
+                "structured": score(questions, {q["id"]: structured(memory, q, semantics) for q in questions}, key_of),
                 "keyword": score(questions, {q["id"]: keyword(memory, q) for q in questions}, key_of)}
     finally:
         driver.databases.get(db).delete()
@@ -216,13 +217,15 @@ def run(config, driver=None):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Structured vs keyword retrieval on the frozen benchmark.")
     parser.add_argument("--config", choices=["gold", "rules", "both"], default="both")
+    parser.add_argument("--semantics", choices=["v1", "v2"], default="v1",
+                        help="answer semantics for the structured system (docs/adr/0009); scoring is unchanged")
     parser.add_argument("--json", help="write the full results to this file")
     args = parser.parse_args(argv)
-    results = [run(c) for c in (["gold", "rules"] if args.config == "both" else [args.config])]
+    results = [run(c, semantics=args.semantics) for c in (["gold", "rules"] if args.config == "both" else [args.config])]
     for r in results:
         for system in ("structured", "keyword"):
             s = r[system]
-            print(f"{r['config']:5} {system:10} accuracy {s['correct']}/{s['questions']}  abstained {s['abstention']['correct']}/"
+            print(f"{r['config']:5} {r['semantics']} {system:10} accuracy {s['correct']}/{s['questions']}  abstained {s['abstention']['correct']}/"
                   f"{s['abstention']['of']}  unsupported {s['unsupported_assertions']}  citations P {s['citation_precision']} "
                   f"R {s['citation_recall']}  median {s['median_seconds']}s")
     if args.json:

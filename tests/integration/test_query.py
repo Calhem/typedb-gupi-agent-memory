@@ -89,3 +89,14 @@ def test_names_are_resolved_as_of_the_belief_time(memory, clock):
     before = memory.query_by_name("reporting", {"report": "Cleo Park", "manager": "Ben Ross"}, utc("2025-01-15"),
                                   believed_at=utc("2025-03-01"))
     assert before.answer is Answer.NOT_YET_KNOWN and before.steps == ["no referent named 'Cleo Park'"]
+
+
+def test_v1_excludes_an_explicit_negation_instead_of_reading_it_as_positive(memory, clock):
+    neg = observe(HR, "hr-n", "Alice does not report to Bob.", "2025-04-01")
+    c_neg = reports(neg, valid=ValidTime(to_earliest=utc("2025-04-01")), polarity="negative")
+    clock.set("2025-04-02")
+    record(memory, [neg], [c_neg])
+    memory.review(c_neg.id, "accepted", "reviewer")
+    r = memory.query(Question("reporting", {"report": "p:alice", "manager": "p:bob"}, utc("2025-03-15")))
+    assert r.answer is Answer.UNKNOWN and r.citations == []
+    assert (c_neg.id, "an explicit negation, which answer semantics v1 cannot express") in r.excluded

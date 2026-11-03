@@ -6,7 +6,7 @@ import pytest
 from helpers import HR, Clock, observe, record, reports
 from typedb.driver import TransactionType
 
-from gupi import migrations, typeql
+from gupi import migrations, retrieval, typeql
 from gupi.memory import Memory
 from gupi.typedb.connection import transaction
 
@@ -127,3 +127,33 @@ def test_phase_1_database_with_data_upgrades_to_phase_2(driver, database, tmp_pa
     assert view.evidence[0].quote == "Alice reports to Bob." and view.basis is None
     assert new.believed_ids(clock()) == {claim.id}
     assert list((tmp_path / "backups").glob("*.data.typedb"))
+
+
+
+def test_polarity_migration_keeps_existing_claims_and_stores_negations(driver, database, tmp_path):
+    """core/0010 is additive: a claim recorded before it is unchanged after it, and a negation round-trips."""
+    old_core = tmp_path / "core"
+    old_core.mkdir()
+    for m in migrations.discover(["core"]):
+        if m.path.name != "0010_polarity.schema.tql":
+            shutil.copy(m.path, old_core / m.path.name)
+    migrations.migrate(driver, database, ["core", "people"], extra_dirs=[old_core])
+    memory = Memory(driver, database, Clock("2025-01-01"), ("core", "people"), require_current_schema=False)
+    o1 = observe(HR, "o1", "Alice reports to Bob.", "2025-01-01")
+    record(memory, [o1], [reports(o1)])
+    with transaction(driver, database, TransactionType.READ) as tx:
+        before = retrieval.all_claims(tx)
+
+    assert migrations.migrate(driver, database, ["core", "people"]) == ["core/0010_polarity.schema.tql"]
+    with transaction(driver, database, TransactionType.READ) as tx:
+        after = retrieval.all_claims(tx)
+    assert after == before and after[0].polarity == "positive"
+
+    memory = Memory(driver, database, Clock("2025-02-01"), ("core", "people"))
+    o2 = observe(HR, "o2", "Alice does not report to Bob.", "2025-02-01")
+    negation = reports(o2, polarity="negative")
+    assert negation.id != reports(o2).id and negation.proposition_key == reports(o2).proposition_key
+    record(memory, [o2], [negation])
+    with transaction(driver, database, TransactionType.READ) as tx:
+        stored = retrieval.claim(tx, negation.id)
+    assert stored.polarity == "negative" and "polarity" not in stored.values
