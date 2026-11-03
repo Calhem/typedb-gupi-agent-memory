@@ -6,6 +6,7 @@ provenance and constraints give more reliable knowledge management is **a hypoth
 
 | Document | Contents |
 |---|---|
+| [review.md](review.md) | **Critical review of all of the below** (2026-11-03): where TypeDB does and does not provide an advantage, failure modes, a fair evaluation matrix, staged milestones, decisions needed. Where it disagrees with the documents below, the review's recommendations apply. |
 | [benchmark-assessment.md](benchmark-assessment.md) | CronQuestions, AVeriTeC, ComplexWebQuestions, LongMemEval: licence, protocol, capabilities, fit, LLM/search needs, complexity; recommends two |
 | [memory-formation-engine.md](memory-formation-engine.md) | Proposed formation pipeline; salience, support and acceptance as separate decisions |
 | [domain-and-evaluation.md](domain-and-evaluation.md) | `projects` domain model, chronological dataset design, question families, baselines, metrics |
