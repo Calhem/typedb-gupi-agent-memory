@@ -1,0 +1,16 @@
+# Phase 5: who said an observation, and persistent embeddings of observations (one per observation and model).
+# Embeddings are base64 little-endian float32 (docs/adr/0002): TypeDB 3.14.1 has no vector type.
+
+define
+  relation authorship, relates author, relates authored;
+  referent plays authorship:author;
+  observation plays authorship:authored;
+
+  attribute embedding-vector, value string;
+  attribute embedding-model, value string;
+  attribute embedding-dim, value integer;
+  entity embedding,
+    owns gupi-id @key, owns embedding-vector, owns embedding-model, owns embedding-dim,
+    plays embedding-of:vector;
+  relation embedding-of, relates vector, relates target;
+  observation plays embedding-of:target;

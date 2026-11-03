@@ -8,9 +8,10 @@ The owner has no programming background and is learning as we go. Explain new te
 keep steps small, verify each step works before moving on, and stop at each phase gate for review.
 
 ## Status
-Phases 1-3 merged. Phase 4 (`feature/phase-4-retrieval`) done, awaiting review (docs/phase-4-report.md).
-Do not start Phase 5 until the owner approves docs/phase-5-plan.md. Everything runs offline: no
-credentials, paid services, embeddings or LLM question answering until the owner decides otherwise. No distributed agents, packet protocols or dynamic schema
+Phases 1-4 merged. Phase 5 (`feature/phase-5-evaluation`) done, awaiting review (docs/phase-5-report.md).
+Specialist direction (owner, 2026-11-03): a memory engine for complex, evolving, contradictory knowledge;
+see docs/specialist/ (on its own branch). Offline only: no credentials or paid services; local embeddings
+are optional. Stop for review before implementing the Memory Formation Engine. No distributed agents, packet protocols or dynamic schema
 modes yet; keep the code open to them without building them.
 
 ## Rules
@@ -35,6 +36,10 @@ modes yet; keep the code open to them without building them.
   retrieval path that loads all claims (`all_claims()` is for tests; a test enforces this).
 - As-of questions use only what GUPI knew at the belief time, including which names existed.
 - The retrieval benchmark (tests/fixtures/retrieval) is frozen: report first runs unchanged, never tune to it.
+- External datasets live in git-ignored `.data/` (fetch with scripts/fetch_datasets.py; checksums in
+  docs/datasets.md). Never commit their content; LoCoMo is CC BY-NC 4.0. benchmarks/config.json and
+  benchmarks/split.json are frozen; amendments only before held-out runs, recorded in the config.
+- Local embedding is slow on CPU for long texts (about 9/s); run long benchmarks alone (memory pressure).
 - Keep the extraction benchmarks (fixtures, rules, saved results) unchanged; offline results are not
   evidence of LLM extraction performance.
 - Claude defaults: `claude-opus-5-5`, effort `medium`, structured output, `fallbacks: "default"`.

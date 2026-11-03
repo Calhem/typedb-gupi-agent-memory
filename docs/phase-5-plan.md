@@ -1,41 +1,33 @@
-# Phase 5 proposal: memory evaluation (LoCoMo, LongMemEval)
+# Phase 5 plan: offline evidence-retrieval evaluation on LoCoMo and LongMemEval (revised)
 
-Goal (gate, from the brief): integrate LoCoMo and LongMemEval using official, permitted datasets and their
-documented protocols; record model versions, prompts, tokens, latency, cost and splits; compare equivalent
-configurations against text and other practical baselines; no leakage or tuning on held-out data; fully
-reproducible reports, an error taxonomy, and at least one controlled ablation of structured versus
-text-only retrieval.
+## Owner decisions (2026-11-03)
+Datasets downloaded only after licence checks; originals and splits preserved; versions, sources and
+checksums recorded; nothing large or restricted committed. Entirely offline, no paid API calls. Retrieval
+measured separately from extraction and answer generation; keyword, structured and hybrid compared; Recall@k,
+MRR, latency, ingestion time and memory footprint reported; temporal, multi-hop, contradiction and abstention
+cases included; no official LoCoMo or LongMemEval scores claimed. An optional lightweight local embedding
+model behind the provider interface, persisted in TypeDB, benchmarked, with offline mode intact without it.
+Datasets and configuration frozen before tuning; development and held-out separate; first runs reported
+honestly; where structure helps and where plain text retrieval wins both documented.
 
-## What is possible offline, and what is not
-Both benchmarks are natural, multi-session conversations with free-text questions and answers. GUPI's
-offline rule extractor was written for a handful of phrasings and will recover little from them, and
-both benchmarks' official metrics score generated answers, normally with an LLM judge. So:
-- **Offline (no credentials):** dataset adapters, ingestion of sessions as dated observations, and the
-  *retrieval* part of the protocol where the datasets mark evidence turns: does keyword retrieval (and
-  structured retrieval over rule-extracted claims) surface the evidence within the top k, as of the
-  question date? This gives a controlled structured-versus-text ablation on retrieval, honestly labelled as
-  not an end-to-end score.
-- **Needs an LLM:** extraction good enough for these conversations, answer generation and the official
-  judged metrics. That is the ClaudeExtractor (Phase 2) plus a question-to-structure step, run through
-  the budget ledger.
+## Findings that shape the plan
+- LoCoMo is CC BY-NC 4.0 (non-commercial research only) and LongMemEval is MIT: docs/datasets.md.
+- Neither dataset has a development split; ours is fixed in `benchmarks/split.json` by id rule.
+- Both are natural conversation. The offline rule extractor recovers little from them, so "structured" here
+  means what TypeDB can do without good extraction: who said a turn (authorship), dated sessions and
+  time windows, conversation/session scope, and whatever rule-extracted claims exist. It is expected to be
+  weak on its own; the interesting question is whether it helps as a filter in the hybrid.
+- Embeddings: `fastembed` (Apache-2.0, ONNX, no PyTorch) with BAAI/bge-small-en-v1.5 (MIT, 384 dimensions),
+  as the optional `embeddings` extra. Vectors are stored in TypeDB (base64 float32, as ADR 0002), one
+  `embedding` per observation and model. Without the extra, everything else still runs.
 
-## Proposed steps
-1. Verify each dataset's current licence, terms and official split/metric definitions from the original
-   sources; record them in docs. No download until the owner approves the specific files (name, source,
-   size).
-2. Adapters: dataset sessions -> observations with their own dates, in disposable databases; a small
-   fixed development slice and the remaining questions untouched as held out.
-3. Offline retrieval evaluation: evidence recall@k and abstention cues for keyword vs structured (rule
-   extraction), per question category (temporal, multi-hop, knowledge update, abstention).
-4. Scale fixes found by real data (batched ingestion; ingestion is about 100 claims per second today).
-5. With approval and credentials: Claude extraction on the development slice first, with per-question token
-   and cost logging, then the held-out run once, judged per the official protocol; never mixed with vendor-
-   reported figures.
-
-## Decisions needed from the owner
-- **Licences and downloads:** approve fetching the datasets after the licence check.
-- **LLM budget:** the remaining $10 covers small slices only (e.g. a few dozen LongMemEval questions with
-  extraction and answering). A full run needs a larger, explicit budget, or Phase 5 stays offline and
-  retrieval-only.
-- **Embeddings:** most published memory systems use them; a fair text baseline may need one. Still deferred,
-  or choose a local model (a large dependency) now?
+## Steps (each tested, committed, pushed)
+1. Dataset manifest, split and frozen configuration (this commit), and a fetch script that verifies checksums.
+2. Schema (core/0009): authorship of observations; persistent embeddings linked to observations.
+3. Embedding provider (fastembed) behind `Embedder`; storage and exact search over TypeDB-stored vectors.
+4. Evidence retrievers over a scope: keyword (existing), embedding, structured, hybrid (RRF).
+5. Ingestion adapters for LoCoMo and LongMemEval (sessions as contexts, turns as observations with dates,
+   speakers as authors), timed, with database size measured.
+6. Development runs; any tuning committed; then each held-out set run once and reported as the first run.
+7. Embedding benchmarks: generation speed, storage size, retrieval latency and scaling of exact search.
+8. Report, ADR, and a Phase 6 proposal.

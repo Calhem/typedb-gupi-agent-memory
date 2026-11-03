@@ -86,10 +86,10 @@ class Memory:
                 self._ingest_source(tx, s, report)
             for c in batch.contexts:
                 self._ingest_context(tx, c, report)
-            for o in batch.observations:
-                self._ingest_observation(tx, o, now, report)
             for r in batch.referents:
                 self._ingest_referent(tx, r, report)
+            for o in batch.observations:
+                self._ingest_observation(tx, o, now, report)
             for m in batch.mentions:
                 self._ingest_mention(tx, m, report)
             self._before_claims(tx)
@@ -146,6 +146,11 @@ class Memory:
         if o.context_id is not None:
             typeql.run(tx, "match $o isa observation, has gupi-id == $oid; $c isa context, has gupi-id == $cid; "
                            "insert containment (context: $c, member: $o);", {"oid": o.id, "cid": o.context_id})
+        if o.author_id is not None:
+            if self._type_of(tx, o.author_id) not in self.types()["referent"]:
+                raise ValueError(f"observation {o.record_key!r} names unknown author {o.author_id!r}")
+            typeql.run(tx, "match $o isa observation, has gupi-id == $oid; $a isa referent, has gupi-id == $aid; "
+                           "insert authorship (author: $a, authored: $o);", {"oid": o.id, "aid": o.author_id})
         report.created.append(o.id)
 
     def _ingest_mention(self, tx, m, report):
