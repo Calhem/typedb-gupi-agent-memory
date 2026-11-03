@@ -64,35 +64,67 @@ scoring protocol is not frozen.
 - one with gold UNKNOWN or CONTESTED
 - each with its interval mode
 
-## Roles
-| Role | Who (proposed) | Does | Must not |
-|---|---|---|---|
-| Primary author (A) | the owner | world script, both documents, gold for both, the questions and their gold answers | read GUPI's code or schema |
-| Second annotator (B) | to be confirmed | annotate both documents independently from the documents and guidelines only; answer the six questions from the documents | see the world script or A's gold before both are frozen |
-| Implementer | (this codebase's developer) | compute the comparison, run the coverage check after the gold is frozen, write the trial report | author, annotate or adjudicate |
+## Roles and responsibilities
+### Needs an independent human
+These cannot be done by the implementer, who designed GUPI and drafted the guidelines.
+
+| Task | Who | Why |
+|---|---|---|
+| Review the reviewer package: the guidelines, the template, the scoring contract and the system mappings | **independent reviewer**, unfamiliar with GUPI | author familiarity (bias-audit-v0.md, B1, B17) |
+| Write the world script, both documents, the six questions and their gold answers, with accepted forms | **primary author (A)**: proposed, the owner | gold must not come from the implementer |
+| Annotate both documents independently, and answer the questions in the sheets | **second annotator (B)**: to be confirmed | independence |
+| Adjudicate the differences | **A and B together** | judgement about the gold |
+| Audit the explanations and evidence (scoring-protocol §6, X1-X7) | **two auditors** who built no evaluated system: to be confirmed | judgement of support and correctness |
+| Check the deterministic scoring by hand (a sample, or all six questions in the trial) | the same two auditors, or two others who did not build the scorer | the scorer's error rate |
+| Decide: changes after the review; whether any software system is also run on the trial questions; proceed, repeat or revise after the trial; any freeze | **owner** | approval gates |
+
+### Can be done internally (implementer)
+- Assemble the reviewer package and its SHA-256 manifest.
+- Maintain the template and the exporter. Export and validate each annotator's sheets, and return errors to
+  the annotator to fix (their time is logged).
+- Receive the freeze hashes. List the differences between A and B mechanically (`disagreements.csv`), and
+  compute the agreement figures.
+- Draft and maintain the system mappings, which the reviewer checks.
+- Apply the deterministic scoring rules to the contract answers. For six questions this can be done with a
+  small script or by hand; either way it is checked by the hand audit.
+- Prepare blinded, shuffled audit sheets.
+- Run the coverage check against GUPI v1 and the v2 proposal.
+- Compile the trial report from the logs, using trial-report-template.md.
+
+The implementer never authors, annotates, adjudicates, audits, judges neutrality, or freezes anything.
 
 The gold is written by people, not drafted by a language model. If any tool helps with the documents' prose,
 it is recorded in the time log's notes.
 
 ## Procedure
+0. **Independent review** of the reviewer package (reviewer-package/README.md). The owner decides which of
+   the reviewer's points to act on before the trial starts.
 1. A and B read the guidelines (logged).
 2. A writes the world script, then Document A and Document B.
-3. A writes the gold for each document, then the six questions and their gold answers.
-4. B annotates both documents and answers the questions, independently.
-5. **Freeze:** A and B each send the implementer the SHA-256 of their files before seeing each other's work.
-6. **Comparison:** the implementer lists every difference, field by field, in `disagreements.csv`.
-7. **Adjudication:** A and B meet, and resolve each difference or mark it as a genuine disagreement. Each
+3. A writes the gold for each document, then the six questions and their gold answers, with accepted forms
+   (scoring-protocol §4.1.1).
+4. B annotates both documents and answers the questions in the sheets, independently. B's answers become
+   contract answers by the fixed mapping (system-mappings-v0.md, H-annotator).
+5. **Export:** each annotator's sheets are exported and validated (`scripts/annotation_export.py`). Errors go
+   back to their author to fix.
+6. **Freeze:** A and B each send the implementer the SHA-256 of their files, before seeing each other's
+   work.
+7. **Comparison:** the implementer lists every difference, field by field, in `disagreements.csv`.
+8. **Adjudication:** A and B meet, and resolve each difference or mark it as a genuine disagreement. Each
    resolution, its cause and any guideline change needed are recorded.
-8. **Coverage check:** the implementer checks each adjudicated gold claim and question against:
-   - GUPI v1 as it is today
-   - the v2 proposal
-   - the guidelines' gold format
+9. **Scoring:** B's contract answers are scored deterministically, against A's frozen gold and against the
+   adjudicated gold.
+10. **Audit:** the two auditors complete X1-X7 for each answer independently, then compare. They also check
+    the scoring by hand.
+11. **Coverage check:** the implementer checks each adjudicated gold claim and question against:
+    - GUPI v1 as it is today
+    - the v2 proposal
+    - the guidelines' gold format
 
-   Each mapping is written after the freeze, and is lossy where the categories differ (bias-audit-v0.md, B1).
-
-   Anything that cannot be expressed is logged in `limitations.csv`. Authors log the limitations they notice
-   while writing in the same file.
-9. **Trial report:** the logs, the measures below and a recommendation to the owner.
+    Each mapping is written after the freeze, and is lossy where the categories differ (bias-audit-v0.md,
+    B1). Anything that cannot be expressed is logged in `limitations.csv`. Authors log the limitations they
+    notice while writing in the same file.
+12. **Trial report:** trial-report-template.md, filled from the logs, with a recommendation to the owner.
 
 ## What is recorded
 Templates in this folder (CSV, one row per entry):
@@ -125,16 +157,17 @@ Templates in this folder (CSV, one row per entry):
     - loses detail
     - cosmetic
 
-## Measures reported (descriptive only)
-- minutes per document, per document's gold and per question, set against authoring-estimate.md
-- claims per document, from each annotator
-- role-filled-claim precision, recall and F1 between A and B before adjudication
-- Cohen's kappa for support and acceptance
-- agreement on the six answers, their bases and their interval modes
-- disagreements by category and cause; limitations by where and severity
+## Measures reported
+See trial-report-template.md:
+- conclusion accuracy
+- evidence-supported accuracy
+- correct-but-unmatched answers
+- contract failures
+- annotator disagreements
+- auditor agreement
+- authoring and annotation time
 
-With roughly 15-25 claims, F1 and kappa are far too noisy to compare with the 0.8 and 0.6 thresholds in
-m1-protocol.md §8. They are reported as counts with the raw table, not as a pass or a fail.
+All are descriptive. With six questions and roughly 15-25 claims, nothing is compared with a threshold.
 
 ## Decision after the trial (owner)
 - **Proceed** to the eight-document mini-pilot, with the guidelines revised from the logs, which is

@@ -249,6 +249,7 @@ removed, and answers are shuffled across systems within each question.
 | X4 | Do the cited segments, together, support the answer? Judged on the documents, regardless of the gold sets. | yes / partly / no |
 | X5 | Is the explanation consistent with the declared uncertainty (e.g. "probably" with `stated`)? | yes / no |
 | X6 | Right answer for the wrong reason? | no / yes |
+| X7 | Is the answer's value correct, judged on its meaning and regardless of how it is written? | yes / no / not applicable |
 
 **Reported per system:**
 - explanation-consistency rate (X1)
@@ -257,6 +258,7 @@ removed, and answers are shuffled across systems within each question.
 - **supported-answer rate:** deterministically correct (c = 1) **and** X4 = yes
 - uncertainty-consistency rate (X5)
 - right-for-the-wrong-reason count (X6)
+- **correct-but-unmatched count:** X7 = yes but c = 0 (the value was right, but no accepted form matched)
 
 Auditor agreement (per item) and adjudicated outcomes are reported too.
 

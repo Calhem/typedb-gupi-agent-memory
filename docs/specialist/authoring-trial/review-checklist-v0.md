@@ -164,7 +164,7 @@ Add any others you think of.
 | F6 | Can the protocol be gamed? For example: always answering `insufficient`, citing ten segments, or omitting the frame. Estimate what "always `insufficient`" would score. | | | |
 | F7 | Is exact matching against gold forms (§4.1) fair? Will gold authors list enough forms? | | | |
 | F8 | Is scoring an answer with no declared frame against the less favourable reading fair? | | | |
-| F9 | Is the audit of explanations and evidence (§6, items X1-X6) adequate to catch answers that cite the right segments for the wrong reasons? Is blinding enough? | | | |
+| F9 | Is the audit of explanations and evidence (§6, items X1-X7) adequate to catch answers that cite the right segments for the wrong reasons? Is blinding enough? | | | |
 | F10 | Is the experimental natural-language metric (scoring-nl-experimental-v0.md) clearly enough labelled as secondary and potentially brittle? Should it be kept at all? | | | |
 
 ## G. Workload and clarity
