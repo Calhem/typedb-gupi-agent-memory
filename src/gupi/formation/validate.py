@@ -151,8 +151,9 @@ def valid_time(candidate):
 
     - start [e, l): from-earliest e, from-latest l
     - end [e, l): to-earliest e, to-latest l
-    - holds-since [e, l): from-latest l only. The state certainly held from l; when it began is NOT stated, so
-      from-earliest stays open. This is never mapped to a start.
+    - holds-since [e, l): from-latest l only, or the statement's own instant if that is earlier ("since June",
+      said on 10 June). The state certainly held from then; when it began is NOT stated, so from-earliest stays
+      open. This is never mapped to a start.
     - holds-at an instant o: to-earliest o, basis "ongoing-at-observation" when there is no end
     A holds-at over a coarser window ("was CTO in March") says only that it held at some instant in it, which
     a valid time cannot express: Unmappable.
@@ -166,6 +167,11 @@ def valid_time(candidate):
         fe, fl = by["start"].earliest, by["start"].latest
     elif "holds-since" in by:
         fl = by["holds-since"].latest
+    if "holds-since" in by:
+        # "since June", said on 10 June while it holds: it certainly began by the moment it was said
+        now = [t.earliest for t in candidate.times if t.kind == "holds-at" and t.earliest == t.latest and t.earliest]
+        if now and fl is not None:
+            fl = min(fl, min(now))
     if "end" in by:
         te, tl, basis = by["end"].earliest, by["end"].latest, "stated"
     held = [t for t in candidate.times if t.kind == "holds-at" and t.earliest is not None]

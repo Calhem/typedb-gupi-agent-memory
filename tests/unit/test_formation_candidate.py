@@ -218,3 +218,14 @@ def test_a_correction_cue_without_a_named_target_still_needs_review():
     assert decide(c, [], {c.id: "reviewer-a"}).outcome == "formed"
     _, plain = employment(JOINED, [month(JOINED, "March 2025", "start", 2025, 3)])
     assert decide(plain, [], {}).outcome == "formed"
+
+
+def test_since_said_inside_its_own_window_is_certain_from_the_statement():
+    """Found by the 6C development demonstration: "Since June 2025, ..." said on 10 June 2025."""
+    text = "Since June 2025, Nora Vance works at Halden as CTO."
+    said = d(2025, 6, 10)
+    now = TimeEvidence("holds-at", "works", *at(text, "works"), said, said, "instant")
+    _, c = employment(text, [month(text, "June 2025", "holds-since", 2025, 6), now])
+    assert valid_time(c)[0] == ValidTime(None, said, said)      # not 1 July, which is after it was said
+    t = c.times[0]
+    assert (t.earliest, t.latest) == (d(2025, 6), d(2025, 7))   # the candidate keeps the possible June interval

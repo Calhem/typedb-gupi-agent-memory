@@ -88,7 +88,7 @@ This is the rule a later formation step will use. It is defined and tested now, 
 | Time evidence | Valid time |
 |---|---|
 | `start` [e, l) | from-earliest e, from-latest l |
-| `holds-since` [e, l) | from-latest l **only**: certainly held from l; from-earliest stays open |
+| `holds-since` [e, l) | from-latest l **only**, or the statement's own instant if that is earlier ("since June", said on 10 June): certainly held from then; from-earliest stays open |
 | `start` and `holds-since` | the start's window, narrowed to the earlier of the two latest bounds |
 | `end` [e, l) | to-earliest e, to-latest l; basis `stated` |
 | `holds-at` an instant o, no `end` | to-earliest o; basis `ongoing-at-observation` |
