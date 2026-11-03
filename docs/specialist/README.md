@@ -6,7 +6,7 @@ provenance and constraints give more reliable knowledge management is **a hypoth
 
 | Document | Contents |
 |---|---|
-| [v2-truth-semantics.md](v2-truth-semantics.md) | **For approval:** revised v2 semantics (evidence first, FALSE only with negative evidence), truth table R1-R15 for D1-D4 with valid- and belief-time boundaries, open questions Q1-Q8; ADR proposal in ../adr/0009 |
+| [v2-truth-semantics.md](v2-truth-semantics.md) | **Directions approved, not implemented:** v2 semantics (evidence first, FALSE only with negative evidence, negations independent of terminations, overlap judged by compatibility and coverage, a basis on every result); truth table R1-R23 as proposed acceptance tests (`tests/acceptance/`); decisions Q1-Q8, open Q9; ADR proposal in ../adr/0009 |
 | [authoring-estimate.md](authoring-estimate.md) | Effort for the held-out split (37-57 h + 5-7 h) and an 8-document mini-pilot (14-22 h + 2-3 h) |
 | [m1-protocol.md](m1-protocol.md) | **For approval:** the M1 methodology pilot (not a competitive benchmark): five hypotheses H1-H5 attributed to application logic, modelling or TypeDB; baselines; error injection; ~40 documents and ~80 questions; authoring and bias controls; stop conditions |
 | [joined-spell-analysis.md](joined-spell-analysis.md) | **For approval:** joined-spell behaviour vs ADR 0007 on five scenario types; four defects (D1-D4); proposed v2 semantics (TRUE / PRESUMED / UNKNOWN / FALSE / CONTESTED, spells first), versioned |
@@ -17,7 +17,6 @@ provenance and constraints give more reliable knowledge management is **a hypoth
 | [capabilities.md](capabilities.md) | Existing vs proposed capabilities vs unproven hypotheses |
 | [roadmap.md](roadmap.md) | Revised phases and the decisions needed |
 
-The month-without-year date bug is fixed separately on branch `fix/month-without-year` (unmerged into `main`;
-merged into this branch).
+The month-without-year date bug is fixed in `main` (PR #1, merge commit `d360ff3`).
 Nothing in these documents is implemented, and no new dataset has been downloaded. The next step is the
 owner's review.
