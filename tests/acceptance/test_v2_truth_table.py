@@ -4,10 +4,8 @@ v1: each row's documented v1 answer is checked against today's `gupi.answering.e
 v1 column cannot drift from the code. v1 cannot store negations (no polarity, ADR 0009 Q4), so its rows
 run without them, as an extraction would leave them.
 
-v2: the proposed answer and basis. v2 is not implemented (ADR 0009 is proposed), so each v2 test is a
-strict expected failure on the missing module `gupi.answering_v2`. When v2 exists, a wrong answer fails as
-a normal assertion and a right one reports XPASS, which fails the suite until the marker is removed. The
-interface used here (`classify` returning `.answer` and `.basis`) is a proposal too.
+v2: the specified answer and basis, checked against `gupi.answering_v2.classify`. The expected outcomes
+are those of the specification and were not changed to fit the implementation.
 """
 
 from dataclasses import dataclass
@@ -17,6 +15,7 @@ from types import SimpleNamespace as NS
 import pytest
 
 from gupi.answering import evaluate
+from gupi.answering_v2 import classify
 from gupi.temporal import ValidTime, holds_at
 
 
@@ -91,11 +90,8 @@ def test_v1_column_matches_todays_code(row, believed, recorded, at, v1, v2):
     assert (result.answer.name, bool(result.assembled)) == v1
 
 
-@pytest.mark.xfail(raises=ModuleNotFoundError, strict=True, reason="v2 not implemented: ADR 0009 is proposed")
 @pytest.mark.parametrize("row, believed, recorded, at, v1, v2", ROWS, ids=IDS)
 def test_v2_proposed(row, believed, recorded, at, v1, v2):
-    from gupi.answering_v2 import classify  # noqa: PLC0415  (absent until v2 is approved and implemented)
-
     result = classify([S[i] for i in believed.split()], at, recorded)
     answer, basis, claims = v2
     assert (result.answer.name, result.basis.kind, sorted(result.basis.claims)) == (answer, basis, sorted(claims.split()))
