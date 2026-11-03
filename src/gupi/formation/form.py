@@ -115,6 +115,10 @@ def form(memory, observation, cset, approvals=None, schema=None, scope=None, rej
         if not typeql.concept_rows(tx, "match $o isa observation, has gupi-id == $id;", {"id": observation.id}):
             raise ValueError(f"observation {observation.id!r} has not been ingested")
         done = bool(typeql.concept_rows(tx, "match $r isa extraction-run, has gupi-id == $id;", {"id": run_id}))
+        stored = sorted({c.id for c in cset.candidates} & _stored_candidate_ids(tx, [c.id for c in cset.candidates]))
+    if stored:
+        raise ValueError(f"candidates {stored} are in the candidate store: decide them with gupi.formation.store "
+                         "(submit/review), not form(); the two paths are not mixed")
     scope = scope or observation.context_id or observation.id
     issues = {}
     for i in validate(cset, observation, schema):
@@ -157,6 +161,13 @@ def form(memory, observation, cset, approvals=None, schema=None, scope=None, rej
     if not done:
         _record_run(memory, run_id, cset, result)
     return result
+
+
+def _stored_candidate_ids(tx, candidate_ids):
+    """Which of these candidates are in the candidate store (core/0012)."""
+    rows = typeql.rows_for(tx, "match $c isa memory-candidate, has gupi-id == $id, has gupi-id $cid;",
+                           [{"id": i} for i in candidate_ids]) if candidate_ids else []
+    return {r.get("cid").get_string() for r in rows}
 
 
 def _claim(c, obs, method, scope):

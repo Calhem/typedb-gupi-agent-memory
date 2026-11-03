@@ -21,7 +21,7 @@ from dataclasses import dataclass, replace
 
 from typedb.driver import TransactionType
 
-from gupi import ids, typeql
+from gupi import ids, retrieval, typeql
 from gupi.formation import form as policy
 from gupi.formation.candidate import IR_VERSION, CandidateSet, from_dict, to_dict
 from gupi.formation.validate import validate
@@ -93,6 +93,12 @@ def submit(memory, observation, cset, schema=None):
         issues.setdefault(i.where, []).append(i)
     if issues.get("set"):
         return SubmitResult([], [(None, "; ".join(i.message for i in issues["set"]))], [])
+    with transaction(memory.driver, memory.database, TransactionType.READ) as tx:
+        legacy = retrieval.claim_ids_formed_from(tx, [c.id for c in cset.candidates])
+        stored = policy._stored_candidate_ids(tx, list(legacy))
+    if mixed := sorted(set(legacy) - stored):
+        raise ValueError(f"candidates {mixed} were already formed by form() (the legacy path), outside the store; "
+                         "they are not stored, so the two paths are not mixed")
     result = SubmitResult([], [], [])
     for n, c in enumerate(cset.candidates):
         if f"candidate {n}" in issues:

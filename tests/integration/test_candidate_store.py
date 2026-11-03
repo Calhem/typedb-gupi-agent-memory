@@ -247,3 +247,18 @@ def test_an_altered_payload_is_detected_on_reading(memory, clock):
                    {"id": cid, "p": tampered})
     with pytest.raises(ValueError, match="does not match its payload"):
         store.get(memory, cid)
+
+
+def test_the_store_and_the_legacy_form_path_are_never_mixed_silently(memory, clock):
+    from gupi.formation.form import form
+    obs, cset, _ = say(memory, clock, "m1", "Alice Grey works at Acme Labs.", "2025-06-01T09:00")
+    with pytest.raises(ValueError, match="in the candidate store"):
+        form(memory, obs, cset)                                    # stored candidates: decided by the store only
+    legacy = Observation(CHAT.id, "c1", "Alice Grey works at Acme Labs.", utc("2025-06-02"), THREAD.id)
+    clock.set("2025-06-02")
+    memory.ingest(Batch(sources=(CHAT,), observations=(legacy,), contexts=(THREAD,)))
+    lset, _ = RulesV2().extract(legacy)
+    assert form(memory, legacy, lset).counts()["formed"] == 1      # the legacy path still works on its own
+    with pytest.raises(ValueError, match="already formed by form"):
+        store.submit(memory, legacy, lset)
+    assert store.get(memory, lset.candidates[0].id) is None
