@@ -17,7 +17,7 @@ Date: 2026-11-03. "Existing" means implemented and covered by tests against the 
 | Budgeted Claude extractor (fail-closed ledger) | ADR 0005 | simulated client only; **never run live** |
 | Keyword (BM25), local embedding and hybrid evidence retrieval; embeddings stored in TypeDB | ADR 0002, 0008 | Phase 5 tests and benchmarks |
 | Migrations with backup and restore; review CLI | ADR 0004 | tests |
-| Tense-aware dates: a month without a year resolved from tense or scheduling words, left unknown when ambiguous; explicit vs inferred dates recorded per claim | ADR 0005 amendment | regression tests; **on branch `fix/month-without-year`, not yet in `main`** |
+| Tense-aware dates: a month without a year resolved from tense or scheduling words, left unknown when ambiguous; explicit vs inferred dates recorded per claim | ADR 0005 amendment | regression tests; **in PR #1 (`fix/month-without-year`), not yet in `main`** |
 
 ## Known defects (found 2026-11-03; not fixed; see joined-spell-analysis.md)
 | Id | Defect | Effect |
@@ -28,8 +28,8 @@ Date: 2026-11-03. "Existing" means implemented and covered by tests against the 
 | D4 | A "still true" claim without a stated start never holds | conflicts inside a recorded gap are reported as FALSE, not CONTESTED |
 
 ## Proposed (designed, not built)
-Spell-based truth semantics v2 with a PRESUMED outcome (joined-spell-analysis.md; fixes D1-D4, versioned so
-past results keep v1); the M1 evaluation pilot with Python-object, flat-triple, reified-triple and PostgreSQL
+Spell-based truth semantics v2 with a PRESUMED outcome, evidence-first classification and FALSE only on
+negative evidence (v2-truth-semantics.md, proposed ADR 0009; fixes D1-D4, versioned so past results keep v1); the M1 evaluation pilot with Python-object, flat-triple, reified-triple and PostgreSQL
 evaluation-only baselines and extraction-error injection (m1-protocol.md);
 Memory Formation Engine stages: source documents, salience, support assessment, attribution and
 modality, change analysis, schema-gap proposals, acceptance policy (memory-formation-engine.md);

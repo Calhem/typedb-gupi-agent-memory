@@ -1,5 +1,10 @@
 # Joined spells and truth semantics: analysis against ADR 0007
 
+> **Revised:** the owner approved v2 in principle with conditions. The revised semantics (evidence first, no
+> global precedence, FALSE only with negative evidence), the truth table and the open questions are in
+> v2-truth-semantics.md and the proposed ADR 0009. The defect analysis below stands; its proposal section is
+> superseded where they differ.
+
 Date: 2026-11-03. Status: **analysis and proposal. No behaviour has been changed.** Checked against
 `main` (`a6d5539`) and `answering.evaluate`. Every "GUPI today" result below was produced by running the
 current code on the stated claims.

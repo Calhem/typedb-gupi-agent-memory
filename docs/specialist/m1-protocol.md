@@ -19,6 +19,9 @@ accuracy does not mean equal engineering value: integrity, query complexity, cha
 are measured separately (H2, H3, H5).
 
 ## 2. The five hypotheses
+Approved in direction (2026-11-03). **All success thresholds below are provisional** until their exact values
+have been reviewed; they will be fixed in the frozen guidelines before any data is written.
+
 Each is stated as a falsifiable claim with its null in brackets. "Better" always means the 95% bootstrap
 interval of the difference excludes zero; with about 48 held-out questions, small effects will be
 inconclusive, and that will be reported as inconclusive.
@@ -166,7 +169,8 @@ Metrics per class: rejected at write; flagged (conflict, review); stored silentl
 unsupported confident answers caused.
 
 ## 5. Dataset
-**Size and split:** about 40 documents and 80 questions in total:
+**Size and split:** about 40 documents and 80 questions in total. The held-out authoring effort is estimated
+in authoring-estimate.md; a smaller independent pilot (8 documents, 16 questions) may come first:
 - *Development* (visible to the implementer): 16 documents, 32 questions.
 - *Held-out* (never visible during implementation): 24 documents, 48 questions.
 
@@ -206,7 +210,8 @@ during ingestion.
    - domain scope and document kinds
    - question families and quotas
    - gold formats
-   - answer-kind definitions (including PRESUMED, only if v2 is approved)
+   - answer-kind definitions (including PRESUMED and interval modes, only if v2 and ADR 0009 are approved;
+     see v2-truth-semantics.md)
    - scoring, including partial credit (e.g. UNKNOWN answered where gold is PRESUMED; CONTESTED vs FALSE)
    - error classes
 
