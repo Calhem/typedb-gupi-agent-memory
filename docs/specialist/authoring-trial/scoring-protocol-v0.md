@@ -87,6 +87,51 @@ Comparison is with a gold answer's value and its `forms`. Normalisation:
 
 A value that matches a **rejected candidate** (guidelines §13.3) is recorded with that candidate's reason.
 
+#### 4.1.1 Accepted aliases
+Aliases are fixed in the gold before it is frozen. The scorer only looks them up and makes no judgement of
+meaning.
+
+**Where the accepted forms of a gold value come from**, and nowhere else:
+1. **The gold `value.forms`,** written by the annotators.
+2. **For entity values,** the gold entity's `name` and `aliases`.
+   - `aliases` holds only names and abbreviations that the documents use for that entity ("Tallis", "O&V").
+   - Role references and descriptions ("the contractor", "our survey manager") are not aliases, because
+     what they refer to depends on context. An annotator who wants one accepted must list it in
+     `value.forms`, where adjudication can see it.
+
+**Mechanical normalisation,** applied identically to the answer and to every form, in this order:
+1. Unicode NFKC
+2. remove diacritics ("Joaquín" becomes "Joaquin")
+3. case-fold
+4. replace "&" with "and"
+5. collapse whitespace
+6. trim punctuation at both ends
+7. drop one leading "the "
+
+**Numbers:**
+- Thousands separators and trailing decimal zeros are removed, and numbers are compared numerically.
+- The currency symbols £, € and $ are equivalent to GBP, EUR and USD.
+
+These are string and number operations only.
+
+**Never part of matching:**
+- synonyms or paraphrases
+- fuzzy or edit-distance matching
+- substrings
+- embeddings or language models
+- any rule that depends on the question or context
+
+**Rules for gold forms:**
+- **Who adds them:** both annotators, while writing their gold. At adjudication, the adjudicated gold takes
+  the forms both annotators accept. Forms they disagree on are logged as a disagreement (category: value).
+- **Frozen with the gold:** forms are included in the gold's SHA-256 manifest.
+- **Unambiguous:** after normalisation, no form may match two different candidate values. That includes
+  the main answer, the alternatives and the rejected candidates. This is checked when the gold is frozen.
+- **Correct but unmatched:** when the audit finds an answer correct but not matched, it is counted and
+  reported per system (§6). A missing form may be added only by a recorded amendment before a held-out run.
+  Scores already reported are never silently recomputed; if they are recomputed, both versions are
+  reported.
+
 ### 4.2 Answer credit A
 A = (credit from the table below) × c. Where the declared uncertainty takes no value (the `insufficient`,
 `not-yet-available` and `disputed`-without-value cells), c is not applied.

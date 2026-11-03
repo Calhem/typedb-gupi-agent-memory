@@ -2,7 +2,7 @@
 {"record": "entity", "id": "ent-joaquin", "kind": "person", "name": "Joaquín Ferro", "aliases": ["Joaquín", "Joaquin Ferro"]}
 {"record": "entity", "id": "ent-wen", "kind": "person", "name": "Wen Abara", "aliases": ["Wen"]}
 {"record": "entity", "id": "ent-ravi", "kind": "person", "name": "Ravi Lindqvist", "aliases": ["Ravi"]}
-{"record": "entity", "id": "ent-contractor", "kind": "organisation", "name": "Oskarsen & Vey Engineering", "aliases": ["the contractor", "O&V"]}
+{"record": "entity", "id": "ent-contractor", "kind": "organisation", "name": "Oskarsen & Vey Engineering", "aliases": ["O&V"]}
 {"record": "entity", "id": "ent-tallis", "kind": "organisation", "name": "Tallis Ground Survey Ltd", "aliases": ["Tallis"]}
 {"record": "entity", "id": "ent-authority", "kind": "organisation", "name": "Brindle Harbour Authority", "aliases": ["the Authority"]}
 {"record": "entity", "id": "ent-minutes-author", "kind": "person", "name": "unidentified minute-taker"}
