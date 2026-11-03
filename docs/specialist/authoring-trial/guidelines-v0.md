@@ -497,7 +497,9 @@ not pick one.
   showing a return came later, or a passage that confirms a name. It is never required for full credit.
 - **Sets per frame:** an answer in the `actual` frame and one in the `recorded` frame may need different
   sets.
-- For `disputed` answers, give a set for each side. Both sides together are the essential evidence.
+- For `disputed` answers, give a set for each side, and the value that side states with its surface forms
+  (for example "complete" against "two boreholes outstanding"). Both sides together are the essential
+  evidence.
 - List **counter-evidence** too: material that points the other way, even if it does not overturn the
   answer.
 
