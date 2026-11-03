@@ -32,3 +32,10 @@ development, the other 8 are held out; LongMemEval questions with sha256(questio
 development, the other 447 held out.
 
 Download (verifies checksums): `uv run python -I scripts/fetch_datasets.py`.
+
+## Embedding model (optional `embeddings` extra)
+| Model | Source and version | File | SHA-256 | Licence |
+|---|---|---|---|---|
+| BAAI/bge-small-en-v1.5 (quantised ONNX, 384 dimensions, 64 MB) | huggingface.co/Qdrant/bge-small-en-v1.5-onnx-Q, revision `aa8f8b060edb00e03bfdd08813a2949946c8ba55`, via fastembed 0.9.1 | `model_optimized.onnx` | `51f1bd0addd6e859e42c2c8021a5e5461385bb676a649f4b269aa445449f2431` | MIT |
+
+Downloaded once by fastembed into `.data/models/` (git-ignored); after that it runs offline on the CPU.

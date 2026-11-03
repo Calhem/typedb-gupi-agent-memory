@@ -27,3 +27,13 @@ def test_bad_vectors_are_rejected():
         cosine([1.0], [1.0, 2.0])
     with pytest.raises(ValueError):
         cosine([0.0, 0.0], [1.0, 0.0])
+
+
+def test_numpy_cosine_matches_exact_cosine():
+    pytest.importorskip("numpy")
+    from gupi.embedding import NumpyCosine
+    candidates = [("a", [1.0, 0.0, 0.2]), ("b", [0.9, 0.1, 0.0]), ("c", [0.0, 1.0, 0.0])]
+    exact = ExactCosine().search([1.0, 0.05, 0.1], candidates, k=3)
+    fast = NumpyCosine().search([1.0, 0.05, 0.1], candidates, k=3)
+    assert [i for i, _ in exact] == [i for i, _ in fast]
+    assert all(abs(x - y) < 1e-6 for (_, x), (_, y) in zip(exact, fast))

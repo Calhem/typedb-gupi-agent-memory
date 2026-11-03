@@ -49,7 +49,8 @@ class Context:
 class Observation:
     """Something a source said, verbatim. `record_key` is the source's own id or offset for it.
 
-    `context_id` (optional) places it in a conversation or document; it is not part of the id.
+    `context_id` (optional) places it in a conversation or document, and `author_id` (optional) names the
+    referent who said it; neither is part of the id.
     """
 
     source_id: str
@@ -57,6 +58,7 @@ class Observation:
     content: str
     observed_at: datetime | None = None
     context_id: str | None = None
+    author_id: str | None = None
 
     @property
     def content_hash(self):

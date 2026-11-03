@@ -53,3 +53,43 @@ class ExactCosine:
         scored = [(cid, cosine(query, vector)) for cid, vector in candidates]
         scored.sort(key=lambda s: (-s[1], s[0]))  # ties broken by id, so results are deterministic
         return scored[:k]
+
+
+class FastEmbedder:
+    """A local embedding model through fastembed (ONNX, CPU, no PyTorch). Optional: `uv sync --extra embeddings`.
+
+    Model files are cached in `cache_dir` (default .data/models, git-ignored). Nothing leaves the machine
+    after the one-time model download.
+    """
+
+    def __init__(self, model="BAAI/bge-small-en-v1.5", cache_dir=".data/models", batch_size=64):
+        try:
+            from fastembed import TextEmbedding
+        except ImportError as e:
+            raise RuntimeError("local embeddings need the optional dependency: uv sync --extra embeddings") from e
+        self.model = model
+        self._impl = TextEmbedding(model, cache_dir=cache_dir)
+        self.dimension = len(next(iter(self._impl.embed(["dimension probe"]))))
+        self.batch_size = batch_size
+
+    def embed(self, texts):
+        return [list(map(float, v)) for v in self._impl.embed(list(texts), batch_size=self.batch_size)]
+
+
+class NumpyCosine:
+    """Exact cosine similarity with NumPy (installed with the embeddings extra). Same results as ExactCosine."""
+
+    def search(self, query, candidates, k):
+        import numpy as np
+        candidates = list(candidates)
+        if not candidates:
+            return []
+        ids = [cid for cid, _ in candidates]
+        m = np.asarray([v for _, v in candidates], dtype=np.float32)
+        q = np.asarray(query, dtype=np.float32)
+        norms = np.linalg.norm(m, axis=1) * np.linalg.norm(q)
+        if not norms.all():
+            raise ValueError("zero-length vector has no direction")
+        scores = (m @ q) / norms
+        order = sorted(range(len(ids)), key=lambda i: (-float(scores[i]), ids[i]))[:k]
+        return [(ids[i], float(scores[i])) for i in order]
