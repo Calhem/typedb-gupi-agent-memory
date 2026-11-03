@@ -1,0 +1,19 @@
+{
+  "_comment": "Frozen before any retrieval code (Phase 5). Changes after a held-out run are not allowed; changes after development runs must be committed before the held-out run.",
+  "k": [1, 5, 10],
+  "systems": ["keyword", "embedding", "structured", "hybrid"],
+  "candidates_per_retriever": 50,
+  "keyword": {"method": "BM25 over turn text", "k1": 1.2, "b": 0.75},
+  "embedding": {"provider": "fastembed", "model": "BAAI/bge-small-en-v1.5", "dimension": 384, "unit": "turn", "similarity": "cosine, exact"},
+  "structured": {
+    "entities": "names in the question that match a referent label in scope (LoCoMo speakers; rule-extracted referents)",
+    "candidates": "turns authored by or naming those entities, inside the question's time window when gupi.timeexpr reads one from the question relative to its date",
+    "ranking": "turns that are evidence for an extracted claim about the entity first, then newest first",
+    "no_entity": "returns nothing (no structural handle)"
+  },
+  "hybrid": {"fusion": "reciprocal rank fusion", "rrf_k": 60, "members": ["keyword", "embedding"],
+             "filter": "restrict to the structured candidates when there are any, otherwise unrestricted"},
+  "units": {"locomo": ["turn"], "longmemeval": ["session", "turn"]},
+  "scope": {"locomo": "the question's conversation", "longmemeval": "the question's own history sessions, as of its question_date"},
+  "metrics": ["recall@k (share of gold evidence units in the top k)", "hit@k (any gold unit in the top k)", "MRR (first gold unit)", "latency per question", "ingestion time", "database size"]
+}
