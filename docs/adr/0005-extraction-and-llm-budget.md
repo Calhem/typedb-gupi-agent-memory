@@ -47,3 +47,13 @@ unparseable output produce no claims.
 - Known limitation: two processes reserving at the same instant could both pass the check (snapshot
   isolation). GUPI runs one extraction process at a time; a lock or serialised reservations would be
   needed before running in parallel.
+
+## Amendment (2026-11-03): months and days without a year
+Before: a month or day without a year always resolved to the most recent such date not after the
+observation, so "the report is due in June", written in March, meant last June. Now the validator reads
+the direction from the sentence (`gupi.timeexpr.direction`): past tense or "ago"/"last" gives the past;
+deadlines and plans ("due", "will", "scheduled", "postponed to") give the future; with no evidence the bound
+stays unknown and a note says so (except for the observation's own month). The chosen year is always
+recorded as an assumption. Phase 5's evidence retriever keeps the old past rule explicitly, because its
+configuration was frozen with it. Frozen extraction and retrieval benchmarks: identical scores; only the
+assumption notes now add "(past tense)".
