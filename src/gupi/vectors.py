@@ -28,8 +28,10 @@ def missing(tx, context_ids, model):
     return sorted({d["id"]: d["text"] for d in docs}.items())
 
 
-def store(memory, embedder, context_ids, batch=256):
-    """Embed and store what is missing in these contexts. Returns how many embeddings were written."""
+def store(memory, embedder, context_ids, batch=256, progress=None):
+    """Embed and store what is missing in these contexts. Returns how many embeddings were written.
+
+    `progress(done, total)` is called after each batch, if given."""
     with transaction(memory.driver, memory.database, TransactionType.READ) as tx:
         todo = missing(tx, context_ids, embedder.model)
     written = 0
@@ -43,6 +45,8 @@ def store(memory, embedder, context_ids, batch=256):
                 insert $e isa embedding, has gupi-id == $eid, has embedding-vector == $v, has embedding-model == $m,
                        has embedding-dim == $d; embedding-of (vector: $e, target: $o);""", rows)
         written += len(rows)
+        if progress:
+            progress(written, len(todo))
     return written
 
 

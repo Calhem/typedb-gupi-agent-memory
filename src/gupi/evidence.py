@@ -110,8 +110,9 @@ def structured(memory, question, contexts, asked_at=None, k=50):
     return Ranking(order[:k], {"entities": sorted(named), "window": window, "candidates": len(found)})
 
 
-def hybrid(memory, embedder, question, contexts, asked_at=None, k=50, rrf_k=60):
-    s = structured(memory, question, contexts, asked_at, k=10_000)
+def hybrid(memory, embedder, question, contexts, asked_at=None, k=50, rrf_k=60, use_structure=True):
+    """RRF of keyword and embedding; with use_structure, restricted to the structured candidates if any."""
+    s = structured(memory, question, contexts, asked_at, k=10_000) if use_structure else Ranking([])
     lists = [keyword(memory, question, contexts, k).ids, embedding(memory, embedder, question, contexts, k).ids]
     allowed = set(s.ids)
     if allowed:
