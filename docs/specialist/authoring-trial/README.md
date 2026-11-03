@@ -1,24 +1,33 @@
-# Two-document authoring trial (before the eight-document mini-pilot)
+# Two-document human feasibility trial (before the eight-document mini-pilot)
 
-Date: 2026-11-03. Status: **approved by the owner; not started. Nothing has been authored.**
+Date: 2026-11-03. Status: **ready for execution; not started. Nothing has been authored.** The next step
+needs independent human participants.
 
 ## Purpose
-Before the eight-document mini-pilot, measure three things on the smallest useful sample:
-1. **Authoring time:** real minutes per task, logged at the time, not estimated afterwards.
-2. **Annotation disagreements:** where two people annotating the same documents differ, and why.
-3. **Representational limitations:** what the guidelines, the gold format, GUPI's current schema (v1) or the
-   proposed v2 semantics cannot express.
+Before the eight-document mini-pilot, find out whether people can apply the guidelines, on the smallest
+useful sample. Report:
+1. **Time:** real minutes per task, logged at the time, not estimated afterwards.
+2. **Usability:** what slowed people down in the guidelines and the spreadsheet template.
+3. **Consistency:** where the author's gold and an independent annotator's answers differ, and why.
+4. **Representational limitations:** what the guidelines or the gold format cannot express. The internal
+   coverage check against GUPI is a paper comparison only.
 
-The trial does not test GUPI, and no system is run on its data. It sets no M1 thresholds: they stay
-provisional until reviewed (m1-protocol.md §2).
+**This is a human feasibility trial.**
+- No software system is run: not GUPI, and not any baseline.
+- The answer contract, contract scoring and the explanation audit are not used here. They are exercised
+  later, in the mini-pilot.
+- It sets no M1 thresholds: they stay provisional until reviewed (m1-protocol.md §2).
 
 ## Prerequisite: annotation guidelines, draft v0
-The guidelines are in guidelines-v0.md (revision 2), with:
+The guidelines are in guidelines-v0.md (revision 3), with:
 - a bias audit, in bias-audit-v0.md
 - the primary scoring protocol (a common structured answer contract), in scoring-protocol-v0.md
 - an experimental secondary metric for free-text answers, in scoring-nl-experimental-v0.md
 - a spreadsheet annotation template, in annotation-template/ (JSON Lines remains the canonical format)
 - an independent-review checklist, in review-checklist-v0.md
+
+The scoring protocol, the experimental metric and the system mappings are **not used** in this feasibility
+trial, because no system is run.
 
 The guidelines and checklist are approved for external review. Everything stays provisional, and the
 scoring protocol is not frozen.
@@ -46,110 +55,129 @@ scoring protocol is not frozen.
 
 **Phenomena:** across the two documents, each of these appears at least once:
 
-| Phenomenon | Exercises |
+| Phenomenon | What it tests (in the guidelines' terms) |
 |---|---|
-| A role change with a stated start | starts, spells |
-| A termination, then a reinstatement | Q3, R3-R6 |
-| A moved deadline stated as a month without a year | the date fix |
-| A late correction: B corrects something stated in A | corrections, as-of history |
-| An explicit negation ("no longer responsible for ...") | negation, independent of an end date |
-| A conflicting report from a different source | CONTESTED |
-| A multi-party approval (who approved, on whose behalf, under what condition) | n-ary claims |
-| An unconfirmed rumour | modality, support |
-| Irrelevant chatter, a pronoun and a role reference | salience, reference |
+| A role change with a stated start | states and their start (§7.3) |
+| A termination, then a reinstatement | termination and reinstatement (§10) |
+| A moved deadline stated as a month without a year | updates; time anchors (§7.1, §11) |
+| A late correction: Document B corrects something stated in Document A | corrections; `as_of` questions (§11, §12) |
+| An explicit negation ("no longer responsible for ...") | negation, kept apart from an end date (§10) |
+| A conflicting report from a different source | `disputed` answers (§12) |
+| A multi-party approval (who approved, on whose behalf, under what condition) | participants and roles (§4, §5) |
+| An unconfirmed rumour | certainty and standing (§6, §8.1) |
+| A forwarded or transcribed statement | transmission (§8.2) |
+| Irrelevant chatter, a pronoun and a role reference | references (§3) |
 
 **Six questions:**
-- at least one straightforward retrieval question
-- one asked as of an earlier belief time
-- one with gold UNKNOWN or CONTESTED
-- each with its interval mode
+- at least one plain retrieval question
+- at least one answered by a reason or caveat in a source's own words (`short-text`)
+- one asked `as_of` an earlier date
+- at least one `recorded` and one `actual` question
+- one whose gold is `insufficient` or `disputed`
+- each with its frame, and, for periods, its mode
 
-## Roles and responsibilities
-### Needs an independent human
-These cannot be done by the implementer, who designed GUPI and drafted the guidelines.
+## Participants and roles
+Three independent participants, where practical:
 
-| Task | Who | Why |
-|---|---|---|
-| Review the reviewer package: the guidelines, the template, the scoring contract and the system mappings | **independent reviewer**, unfamiliar with GUPI | author familiarity (bias-audit-v0.md, B1, B17) |
-| Write the world script, both documents, the six questions and their gold answers, with accepted forms | **primary author (A)**: proposed, the owner | gold must not come from the implementer |
-| Annotate both documents independently, and answer the questions in the sheets | **second annotator (B)**: to be confirmed | independence |
-| Adjudicate the differences | **A and B together** | judgement about the gold |
-| Audit the explanations and evidence (scoring-protocol §6, X1-X7) | **two auditors** who built no evaluated system: to be confirmed | judgement of support and correctness |
-| Check the deterministic scoring by hand (a sample, or all six questions in the trial) | the same two auditors, or two others who did not build the scorer | the scorer's error rate |
-| Decide: changes after the review; whether any software system is also run on the trial questions; proceed, repeat or revise after the trial; any freeze | **owner** | approval gates |
+| Participant | Role | Does | Must not |
+|---|---|---|---|
+| **P1** | guidelines reviewer | reviews the reviewer package (step 1). May also help with adjudication, as a facilitator, or check the comparison. | have seen the trial's documents or gold before step 5 |
+| **P2** | primary author | writes the world script, two documents, six questions and the gold (step 3) | read GUPI's code or schema; see P3's answers before freezing |
+| **P3** | independent annotator | annotates the two documents and answers the six questions from the documents alone (step 4) | see the world script, the gold or P2's notes before freezing |
 
-### Can be done internally (implementer)
-- Assemble the reviewer package and its SHA-256 manifest.
-- Maintain the template and the exporter. Export and validate each annotator's sheets, and return errors to
-  the annotator to fix (their time is logged).
-- Receive the freeze hashes. List the differences between A and B mechanically (`disagreements.csv`), and
-  compute the agreement figures.
-- Draft and maintain the system mappings, which the reviewer checks.
-- Apply the deterministic scoring rules to the contract answers. For six questions this can be done with a
-  small script or by hand; either way it is checked by the hand audit.
-- Prepare blinded, shuffled audit sheets.
-- Run the coverage check against GUPI v1 and the v2 proposal.
-- Compile the trial report from the logs, using trial-report-template.md.
+**Overlapping roles** (for example P1 helping to adjudicate) are allowed, and recorded in `roles-log.csv`
+with the steps involved. The report states every overlap.
 
-The implementer never authors, annotates, adjudicates, audits, judges neutrality, or freezes anything.
+**Fewer than three people.** If three independent people are not available, the owner decides who doubles
+up. The report says so, and treats agreement figures with corresponding caution.
+
+**Owner (not a participant):** decides which review points to act on (step 2), and what happens after the
+trial. P2 may be the owner, as proposed earlier; if so, that is recorded too.
+
+**Implementer (internal; not a participant).** Does only clerical and mechanical work:
+- assembles and sends the packages, with SHA-256 manifests
+- carries files between participants. P3 receives the documents and questions only, never the gold or the
+  world script.
+- exports and validates the sheets (`scripts/annotation_export.py`), returning errors to their author
+- receives the freeze hashes, and keeps the frozen copies unchanged
+- lists the differences mechanically, and computes the agreement figures
+- runs the paper coverage check
+- compiles the report (trial-report-template.md)
+
+The implementer never authors, annotates, adjudicates, judges neutrality, or creates any trial document or
+question.
 
 The gold is written by people, not drafted by a language model. If any tool helps with the documents' prose,
 it is recorded in the time log's notes.
 
 ## Procedure
-0. **Independent review** of the reviewer package (reviewer-package/README.md). The owner decides which of
-   the reviewer's points to act on before the trial starts.
-1. A and B read the guidelines (logged).
-2. A writes the world script, then Document A and Document B.
-3. A writes the gold for each document, then the six questions and their gold answers, with accepted forms
-   (scoring-protocol §4.1.1).
-4. B annotates both documents and answers the questions in the sheets, independently. B's answers become
-   contract answers by the fixed mapping (system-mappings-v0.md, H-annotator).
-5. **Export:** each annotator's sheets are exported and validated (`scripts/annotation_export.py`). Errors go
-   back to their author to fix.
-6. **Freeze:** A and B each send the implementer the SHA-256 of their files, before seeing each other's
-   work.
-7. **Comparison:** the implementer lists every difference, field by field, in `disagreements.csv`.
-8. **Adjudication:** A and B meet, and resolve each difference or mark it as a genuine disagreement. Each
-   resolution, its cause and any guideline change needed are recorded.
-9. **Scoring:** B's contract answers are scored deterministically, against A's frozen gold and against the
-   adjudicated gold.
-10. **Audit:** the two auditors complete X1-X7 for each answer independently, then compare. They also check
-    the scoring by hand.
-11. **Coverage check:** the implementer checks each adjudicated gold claim and question against:
-    - GUPI v1 as it is today
-    - the v2 proposal
-    - the guidelines' gold format
+1. **Independent guidelines review** (P1).
+   - P1 receives the reviewer package (reviewer-package/README.md) and returns the short form, their practice
+     answers and their time.
+2. **Resolve material ambiguities** (owner).
+   - Only points that would make annotators disagree, or block annotation, are acted on.
+   - Each decision is recorded in `review-decisions.md`, with the change made.
+   - The guidelines' revision number and the manifest are updated. Everything else waits for the trial's
+     evidence.
+3. **Author and freeze** (P2).
+   - P2 receives the guidelines as revised in step 2, the template, `time-log.csv` and `limitations.csv`.
+   - P2 writes the world script, Document A and Document B, the six questions (with frames), and the gold
+     for both documents and all questions, with accepted forms. Scope and guidance: §Scope above, and
+     guidelines §17.
+   - **Freeze:** P2's files are exported and validated, then P2 sends their SHA-256 hashes. The implementer
+     keeps an unchanged copy of the frozen files.
+4. **Independent annotation** (P3).
+   - P3 receives the guidelines, the template, the two documents and the six questions. They do not receive
+     the world script, the gold or any of P2's notes.
+   - P3 annotates both documents and answers the questions.
+   - **Freeze:** P3's files are exported, validated and hashed in the same way, and an unchanged copy is
+     kept.
+5. **Compare, adjudicate and document** (P2 and P3, optionally facilitated by P1).
+   - The implementer lists every difference between the frozen files in `disagreements.csv`.
+   - P2 and P3 resolve each difference, keep both readings (`both-acceptable`), or mark it `unresolvable`,
+     recording its cause and any guideline change needed (guidelines §14).
+   - The adjudicated gold is a new file. **The frozen files are never edited,** so agreement is measured on
+     what each person wrote independently.
+6. **Report** (implementer compiles; participants review their own sections).
+   - Time, usability, consistency and representational limitations, using trial-report-template.md, with a
+     recommendation to the owner.
 
-    Each mapping is written after the freeze, and is lossy where the categories differ (bias-audit-v0.md,
-    B1). Anything that cannot be expressed is logged in `limitations.csv`. Authors log the limitations they
-    notice while writing in the same file.
-12. **Trial report:** trial-report-template.md, filled from the logs, with a recommendation to the owner.
+**Elapsed time:** about one to two weeks, set mainly by the participants' availability.
+
+**Person-time** (authoring-estimate.md):
+- P1: about 2-3 hours
+- P2: about 4.5-7.5 hours
+- P3: about 1.5-2.5 hours
+- adjudication: about 1-1.5 hours each
 
 ## What is recorded
 Templates in this folder (CSV, one row per entry):
 - **`time-log.csv`:** person, task, start, end, minutes, interruptions, notes. The tasks are:
+  - review
   - guidelines
   - world-script
   - document-A, document-B
   - gold-A, gold-B
   - questions
-  - second-annotation
+  - annotation
+  - export-fixes
   - adjudication
-- **`disagreements.csv`:** document, item (claim or question id), field, A's value, B's value, category,
-  cause, resolution, guideline change needed.
+- **`disagreements.csv`:** document, item (claim or question id), field, the author's value (P2, column
+  `value_a`), the annotator's value (P3, column `value_b`), category, cause, resolution, guideline change
+  needed.
   - **Categories:**
     - missed claim, extra claim
     - role assignment, value, modality, assertor
     - time phrase, explicit vs inferred date
-    - support, salience, acceptance
-    - answer kind, basis, interval mode
+    - commitment, standing, transmission
+    - frame, status, evidence, alternatives, interval mode
   - **Causes:**
     - guideline unclear
     - guideline silent
     - document ambiguous
     - annotator slip
     - genuine disagreement
+- **`roles-log.csv`:** participant, role, steps, overlaps with, declared connections, note.
 - **`limitations.csv`:** found by (author, annotator, coverage check), document, item, what could not be
   represented, where (guidelines, gold format, GUPI v1, v2 proposal, schema), example, severity, proposal.
   - **Severities:**
@@ -158,22 +186,16 @@ Templates in this folder (CSV, one row per entry):
     - cosmetic
 
 ## Measures reported
-See trial-report-template.md:
-- conclusion accuracy
-- evidence-supported accuracy
-- correct-but-unmatched answers
-- contract failures
-- annotator disagreements
-- auditor agreement
-- authoring and annotation time
+See trial-report-template.md, which covers time, usability, consistency (annotator agreement and
+disagreements) and representational limitations.
 
 All are descriptive. With six questions and roughly 15-25 claims, nothing is compared with a threshold.
 
 ## Decision after the trial (owner)
 - **Proceed** to the eight-document mini-pilot, with the guidelines revised from the logs, which is
   expected.
-- **Repeat the trial** with revised guidelines, if the disagreements show the answer kinds, the bases or
-  the gold format cannot be applied consistently.
+- **Repeat the trial** with revised guidelines, if the disagreements show that the statuses, frames,
+  standings or gold format cannot be applied consistently.
 - **Revise the estimate or scope,** if the measured minutes are far from the estimate (for example more than
   twice), or if limitations block whole question families.
 
@@ -184,5 +206,7 @@ Limitations attributed to GUPI v1 or the v2 proposal become inputs to the format
 - Fictional organisations and people only, with no real names, nothing confidential and no personal data.
   The repository is public.
 - Trial data is not held-out data, and is never reused in the development or held-out splits.
-- A and B keep their files locally until the freeze. The logs, documents and adjudicated gold are committed
-  with the trial report, under `evaluation/m1/trial/`.
+- P2 and P3 keep their files locally until the freeze.
+- The implementer keeps the frozen copies unchanged, and checks them against their hashes.
+- The logs, documents, both frozen files and the adjudicated gold are committed with the trial report, under
+  `evaluation/m1/trial/`.
