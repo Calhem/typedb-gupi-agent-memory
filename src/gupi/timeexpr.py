@@ -31,6 +31,7 @@ class Reading:
     latest: datetime
     precision: str            # "day", "month" or "year"
     assumption: str | None = None
+    explicit: bool = True     # False when the date is derived from the observation date (no stated year, or relative)
 
 
 def _utc(y, m=1, d=1):
@@ -62,9 +63,12 @@ def _year_for(month, observed_at, day=1, direction="past"):
 
 # Words that show whether a sentence talks about the past or the future. Scheduling words that end in "-ed"
 # ("scheduled", "planned", "expected") point forward, so they are checked before the generic past tense.
-FUTURE_CUES = re.compile(
-    r"^(?:will|shall|'ll|going|due|deadline|scheduled|planned|plan|plans|expected|expect|expects|aim|aims|"
-    r"target|targets|targeted|upcoming|next|intend|intends|intended|forecast|forecasts)$")
+# Strong future cues settle the direction. Weak ones (plans and expectations) only count when nothing in the
+# sentence points to the past: "we had planned to finish in June" may be about a June already gone.
+STRONG_FUTURE = re.compile(r"^(?:will|shall|'ll|going|due|deadline|upcoming|next)$")
+WEAK_FUTURE = re.compile(
+    r"^(?:scheduled|planned|plan|plans|expected|expect|expects|aim|aims|target|targets|targeted|intend|intends|"
+    r"intended|forecast|forecasts)$")
 PAST_CUES = re.compile(
     r"^(?:was|were|had|did|ago|last|previous|previously|earlier|already|since|\w+ed|"
     r"left|went|began|became|came|made|said|told|took|gave|got|met|ran|wrote|sent|spent|won|lost|held|"
@@ -87,13 +91,20 @@ def direction(text, position=None):
     before, after = text[start:position], text[position:end]
     if RESCHEDULED_TO.search(before):
         return "future"  # "postponed to June": the new date lies ahead
-    for words in (reversed(WORD.findall(before.lower())), WORD.findall(after.lower())):
-        for w in words:
-            if FUTURE_CUES.match(w):
-                return "future"
-            if PAST_CUES.match(w) and w not in NOT_PAST:
-                return "past"
+    nearby = list(reversed(WORD.findall(before.lower()))) + WORD.findall(after.lower())
+    past_anywhere = any(_is_past(w) for w in nearby)
+    for w in nearby:
+        if STRONG_FUTURE.match(w):
+            return "future"
+        if _is_past(w):
+            return "past"
+        if WEAK_FUTURE.match(w):
+            return None if past_anywhere else "future"  # mixed signals: not resolved
     return None
+
+
+def _is_past(word):
+    return bool(PAST_CUES.match(word)) and word not in NOT_PAST and not WEAK_FUTURE.match(word)
 
 
 def read(expression, observed_at, direction=None):
@@ -132,29 +143,30 @@ def read(expression, observed_at, direction=None):
             if y is None:
                 return None
             r = _day(y, MONTHS[name], day)
-            return r and Reading(r.earliest, r.latest, "day", _assumption(y, direction, MONTHS[name], obs))
+            return r and Reading(r.earliest, r.latest, "day", _assumption(y, direction, MONTHS[name], obs), explicit=False)
     if text in MONTHS:
         y = _year_without_evidence(MONTHS[text], obs, direction)
         if y is None:
             return None
-        return Reading(*_month_window(y, MONTHS[text]), "month", _assumption(y, direction, MONTHS[text], obs))
+        return Reading(*_month_window(y, MONTHS[text]), "month", _assumption(y, direction, MONTHS[text], obs),
+                       explicit=False)
 
     if text == "today":
-        return Reading(today, today + timedelta(days=1), "day")
+        return Reading(today, today + timedelta(days=1), "day", explicit=False)
     if text == "yesterday":
-        return Reading(today - timedelta(days=1), today, "day")
+        return Reading(today - timedelta(days=1), today, "day", explicit=False)
     if text in ("last week", "the previous week"):
         monday = today - timedelta(days=today.weekday())
-        return Reading(monday - timedelta(days=7), monday, "day")
+        return Reading(monday - timedelta(days=7), monday, "day", explicit=False)
     if text in ("this month",):
-        return Reading(*_month_window(obs.year, obs.month), "month")
+        return Reading(*_month_window(obs.year, obs.month), "month", explicit=False)
     if text in ("last month", "the previous month"):
         y, mo = (obs.year - 1, 12) if obs.month == 1 else (obs.year, obs.month - 1)
-        return Reading(*_month_window(y, mo), "month")
+        return Reading(*_month_window(y, mo), "month", explicit=False)
     if text == "this year":
-        return Reading(_utc(obs.year), _utc(obs.year + 1), "year")
+        return Reading(_utc(obs.year), _utc(obs.year + 1), "year", explicit=False)
     if text in ("last year", "the previous year"):
-        return Reading(_utc(obs.year - 1), _utc(obs.year), "year")
+        return Reading(_utc(obs.year - 1), _utc(obs.year), "year", explicit=False)
     return None
 
 

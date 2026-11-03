@@ -64,6 +64,7 @@ def test_coarsest_precision():
 
 @pytest.mark.parametrize("text, phrase, expected", [
     # past events
+    ("The meeting happened in June.", "in June", "past"),
     ("Sam joined Acme in September.", "in September", "past"),
     ("Lena stopped reporting to Raj in June.", "in June", "past"),
     ("The offsite in June was a success.", "in June", "past"),
@@ -82,6 +83,9 @@ def test_coarsest_precision():
     ("Budget review: June.", "June", None),
     ("Agenda item - the June numbers", "June", None),
     ("We need the June figures.", "June", None),
+    # mixed signals: a plan stated in the past tense may be about a date already gone
+    ("We had planned to finish in June.", "in June", None),
+    ("The launch was expected in March.", "in March", None),
 ])
 def test_direction_from_the_sentence(text, phrase, expected):
     assert direction(text, text.index(phrase)) == expected
@@ -101,3 +105,15 @@ def test_phase5_evidence_windows_keep_their_frozen_past_rule():
     asked = datetime(2023, 3, 1, tzinfo=timezone.utc)
     assert time_window("What did Melanie start in June?", asked) == (d(2022, 6), d(2022, 7))
     assert time_window("What is due in June?", asked) == (d(2022, 6), d(2022, 7))  # legacy, even with "due"
+
+
+def test_explicit_and_inferred_dates_are_distinguished():
+    assert read("June 2025", OBS).explicit and read("2025-03-10", OBS).explicit and read("since 2023", OBS).explicit
+    inferred = read("in June", OBS, "past")
+    assert not inferred.explicit and "inferred" in inferred.assumption
+    assert not read("last month", OBS).explicit and not read("yesterday", OBS).explicit
+
+
+def test_unresolvable_statements_are_left_unread():
+    for text, phrase in (("June looks tight.", "June"), ("We had planned to finish in June.", "in June")):
+        assert read(phrase, OBS, direction(text, text.index(phrase))) is None
