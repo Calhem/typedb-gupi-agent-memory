@@ -209,6 +209,17 @@ def _joined(starts, ends, positive, at):
     return (best[1], best[2]) if best else None
 
 
+def contribution(c, at, basis_kind):
+    """What a cited claim contributes at `at`: "positive", "negative", "ended" (a termination) or "boundary"."""
+    if c.polarity == "negative":
+        return "negative"
+    if _covers(c, at):
+        return "positive"
+    if basis_kind in ("termination-continuing", "conflict") and c.valid.to_latest is not None and c.valid.to_latest <= at:
+        return "ended"
+    return "boundary"
+
+
 # --- results --------------------------------------------------------------------------------------------
 
 def _result(answer, kind, claim_ids, notes, explanation):

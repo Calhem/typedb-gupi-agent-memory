@@ -26,6 +26,7 @@ class Question:
     valid_at: datetime
     believed_at: datetime | None = None
     values: dict = field(default_factory=dict)
+    semantics: str = "v1"            # "v1" (default) or "v2" (docs/adr/0009); recorded in every result
 
 
 @dataclass(frozen=True)
@@ -46,6 +47,8 @@ class Binding:
     answer: Answer
     citations: tuple
     notes: tuple = ()
+    basis: object = None             # v2: gupi.answering_v2.Basis (kind and deciding claims)
+    explanation: str | None = None   # v2: why this answer, in words
 
 
 @dataclass
@@ -61,13 +64,15 @@ class Result:
     @property
     def binding(self):
         """Labels of the open role when the answer is TRUE (several if several hold)."""
-        return [b.label for b in self.bindings if b.answer is Answer.TRUE and b.label] if self.answer is Answer.TRUE else []
+        if self.answer not in (Answer.TRUE, Answer.PRESUMED):
+            return []
+        return [b.label for b in self.bindings if b.answer is self.answer and b.label]
 
     @property
     def citations(self):
         seen, out = set(), []
         for b in self.bindings:
-            if self.answer is Answer.TRUE and b.answer is not Answer.TRUE and len(self.bindings) > 1:
+            if self.answer in (Answer.TRUE, Answer.PRESUMED) and b.answer is not self.answer and len(self.bindings) > 1:
                 continue
             for c in b.citations:
                 if (c.claim_id, c.observation_id) not in seen:
@@ -131,14 +136,16 @@ def _why_not(c, t):
     return f"{latest.verdict} by {latest.decided_by} on {latest.recorded_at.date()}" + (f": {latest.reason}" if latest.reason else "")
 
 
-def _cite(claim, truth):
-    return tuple(Citation(claim.id, e.observation_id, e.source_id, e.observed_at, e.quote, claim.basis, truth.value)
+def _cite(claim, verdict):
+    return tuple(Citation(claim.id, e.observation_id, e.source_id, e.observed_at, e.quote, claim.basis, verdict)
                  for e in claim.evidence)
 
 
 def answer(memory, q: Question):
     """Answer a structured question. See Result for what comes back."""
     memory._check("claim", q.claim_type)
+    if q.semantics not in ("v1", "v2"):
+        raise ValueError("semantics must be 'v1' or 'v2'")
     t = q.believed_at or memory.clock()
     open_roles = [r for r, v in q.roles.items() if v is None]
     if len(open_roles) > 1:
@@ -169,6 +176,12 @@ def answer(memory, q: Question):
 
     bindings, notes = [], []
     for group, claims in candidates:
+        if q.semantics == "v2":
+            binding = _binding_v2(q, group, claims, believed_ids, labels)
+            if binding:
+                bindings.append(binding)
+                notes += binding.notes
+            continue
         for c in claims:
             if c.polarity == "negative" and c.id in believed_ids:
                 excluded.append((c.id, "an explicit negation, which answer semantics v1 cannot express"))
@@ -182,10 +195,10 @@ def answer(memory, q: Question):
                 excluded.append((c.id, "a different " + ", ".join(k for k in q.values if c.values.get(k) not in (None, q.values[k]))))
         ev = evaluate([c for c in matching if c.id in believed_ids], q.valid_at, bool(matching or bounding), bounding)
         support = SUPPORT[ev.answer]
-        cites = [x for c, truth in ev.used if truth.value in support for x in _cite(c, truth)]
+        cites = [x for c, truth in ev.used if truth.value in support for x in _cite(c, truth.value)]
         for s_id, e_id in ev.assembled:
             for c in (x for x in recorded if x.id in (s_id, e_id)):
-                cites += _cite(c, c.holds_at(q.valid_at))
+                cites += _cite(c, c.holds_at(q.valid_at).value)
         for c, reason in ev.ignored:
             excluded.append((c.id, reason))
         label = ", ".join(sorted({labels.get(p) or p for p in group})) if group else None
@@ -195,9 +208,24 @@ def answer(memory, q: Question):
         steps.append(f"open role {open_role!r}: {len(bindings)} candidate(s)")
 
     overall = _overall(bindings, open_role, anything=bool(recorded))
-    temporal = {"valid_at": q.valid_at, "believed_at": t, "assumptions": sorted(set(notes)),
+    temporal = {"valid_at": q.valid_at, "believed_at": t, "semantics": q.semantics, "assumptions": sorted(set(notes)),
                 "bounds": {b.label or "answer": [f"{c.claim_id}: {c.verdict}" for c in b.citations] for b in bindings}}
     return Result(q, overall, bindings, excluded, temporal, steps)
+
+
+def _binding_v2(q, group, claims, believed_ids, labels):
+    """One candidate's answer under v2 (docs/adr/0009): the deciding claims are cited with what each contributes."""
+    from gupi.answering_v2 import classify, contribution
+    matching = [c for c in claims if all(c.values.get(k) == v for k, v in q.values.items())]
+    bounding = [c for c in claims if c.id in believed_ids and q.values and any(k not in c.values for k in q.values)]
+    if not matching and not bounding:
+        return None
+    r = classify([c for c in matching if c.id in believed_ids], q.valid_at, True, bounding)
+    by_id = {c.id: c for c in claims}
+    cites = [x for cid in r.basis.claims if cid in by_id
+             for x in _cite(by_id[cid], contribution(by_id[cid], q.valid_at, r.basis.kind))]
+    label = ", ".join(sorted({labels.get(p) or p for p in group})) if group else None
+    return Binding(tuple(sorted(group)), label, r.answer, tuple(dict.fromkeys(cites)), r.notes, r.basis, r.explanation)
 
 
 def _overall(bindings, open_role, anything):
@@ -210,6 +238,8 @@ def _overall(bindings, open_role, anything):
         return Answer.CONTESTED
     if Answer.TRUE in answers:
         return Answer.TRUE
+    if Answer.PRESUMED in answers:  # v2 only
+        return Answer.PRESUMED
     if all(a is Answer.FALSE for a in answers):
         return Answer.FALSE
     if all(a is Answer.NOT_YET_KNOWN for a in answers):
@@ -217,7 +247,7 @@ def _overall(bindings, open_role, anything):
     return Answer.UNKNOWN
 
 
-def by_name(memory, claim_type, roles_by_name, valid_at, believed_at=None, values=None):
+def by_name(memory, claim_type, roles_by_name, valid_at, believed_at=None, values=None, semantics="v1"):
     """Answer a question whose fixed roles are given by name. A name matching several referents that are not
     accepted as the same is reported as ambiguous and answered for each; a name nobody has mentioned gives
     NOT_YET_KNOWN."""
@@ -227,14 +257,14 @@ def by_name(memory, claim_type, roles_by_name, valid_at, believed_at=None, value
         resolved = {r: (resolve(tx, n, groups, t) if n is not None else [None]) for r, n in roles_by_name.items()}
     missing = [roles_by_name[r] for r, gs in resolved.items() if not gs]
     if missing:
-        q = Question(claim_type, {}, valid_at, t, values or {})
+        q = Question(claim_type, {}, valid_at, t, values or {}, semantics)
         return Result(q, Answer.NOT_YET_KNOWN, [], [], {"valid_at": valid_at, "believed_at": t, "assumptions": [], "bounds": {}},
                       [f"no referent named {n!r}" for n in missing])
     ambiguous = [roles_by_name[r] for r, gs in resolved.items() if len(gs) > 1]
     results = []
     for combo in itertools.product(*[[(r, g) for g in gs] for r, gs in resolved.items()]):
         roles = {r: (min(g) if g is not None else None) for r, g in combo}
-        results.append(answer(memory, Question(claim_type, roles, valid_at, t, values or {})))
+        results.append(answer(memory, Question(claim_type, roles, valid_at, t, values or {}, semantics)))
     if len(results) == 1:
         return results[0]
     first = results[0]
