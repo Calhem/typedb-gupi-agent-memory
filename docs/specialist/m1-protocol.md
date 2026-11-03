@@ -213,10 +213,14 @@ during ingestion.
    - answer-kind definitions (including PRESUMED and interval modes, only if v2 and ADR 0009 are approved;
      see v2-truth-semantics.md)
    - scoring, including partial credit (e.g. UNKNOWN answered where gold is PRESUMED; CONTESTED vs FALSE)
+   - the basis of each answer (v2-truth-semantics.md §2), so that FALSE from an explicit negation and FALSE
+     from a continuing termination are scored apart
    - error classes
 
-   It is written **without reference to GUPI's schema**, reviewed by the owner and frozen before any
-   data is written.
+   It is written **without reference to GUPI's schema** and reviewed by the owner. A draft (v0) is tried in
+   a **two-document authoring trial** (authoring-trial/README.md), which records authoring time, annotation
+   disagreements and representational limitations. The guidelines are revised from it, then frozen before
+   the eight-document mini-pilot. No data for the mini-pilot or either split is written before that freeze.
 2. **Roles.**
    - The **implementer** writes only the development split and the code.
    - **Held-out authors** (proposed: the owner, and ideally one outside reviewer) write the held-out world,
@@ -286,5 +290,8 @@ during ingestion.
 2. Confirm the held-out authors and second annotator, and the time available.
 3. Confirm PostgreSQL as an evaluation-only container (separate compose profile; `psycopg` in an evaluation
    dependency group; never imported by `gupi`).
-4. Decide whether M1 uses answer semantics v2 (joined-spell-analysis.md) or v1, so that the guidelines'
-   answer kinds can be frozen.
+4. Decide whether M1 uses answer semantics v2 (v2-truth-semantics.md, ADR 0009) or v1, so that the
+   guidelines' answer kinds can be frozen. The Q1-Q8 directions were approved on 2026-11-03; the trial uses
+   v2's answer kinds as a draft.
+5. Review the two-document trial's report before the mini-pilot starts. The success thresholds stay
+   provisional until reviewed; the trial does not set them.

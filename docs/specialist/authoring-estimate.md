@@ -2,7 +2,26 @@
 
 Date: 2026-11-03. Estimates for an author who knows the domain but not GUPI's code, working from frozen
 guidelines (m1-protocol.md §6). Ranges reflect writing speed and how much revision the gold needs. They
-exclude the implementer's time and are estimates, not measurements: the mini-pilot below measures them.
+exclude the implementer's time and are estimates, not measurements.
+
+**Order (approved 2026-11-03):** a two-document authoring trial first (authoring-trial/README.md), then the
+eight-document mini-pilot, then the full split. Each stage's measured times replace the estimates for the
+next.
+
+## Two-document authoring trial (first)
+| Task | Hours |
+|---|---|
+| Read the draft guidelines (both people) | 1-2 each |
+| Small world script (6-8 people, 10-15 events) | 1-1.5 |
+| 2 documents (about 400 words each) | 1-1.5 |
+| Gold for 2 documents | 1-1.5 |
+| 6 questions with gold answers | 0.5-1 |
+| **Primary author total** | **4.5-7.5 h** (about 1 day) |
+| Second annotator: 2 documents and 6 answers | 1.5-2.5 |
+| Adjudication (both people) | 1-1.5 each |
+| Implementer: comparison, coverage check, trial report | not counted |
+
+Writing the draft guidelines comes before the trial and is not included.
 
 ## Full held-out split: 24 documents, 48 questions
 | Task | Unit effort | Quantity | Hours |
@@ -20,7 +39,7 @@ exclude the implementer's time and are estimates, not measurements: the mini-pil
 
 For one primary author that is roughly **5-7 working days**, plus about **1 day** for the second annotator.
 
-## Smaller independent pilot (recommended first)
+## Eight-document mini-pilot (after the trial)
 **8 documents and 16 questions**, one organisation pair plus a subcontractor. It covers each phenomenon at
 least once:
 - reinstatement
