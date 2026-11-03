@@ -59,9 +59,16 @@ class FormationResult:
         return {o: len(self.by(o)) for o in OUTCOMES}
 
 
-def decide(candidate, issues, approvals):
-    """The formation policy for one candidate. `issues`: its validation issues; `approvals`: {candidate id:
-    reviewer} for candidates a reviewer has explicitly authorised. Pure: writes nothing."""
+def decide(candidate, issues, approvals, rejections=None, copy_of=None):
+    """The formation policy for one candidate. Pure: writes nothing.
+
+    - `issues`: its validation issues
+    - `approvals` / `rejections`: {candidate id: reviewer} for candidates a reviewer has explicitly authorised
+      or refused
+    - `copy_of`: an existing claim this candidate is a forwarded or quoted copy of"""
+    rejections = rejections or {}
+    if candidate.id in rejections:
+        return Decision(candidate.id, "rejected", "rejected by review", rejections[candidate.id])
     if issues:
         return Decision(candidate.id, "rejected", "malformed or unsupported: " + "; ".join(i.message for i in issues))
     if candidate.modality != "actual":
@@ -69,6 +76,9 @@ def decide(candidate, issues, approvals):
                                                   "never formed into a claim about what is the case")
     if repeats := [r.target for r in candidate.relations if r.kind == "repeats"]:
         return Decision(candidate.id, "withheld", f"repeats {repeats[0]} (a forwarded or quoted copy): "
+                                                  "not an independent attestation")
+    if copy_of is not None:
+        return Decision(candidate.id, "withheld", f"repeats existing claim {copy_of} (a forwarded or quoted copy): "
                                                   "not an independent attestation")
     try:
         valid_time(candidate)
@@ -83,6 +93,8 @@ def decide(candidate, issues, approvals):
         needs.append("a stated correction")
     elif CORRECTION_CUE.match(candidate.passage.text):
         needs.append("a stated correction whose target could not be identified")  # the passage still says so
+    if any(t.kind != "holds-at" and t.earliest is None and t.latest is None for t in candidate.times):
+        needs.append("a stated time could not be read")  # forming it would make the claim look timeless
     if needs and candidate.id not in approvals:
         return Decision(candidate.id, "review", "needs a review decision before forming: " + ", ".join(needs))
     if needs:
@@ -90,11 +102,15 @@ def decide(candidate, issues, approvals):
     return Decision(candidate.id, "formed", "an asserted actual condition or event", POLICY)
 
 
-def form(memory, observation, cset, approvals=None, schema=None, scope=None):
+def form(memory, observation, cset, approvals=None, schema=None, scope=None, rejections=None):
     """Form the candidates of one already-ingested observation. Idempotent: running the same formation again
-    writes nothing new and returns the same decisions."""
-    approvals = dict(approvals or {})
-    run_id = ids.stable_id("run", POLICY, observation.id, to_dict(cset), sorted(approvals.items()))
+    writes nothing new and returns the same decisions. `approvals` and `rejections` are reviewers' decisions
+    on specific candidates, {candidate id: reviewer}; one candidate cannot be both."""
+    approvals, rejections = dict(approvals or {}), dict(rejections or {})
+    if both := set(approvals) & set(rejections):
+        raise ValueError(f"candidates both approved and rejected: {sorted(both)}")
+    run_id = ids.stable_id("run", POLICY, observation.id, to_dict(cset), sorted(approvals.items()),
+                           *([sorted(rejections.items())] if rejections else []))
     with transaction(memory.driver, memory.database, TransactionType.READ) as tx:
         if not typeql.concept_rows(tx, "match $o isa observation, has gupi-id == $id;", {"id": observation.id}):
             raise ValueError(f"observation {observation.id!r} has not been ingested")
@@ -105,9 +121,17 @@ def form(memory, observation, cset, approvals=None, schema=None, scope=None):
         issues.setdefault(i.where, []).append(i)
     set_issues = issues.get("set", [])
 
+    drafts = {}
+    for c in cset.candidates:  # the claim each candidate would become, to compare it with memory
+        try:
+            drafts[c.id] = _claim(c, observation, cset.extractor, scope)[0]
+        except ValueError:
+            pass
+    copies = _existing_copies(memory, cset, drafts)
+
     result, referents, mentions, claims = FormationResult(run_id, already_formed=done), {}, [], []
     for n, c in enumerate(cset.candidates):
-        d = decide(c, set_issues + issues.get(f"candidate {n}", []), approvals)
+        d = decide(c, set_issues + issues.get(f"candidate {n}", []), approvals, rejections, copies.get(c.id))
         if d.outcome == "formed":
             try:
                 claim, refs, ms = _claim(c, observation, cset.extractor, scope)
@@ -129,7 +153,7 @@ def form(memory, observation, cset, approvals=None, schema=None, scope=None):
         for decider, ds in sorted(by_decider.items()):
             for d in ds:  # one review per claim, each its own historical event; repeating it is a no-op
                 memory.review(d.claim_id, "accepted", decider, reason=f"formed from {d.candidate_id}: {d.reason}")
-    result.decisions = _suggest_corrections(memory, cset, result.decisions)
+    result.decisions = _suggest_corrections(memory, cset, result.decisions, drafts)
     if not done:
         _record_run(memory, run_id, cset, result)
     return result
@@ -166,23 +190,63 @@ def _claim(c, obs, method, scope):
     return claim, refs, mentions
 
 
-def _suggest_corrections(memory, cset, decisions):
-    """For each formed candidate with a stated correction: a suggestion naming the claim its target became.
+def _existing_copies(memory, cset, drafts):
+    """{candidate id: claim id} for forwarded or quoted candidates whose statement is already in memory as a
+    claim of the same type and polarity, from a passage with the same words, in any conversation. Such a copy
+    is not a new attestation. Withholding it merges nothing: no referent is touched."""
+    forwarded = [c for c in cset.candidates if c.attribution.mode in ("forwarded", "quoted") and c.id in drafts]
+    out = {}
+    with transaction(memory.driver, memory.database, TransactionType.READ) as tx:
+        for c in forwarded:
+            rows = typeql.rows_for(tx, "match $o isa observation, has content $t; $t contains $p; "
+                                       "evidence (supported: $c, support: $o); $c isa claim, has gupi-id $cid;",
+                                   [{"p": c.passage.text}])
+            ids_ = sorted({r.get("cid").get_string() for r in rows} - {drafts[c.id].id})
+            same = [x for x in retrieval.claims_by_ids(tx, ids_)
+                    if x.type == c.claim_type and x.polarity == c.polarity
+                    and x.attribution_mode not in ("forwarded", "quoted")
+                    and any(_words(e.quote) == _words(c.passage.text) for e in x.evidence)]
+            if same:
+                out[c.id] = same[0].id
+    return out
+
+
+def _words(text):
+    return " ".join((text or "").casefold().split())
+
+
+def _suggest_corrections(memory, cset, decisions, drafts):
+    """For each candidate that states a correction, formed or awaiting review: a suggestion naming what it may
+    correct. A target named by the extractor (an earlier candidate) is used if it became a claim; otherwise
+    every believed claim about the same proposition is listed, and more than one is flagged as ambiguous.
     Nothing is superseded."""
     by_id = {c.id: c for c in cset.candidates}
-    targets = {r.target for d in decisions if d.outcome == "formed"
-               for r in by_id[d.candidate_id].relations if r.kind in ("corrects", "retracts")}
+    named = {r.target for c in cset.candidates for r in c.relations if r.kind in ("corrects", "retracts")}
+    keys = {drafts[c.id].proposition_key for c in cset.candidates if c.id in drafts}
     with transaction(memory.driver, memory.database, TransactionType.READ) as tx:
-        formed_from = retrieval.claim_ids_formed_from(tx, targets)
+        formed_from = retrieval.claim_ids_formed_from(tx, named)
+        recorded = retrieval.recorded_with_keys(tx, keys, memory.clock())
+        believed = retrieval.believed_among(tx, recorded, memory.clock())
+        views = {v.id: v for v in retrieval.claims_by_ids(tx, believed)}
     out = []
     for d in decisions:
-        rel = next((r for r in by_id[d.candidate_id].relations if r.kind in ("corrects", "retracts")), None)
-        if d.outcome == "formed" and rel is not None:
-            old = formed_from.get(rel.target)
-            d = Decision(d.candidate_id, d.outcome, d.reason, d.decided_by, d.claim_id,
-                         {"old": old, "new": d.claim_id, "reason": f"{rel.cue or rel.kind}: candidate {d.candidate_id} "
-                          f"{rel.kind} {rel.target}" + ("" if old else " (which was never formed into a claim)")})
-        out.append(d)
+        c = by_id[d.candidate_id]
+        rel = next((r for r in c.relations if r.kind in ("corrects", "retracts")), None)
+        cued = rel is not None or CORRECTION_CUE.match(c.passage.text)
+        if d.outcome not in ("formed", "review") or not cued:
+            out.append(d)
+            continue
+        if rel is not None and formed_from.get(rel.target):
+            targets = [formed_from[rel.target]]
+        else:
+            key = drafts[c.id].proposition_key if c.id in drafts else None
+            targets = sorted(v.id for v in views.values() if v.proposition_key == key and v.id != d.claim_id)
+        cue = rel.cue if rel is not None and rel.cue else "Correction"
+        out.append(Decision(d.candidate_id, d.outcome, d.reason, d.decided_by, d.claim_id, {
+            "old": targets[0] if len(targets) == 1 else None, "possible_targets": targets,
+            "ambiguous": len(targets) > 1, "new": d.claim_id,
+            "reason": f"{cue}: candidate {d.candidate_id}" + (f" {rel.kind} {rel.target}" if rel else "")
+                      + ("" if targets else " (no claim in memory matches its target)")}))
     return out
 
 

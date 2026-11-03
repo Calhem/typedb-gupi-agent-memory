@@ -11,17 +11,21 @@ from gupi import retrieval, typeql
 from gupi.formation.form import POLICY, form
 from gupi.formation.rules_v2 import RulesV2
 from gupi.query import Question
-from gupi.records import Batch, Observation, Referent
+from gupi.records import Batch, Context, Observation, Referent
 from gupi.temporal import Answer, ValidTime
 from gupi.typedb.connection import transaction
 
 pytestmark = pytest.mark.integration
+THREAD = Context("ctx:thread", "conversation")
 
 
-def observe(memory, clock, text, at="2025-08-20", key="k1", source=HR, author=None):
-    obs = Observation(source.id, key, text, utc(at), author_id=author)
+def observe(memory, clock, text, at="2025-08-20", key="k1", source=HR, author=None, context=None):
+    obs = Observation(source.id, key, text, utc(at), context.id if context else None, author_id=author)
     clock.set(at)
-    record(memory, [obs], [])
+    if context:
+        memory.ingest(Batch(sources=(source,), contexts=(context,), observations=(obs,)))
+    else:
+        record(memory, [obs], [])
     return obs
 
 
@@ -172,3 +176,59 @@ def test_citations_point_to_the_exact_passage_and_the_asserter(memory, clock):
     assert res.answer is Answer.FALSE
     (cite,) = res.citations
     assert (cite.quote, cite.observation_id, cite.said_at, cite.verdict) == (passage, obs.id, utc("2025-08-20"), "ended")
+
+
+# --- hardening (docs/formation/6c-hardening-audit.md) ----------------------------------------------------
+
+def test_a_later_forward_of_a_stored_statement_is_withheld_not_a_second_attestation(memory, clock):
+    """H3: the forward arrives in a different message from the original."""
+    run(memory, clock, "Alice Grey works at Acme Labs.", key="k1", at="2025-06-01")
+    _, _, r = run(memory, clock, "FYI\n---- Forwarded message ----\nAlice Grey works at Acme Labs.", key="k2",
+                  at="2025-06-02")
+    assert [d.outcome for d in r.decisions] == ["withheld"] and "repeats existing claim" in r.decisions[0].reason
+    assert len(memory.all_claims()) == 1
+
+
+def test_an_independent_repetition_from_another_source_is_still_formed(memory, clock):
+    run(memory, clock, "Alice Grey works at Acme Labs.", key="k1", at="2025-06-01")
+    _, _, r = run(memory, clock, "Alice Grey works at Acme Labs.", key="k2", at="2025-06-02", source=CHAT)
+    assert [d.outcome for d in r.decisions] == ["formed"] and len(memory.all_claims()) == 2
+
+
+def test_a_correction_of_an_existing_claim_names_its_target_for_review(memory, clock):
+    """H4: no earlier candidate set is given; the target is found in memory, and nothing is superseded."""
+    _, _, first = run(memory, clock, "Alice Grey joined Acme Labs in March 2025.", key="k1", at="2025-04-02", context=THREAD)
+    _, _, r = run(memory, clock, "Correction: Alice Grey joined Acme Labs in April 2025, not March.",
+                  key="k2", at="2025-05-02", context=THREAD)
+    (d,) = r.decisions
+    assert d.outcome == "review" and d.claim_id is None
+    assert (d.suggestion["old"], d.suggestion["ambiguous"], d.suggestion["new"]) == (first.decisions[0].claim_id, False, None)
+    assert view(memory, first.decisions[0].claim_id).superseded_by == ()
+
+
+def test_a_correction_with_several_possible_targets_is_flagged_ambiguous(memory, clock):
+    run(memory, clock, "Alice Grey works at Acme Labs.", key="k1", at="2025-04-01", context=THREAD)
+    run(memory, clock, "Alice Grey joined Acme Labs in March 2025.", key="k2", at="2025-04-02", context=THREAD)
+    _, _, r = run(memory, clock, "Correction: Alice Grey joined Acme Labs in April 2025.", key="k3",
+                  at="2025-05-02", context=THREAD)
+    s = r.decisions[0].suggestion
+    assert s["ambiguous"] and s["old"] is None and len(s["possible_targets"]) == 2
+
+
+def test_a_reviewer_can_reject_a_candidate_and_the_rejection_is_recorded(memory, clock):
+    """H5."""
+    obs, cset, _ = run(memory, clock, "I think Alice Grey reports to Bo Kim.")
+    (cand,) = cset.candidates
+    r = form(memory, obs, cset, rejections={cand.id: "reviewer-b"})
+    (d,) = r.decisions
+    assert (d.outcome, d.reason, d.decided_by, d.claim_id) == ("rejected", "rejected by review", "reviewer-b", None)
+    assert memory.all_claims() == []
+    with pytest.raises(ValueError, match="both approved and rejected"):
+        form(memory, obs, cset, approvals={cand.id: "a"}, rejections={cand.id: "b"})
+
+
+def test_a_stated_time_that_cannot_be_read_goes_to_review(memory, clock):
+    """H6: forming it would give a claim that looks timeless."""
+    _, _, r = run(memory, clock, "Alice Grey joined Acme Labs in Smarch 2025.")
+    assert [d.outcome for d in r.decisions] == ["review"] and "could not be read" in r.decisions[0].reason
+    assert memory.all_claims() == []

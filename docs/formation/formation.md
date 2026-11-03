@@ -18,11 +18,12 @@ Each candidate gets exactly one decision:
 
 | Candidate | Decision | Why |
 |---|---|---|
+| rejected by a named reviewer | **rejected** (decided by that reviewer) | a recorded refusal |
 | fails structural or schema validation | **rejected** | no claim from malformed or unsupported input |
 | modality other than `actual` (planned, hypothetical, ...) | **withheld** | a plan is never answered as a fact |
-| repeats another candidate in the same observation (a forwarded or quoted copy) | **withheld** | not an independent attestation |
+| repeats another candidate in the same observation, or a claim already in memory, as a forwarded or quoted copy (same type, polarity and words; in any conversation) | **withheld** | not an independent attestation |
 | time that a valid time cannot express ("was CTO in March") | **withheld** | no invented bounds |
-| hedged (`probable`, `possible`, `unknown`), rumour, or a stated correction, with no reviewer approval. This includes a passage that opens with a correction cue whose target the extractor could not name. | **review** | needs an explicit decision |
+| hedged (`probable`, `possible`, `unknown`), rumour, or a stated correction, with no reviewer approval. This includes a passage that opens with a correction cue whose target the extractor could not name, and a stated time that could not be read. | **review** | needs an explicit decision |
 | the same, approved by a named reviewer | **formed**, accepted by that reviewer | the uncertainty is kept on the claim (`commitment`) |
 | otherwise: an asserted actual condition or event | **formed**, accepted by the policy | |
 
@@ -41,7 +42,12 @@ no known author.
 | provenance | `method` (the extractor), `candidate-id`, the acceptance review, and the formation run (an `extraction-run` with method `formation:v1`, whose report lists **every** decision, including rejected, withheld and review ones) |
 
 ## Corrections
-A stated correction is routed to review. Once approved:
+A stated correction is routed to review. Its decision carries a suggestion, even while it awaits review:
+- **The target** is the claim its named target became. Failing that, the suggestion lists every believed
+  claim about the same proposition in the same conversation.
+- **Ambiguity:** more than one possible target is flagged as ambiguous, and none is chosen.
+
+Once approved:
 - its own claim is formed
 - the decision carries a **suggestion**: the claim its target became (old), and the new claim
 
