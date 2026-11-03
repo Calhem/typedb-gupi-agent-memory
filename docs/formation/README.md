@@ -18,3 +18,8 @@ implemented.
 6B results: ../evaluation/phase-6b-extraction.md.
 | [formation.md](formation.md) | 6C: the formation pathway and its policy (`formation:v1`) |
 | [6c-dev-demo.md](6c-dev-demo.md) | 6C: the development-only end-to-end demonstration (not a benchmark) |
+| [6c-hardening-audit.md](6c-hardening-audit.md) | 6C hardening: where evidence could be silently strengthened (H1-H11) |
+| [6c-hardening.md](6c-hardening.md) | 6C hardening: three separate dimensions (temporal, evidential, acceptance) and the qualification on v2 answers |
+| [candidate-persistence.md](candidate-persistence.md) | **For approval:** candidate persistence assessment; recommends a minimal core/0012 |
+
+Adversarial results (development-only): ../evaluation/phase-6c-adversarial.md.

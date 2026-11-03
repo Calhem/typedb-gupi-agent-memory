@@ -34,6 +34,15 @@ Date: 2026-11-03.
 - corrections never supersede
 - old claims without the new fields are unchanged
 
+## Outcome
+| Finding | Status | Commit |
+|---|---|---|
+| H1, H2, H7 | **fixed:** v2 answers carry a separate qualification | `a22afa5` |
+| H3, H4, H5, H6 | **fixed** within formation | `4fcbc10` |
+| an unparsed domain sentence dropped silently (found by the adversarial run) | **fixed:** now reported | `0d5cc4a` |
+| H8 (v1), H9 (same name in one scope), H10 (asserter kind) | **deferred,** documented | |
+| H11 (candidate persistence) | **recommendation for approval** (candidate-persistence.md) | |
+
 ## What this milestone changes
 - **H1, H2 and H7:** an evidential **qualification** is attached to v2 answers. It is a separate dimension;
   the temporal classifier and the status labels are unchanged.
