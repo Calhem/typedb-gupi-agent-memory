@@ -191,11 +191,12 @@ def test_round_trip_through_json_keeps_ids():
     assert back == cs and back.candidates[0].id == c.id and to_dict(cs)["candidates"][0]["id"] == c.id
 
 
-def test_formation_does_not_touch_memory_or_typedb():
-    """Candidates stay separate from memory: the formation package imports nothing that can write it."""
+def test_only_the_formation_pathway_touches_memory_or_typedb():
+    """Candidates stay separate from memory: every module of the package except form.py (the explicit
+    formation pathway, 6C) imports nothing that can write it."""
     src = Path(__file__).resolve().parents[2] / "src/gupi/formation"
     imported = set()
-    for path in src.glob("*.py"):
+    for path in sorted(set(src.glob("*.py")) - {src / "form.py"}):
         for node in ast.walk(ast.parse(path.read_text())):
             if isinstance(node, ast.ImportFrom):
                 imported.add(node.module or "")
