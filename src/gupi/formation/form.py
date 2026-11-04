@@ -32,6 +32,8 @@ from gupi.records import Batch, Claim, Evidence, Mention, Referent
 from gupi.typedb.connection import transaction
 
 POLICY = "formation:v1"
+# gupi.candidate/1.1 claimant kinds -> referent types; anything else (unknown, or not stated) is unclassified
+CLAIMANT_REFERENT_KIND = {"person": "person", "organisation": "organization"}
 CORRECTION_CUE = re.compile(r"\s*(?:correction|erratum|update to my last|to correct)\b", re.I)
 OUTCOMES = ("formed", "withheld", "review", "rejected")
 
@@ -198,8 +200,11 @@ def _claim(c, obs, method, scope):
         roles.setdefault(p.role, []).append(rid)
     asserter = None
     if c.attribution.asserted_by:
-        asserter = referent_id(scope, "person", c.attribution.asserted_by)
-        refs.append(Referent(asserter, "person", c.attribution.asserted_by))
+        # C2: the claimant's referent kind is what the candidate establishes; an absent kind (format 1.0, or 1.1
+        # without asserted_by_kind) is not evidence that the claimant is a person
+        kind = CLAIMANT_REFERENT_KIND.get(c.attribution.asserted_by_kind, "unclassified")
+        asserter = referent_id(scope, kind, c.attribution.asserted_by)
+        refs.append(Referent(asserter, kind, c.attribution.asserted_by))
     vt, to_basis = valid_time(c)
     read = [t for t in c.times if t.earliest is not None or t.latest is not None]
     kinds = {t.kind for t in read}
