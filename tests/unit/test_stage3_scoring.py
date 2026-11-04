@@ -65,6 +65,9 @@ def test_a_false_positive_on_a_negative_control(tmp_path):
     r, _ = scored(tmp_path, **{"S-08": fp})
     assert r["summary"]["counts"]["unsupported"] == 1 and r["summary"]["precision"]["n"] == 10
     assert kinds(r) == {"invented assertion": 1}
+    formed = lambda x: {"statuses": {c.id: "formed" for _, cs, _, _ in x.values() for c in cs.candidates}, "superseded": 0}
+    r, _ = scored(tmp_path, formed=formed, **{"S-08": fp})
+    assert kinds(r)["unsupported definitive assertion"] == 1               # the same false positive, formed
 
 
 def test_a_false_negative_is_a_miss(tmp_path):
@@ -131,8 +134,9 @@ def test_pipeline_errors_are_kept_apart(tmp_path):
     assert p["validator_rejections"] == {"extractor": 0, "store": 1} and len(p["formation_failures"]) == 1
     assert p["duplicate_original_attestations"] == 1                       # S-10, a forwarded copy, formed
     assert k["correction formed without review"] == 1 and k["correction applied automatically"] == 1
-    assert k["unsupported definitive assertion"] == 2                     # S-04 and S-10 should not be formed
-    assert r["integrity"]["independent_corroboration"]["k"] == 8 and r["severe_errors"]["formed"] >= 3
+    assert "unsupported definitive assertion" not in k                    # every formed claim matches gold
+    assert sorted(d["gold"] for d in p["admission_disagreements"]) == ["S-04-a1", "S-10-a1"]   # pipeline, not extraction
+    assert r["integrity"]["independent_corroboration"]["k"] == 8 and r["severe_errors"]["formed"] == 1
 
 
 def test_missing_and_malformed_responses_are_invalid_outputs_never_repaired(tmp_path):

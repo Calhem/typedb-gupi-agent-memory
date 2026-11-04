@@ -61,7 +61,7 @@ SEVERE = {
     "correction formed without review": "a correction, retraction or update formed automatically",
     "correction applied automatically": "a claim superseded during the run (nothing may supersede without review)",
     "inference formed": "a candidate formed automatically for an assertion gold marks inferred",
-    "unsupported definitive assertion": "a certain, formed claim with no exactly matching gold that should be formed",
+    "unsupported definitive assertion": "a certain claim formed automatically that matches no gold assertion exactly",
 }
 
 
@@ -286,14 +286,17 @@ def evaluate(passages, gold, extracted, categories=None, formed=None):
         severe.append({"passage": None, "candidate": None, "gold": None, "error": "correction applied automatically",
                        "detail": f"{formed['superseded']} supersession(s) recorded during the run"})
     gold_by_id = {g["assertion_id"]: g for g in gold_rows}
+    disagreements = []
     for p in base["passages"]:
         for r in p["candidates"]:
             c = cands[r["candidate"]]
-            if r.get("status") != "formed" or c.commitment != "certain":
-                continue
             g = gold_by_id.get(r.get("gold")) if r["result"] == "matched" else None
-            if g is None or g["expected_admission"] != "formed":
-                severe.append(_err(dict(r, passage=p["passage"]), c, g, "unsupported definitive assertion"))
+            if g is not None and r.get("status") and r["status"] != g["expected_admission"]:
+                # a pipeline outcome, kept apart from extraction errors: the extraction matched the gold
+                disagreements.append({"passage": p["passage"], "candidate": c.id, "gold": g["assertion_id"],
+                                      "status": r["status"], "expected": g["expected_admission"]})
+            if r.get("status") == "formed" and c.commitment == "certain" and g is None:
+                severe.append(_err(dict(r, passage=p["passage"]), c, None, "unsupported definitive assertion"))
     for e in severe:
         e.setdefault("status", (statuses or {}).get(e["candidate"]))
 
@@ -312,6 +315,7 @@ def evaluate(passages, gold, extracted, categories=None, formed=None):
         "formation": None if statuses is None else {
             k: sum(1 for s in statuses.values() if s == k) for k in ("formed", "review", "withheld", "rejected")},
         "formation_failures": formed.get("failures", []),
+        "admission_disagreements": disagreements if statuses is not None else None,
         "duplicate_original_attestations": base["summary"]["counts"]["copies_formed"]
             + sum(1 for p in base["passages"] for r in p["candidates"] if r["result"] == "duplicate" and r.get("status") == "formed"),
         "supersessions_during_run": formed.get("superseded", 0) if statuses is not None else None,
