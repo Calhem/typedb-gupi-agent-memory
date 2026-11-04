@@ -17,6 +17,30 @@ and hashes only, are `audit.json`, `probe-results.json` and `counts.json`.
 | validation and formation | `store.submit` → `formation:v1` | stores valid candidates and records a decision for each: formed (claim created atomically), withheld, review, rejected |
 | TypeDB | `memory-candidate`, `formation-decision`, `formed-into`, `claim` | — |
 
+## Turn populations: 225,272 (Phase 6D) and 252,632 (Phase 7A)
+**The two figures count different populations.** The definition is the same in both: one turn is one
+observation, and LongMemEval is counted once per distinct session version.
+
+| Population | LoCoMo | LongMemEval S | Total | Where it is used |
+|---|---|---|---|---|
+| held-out splits | 5,094 (8 conversations) | 220,178 (447 questions, 21,262 session versions) | **225,272** | Phase 6D: LoCoMo held-out through the store; LongMemEval held-out extraction only |
+| development splits | 788 (2 conversations) | 26,572 (53 questions, 2,605 session versions) | 27,360 | Phase 6D feasibility (LoCoMo dev only); 7A sample and audit |
+| complete datasets | 5,882 (10 conversations) | 246,750 (500 questions, 23,867 session versions) | **252,632** | Phase 7A audit and independent counts |
+
+**What the reconciliation shows:**
+- **The arithmetic:** 252,632 − 225,272 = 27,360, exactly the development turns.
+- **No duplicate effect:**
+  - **LongMemEval's turn references:** the 246,750 raw turn references (summed over every question's history)
+    are all distinct.
+  - **Session versions:** no session version is shared between questions, and none between the
+    development and held-out splits.
+  - **So:** deduplication changes nothing.
+- **No preprocessing difference:** both phases use the same adapters and the same text.
+- **Where the zero holds:**
+  - **Held-out:** the Phase 6D zero holds for the 225,272 held-out turns it tested.
+  - **Complete datasets:** Phase 7A reproduces it on all 252,632 turns, development included.
+- **The frozen Phase 6D results are unchanged.**
+
 ## Checks (all turns of both splits)
 | Check | Result |
 |---|---|
@@ -63,7 +87,7 @@ splits 6D did not run.
 ## Confirmed defects (recorded, not fixed)
 | Id | Where | Defect | Evidence | Proposed regression test |
 |---|---|---|---|---|
-| D1 | `rules_v2.NAME` / `WHO` | A capitalised pronoun ("She", "He", "It", "We") matches the name pattern. "She joined Halden in March 2025." becomes employment(employee "She"), is formed by formation:v1 and believed, whether or not an antecedent was given. Every "She" in one conversation then shares one referent. | probes p1-20, p1-21, p1-22, p3-07 (probes-first-run.json) | unit: no candidate, and a reported rejection, for "She works at Acme Labs.", "He joined Acme in May 2025.", "It works for Acme.", "We joined Acme in 2024."; integration: such a message forms no claim |
-| D2 | `rules_v2.DOMAIN_VERB` | In-domain sentences whose verb is not in `DOMAIN_VERB` are dropped silently: "began working for", "took a job at", "quit", "resigned from", "was appointed", "is employed by", "is ... boss", "was let go". So the "unparsed in-domain" counts are a lower bound. | probes p1-02, p1-05, p1-06, p1-07, p2-02, p2-03, p2-05, p3-03, p4-04 | for each sentence: a candidate or a reported rejection, never silence |
+| D1 (correctness; needs a regression test and a fix) | `rules_v2.NAME` / `WHO` | A capitalised pronoun ("She", "He", "It", "We") matches the name pattern. "She joined Halden in March 2025." becomes employment(employee "She"), is formed by formation:v1 and believed, whether or not an antecedent was given. Every "She" in one conversation then shares one referent. | probes p1-20, p1-21, p1-22, p3-07 (probes-first-run.json) | unit: no candidate, and a reported rejection, for "She works at Acme Labs.", "He joined Acme in May 2025.", "It works for Acme.", "We joined Acme in 2024."; integration: such a message forms no claim |
+| D2 (diagnostic coverage) | `rules_v2.DOMAIN_VERB` | In-domain sentences whose verb is not in `DOMAIN_VERB` are dropped silently: "began working for", "took a job at", "quit", "resigned from", "was appointed", "is employed by", "is ... boss", "was let go". So the "unparsed in-domain" counts are a lower bound. | probes p1-02, p1-05, p1-06, p1-07, p2-02, p2-03, p2-05, p3-03, p4-04 | for each sentence: a candidate or a reported rejection, never silence |
 
 **No input-pipeline or adapter defect was found.**

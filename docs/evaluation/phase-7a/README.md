@@ -18,16 +18,34 @@ things together:
 **What it is not:** the pipeline is sound, and nothing was lost to validation or formation. Context
 resolution is a real but secondary gap.
 
-**One correctness defect was found on the way:**
-- **The defect (D1):** capitalised pronouns are read as names, and become believed claims about a person
-  called "She".
-- **The gap (D2):** some in-domain sentences are dropped silently.
+**Two defects were found on the way, recorded and not fixed in this branch:**
+- **D1, a correctness defect:**
+  - **What happens:** capitalised pronouns are read as names, and become believed claims about a person
+    called "She".
+  - **What it needs:** a regression test and a fix, in their own milestone.
+- **D2, a diagnostic coverage defect:**
+  - **What happens:** in-domain sentences whose verb the extractor does not list are dropped without being
+    reported.
+  - **What it affects:** the reports of unparsed sentences undercount. Extraction itself is unaffected.
+
+**How to read the evidence:**
+- **Datasets:** LoCoMo and LongMemEval are independent of GUPI.
+- **Labels:** the fact labels, the probe expectations and the targeted sample's work-vocabulary pattern are
+  developer-authored.
+- **Measured:** extractor outputs and counts.
+- **Estimated:** coverage, stages and ceilings, which rest on those labels.
+- **Two sample types:** representative and targeted samples are always reported separately.
+
+**Turn populations:**
+- **Phase 6D's "225,272 turns":** the held-out splits.
+- **This phase's 252,632:** the complete datasets.
+- **The difference:** exactly the 27,360 development turns. pipeline-audit.md shows the reconciliation.
 
 ## Completion report
 | # | Question | Answer | Kind |
 |---|---|---|---|
-| 1 | Branch head and tests | the head of `feature/phase-7a-extraction-diagnosis` (see the final report); the full suite passes against TypeDB 3.14.1 | measured |
-| 2 | Is the zero reproduced? | **Yes, exactly,** independently of the 6D runner: 0 raw candidates from all 5,882 LoCoMo and 246,750 LongMemEval S turns, and from a 5% hashed subset (counts.json) | measured |
+| 1 | Branch head and tests | branch `feature/phase-7a-extraction-diagnosis`, merged into main after review (the merge commit is in the merge report); 356 tests pass against TypeDB 3.14.1 | measured |
+| 2 | Is the zero reproduced? | **Yes, exactly,** independently of the 6D runner: 0 raw candidates from all 5,882 LoCoMo and 246,750 LongMemEval S turns (252,632: the complete datasets, which contain Phase 6D's 225,272 held-out turns), and from a 5% hashed subset (counts.json) | measured |
 | 3 | Pipeline defects? | **None.** Text, speakers, ids, order, timestamps and the TypeDB round trip are intact. The extractor is called for every turn with no exceptions. The adapter path gives results identical to direct calls (pipeline-audit.md). Two extractor defects instead (D1, D2) | measured |
 | 4 | Sample and domain coverage | 60 representative + 40 targeted turns (development splits). Representative: 28/60 turns hold potentially useful memory, 39 assertions, of which **1** is in the supported domain, 7 borderline and 31 outside it | estimated (one annotator) |
 | 5 | Extraction success within the supported domain | Benchmark sample: **0 of 8** clear in-domain assertions extracted (0 of 25 including borderline). Probes: 15 of 48 that should extract did (11/11 supported phrasings, 4/37 variations); the brief's 10 sentences: 4 of 8 extracted, with correct temporal, attribution and certainty readings, plus 2 correctly left alone. Phase 2 held-out: 5/12 | measured |
