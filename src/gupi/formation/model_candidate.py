@@ -55,6 +55,9 @@ HEDGE = re.compile(r"\b(?:probably|possibly|perhaps|maybe|might|could|apparently
                    r"supposedly|rumou?red|I think|I believe|it seems|likely|unconfirmed|not official)\b", re.I)
 NEGATION = re.compile(r"\b(?:not|no longer|never|denie[sd]|deny|isn't|wasn't|doesn't|didn't|hasn't|won't|"
                       r"aren't|weren't)\b", re.I)
+PRESENT = re.compile(r"(?:is|are|am|works?|reports?|leads?|owns?|manages?|heads?|runs?|chairs?|"
+                     r"has (?:worked|been|reported|led|run|owned)|have (?:worked|been)|is (?:still|now) \w+|"
+                     r"(?:still|now|currently) \w+|no longer \w+|does not \w+|doesn't \w+|is not|isn't)", re.I)
 CONTRAST = re.compile(r",\s*not\s+[^,.;!?]+")   # a contrast (", not March"), never a plain "does not"
 FUTURE_OR_CONDITIONAL = re.compile(r"\b(?:will|would|shall|plans? to|planning to|going to|intends? to|if|unless|"
                                    r"expected to|due to (?:join|leave|start))\b", re.I)
@@ -293,6 +296,11 @@ def _candidate(a, n, obs, earlier, report):
     for t in a["times"]:
         ts, te = _find(text, t["text"], s, e, "time")
         reading = timeexpr.read(t["text"], obs.observed_at, timeexpr.direction(text, ts))
+        if reading is None and t["kind"] == "holds-at" and PRESENT.fullmatch(t["text"].strip()):
+            # the rules:v2 reading of a present-tense verb: it holds at the moment the message was written
+            times.append(TimeEvidence("holds-at", t["text"], ts, te, obs.observed_at, obs.observed_at, "instant", True,
+                                      "present tense: at the observation time"))
+            continue
         if reading is None:
             times.append(TimeEvidence(t["kind"], t["text"], ts, te, None, None, "unknown", True, "could not be read"))
             report.flags.append({"kind": "unreadable-time", "assertion": n, "detail": t["text"]})
@@ -300,17 +308,19 @@ def _candidate(a, n, obs, earlier, report):
             times.append(TimeEvidence(t["kind"], t["text"], ts, te, reading.earliest, reading.latest, reading.precision,
                                       reading.explicit, reading.assumption))
 
-    # polarity and modality: the evidence must not contradict the model's reading
-    asserted = CONTRAST.sub("", passage.text)   # "joined in April, not March" asserts, it does not deny
+    # polarity, modality and certainty: the evidence, read from the start of its sentence (a model must not
+    # escape a leading "I think" or "If" by quoting only what follows), must not contradict the model's reading
+    lead = max(text.rfind(ch, 0, s) for ch in ".!?\n") + 1
+    asserted = CONTRAST.sub("", text[lead:e])   # "joined in April, not March" asserts, it does not deny
     if a["polarity"] == "positive" and NEGATION.search(asserted):
         raise _Stop("cue-conflict", f"the evidence has a negation ({NEGATION.search(asserted).group()!r}) "
                                     "but the polarity is positive")
-    if a["modality"] == "actual" and FUTURE_OR_CONDITIONAL.search(passage.text):
-        raise _Stop("cue-conflict", f"the evidence is future or conditional ({FUTURE_OR_CONDITIONAL.search(passage.text).group()!r}) "
+    if a["modality"] == "actual" and FUTURE_OR_CONDITIONAL.search(asserted):
+        raise _Stop("cue-conflict", f"the evidence is future or conditional ({FUTURE_OR_CONDITIONAL.search(asserted).group()!r}) "
                                     "but the modality is actual")
     commitment = a["commitment"]
-    if commitment == "certain" and (HEDGE.search(passage.text) or a.get("allegation")):
-        cue = HEDGE.search(passage.text).group() if HEDGE.search(passage.text) else "an allegation"
+    if commitment == "certain" and (HEDGE.search(asserted) or a.get("allegation")):
+        cue = HEDGE.search(asserted).group() if HEDGE.search(asserted) else "an allegation"
         commitment = "unknown"   # never kept as certain against a hedge: formation sends "unknown" to review
         report.flags.append({"kind": "commitment-downgraded", "assertion": n, "detail": f"certain → unknown ({cue!r})"})
     if a.get("allegation"):

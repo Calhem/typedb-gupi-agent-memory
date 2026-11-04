@@ -1,0 +1,33 @@
+passage_id,set,thread_id,turn,author_code,document_kind,stated_author,document_date,text
+DEV-101,DEV,,,dev,email,Ivo Marsh,2025-08-20,Mara Quist joined Pellwick as head of research in February 2025.
+DEV-102,DEV,,,dev,note,Ivo Marsh,2025-08-20,Teo Brandt has worked at Arnholt Systems since 2023.
+DEV-103,DEV,,,dev,minutes,Ivo Marsh,2025-08-20,Ilsa Moreno reports to Teo Brandt.
+DEV-104,DEV,,,dev,filing summary,Ivo Marsh,2025-08-20,Halden Holdings owns a majority stake in Pellwick.
+DEV-105,DEV,,,dev,news excerpt,Ivo Marsh,2025-08-20,"According to Halden Press, Omar Siddiq is alleged to have misled investors."
+DEV-106,DEV,,,dev,chat,Ivo Marsh,2025-08-20,Dana Okoro told me Mara Quist reports to her now.
+DEV-107,DEV,,,dev,email,Ivo Marsh,2025-08-20,"FYI.
+---- Forwarded message ----
+From: Dana Okoro
+Omar Siddiq left Arnholt Systems in June 2025."
+DEV-108,DEV,,,dev,email,Wen Abara,2025-08-20,"Passing this on.
+---- Forwarded message ----
+From: Dana Okoro
+Omar Siddiq left Arnholt Systems in June 2025."
+DEV-109,DEV,T1,1,dev,chat,Ivo Marsh,2025-08-20,Teo Brandt joined Pellwick in March 2025.
+DEV-110,DEV,T1,2,dev,chat,Ivo Marsh,2025-08-20,"Correction: Teo Brandt joined Pellwick in April 2025, not March."
+DEV-111,DEV,,,dev,minutes,Ivo Marsh,2025-08-20,Ilsa Moreno does not report to Omar Siddiq.
+DEV-112,DEV,,,dev,chat,Ivo Marsh,2025-08-20,I think Ravi Menon works at Halden Holdings.
+DEV-113,DEV,,,dev,email,Ivo Marsh,2025-08-20,"Mara Quist will join Halden Holdings in January 2026, if the board approves."
+DEV-114,DEV,,,dev,note,Ivo Marsh,2025-08-20,"If Teo Brandt had stayed at Arnholt Systems, the data team would be larger."
+DEV-115,DEV,,,dev,chat,Ivo Marsh,2025-08-20,Can we move Thursday's review to Friday afternoon?
+DEV-116,DEV,,,dev,chat,Ivo Marsh,2025-08-20,"Great work on the launch, everyone!"
+DEV-117,DEV,,,dev,chat,Ivo Marsh,2025-08-20,Dana from finance has moved to the Pellwick team.
+DEV-118,DEV,,,dev,note,Ivo Marsh,2025-08-20,Omar Siddiq started at Halden Holdings around 2019.
+DEV-119,DEV,,,dev,minutes,Ivo Marsh,2025-08-20,Ilsa Moreno left Pellwick last month.
+DEV-120,DEV,,,dev,minutes,Ivo Marsh,2025-08-20,Ravi Menon has reported to Mara Quist since May 2025.
+DEV-121,DEV,,,dev,chat,Wen Abara,2025-08-20,"Ravi Menon reports to Teo Brandt, not Mara."
+DEV-122,DEV,,,dev,note,Ivo Marsh,2025-08-20,Teo Brandt was promoted to CTO at Arnholt Systems in January 2025.
+DEV-123,DEV,,,dev,chat,Ivo Marsh,2025-08-20,Word is that Pellwick is under investigation by regulators.
+DEV-124,DEV,,,dev,email,Ivo Marsh,2025-08-20,I started at Halden Holdings in June 2024.
+DEV-125,DEV,T3,1,dev,email,Ivo Marsh,2025-08-20,Omar Siddiq leads the audit committee at Halden Holdings.
+DEV-126,DEV,T3,2,dev,email,Ivo Marsh,2025-08-20,Please disregard my earlier note about Omar and the audit committee.

@@ -7,7 +7,6 @@ from datetime import datetime, timezone
 
 import pytest
 
-from gupi.formation.candidate import Candidate, CandidateSet, Participant, Passage, TimeEvidence
 from gupi.formation.model_candidate import METHOD, RESPONSE_FORMAT, ModelCandidateV1
 from gupi.records import Observation
 
@@ -117,6 +116,9 @@ def test_certainty_is_never_kept_against_a_hedge():
     assert [f["kind"] for f in report.flags] == ["commitment-downgraded"]
     cset, _ = run(text, response(assertion(text.rstrip("."), NORA, times=[("March 2025", "start")], commitment="probable")))
     assert cset.candidates[0].commitment == "probable"   # an honest hedge is kept as it is
+    text = "I think Nora Vance works at Halden."             # the hedge is outside the quoted evidence
+    cset, _ = run(text, response(assertion("Nora Vance works at Halden", NORA)))
+    assert cset.candidates[0].commitment == "unknown"
 
 
 def test_polarity_and_modality_must_agree_with_the_evidence():
@@ -207,3 +209,15 @@ def test_extraction_is_deterministic_and_never_mutates_the_response():
     before = copy.deepcopy(resp)
     a, b = run(text, resp), run(text, json.dumps(resp))
     assert a[0] == b[0] and resp == before
+
+
+def test_a_present_tense_verb_holds_at_the_moment_it_was_written():
+    text = "Ilsa Moreno reports to Teo Brandt."
+    a = assertion("Ilsa Moreno reports to Teo Brandt", [("report", "Ilsa Moreno", "person"), ("manager", "Teo Brandt", "person")],
+                  relation="reporting", times=[("reports", "holds-at")])
+    (c,) = run(text, response(a))[0].candidates
+    assert (c.times[0].earliest, c.times[0].latest, c.times[0].precision) == (SAID, SAID, "instant")
+    cset, report = run("Ilsa Moreno reported to Teo Brandt.", response(
+        assertion("Ilsa Moreno reported to Teo Brandt", [("report", "Ilsa Moreno", "person"), ("manager", "Teo Brandt", "person")],
+                  relation="reporting", times=[("reported", "holds-at")])))
+    assert cset.candidates[0].times[0].precision == "unknown" and [f["kind"] for f in report.flags] == ["unreadable-time"]
