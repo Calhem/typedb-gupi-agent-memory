@@ -1,0 +1,31 @@
+{
+ "status": "draft",
+ "warning": "NOT FROZEN. The independent corpus and gold do not exist yet. No result may be reported against this file.",
+ "phase": "7B",
+ "created": "2026-11-04",
+ "corpus": {
+  "S1": {"file": null, "sha256": null, "passages": null, "authors": null, "reason": "awaiting independent authors"},
+  "S2": {"file": null, "sha256": null, "turns": null, "authors": null, "reason": "awaiting independent authors (or an approved benchmark-development draw)"},
+  "DEV": {"file": null, "sha256": null, "note": "developer-authored; development only, never scored as evidence"}
+ },
+ "gold": {"annotator_files": null, "adjudication": null, "adjudicated_gold_sha256": null, "agreement": null,
+          "reason": "awaiting independent annotators and an adjudicator"},
+ "development_sets_never_scored": ["tests/fixtures/formation/eval-v1.json", "tests/fixtures/formation/adversarial-v1.json",
+                                   "tests/fixtures/diagnosis/probes-v1.json", "tests/fixtures/diagnosis/probes-v2.json",
+                                   "tests/fixtures/phase7b-dev/"],
+ "extractors": {
+  "baseline_A": {"version": "rules:v2.1", "source": "src/gupi/formation/rules_v21.py", "sha256": null},
+  "candidate_B": {"version": "model:candidate-v1", "model": "claude-sonnet-5-5", "effort": null, "thinking": "off",
+                  "prompt_version": null, "prompt_sha256": null, "source_sha256": null, "reason": "not implemented (Stage 2)"},
+  "optional_B2": {"version": "model:candidate-v1", "model": "claude-haiku-5-5", "status": "needs approval"},
+  "optional_C": {"version": null, "status": "not planned; needs separate approval"}
+ },
+ "contract": {"ir_version": "gupi.candidate/1", "candidate_sha256": null, "validate_sha256": null,
+              "preconditions": {"C1_fixed_in": null, "D3_decision": null}},
+ "formation": {"policy": "formation:v1", "source_sha256": null},
+ "scorer": {"source_sha256": null, "thresholds": "docs/evaluation/phase-7b/success-criteria.md", "thresholds_sha256": null},
+ "runtime": {"typedb": "3.14.1", "python": null, "typedb_driver": null, "anthropic": null, "hardware": "Apple M2 Pro, 16 GB"},
+ "cost": {"ledger_lifetime_limit_usd": 10.0, "spent_usd_at_freeze": 0.0, "proposed_stage2_cap_usd": 3.0, "per_run_cap_usd": 1.5,
+          "authorised_usd": 0.0},
+ "run": {"order_seed": null, "stopping_rule": "success-criteria.md: 5 deterministic severe errors in the first 10 S1 passages"}
+}
