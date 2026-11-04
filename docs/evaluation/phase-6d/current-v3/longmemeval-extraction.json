@@ -1,0 +1,30 @@
+{
+ "meta": {
+  "phase": "6D",
+  "part": "D6 LongMemEval held-out, extraction only",
+  "run_label": "current-v3",
+  "git": {
+   "commit": "b2f67da8a37745c36fcc72c16677dfa70b90ddb6",
+   "branch": "feature/phase-7b-evidence-integrity",
+   "dirty": false
+  },
+  "started": "2026-11-04T19:14:35+00:00",
+  "peak_rss_bytes_at_start": 1890500608,
+  "wall_seconds": 34.86,
+  "manifest": {
+   "path": "docs/evaluation/phase-6d/manifest-v3.json",
+   "sha256": "0a0203d1c3b69cb09c828f466cf2e1ace38993f8ec5a62497a7df012c7ce5671"
+  }
+ },
+ "questions": 447,
+ "turns": 220178,
+ "turns_with_domain_verb": 40268,
+ "turns_with_candidates": 0,
+ "candidates": 0,
+ "candidate_kinds": {},
+ "answer_turns": 816,
+ "answer_turns_with_candidates": 0,
+ "extract_seconds": 29.21,
+ "turns_per_second": 7537.8,
+ "peak_python_rss_bytes": 1890500608
+}

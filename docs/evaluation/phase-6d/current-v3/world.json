@@ -1,0 +1,4415 @@
+{
+ "meta": {
+  "phase": "6D",
+  "part": "D1 world",
+  "run_label": "current-v3",
+  "git": {
+   "commit": "92f3f70c79ade015da5f0eb156617263b28e4e76",
+   "branch": "feature/phase-7b-evidence-integrity",
+   "dirty": false
+  },
+  "started": "2026-11-04T18:17:42+00:00",
+  "peak_rss_bytes_at_start": 288227328,
+  "wall_seconds": 9.22,
+  "manifest": {
+   "path": "docs/evaluation/phase-6d/manifest-v3.json",
+   "sha256": "0a0203d1c3b69cb09c828f466cf2e1ace38993f8ec5a62497a7df012c7ce5671"
+  }
+ },
+ "systems": {
+  "gupi-e2e": {
+   "questions": 15,
+   "correct": 13,
+   "missing": 0,
+   "incorrect": 2,
+   "frozen_scorer": {
+    "accuracy": 0.867,
+    "correct": 13,
+    "questions": 15,
+    "abstention": {
+     "correct": 6,
+     "of": 6
+    },
+    "unsupported_assertions": 0,
+    "citation_precision": 0.889,
+    "citation_recall": 0.889,
+    "median_seconds": 0.0237
+   },
+   "by_category": {
+    "temporal-status": {
+     "correct": 13,
+     "of": 15
+    },
+    "contradiction": {
+     "correct": 2,
+     "of": 2
+    },
+    "open-role": {
+     "correct": 3,
+     "of": 3
+    },
+    "abstention": {
+     "correct": 6,
+     "of": 6
+    },
+    "belief-time": {
+     "correct": 2,
+     "of": 2
+    }
+   },
+   "unsupported_definitive": 0,
+   "unsupported_definitive_parts": {
+    "definitive_where_gold_abstains_or_contested": 0,
+    "definitive_on_evidence_not_direct": 0
+   },
+   "standings": {
+    "direct": 8,
+    "n/a": 6,
+    "None": 1
+   },
+   "latency": {
+    "n": 15,
+    "p50": 0.02374,
+    "p95": 0.05328,
+    "max": 0.05328,
+    "total": 0.357
+   },
+   "rows": [
+    {
+     "id": "q01",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "TRUE",
+     "gold_binding": null,
+     "got": "PRESUMED",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [
+      "w1-1",
+      "w1-3"
+     ],
+     "gold_evidence": [
+      "w1-1",
+      "w1-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "PRESUMED: inside a period joined from claim:cdf08ee612512fa582e6f18daaa69df9 to claim:5bca524a3c50a33eaabd5b14629fce0a, which no single claim covers; assumes no unrecorded break.",
+     "seconds": 0.053283666959032416
+    },
+    {
+     "id": "q02",
+     "categories": [
+      "temporal-status",
+      "contradiction"
+     ],
+     "gold": "CONTESTED",
+     "gold_binding": null,
+     "got": "CONTESTED",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w1-3",
+      "w3-3"
+     ],
+     "gold_evidence": [
+      "w1-3",
+      "w3-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "CONTESTED: claim:bf831e3c1cb95d882fe5102ee6a2e677 say it held at 2025-07-15, and claim:5bca524a3c50a33eaabd5b14629fce0a that it did not.",
+     "seconds": 0.025086708832532167
+    },
+    {
+     "id": "q03",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "FALSE",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [],
+     "gold_evidence": [
+      "w1-5"
+     ],
+     "citation_precision": 0.0,
+     "citation_recall": 0.0,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: no believed evidence covers 2025-05-15.",
+     "seconds": 0.02106195781379938
+    },
+    {
+     "id": "q04",
+     "categories": [
+      "temporal-status",
+      "open-role"
+     ],
+     "gold": "TRUE",
+     "gold_binding": "Nora Vance",
+     "got": "TRUE",
+     "binding": [
+      "Nora Vance"
+     ],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-3"
+     ],
+     "gold_evidence": [
+      "w3-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": true,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "TRUE: claim:bf831e3c1cb95d882fe5102ee6a2e677 directly cover 2025-04-15.",
+     "seconds": 0.028647832805290818
+    },
+    {
+     "id": "q05",
+     "categories": [
+      "temporal-status",
+      "contradiction",
+      "open-role"
+     ],
+     "gold": "CONTESTED",
+     "gold_binding": null,
+     "got": "CONTESTED",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w1-3",
+      "w3-3"
+     ],
+     "gold_evidence": [
+      "w1-3",
+      "w3-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "CONTESTED: claim:bf831e3c1cb95d882fe5102ee6a2e677 say it held at 2025-07-15, and claim:5bca524a3c50a33eaabd5b14629fce0a that it did not.",
+     "seconds": 0.02485558297485113
+    },
+    {
+     "id": "q06",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: no believed evidence covers 2025-01-14.",
+     "seconds": 0.023738584015518427
+    },
+    {
+     "id": "q07",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: claims were recorded, but none is believed at the belief time.",
+     "seconds": 0.021894959034398198
+    },
+    {
+     "id": "q08",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: no believed evidence covers 2025-06-30.",
+     "seconds": 0.019197499845176935
+    },
+    {
+     "id": "q09",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "FALSE",
+     "gold_binding": null,
+     "got": "FALSE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-2"
+     ],
+     "gold_evidence": [
+      "w3-2"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": true,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "FALSE: recorded as ended by 2025-08-01 (claim:a467a50d9ffa8bc4140f410ea4fad9d0), with no later start or correction recorded by the belief time. This is a default, not an observation at 2025-08-10.",
+     "seconds": 0.025566959055140615
+    },
+    {
+     "id": "q10",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "TRUE",
+     "gold_binding": null,
+     "got": "TRUE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-1"
+     ],
+     "gold_evidence": [
+      "w3-1"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": true,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "TRUE: claim:f3c87deeea6c7a6b6d713833d61cd825 directly cover 2025-08-01.",
+     "seconds": 0.029112708056345582
+    },
+    {
+     "id": "q11",
+     "categories": [
+      "temporal-status",
+      "abstention",
+      "belief-time"
+     ],
+     "gold": "NOT_YET_KNOWN",
+     "gold_binding": null,
+     "got": "NOT_YET_KNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.005029208026826382
+    },
+    {
+     "id": "q12",
+     "categories": [
+      "temporal-status",
+      "belief-time"
+     ],
+     "gold": "FALSE",
+     "gold_binding": null,
+     "got": "FALSE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w1-3"
+     ],
+     "gold_evidence": [
+      "w1-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": true,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "FALSE: recorded as ended by 2025-06-01 (claim:5bca524a3c50a33eaabd5b14629fce0a), with no later start or correction recorded by the belief time. This is a default, not an observation at 2025-07-15.",
+     "seconds": 0.014148500049486756
+    },
+    {
+     "id": "q13",
+     "categories": [
+      "temporal-status",
+      "open-role"
+     ],
+     "gold": "TRUE",
+     "gold_binding": "Omar Fry",
+     "got": "TRUE",
+     "binding": [
+      "Omar Fry"
+     ],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-1"
+     ],
+     "gold_evidence": [
+      "w3-1"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": true,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "TRUE: claim:f3c87deeea6c7a6b6d713833d61cd825 directly cover 2025-08-01.",
+     "seconds": 0.025438916170969605
+    },
+    {
+     "id": "q14",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "NOT_YET_KNOWN",
+     "gold_binding": null,
+     "got": "NOT_YET_KNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.019211750011891127
+    },
+    {
+     "id": "q15",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: no believed evidence covers 2025-07-01.",
+     "seconds": 0.02054925006814301
+    }
+   ]
+  },
+  "gupi-e2e-policy": {
+   "questions": 15,
+   "correct": 13,
+   "missing": 0,
+   "incorrect": 2,
+   "frozen_scorer": {
+    "accuracy": 0.867,
+    "correct": 13,
+    "questions": 15,
+    "abstention": {
+     "correct": 6,
+     "of": 6
+    },
+    "unsupported_assertions": 0,
+    "citation_precision": 0.889,
+    "citation_recall": 0.889,
+    "median_seconds": 0.0228
+   },
+   "by_category": {
+    "temporal-status": {
+     "correct": 13,
+     "of": 15
+    },
+    "contradiction": {
+     "correct": 2,
+     "of": 2
+    },
+    "open-role": {
+     "correct": 3,
+     "of": 3
+    },
+    "abstention": {
+     "correct": 6,
+     "of": 6
+    },
+    "belief-time": {
+     "correct": 2,
+     "of": 2
+    }
+   },
+   "unsupported_definitive": 0,
+   "unsupported_definitive_parts": {
+    "definitive_where_gold_abstains_or_contested": 0,
+    "definitive_on_evidence_not_direct": 0
+   },
+   "standings": {
+    "direct": 8,
+    "n/a": 6,
+    "None": 1
+   },
+   "latency": {
+    "n": 15,
+    "p50": 0.02278,
+    "p95": 0.04553,
+    "max": 0.04553,
+    "total": 0.338
+   },
+   "rows": [
+    {
+     "id": "q01",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "TRUE",
+     "gold_binding": null,
+     "got": "PRESUMED",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [
+      "w1-1",
+      "w1-3"
+     ],
+     "gold_evidence": [
+      "w1-1",
+      "w1-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "PRESUMED: inside a period joined from claim:cdf08ee612512fa582e6f18daaa69df9 to claim:5bca524a3c50a33eaabd5b14629fce0a, which no single claim covers; assumes no unrecorded break.",
+     "seconds": 0.04553374997340143
+    },
+    {
+     "id": "q02",
+     "categories": [
+      "temporal-status",
+      "contradiction"
+     ],
+     "gold": "CONTESTED",
+     "gold_binding": null,
+     "got": "CONTESTED",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w1-3",
+      "w3-3"
+     ],
+     "gold_evidence": [
+      "w1-3",
+      "w3-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "CONTESTED: claim:bf831e3c1cb95d882fe5102ee6a2e677 say it held at 2025-07-15, and claim:5bca524a3c50a33eaabd5b14629fce0a that it did not.",
+     "seconds": 0.024273541988804936
+    },
+    {
+     "id": "q03",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "FALSE",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [],
+     "gold_evidence": [
+      "w1-5"
+     ],
+     "citation_precision": 0.0,
+     "citation_recall": 0.0,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: no believed evidence covers 2025-05-15.",
+     "seconds": 0.02057758392766118
+    },
+    {
+     "id": "q04",
+     "categories": [
+      "temporal-status",
+      "open-role"
+     ],
+     "gold": "TRUE",
+     "gold_binding": "Nora Vance",
+     "got": "TRUE",
+     "binding": [
+      "Nora Vance"
+     ],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-3"
+     ],
+     "gold_evidence": [
+      "w3-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": true,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "TRUE: claim:bf831e3c1cb95d882fe5102ee6a2e677 directly cover 2025-04-15.",
+     "seconds": 0.026933707995340228
+    },
+    {
+     "id": "q05",
+     "categories": [
+      "temporal-status",
+      "contradiction",
+      "open-role"
+     ],
+     "gold": "CONTESTED",
+     "gold_binding": null,
+     "got": "CONTESTED",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w1-3",
+      "w3-3"
+     ],
+     "gold_evidence": [
+      "w1-3",
+      "w3-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "CONTESTED: claim:bf831e3c1cb95d882fe5102ee6a2e677 say it held at 2025-07-15, and claim:5bca524a3c50a33eaabd5b14629fce0a that it did not.",
+     "seconds": 0.025937333004549146
+    },
+    {
+     "id": "q06",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: no believed evidence covers 2025-01-14.",
+     "seconds": 0.02260429202578962
+    },
+    {
+     "id": "q07",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: no believed evidence covers 2025-03-10.",
+     "seconds": 0.021294916979968548
+    },
+    {
+     "id": "q08",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: no believed evidence covers 2025-06-30.",
+     "seconds": 0.020091249840334058
+    },
+    {
+     "id": "q09",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "FALSE",
+     "gold_binding": null,
+     "got": "FALSE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-2"
+     ],
+     "gold_evidence": [
+      "w3-2"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": true,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "FALSE: recorded as ended by 2025-08-01 (claim:a467a50d9ffa8bc4140f410ea4fad9d0), with no later start or correction recorded by the belief time. This is a default, not an observation at 2025-08-10.",
+     "seconds": 0.025926833972334862
+    },
+    {
+     "id": "q10",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "TRUE",
+     "gold_binding": null,
+     "got": "TRUE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-1"
+     ],
+     "gold_evidence": [
+      "w3-1"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": true,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "TRUE: claim:f3c87deeea6c7a6b6d713833d61cd825 directly cover 2025-08-01.",
+     "seconds": 0.024091624887660146
+    },
+    {
+     "id": "q11",
+     "categories": [
+      "temporal-status",
+      "abstention",
+      "belief-time"
+     ],
+     "gold": "NOT_YET_KNOWN",
+     "gold_binding": null,
+     "got": "NOT_YET_KNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.0037884169723838568
+    },
+    {
+     "id": "q12",
+     "categories": [
+      "temporal-status",
+      "belief-time"
+     ],
+     "gold": "FALSE",
+     "gold_binding": null,
+     "got": "FALSE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w1-3"
+     ],
+     "gold_evidence": [
+      "w1-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": true,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "FALSE: recorded as ended by 2025-06-01 (claim:5bca524a3c50a33eaabd5b14629fce0a), with no later start or correction recorded by the belief time. This is a default, not an observation at 2025-07-15.",
+     "seconds": 0.013780416920781136
+    },
+    {
+     "id": "q13",
+     "categories": [
+      "temporal-status",
+      "open-role"
+     ],
+     "gold": "TRUE",
+     "gold_binding": "Omar Fry",
+     "got": "TRUE",
+     "binding": [
+      "Omar Fry"
+     ],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-1"
+     ],
+     "gold_evidence": [
+      "w3-1"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "direct",
+     "definitive_flag": true,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "TRUE: claim:f3c87deeea6c7a6b6d713833d61cd825 directly cover 2025-08-01.",
+     "seconds": 0.022782500134781003
+    },
+    {
+     "id": "q14",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "NOT_YET_KNOWN",
+     "gold_binding": null,
+     "got": "NOT_YET_KNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.017219332978129387
+    },
+    {
+     "id": "q15",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: no believed evidence covers 2025-07-01.",
+     "seconds": 0.02335658296942711
+    }
+   ]
+  },
+  "gupi-gold": {
+   "questions": 15,
+   "correct": 13,
+   "missing": 0,
+   "incorrect": 2,
+   "frozen_scorer": {
+    "accuracy": 0.867,
+    "correct": 13,
+    "questions": 15,
+    "abstention": {
+     "correct": 6,
+     "of": 6
+    },
+    "unsupported_assertions": 0,
+    "citation_precision": 0.833,
+    "citation_recall": 0.833,
+    "median_seconds": 0.0229
+   },
+   "by_category": {
+    "temporal-status": {
+     "correct": 13,
+     "of": 15
+    },
+    "contradiction": {
+     "correct": 2,
+     "of": 2
+    },
+    "open-role": {
+     "correct": 3,
+     "of": 3
+    },
+    "abstention": {
+     "correct": 6,
+     "of": 6
+    },
+    "belief-time": {
+     "correct": 2,
+     "of": 2
+    }
+   },
+   "unsupported_definitive": 5,
+   "unsupported_definitive_parts": {
+    "definitive_where_gold_abstains_or_contested": 0,
+    "definitive_on_evidence_not_direct": 5
+   },
+   "standings": {
+    "n/a": 7,
+    "unrecorded": 7,
+    "None": 1
+   },
+   "latency": {
+    "n": 15,
+    "p50": 0.0229,
+    "p95": 0.04991,
+    "max": 0.04991,
+    "total": 0.343
+   },
+   "rows": [
+    {
+     "id": "q01",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "TRUE",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [
+      "w1-1",
+      "w3-3"
+     ],
+     "gold_evidence": [
+      "w1-1",
+      "w1-3"
+     ],
+     "citation_precision": 0.5,
+     "citation_recall": 0.5,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: the start date is disputed. claim:f093c38d843c8fe340e7facfbc34c9b7 place(s) the start before 2025-03-15, but the date given by claim:3273fc2e49aa7328b79a481bc6e711e6 is too imprecise to say whether it was before or after 2025-03-15. The true start is not assumed to lie between them.",
+     "seconds": 0.04990637511946261
+    },
+    {
+     "id": "q02",
+     "categories": [
+      "temporal-status",
+      "contradiction"
+     ],
+     "gold": "CONTESTED",
+     "gold_binding": null,
+     "got": "CONTESTED",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w1-3",
+      "w3-3"
+     ],
+     "gold_evidence": [
+      "w1-3",
+      "w3-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "unrecorded",
+     "definitive_flag": false,
+     "qualifiers": [
+      "provenance-not-recorded"
+     ],
+     "unsupported_definitive": false,
+     "explanation": "CONTESTED: claim:3273fc2e49aa7328b79a481bc6e711e6 say it held at 2025-07-15, and claim:b32b82de0e2993d6ea7efdb7f2336a37 that it did not.",
+     "seconds": 0.027258583111688495
+    },
+    {
+     "id": "q03",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "FALSE",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [],
+     "gold_evidence": [
+      "w1-5"
+     ],
+     "citation_precision": 0.0,
+     "citation_recall": 0.0,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: no believed evidence covers 2025-05-15.",
+     "seconds": 0.02125141699798405
+    },
+    {
+     "id": "q04",
+     "categories": [
+      "temporal-status",
+      "open-role"
+     ],
+     "gold": "TRUE",
+     "gold_binding": "Nora Vance",
+     "got": "TRUE",
+     "binding": [
+      "Nora Vance"
+     ],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-3"
+     ],
+     "gold_evidence": [
+      "w3-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "unrecorded",
+     "definitive_flag": true,
+     "qualifiers": [
+      "provenance-not-recorded"
+     ],
+     "unsupported_definitive": true,
+     "explanation": "TRUE: claim:3273fc2e49aa7328b79a481bc6e711e6 directly cover 2025-04-15. Note: the start date is disputed (claim:f093c38d843c8fe340e7facfbc34c9b7: start in [2025-01-01, 2025-02-01), claim:3273fc2e49aa7328b79a481bc6e711e6: start in [2025-03-01, 2025-04-01)); every account places the start by 2025-04-15, and none is preferred.",
+     "seconds": 0.026845791144296527
+    },
+    {
+     "id": "q05",
+     "categories": [
+      "temporal-status",
+      "contradiction",
+      "open-role"
+     ],
+     "gold": "CONTESTED",
+     "gold_binding": null,
+     "got": "CONTESTED",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w1-3",
+      "w3-3"
+     ],
+     "gold_evidence": [
+      "w1-3",
+      "w3-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "unrecorded",
+     "definitive_flag": false,
+     "qualifiers": [
+      "provenance-not-recorded"
+     ],
+     "unsupported_definitive": false,
+     "explanation": "CONTESTED: claim:3273fc2e49aa7328b79a481bc6e711e6 say it held at 2025-07-15, and claim:b32b82de0e2993d6ea7efdb7f2336a37 that it did not.",
+     "seconds": 0.027285750024020672
+    },
+    {
+     "id": "q06",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: no believed evidence covers 2025-01-14.",
+     "seconds": 0.023538583889603615
+    },
+    {
+     "id": "q07",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: claims were recorded, but none is believed at the belief time.",
+     "seconds": 0.021719791926443577
+    },
+    {
+     "id": "q08",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: claims were recorded, but none is believed at the belief time.",
+     "seconds": 0.020368000026792288
+    },
+    {
+     "id": "q09",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "FALSE",
+     "gold_binding": null,
+     "got": "FALSE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-2"
+     ],
+     "gold_evidence": [
+      "w3-2"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "unrecorded",
+     "definitive_flag": true,
+     "qualifiers": [
+      "provenance-not-recorded"
+     ],
+     "unsupported_definitive": true,
+     "explanation": "FALSE: recorded as ended by 2025-08-01 (claim:d487ab34ea862bb404e186f0fa1db56d), with no later start or correction recorded by the belief time. This is a default, not an observation at 2025-08-10.",
+     "seconds": 0.02355020889081061
+    },
+    {
+     "id": "q10",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "TRUE",
+     "gold_binding": null,
+     "got": "TRUE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-1"
+     ],
+     "gold_evidence": [
+      "w3-1"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "unrecorded",
+     "definitive_flag": true,
+     "qualifiers": [
+      "provenance-not-recorded"
+     ],
+     "unsupported_definitive": true,
+     "explanation": "TRUE: claim:75a5cb2fd47d7519178d0861db47b539 directly cover 2025-08-01.",
+     "seconds": 0.022903000004589558
+    },
+    {
+     "id": "q11",
+     "categories": [
+      "temporal-status",
+      "abstention",
+      "belief-time"
+     ],
+     "gold": "NOT_YET_KNOWN",
+     "gold_binding": null,
+     "got": "NOT_YET_KNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.003935832995921373
+    },
+    {
+     "id": "q12",
+     "categories": [
+      "temporal-status",
+      "belief-time"
+     ],
+     "gold": "FALSE",
+     "gold_binding": null,
+     "got": "FALSE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w1-3"
+     ],
+     "gold_evidence": [
+      "w1-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "unrecorded",
+     "definitive_flag": true,
+     "qualifiers": [
+      "provenance-not-recorded"
+     ],
+     "unsupported_definitive": true,
+     "explanation": "FALSE: recorded as ended by 2025-06-01 (claim:b32b82de0e2993d6ea7efdb7f2336a37), with no later start or correction recorded by the belief time. This is a default, not an observation at 2025-07-15.",
+     "seconds": 0.014116291888058186
+    },
+    {
+     "id": "q13",
+     "categories": [
+      "temporal-status",
+      "open-role"
+     ],
+     "gold": "TRUE",
+     "gold_binding": "Omar Fry",
+     "got": "TRUE",
+     "binding": [
+      "Omar Fry"
+     ],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-1"
+     ],
+     "gold_evidence": [
+      "w3-1"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "unrecorded",
+     "definitive_flag": true,
+     "qualifiers": [
+      "provenance-not-recorded"
+     ],
+     "unsupported_definitive": true,
+     "explanation": "TRUE: claim:75a5cb2fd47d7519178d0861db47b539 directly cover 2025-08-01.",
+     "seconds": 0.023209166014567018
+    },
+    {
+     "id": "q14",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "NOT_YET_KNOWN",
+     "gold_binding": null,
+     "got": "NOT_YET_KNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.01646575005725026
+    },
+    {
+     "id": "q15",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: no believed evidence covers 2025-07-01.",
+     "seconds": 0.020927999867126346
+    }
+   ]
+  },
+  "gupi-rules-v1": {
+   "questions": 15,
+   "correct": 13,
+   "missing": 0,
+   "incorrect": 2,
+   "frozen_scorer": {
+    "accuracy": 0.867,
+    "correct": 13,
+    "questions": 15,
+    "abstention": {
+     "correct": 6,
+     "of": 6
+    },
+    "unsupported_assertions": 0,
+    "citation_precision": 0.833,
+    "citation_recall": 0.833,
+    "median_seconds": 0.0219
+   },
+   "by_category": {
+    "temporal-status": {
+     "correct": 13,
+     "of": 15
+    },
+    "contradiction": {
+     "correct": 2,
+     "of": 2
+    },
+    "open-role": {
+     "correct": 3,
+     "of": 3
+    },
+    "abstention": {
+     "correct": 6,
+     "of": 6
+    },
+    "belief-time": {
+     "correct": 2,
+     "of": 2
+    }
+   },
+   "unsupported_definitive": 5,
+   "unsupported_definitive_parts": {
+    "definitive_where_gold_abstains_or_contested": 0,
+    "definitive_on_evidence_not_direct": 5
+   },
+   "standings": {
+    "n/a": 7,
+    "unrecorded": 7,
+    "None": 1
+   },
+   "latency": {
+    "n": 15,
+    "p50": 0.02187,
+    "p95": 0.0412,
+    "max": 0.0412,
+    "total": 0.339
+   },
+   "rows": [
+    {
+     "id": "q01",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "TRUE",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [
+      "w1-1",
+      "w3-3"
+     ],
+     "gold_evidence": [
+      "w1-1",
+      "w1-3"
+     ],
+     "citation_precision": 0.5,
+     "citation_recall": 0.5,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: the start date is disputed. claim:9ee48fba5d715cecf76f8596504f4da4 place(s) the start before 2025-03-15, but the date given by claim:1f6242be8efeb8beb821d8088adb47ae is too imprecise to say whether it was before or after 2025-03-15. The true start is not assumed to lie between them.",
+     "seconds": 0.041200167033821344
+    },
+    {
+     "id": "q02",
+     "categories": [
+      "temporal-status",
+      "contradiction"
+     ],
+     "gold": "CONTESTED",
+     "gold_binding": null,
+     "got": "CONTESTED",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w1-3",
+      "w3-3"
+     ],
+     "gold_evidence": [
+      "w1-3",
+      "w3-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "unrecorded",
+     "definitive_flag": false,
+     "qualifiers": [
+      "provenance-not-recorded"
+     ],
+     "unsupported_definitive": false,
+     "explanation": "CONTESTED: claim:1f6242be8efeb8beb821d8088adb47ae say it held at 2025-07-15, and claim:e73ded6f6c1d4c43fcf96c8f9cb78155 that it did not.",
+     "seconds": 0.027171541936695576
+    },
+    {
+     "id": "q03",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "FALSE",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [],
+     "gold_evidence": [
+      "w1-5"
+     ],
+     "citation_precision": 0.0,
+     "citation_recall": 0.0,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: no believed evidence covers 2025-05-15.",
+     "seconds": 0.021142208017408848
+    },
+    {
+     "id": "q04",
+     "categories": [
+      "temporal-status",
+      "open-role"
+     ],
+     "gold": "TRUE",
+     "gold_binding": "Nora Vance",
+     "got": "TRUE",
+     "binding": [
+      "Nora Vance"
+     ],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-3"
+     ],
+     "gold_evidence": [
+      "w3-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "unrecorded",
+     "definitive_flag": true,
+     "qualifiers": [
+      "provenance-not-recorded"
+     ],
+     "unsupported_definitive": true,
+     "explanation": "TRUE: claim:1f6242be8efeb8beb821d8088adb47ae directly cover 2025-04-15. Note: the start date is disputed (claim:9ee48fba5d715cecf76f8596504f4da4: start in [2025-01-01, 2025-02-01), claim:1f6242be8efeb8beb821d8088adb47ae: start in [2025-03-01, 2025-04-01)); every account places the start by 2025-04-15, and none is preferred.",
+     "seconds": 0.027432499919086695
+    },
+    {
+     "id": "q05",
+     "categories": [
+      "temporal-status",
+      "contradiction",
+      "open-role"
+     ],
+     "gold": "CONTESTED",
+     "gold_binding": null,
+     "got": "CONTESTED",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w1-3",
+      "w3-3"
+     ],
+     "gold_evidence": [
+      "w1-3",
+      "w3-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "unrecorded",
+     "definitive_flag": false,
+     "qualifiers": [
+      "provenance-not-recorded"
+     ],
+     "unsupported_definitive": false,
+     "explanation": "CONTESTED: claim:1f6242be8efeb8beb821d8088adb47ae say it held at 2025-07-15, and claim:e73ded6f6c1d4c43fcf96c8f9cb78155 that it did not.",
+     "seconds": 0.02823049994185567
+    },
+    {
+     "id": "q06",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: no believed evidence covers 2025-01-14.",
+     "seconds": 0.02187387482263148
+    },
+    {
+     "id": "q07",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: claims were recorded, but none is believed at the belief time.",
+     "seconds": 0.021040417021140456
+    },
+    {
+     "id": "q08",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: claims were recorded, but none is believed at the belief time.",
+     "seconds": 0.020731792086735368
+    },
+    {
+     "id": "q09",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "FALSE",
+     "gold_binding": null,
+     "got": "FALSE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-2"
+     ],
+     "gold_evidence": [
+      "w3-2"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "unrecorded",
+     "definitive_flag": true,
+     "qualifiers": [
+      "provenance-not-recorded"
+     ],
+     "unsupported_definitive": true,
+     "explanation": "FALSE: recorded as ended by 2025-08-01 (claim:cae83a406ba75033d8bfb45c724a57ea), with no later start or correction recorded by the belief time. This is a default, not an observation at 2025-08-10.",
+     "seconds": 0.026765457820147276
+    },
+    {
+     "id": "q10",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "TRUE",
+     "gold_binding": null,
+     "got": "TRUE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-1"
+     ],
+     "gold_evidence": [
+      "w3-1"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "unrecorded",
+     "definitive_flag": true,
+     "qualifiers": [
+      "provenance-not-recorded"
+     ],
+     "unsupported_definitive": true,
+     "explanation": "TRUE: claim:e12616069dea31187dec2cb4956b1f5c directly cover 2025-08-01.",
+     "seconds": 0.023083207895979285
+    },
+    {
+     "id": "q11",
+     "categories": [
+      "temporal-status",
+      "abstention",
+      "belief-time"
+     ],
+     "gold": "NOT_YET_KNOWN",
+     "gold_binding": null,
+     "got": "NOT_YET_KNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.004694417119026184
+    },
+    {
+     "id": "q12",
+     "categories": [
+      "temporal-status",
+      "belief-time"
+     ],
+     "gold": "FALSE",
+     "gold_binding": null,
+     "got": "FALSE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w1-3"
+     ],
+     "gold_evidence": [
+      "w1-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "unrecorded",
+     "definitive_flag": true,
+     "qualifiers": [
+      "provenance-not-recorded"
+     ],
+     "unsupported_definitive": true,
+     "explanation": "FALSE: recorded as ended by 2025-06-01 (claim:e73ded6f6c1d4c43fcf96c8f9cb78155), with no later start or correction recorded by the belief time. This is a default, not an observation at 2025-07-15.",
+     "seconds": 0.013950375141575933
+    },
+    {
+     "id": "q13",
+     "categories": [
+      "temporal-status",
+      "open-role"
+     ],
+     "gold": "TRUE",
+     "gold_binding": "Omar Fry",
+     "got": "TRUE",
+     "binding": [
+      "Omar Fry"
+     ],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-1"
+     ],
+     "gold_evidence": [
+      "w3-1"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": "unrecorded",
+     "definitive_flag": true,
+     "qualifiers": [
+      "provenance-not-recorded"
+     ],
+     "unsupported_definitive": true,
+     "explanation": "TRUE: claim:e12616069dea31187dec2cb4956b1f5c directly cover 2025-08-01.",
+     "seconds": 0.02416737494058907
+    },
+    {
+     "id": "q14",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "NOT_YET_KNOWN",
+     "gold_binding": null,
+     "got": "NOT_YET_KNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.017752042040228844
+    },
+    {
+     "id": "q15",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "UNKNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": "n/a",
+     "definitive_flag": false,
+     "qualifiers": [],
+     "unsupported_definitive": false,
+     "explanation": "UNKNOWN: no believed evidence covers 2025-07-01.",
+     "seconds": 0.01985641592182219
+    }
+   ]
+  },
+  "keyword-answer": {
+   "questions": 15,
+   "correct": 5,
+   "missing": 0,
+   "incorrect": 10,
+   "frozen_scorer": {
+    "accuracy": 0.333,
+    "correct": 5,
+    "questions": 15,
+    "abstention": {
+     "correct": 2,
+     "of": 6
+    },
+    "unsupported_assertions": 4,
+    "citation_precision": 0.667,
+    "citation_recall": 0.556,
+    "median_seconds": 0.0033
+   },
+   "by_category": {
+    "temporal-status": {
+     "correct": 5,
+     "of": 15
+    },
+    "contradiction": {
+     "correct": 0,
+     "of": 2
+    },
+    "open-role": {
+     "correct": 0,
+     "of": 3
+    },
+    "abstention": {
+     "correct": 2,
+     "of": 6
+    },
+    "belief-time": {
+     "correct": 2,
+     "of": 2
+    }
+   },
+   "unsupported_definitive": 6,
+   "unsupported_definitive_parts": {
+    "definitive_where_gold_abstains_or_contested": 6,
+    "definitive_on_evidence_not_direct": 0
+   },
+   "standings": {
+    "None": 15
+   },
+   "latency": {
+    "n": 15,
+    "p50": 0.00333,
+    "p95": 0.00546,
+    "max": 0.00546,
+    "total": 0.051
+   },
+   "rows": [
+    {
+     "id": "q01",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "TRUE",
+     "gold_binding": null,
+     "got": "FALSE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [
+      "w1-3"
+     ],
+     "gold_evidence": [
+      "w1-1",
+      "w1-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 0.5,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.0054587500635534525
+    },
+    {
+     "id": "q02",
+     "categories": [
+      "temporal-status",
+      "contradiction"
+     ],
+     "gold": "CONTESTED",
+     "gold_binding": null,
+     "got": "FALSE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [
+      "w1-3"
+     ],
+     "gold_evidence": [
+      "w1-3",
+      "w3-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 0.5,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": true,
+     "explanation": null,
+     "seconds": 0.0031525411177426577
+    },
+    {
+     "id": "q03",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "FALSE",
+     "gold_binding": null,
+     "got": "TRUE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [
+      "w1-5"
+     ],
+     "gold_evidence": [
+      "w1-5"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.0031943749636411667
+    },
+    {
+     "id": "q04",
+     "categories": [
+      "temporal-status",
+      "open-role"
+     ],
+     "gold": "TRUE",
+     "gold_binding": "Nora Vance",
+     "got": "TRUE",
+     "binding": [
+      "Leah Ortiz"
+     ],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [
+      "w1-5"
+     ],
+     "gold_evidence": [
+      "w3-3"
+     ],
+     "citation_precision": 0.0,
+     "citation_recall": 0.0,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.0034621248487383127
+    },
+    {
+     "id": "q05",
+     "categories": [
+      "temporal-status",
+      "contradiction",
+      "open-role"
+     ],
+     "gold": "CONTESTED",
+     "gold_binding": null,
+     "got": "TRUE",
+     "binding": [
+      "Leah Ortiz"
+     ],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [
+      "w1-5"
+     ],
+     "gold_evidence": [
+      "w1-3",
+      "w3-3"
+     ],
+     "citation_precision": 0.0,
+     "citation_recall": 0.0,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": true,
+     "explanation": null,
+     "seconds": 0.0030444578733295202
+    },
+    {
+     "id": "q06",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "TRUE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [
+      "w1-2"
+     ],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": true,
+     "explanation": null,
+     "seconds": 0.0035438749473541975
+    },
+    {
+     "id": "q07",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "TRUE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [
+      "w2-1"
+     ],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": true,
+     "explanation": null,
+     "seconds": 0.00345737487077713
+    },
+    {
+     "id": "q08",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "TRUE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [
+      "w2-3"
+     ],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": true,
+     "explanation": null,
+     "seconds": 0.0032350828405469656
+    },
+    {
+     "id": "q09",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "FALSE",
+     "gold_binding": null,
+     "got": "FALSE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-2"
+     ],
+     "gold_evidence": [
+      "w3-2"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.0035216249525547028
+    },
+    {
+     "id": "q10",
+     "categories": [
+      "temporal-status"
+     ],
+     "gold": "TRUE",
+     "gold_binding": null,
+     "got": "TRUE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w3-1"
+     ],
+     "gold_evidence": [
+      "w3-1"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.003330749925225973
+    },
+    {
+     "id": "q11",
+     "categories": [
+      "temporal-status",
+      "abstention",
+      "belief-time"
+     ],
+     "gold": "NOT_YET_KNOWN",
+     "gold_binding": null,
+     "got": "NOT_YET_KNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.0026685830671340227
+    },
+    {
+     "id": "q12",
+     "categories": [
+      "temporal-status",
+      "belief-time"
+     ],
+     "gold": "FALSE",
+     "gold_binding": null,
+     "got": "FALSE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [
+      "w1-3"
+     ],
+     "gold_evidence": [
+      "w1-3"
+     ],
+     "citation_precision": 1.0,
+     "citation_recall": 1.0,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.0027657090686261654
+    },
+    {
+     "id": "q13",
+     "categories": [
+      "temporal-status",
+      "open-role"
+     ],
+     "gold": "TRUE",
+     "gold_binding": "Omar Fry",
+     "got": "FALSE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [
+      "w3-2"
+     ],
+     "gold_evidence": [
+      "w3-1"
+     ],
+     "citation_precision": 0.0,
+     "citation_recall": 0.0,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.0033784580882638693
+    },
+    {
+     "id": "q14",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "NOT_YET_KNOWN",
+     "gold_binding": null,
+     "got": "NOT_YET_KNOWN",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": true,
+     "cited": [],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": false,
+     "explanation": null,
+     "seconds": 0.0030330829322338104
+    },
+    {
+     "id": "q15",
+     "categories": [
+      "temporal-status",
+      "abstention"
+     ],
+     "gold": "UNKNOWN",
+     "gold_binding": null,
+     "got": "TRUE",
+     "binding": [],
+     "missing": false,
+     "error": null,
+     "correct": false,
+     "cited": [
+      "w1-2"
+     ],
+     "gold_evidence": [],
+     "citation_precision": null,
+     "citation_recall": null,
+     "standing": null,
+     "definitive_flag": null,
+     "qualifiers": null,
+     "unsupported_definitive": true,
+     "explanation": null,
+     "seconds": 0.003394666127860546
+    }
+   ]
+  }
+ },
+ "databases": {
+  "gupi-e2e": {
+   "observation": 11,
+   "memory-candidate": 11,
+   "formation-decision": 11,
+   "formed-into": 11,
+   "claim": 21,
+   "review": 22,
+   "correction-suggestion": 0,
+   "embedding": {
+    "written": 11,
+    "seconds": 0.078
+   },
+   "claims_with_candidate_but_no_store_link": 0,
+   "database": "gupi-6d-world-bff06c8d",
+   "bytes": 21393408,
+   "timings": {
+    "ingest": 0.0947,
+    "extract": 0.0085,
+    "submit": 0.4398,
+    "build_total": 0.8954
+   },
+   "reviews": [
+    [
+     "w2-1",
+     "candidate:0f5f379b0d06abb8a7ed9eda1feb0e3e",
+     "claim rejected"
+    ]
+   ]
+  },
+  "gupi-e2e-policy": {
+   "observation": 11,
+   "memory-candidate": 11,
+   "formation-decision": 11,
+   "formed-into": 11,
+   "claim": 21,
+   "review": 21,
+   "correction-suggestion": 0,
+   "embedding": 0,
+   "claims_with_candidate_but_no_store_link": 0,
+   "database": "gupi-6d-world-a50c5285",
+   "bytes": 21393408,
+   "timings": {
+    "ingest": 0.1117,
+    "extract": 0.0035,
+    "submit": 0.4443,
+    "build_total": 0.8552
+   },
+   "reviews": []
+  },
+  "gupi-gold": {
+   "observation": 11,
+   "memory-candidate": 0,
+   "formation-decision": 0,
+   "formed-into": 0,
+   "claim": 21,
+   "review": 20,
+   "correction-suggestion": 0,
+   "embedding": 0,
+   "claims_with_candidate_but_no_store_link": 0,
+   "database": "gupi-6d-world-fcace136",
+   "bytes": 21377024
+  },
+  "gupi-rules-v1": {
+   "observation": 11,
+   "memory-candidate": 0,
+   "formation-decision": 0,
+   "formed-into": 0,
+   "claim": 21,
+   "review": 20,
+   "correction-suggestion": 0,
+   "embedding": 0,
+   "claims_with_candidate_but_no_store_link": 0,
+   "database": "gupi-6d-world-a0255f74",
+   "bytes": 21389312
+  }
+ },
+ "checks": {
+  "gold_does_not_change_answers": true,
+  "e2e_uses_candidate_store": true,
+  "e2e_claims_all_linked_to_store": true,
+  "baselines_see_same_observations": true
+ },
+ "retrieval": {
+  "unit": "message",
+  "note": "11 messages in all: recall@10 is close to guaranteed",
+  "summary": {
+   "keyword": {
+    "recall@1": 0.278,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.267,
+    "questions": 9,
+    "latency": {
+     "n": 9,
+     "p50": 0.00374,
+     "p95": 0.00613,
+     "max": 0.00613,
+     "total": 0.036
+    }
+   },
+   "embedding": {
+    "recall@1": 0.444,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.267,
+    "questions": 9,
+    "latency": {
+     "n": 9,
+     "p50": 0.00868,
+     "p95": 0.01313,
+     "max": 0.01313,
+     "total": 0.083
+    }
+   },
+   "hybrid": {
+    "recall@1": 0.278,
+    "recall@5": 0.889,
+    "recall@10": 0.889,
+    "precision@5": 0.244,
+    "questions": 9,
+    "latency": {
+     "n": 9,
+     "p50": 0.02669,
+     "p95": 0.04684,
+     "max": 0.04684,
+     "total": 0.256
+    }
+   },
+   "hybrid-unfiltered": {
+    "recall@1": 0.389,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.267,
+    "questions": 9,
+    "latency": {
+     "n": 9,
+     "p50": 0.01568,
+     "p95": 0.02055,
+     "max": 0.02055,
+     "total": 0.148
+    }
+   },
+   "structured": {
+    "recall@1": 0.222,
+    "recall@5": 0.389,
+    "recall@10": 0.556,
+    "precision@5": 0.133,
+    "questions": 9,
+    "latency": {
+     "n": 9,
+     "p50": 0.0133,
+     "p95": 0.01828,
+     "max": 0.01828,
+     "total": 0.125
+    }
+   }
+  },
+  "rows": [
+   {
+    "question": "q01",
+    "system": "keyword",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 2,
+    "returned": 9,
+    "top5": [
+     "w3-3",
+     "w1-3",
+     "w1-1",
+     "w1-2",
+     "w1-5"
+    ],
+    "seconds": 0.006125875050202012,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.4
+   },
+   {
+    "question": "q01",
+    "system": "embedding",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 2,
+    "returned": 11,
+    "top5": [
+     "w1-3",
+     "w3-3",
+     "w1-1",
+     "w1-2",
+     "w1-5"
+    ],
+    "seconds": 0.013134250184521079,
+    "recall@1": 0.5,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.4
+   },
+   {
+    "question": "q01",
+    "system": "hybrid",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 2,
+    "returned": 6,
+    "top5": [
+     "w3-3",
+     "w1-3",
+     "w1-1",
+     "w1-2",
+     "w1-5"
+    ],
+    "seconds": 0.04684233316220343,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.4
+   },
+   {
+    "question": "q01",
+    "system": "hybrid-unfiltered",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 2,
+    "returned": 11,
+    "top5": [
+     "w3-3",
+     "w1-3",
+     "w1-1",
+     "w1-2",
+     "w1-5"
+    ],
+    "seconds": 0.015682041877880692,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.4
+   },
+   {
+    "question": "q01",
+    "system": "structured",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 2,
+    "returned": 6,
+    "top5": [
+     "w3-3",
+     "w2-3",
+     "w1-5",
+     "w1-3",
+     "w1-2"
+    ],
+    "seconds": 0.01660454203374684,
+    "recall@1": 0.0,
+    "recall@5": 0.5,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q02",
+    "system": "keyword",
+    "categories": [
+     "temporal-status",
+     "contradiction"
+    ],
+    "gold": 2,
+    "returned": 9,
+    "top5": [
+     "w1-3",
+     "w1-1",
+     "w3-3",
+     "w3-2",
+     "w1-2"
+    ],
+    "seconds": 0.0034294158685952425,
+    "recall@1": 0.5,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.4
+   },
+   {
+    "question": "q02",
+    "system": "embedding",
+    "categories": [
+     "temporal-status",
+     "contradiction"
+    ],
+    "gold": 2,
+    "returned": 11,
+    "top5": [
+     "w1-3",
+     "w1-1",
+     "w3-3",
+     "w1-2",
+     "w1-5"
+    ],
+    "seconds": 0.007528207963332534,
+    "recall@1": 0.5,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.4
+   },
+   {
+    "question": "q02",
+    "system": "hybrid",
+    "categories": [
+     "temporal-status",
+     "contradiction"
+    ],
+    "gold": 2,
+    "returned": 6,
+    "top5": [
+     "w1-3",
+     "w1-1",
+     "w3-3",
+     "w1-2",
+     "w1-5"
+    ],
+    "seconds": 0.023931958014145494,
+    "recall@1": 0.5,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.4
+   },
+   {
+    "question": "q02",
+    "system": "hybrid-unfiltered",
+    "categories": [
+     "temporal-status",
+     "contradiction"
+    ],
+    "gold": 2,
+    "returned": 11,
+    "top5": [
+     "w1-3",
+     "w1-1",
+     "w3-3",
+     "w1-2",
+     "w3-2"
+    ],
+    "seconds": 0.015005416935309768,
+    "recall@1": 0.5,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.4
+   },
+   {
+    "question": "q02",
+    "system": "structured",
+    "categories": [
+     "temporal-status",
+     "contradiction"
+    ],
+    "gold": 2,
+    "returned": 6,
+    "top5": [
+     "w3-3",
+     "w2-3",
+     "w1-5",
+     "w1-3",
+     "w1-2"
+    ],
+    "seconds": 0.013304707827046514,
+    "recall@1": 0.5,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.4
+   },
+   {
+    "question": "q03",
+    "system": "keyword",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 1,
+    "returned": 9,
+    "top5": [
+     "w1-3",
+     "w1-5",
+     "w3-2",
+     "w3-1",
+     "w1-4"
+    ],
+    "seconds": 0.003739750012755394,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q03",
+    "system": "embedding",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 1,
+    "returned": 11,
+    "top5": [
+     "w1-5",
+     "w1-1",
+     "w1-3",
+     "w3-3",
+     "w3-1"
+    ],
+    "seconds": 0.00809024996124208,
+    "recall@1": 1.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q03",
+    "system": "hybrid",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 1,
+    "returned": 9,
+    "top5": [
+     "w1-5",
+     "w1-3",
+     "w1-1",
+     "w3-1",
+     "w3-2"
+    ],
+    "seconds": 0.02446383284404874,
+    "recall@1": 1.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q03",
+    "system": "hybrid-unfiltered",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 1,
+    "returned": 11,
+    "top5": [
+     "w1-5",
+     "w1-3",
+     "w1-1",
+     "w3-1",
+     "w3-2"
+    ],
+    "seconds": 0.018742666114121675,
+    "recall@1": 1.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q03",
+    "system": "structured",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 1,
+    "returned": 9,
+    "top5": [
+     "w3-3",
+     "w3-2",
+     "w3-1",
+     "w2-3",
+     "w2-2"
+    ],
+    "seconds": 0.012221707962453365,
+    "recall@1": 0.0,
+    "recall@5": 0.0,
+    "recall@10": 1.0,
+    "precision@5": 0.0
+   },
+   {
+    "question": "q04",
+    "system": "keyword",
+    "categories": [
+     "temporal-status",
+     "open-role"
+    ],
+    "gold": 1,
+    "returned": 7,
+    "top5": [
+     "w1-5",
+     "w1-1",
+     "w3-3",
+     "w1-3",
+     "w3-2"
+    ],
+    "seconds": 0.0032239160500466824,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q04",
+    "system": "embedding",
+    "categories": [
+     "temporal-status",
+     "open-role"
+    ],
+    "gold": 1,
+    "returned": 11,
+    "top5": [
+     "w1-1",
+     "w1-5",
+     "w3-3",
+     "w1-3",
+     "w1-4"
+    ],
+    "seconds": 0.008678749902173877,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q04",
+    "system": "hybrid",
+    "categories": [
+     "temporal-status",
+     "open-role"
+    ],
+    "gold": 1,
+    "returned": 5,
+    "top5": [
+     "w1-5",
+     "w1-1",
+     "w3-3",
+     "w1-3",
+     "w2-3"
+    ],
+    "seconds": 0.023990332847461104,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q04",
+    "system": "hybrid-unfiltered",
+    "categories": [
+     "temporal-status",
+     "open-role"
+    ],
+    "gold": 1,
+    "returned": 11,
+    "top5": [
+     "w1-5",
+     "w1-1",
+     "w3-3",
+     "w1-3",
+     "w3-2"
+    ],
+    "seconds": 0.013571165967732668,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q04",
+    "system": "structured",
+    "categories": [
+     "temporal-status",
+     "open-role"
+    ],
+    "gold": 1,
+    "returned": 5,
+    "top5": [
+     "w3-3",
+     "w2-3",
+     "w1-5",
+     "w1-3",
+     "w1-1"
+    ],
+    "seconds": 0.01238674996420741,
+    "recall@1": 1.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q05",
+    "system": "keyword",
+    "categories": [
+     "temporal-status",
+     "contradiction",
+     "open-role"
+    ],
+    "gold": 2,
+    "returned": 7,
+    "top5": [
+     "w3-2",
+     "w1-5",
+     "w1-1",
+     "w3-3",
+     "w1-3"
+    ],
+    "seconds": 0.0030526670161634684,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.4
+   },
+   {
+    "question": "q05",
+    "system": "embedding",
+    "categories": [
+     "temporal-status",
+     "contradiction",
+     "open-role"
+    ],
+    "gold": 2,
+    "returned": 11,
+    "top5": [
+     "w1-1",
+     "w1-5",
+     "w3-3",
+     "w1-3",
+     "w2-3"
+    ],
+    "seconds": 0.009196917060762644,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.4
+   },
+   {
+    "question": "q05",
+    "system": "hybrid",
+    "categories": [
+     "temporal-status",
+     "contradiction",
+     "open-role"
+    ],
+    "gold": 2,
+    "returned": 5,
+    "top5": [
+     "w1-5",
+     "w1-1",
+     "w3-3",
+     "w1-3",
+     "w2-3"
+    ],
+    "seconds": 0.02281574998050928,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.4
+   },
+   {
+    "question": "q05",
+    "system": "hybrid-unfiltered",
+    "categories": [
+     "temporal-status",
+     "contradiction",
+     "open-role"
+    ],
+    "gold": 2,
+    "returned": 11,
+    "top5": [
+     "w1-1",
+     "w1-5",
+     "w3-3",
+     "w3-2",
+     "w1-3"
+    ],
+    "seconds": 0.013397207949310541,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.4
+   },
+   {
+    "question": "q05",
+    "system": "structured",
+    "categories": [
+     "temporal-status",
+     "contradiction",
+     "open-role"
+    ],
+    "gold": 2,
+    "returned": 5,
+    "top5": [
+     "w3-3",
+     "w2-3",
+     "w1-5",
+     "w1-3",
+     "w1-1"
+    ],
+    "seconds": 0.014826708938926458,
+    "recall@1": 0.5,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.4
+   },
+   {
+    "question": "q09",
+    "system": "keyword",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 1,
+    "returned": 10,
+    "top5": [
+     "w2-2",
+     "w3-2",
+     "w1-4",
+     "w1-5",
+     "w3-1"
+    ],
+    "seconds": 0.0043100418988615274,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q09",
+    "system": "embedding",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 1,
+    "returned": 11,
+    "top5": [
+     "w1-4",
+     "w2-2",
+     "w3-2",
+     "w1-2",
+     "w3-1"
+    ],
+    "seconds": 0.008640165906399488,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q09",
+    "system": "hybrid",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 1,
+    "returned": 11,
+    "top5": [
+     "w2-2",
+     "w1-4",
+     "w3-2",
+     "w1-2",
+     "w3-1"
+    ],
+    "seconds": 0.030725291930139065,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q09",
+    "system": "hybrid-unfiltered",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 1,
+    "returned": 11,
+    "top5": [
+     "w2-2",
+     "w1-4",
+     "w3-2",
+     "w1-2",
+     "w3-1"
+    ],
+    "seconds": 0.01411954197101295,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q09",
+    "system": "structured",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 1,
+    "returned": 0,
+    "top5": [],
+    "seconds": 0.012385833077132702,
+    "recall@1": 0.0,
+    "recall@5": 0.0,
+    "recall@10": 0.0,
+    "precision@5": 0.0
+   },
+   {
+    "question": "q10",
+    "system": "keyword",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 1,
+    "returned": 8,
+    "top5": [
+     "w3-1",
+     "w1-5",
+     "w3-2",
+     "w1-4",
+     "w2-2"
+    ],
+    "seconds": 0.003647790988907218,
+    "recall@1": 1.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q10",
+    "system": "embedding",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 1,
+    "returned": 11,
+    "top5": [
+     "w3-1",
+     "w1-4",
+     "w1-5",
+     "w2-2",
+     "w3-2"
+    ],
+    "seconds": 0.00854595797136426,
+    "recall@1": 1.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q10",
+    "system": "hybrid",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 1,
+    "returned": 11,
+    "top5": [
+     "w3-1",
+     "w1-5",
+     "w1-4",
+     "w3-2",
+     "w2-2"
+    ],
+    "seconds": 0.026685750111937523,
+    "recall@1": 1.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q10",
+    "system": "hybrid-unfiltered",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 1,
+    "returned": 11,
+    "top5": [
+     "w3-1",
+     "w1-5",
+     "w1-4",
+     "w3-2",
+     "w2-2"
+    ],
+    "seconds": 0.01926037506200373,
+    "recall@1": 1.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q10",
+    "system": "structured",
+    "categories": [
+     "temporal-status"
+    ],
+    "gold": 1,
+    "returned": 0,
+    "top5": [],
+    "seconds": 0.013322249986231327,
+    "recall@1": 0.0,
+    "recall@5": 0.0,
+    "recall@10": 0.0,
+    "precision@5": 0.0
+   },
+   {
+    "question": "q12",
+    "system": "keyword",
+    "categories": [
+     "temporal-status",
+     "belief-time"
+    ],
+    "gold": 1,
+    "returned": 9,
+    "top5": [
+     "w1-3",
+     "w1-1",
+     "w3-3",
+     "w3-2",
+     "w1-2"
+    ],
+    "seconds": 0.004136292031034827,
+    "recall@1": 1.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q12",
+    "system": "embedding",
+    "categories": [
+     "temporal-status",
+     "belief-time"
+    ],
+    "gold": 1,
+    "returned": 11,
+    "top5": [
+     "w1-3",
+     "w1-1",
+     "w3-3",
+     "w1-5",
+     "w1-2"
+    ],
+    "seconds": 0.009746875148266554,
+    "recall@1": 1.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q12",
+    "system": "hybrid",
+    "categories": [
+     "temporal-status",
+     "belief-time"
+    ],
+    "gold": 1,
+    "returned": 1,
+    "top5": [
+     "w2-3"
+    ],
+    "seconds": 0.028943875106051564,
+    "recall@1": 0.0,
+    "recall@5": 0.0,
+    "recall@10": 0.0,
+    "precision@5": 0.0
+   },
+   {
+    "question": "q12",
+    "system": "hybrid-unfiltered",
+    "categories": [
+     "temporal-status",
+     "belief-time"
+    ],
+    "gold": 1,
+    "returned": 11,
+    "top5": [
+     "w1-3",
+     "w1-1",
+     "w3-3",
+     "w1-5",
+     "w1-2"
+    ],
+    "seconds": 0.020546500105410814,
+    "recall@1": 1.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q12",
+    "system": "structured",
+    "categories": [
+     "temporal-status",
+     "belief-time"
+    ],
+    "gold": 1,
+    "returned": 1,
+    "top5": [
+     "w2-3"
+    ],
+    "seconds": 0.018278209026902914,
+    "recall@1": 0.0,
+    "recall@5": 0.0,
+    "recall@10": 0.0,
+    "precision@5": 0.0
+   },
+   {
+    "question": "q13",
+    "system": "keyword",
+    "categories": [
+     "temporal-status",
+     "open-role"
+    ],
+    "gold": 1,
+    "returned": 8,
+    "top5": [
+     "w1-5",
+     "w3-2",
+     "w3-1",
+     "w1-4",
+     "w2-2"
+    ],
+    "seconds": 0.004268875112757087,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q13",
+    "system": "embedding",
+    "categories": [
+     "temporal-status",
+     "open-role"
+    ],
+    "gold": 1,
+    "returned": 11,
+    "top5": [
+     "w1-4",
+     "w3-1",
+     "w1-5",
+     "w2-2",
+     "w3-2"
+    ],
+    "seconds": 0.00947141693904996,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q13",
+    "system": "hybrid",
+    "categories": [
+     "temporal-status",
+     "open-role"
+    ],
+    "gold": 1,
+    "returned": 11,
+    "top5": [
+     "w1-5",
+     "w1-4",
+     "w3-1",
+     "w3-2",
+     "w2-2"
+    ],
+    "seconds": 0.027407667133957148,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q13",
+    "system": "hybrid-unfiltered",
+    "categories": [
+     "temporal-status",
+     "open-role"
+    ],
+    "gold": 1,
+    "returned": 11,
+    "top5": [
+     "w1-5",
+     "w1-4",
+     "w3-1",
+     "w3-2",
+     "w2-2"
+    ],
+    "seconds": 0.01773262512870133,
+    "recall@1": 0.0,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "precision@5": 0.2
+   },
+   {
+    "question": "q13",
+    "system": "structured",
+    "categories": [
+     "temporal-status",
+     "open-role"
+    ],
+    "gold": 1,
+    "returned": 0,
+    "top5": [],
+    "seconds": 0.011834583943709731,
+    "recall@1": 0.0,
+    "recall@5": 0.0,
+    "recall@10": 0.0,
+    "precision@5": 0.0
+   }
+  ]
+ },
+ "evidence_states": {
+  "cited": 11,
+  "formed_not_cited": 1,
+  "candidate_only": 0,
+  "text_only": 0,
+  "rows": [
+   {
+    "question": "q01",
+    "message": "w1-1",
+    "state": "cited"
+   },
+   {
+    "question": "q01",
+    "message": "w1-3",
+    "state": "cited"
+   },
+   {
+    "question": "q02",
+    "message": "w1-3",
+    "state": "cited"
+   },
+   {
+    "question": "q02",
+    "message": "w3-3",
+    "state": "cited"
+   },
+   {
+    "question": "q03",
+    "message": "w1-5",
+    "state": "formed_not_cited"
+   },
+   {
+    "question": "q04",
+    "message": "w3-3",
+    "state": "cited"
+   },
+   {
+    "question": "q05",
+    "message": "w1-3",
+    "state": "cited"
+   },
+   {
+    "question": "q05",
+    "message": "w3-3",
+    "state": "cited"
+   },
+   {
+    "question": "q09",
+    "message": "w3-2",
+    "state": "cited"
+   },
+   {
+    "question": "q10",
+    "message": "w3-1",
+    "state": "cited"
+   },
+   {
+    "question": "q12",
+    "message": "w1-3",
+    "state": "cited"
+   },
+   {
+    "question": "q13",
+    "message": "w3-1",
+    "state": "cited"
+   }
+  ]
+ },
+ "attribution": [
+  {
+   "question": "q01",
+   "gold": "TRUE",
+   "got": "PRESUMED",
+   "correct": false,
+   "unsupported_definitive": false,
+   "citation_failure": false,
+   "earliest_stage": 7,
+   "stages": [
+    7
+   ],
+   "notes": [
+    "evidence formed and cited as gold; the answer follows from the semantics (gupi-gold differs)"
+   ]
+  },
+  {
+   "question": "q03",
+   "gold": "FALSE",
+   "got": "UNKNOWN",
+   "correct": false,
+   "unsupported_definitive": false,
+   "citation_failure": true,
+   "earliest_stage": 7,
+   "stages": [
+    7
+   ],
+   "notes": [
+    "w1-5: formed and believed; not cited, and gupi-gold does not cite it either",
+    "evidence formed and cited as gold; the answer follows from the semantics (gupi-gold gives the same answer)"
+   ]
+  }
+ ],
+ "trace": {
+  "w1-1": {
+   "text": "Nora Vance joined Halden as CTO in January 2025.",
+   "gold": {
+    "message": "w1-1",
+    "type": "employment",
+    "roles": {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "values": {
+     "job-title": "CTO"
+    },
+    "start": [
+     "2025-01-01",
+     "2025-02-01"
+    ],
+    "end": null,
+    "ongoing": false
+   },
+   "candidates": [
+    {
+     "id": "candidate:936340f63b2343379173890688018d06",
+     "type": "employment",
+     "roles": {
+      "employee": "Nora Vance",
+      "employer": "Halden"
+     },
+     "values": {
+      "job-title": "CTO"
+     },
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": "direct",
+     "asserted_by": null,
+     "times": [
+      [
+       "start",
+       "January 2025",
+       "2025-01-01T00:00:00+00:00",
+       "2025-02-01T00:00:00+00:00"
+      ]
+     ],
+     "relations": [],
+     "passage": "Nora Vance joined Halden as CTO in January 2025.",
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:cdf08ee612512fa582e6f18daaa69df9",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "mapped_valid_time": [
+      "2025-01-01T00:00:00+00:00",
+      "2025-02-01T00:00:00+00:00",
+      null,
+      null
+     ],
+     "unmappable": null,
+     "believed_now": true,
+     "stored_valid_time": [
+      "2025-01-01T00:00:00+00:00",
+      "2025-02-01T00:00:00+00:00",
+      null,
+      null
+     ]
+    }
+   ],
+   "not_extracted": [],
+   "invalid_in_store": [],
+   "said": "2025-01-15T09:00:00+00:00"
+  },
+  "w1-2": {
+   "text": "Ivo Marsh reports to Nora Vance.",
+   "gold": {
+    "message": "w1-2",
+    "type": "reporting",
+    "roles": {
+     "report": "Ivo Marsh",
+     "manager": "Nora Vance"
+    },
+    "values": {},
+    "start": null,
+    "end": null,
+    "ongoing": true
+   },
+   "candidates": [
+    {
+     "id": "candidate:0a702f8a40789b6d24545b78d57c5401",
+     "type": "reporting",
+     "roles": {
+      "report": "Ivo Marsh",
+      "manager": "Nora Vance"
+     },
+     "values": {},
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": "direct",
+     "asserted_by": null,
+     "times": [
+      [
+       "holds-at",
+       "reports",
+       "2025-01-15T09:05:00+00:00",
+       "2025-01-15T09:05:00+00:00"
+      ]
+     ],
+     "relations": [],
+     "passage": "Ivo Marsh reports to Nora Vance.",
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:af8337fa8ac22ecdce528d38a597bae6",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "mapped_valid_time": [
+      null,
+      null,
+      "2025-01-15T09:05:00+00:00",
+      null
+     ],
+     "unmappable": null,
+     "believed_now": true,
+     "stored_valid_time": [
+      null,
+      null,
+      "2025-01-15T09:05:00+00:00",
+      null
+     ]
+    }
+   ],
+   "not_extracted": [],
+   "invalid_in_store": [],
+   "said": "2025-01-15T09:05:00+00:00"
+  },
+  "w2-1": {
+   "text": "Ivo Marsh reports to Sam Reed.",
+   "gold": {
+    "message": "w2-1",
+    "type": "reporting",
+    "roles": {
+     "report": "Ivo Marsh",
+     "manager": "Sam Reed"
+    },
+    "values": {},
+    "start": null,
+    "end": null,
+    "ongoing": true,
+    "decision": "rejected"
+   },
+   "candidates": [
+    {
+     "id": "candidate:0f5f379b0d06abb8a7ed9eda1feb0e3e",
+     "type": "reporting",
+     "roles": {
+      "report": "Ivo Marsh",
+      "manager": "Sam Reed"
+     },
+     "values": {},
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": "direct",
+     "asserted_by": null,
+     "times": [
+      [
+       "holds-at",
+       "reports",
+       "2025-03-10T12:00:00+00:00",
+       "2025-03-10T12:00:00+00:00"
+      ]
+     ],
+     "relations": [],
+     "passage": "Ivo Marsh reports to Sam Reed.",
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:dfc0b70c0a92eeb47934f010491e41bd",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "mapped_valid_time": [
+      null,
+      null,
+      "2025-03-10T12:00:00+00:00",
+      null
+     ],
+     "unmappable": null,
+     "believed_now": false,
+     "stored_valid_time": [
+      null,
+      null,
+      "2025-03-10T12:00:00+00:00",
+      null
+     ]
+    }
+   ],
+   "not_extracted": [],
+   "invalid_in_store": [],
+   "said": "2025-03-10T12:00:00+00:00"
+  },
+  "w1-3": {
+   "text": "Nora Vance left Halden in May 2025.",
+   "gold": {
+    "message": "w1-3",
+    "type": "employment",
+    "roles": {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "values": {},
+    "start": null,
+    "end": [
+     "2025-05-01",
+     "2025-06-01"
+    ],
+    "ongoing": false
+   },
+   "candidates": [
+    {
+     "id": "candidate:136a3efc18aeb99aef070683f514951d",
+     "type": "employment",
+     "roles": {
+      "employee": "Nora Vance",
+      "employer": "Halden"
+     },
+     "values": {},
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": "direct",
+     "asserted_by": null,
+     "times": [
+      [
+       "end",
+       "May 2025",
+       "2025-05-01T00:00:00+00:00",
+       "2025-06-01T00:00:00+00:00"
+      ]
+     ],
+     "relations": [],
+     "passage": "Nora Vance left Halden in May 2025.",
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:5bca524a3c50a33eaabd5b14629fce0a",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "mapped_valid_time": [
+      null,
+      null,
+      "2025-05-01T00:00:00+00:00",
+      "2025-06-01T00:00:00+00:00"
+     ],
+     "unmappable": null,
+     "believed_now": true,
+     "stored_valid_time": [
+      null,
+      null,
+      "2025-05-01T00:00:00+00:00",
+      "2025-06-01T00:00:00+00:00"
+     ]
+    }
+   ],
+   "not_extracted": [],
+   "invalid_in_store": [],
+   "said": "2025-06-02T10:00:00+00:00"
+  },
+  "w1-4": {
+   "text": "Since June 2025, Ivo Marsh reports to Leah Ortiz.",
+   "gold": {
+    "message": "w1-4",
+    "type": "reporting",
+    "roles": {
+     "report": "Ivo Marsh",
+     "manager": "Leah Ortiz"
+    },
+    "values": {},
+    "start": [
+     "2025-06-01",
+     "2025-07-01"
+    ],
+    "end": null,
+    "ongoing": true
+   },
+   "candidates": [
+    {
+     "id": "candidate:e7a3a964088d7fb2fbaed0fe1c76a23b",
+     "type": "reporting",
+     "roles": {
+      "report": "Ivo Marsh",
+      "manager": "Leah Ortiz"
+     },
+     "values": {},
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": "direct",
+     "asserted_by": null,
+     "times": [
+      [
+       "holds-since",
+       "June 2025",
+       "2025-06-01T00:00:00+00:00",
+       "2025-07-01T00:00:00+00:00"
+      ],
+      [
+       "holds-at",
+       "reports",
+       "2025-06-02T10:05:00+00:00",
+       "2025-06-02T10:05:00+00:00"
+      ]
+     ],
+     "relations": [],
+     "passage": "Since June 2025, Ivo Marsh reports to Leah Ortiz.",
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:aafb09e6c93abd41c794e0dd65797497",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "mapped_valid_time": [
+      null,
+      "2025-06-02T10:05:00+00:00",
+      "2025-06-02T10:05:00+00:00",
+      null
+     ],
+     "unmappable": null,
+     "believed_now": true,
+     "stored_valid_time": [
+      null,
+      "2025-06-02T10:05:00+00:00",
+      "2025-06-02T10:05:00+00:00",
+      null
+     ]
+    }
+   ],
+   "not_extracted": [],
+   "invalid_in_store": [],
+   "said": "2025-06-02T10:05:00+00:00"
+  },
+  "w1-5": {
+   "text": "Leah Ortiz joined Halden as CTO in June 2025.",
+   "gold": {
+    "message": "w1-5",
+    "type": "employment",
+    "roles": {
+     "employee": "Leah Ortiz",
+     "employer": "Halden"
+    },
+    "values": {
+     "job-title": "CTO"
+    },
+    "start": [
+     "2025-06-01",
+     "2025-07-01"
+    ],
+    "end": null,
+    "ongoing": false
+   },
+   "candidates": [
+    {
+     "id": "candidate:3e93b0339ea763387000e00f44192b27",
+     "type": "employment",
+     "roles": {
+      "employee": "Leah Ortiz",
+      "employer": "Halden"
+     },
+     "values": {
+      "job-title": "CTO"
+     },
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": "direct",
+     "asserted_by": null,
+     "times": [
+      [
+       "start",
+       "June 2025",
+       "2025-06-01T00:00:00+00:00",
+       "2025-07-01T00:00:00+00:00"
+      ]
+     ],
+     "relations": [],
+     "passage": "Leah Ortiz joined Halden as CTO in June 2025.",
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:dafaf95ed7c4a7cf503a1acc5086aa67",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "mapped_valid_time": [
+      "2025-06-01T00:00:00+00:00",
+      "2025-07-01T00:00:00+00:00",
+      null,
+      null
+     ],
+     "unmappable": null,
+     "believed_now": true,
+     "stored_valid_time": [
+      "2025-06-01T00:00:00+00:00",
+      "2025-07-01T00:00:00+00:00",
+      null,
+      null
+     ]
+    }
+   ],
+   "not_extracted": [],
+   "invalid_in_store": [],
+   "said": "2025-06-03T08:00:00+00:00"
+  },
+  "w2-2": {
+   "text": "Ivo Marsh reports to Leah Ortiz.",
+   "gold": {
+    "message": "w2-2",
+    "type": "reporting",
+    "roles": {
+     "report": "Ivo Marsh",
+     "manager": "Leah Ortiz"
+    },
+    "values": {},
+    "start": null,
+    "end": null,
+    "ongoing": true
+   },
+   "candidates": [
+    {
+     "id": "candidate:e981ab93c698cea0c704c311627cdde7",
+     "type": "reporting",
+     "roles": {
+      "report": "Ivo Marsh",
+      "manager": "Leah Ortiz"
+     },
+     "values": {},
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": "direct",
+     "asserted_by": null,
+     "times": [
+      [
+       "holds-at",
+       "reports",
+       "2025-07-01T12:00:00+00:00",
+       "2025-07-01T12:00:00+00:00"
+      ]
+     ],
+     "relations": [],
+     "passage": "Ivo Marsh reports to Leah Ortiz.",
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:1ed8a1ef3a150e18c91a1a02a2a8f13b",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "mapped_valid_time": [
+      null,
+      null,
+      "2025-07-01T12:00:00+00:00",
+      null
+     ],
+     "unmappable": null,
+     "believed_now": true,
+     "stored_valid_time": [
+      null,
+      null,
+      "2025-07-01T12:00:00+00:00",
+      null
+     ]
+    }
+   ],
+   "not_extracted": [],
+   "invalid_in_store": [],
+   "said": "2025-07-01T12:00:00+00:00"
+  },
+  "w2-3": {
+   "text": "Pia Holm works at Halden as a Designer.",
+   "gold": {
+    "message": "w2-3",
+    "type": "employment",
+    "roles": {
+     "employee": "Pia Holm",
+     "employer": "Halden"
+    },
+    "values": {
+     "job-title": "Designer"
+    },
+    "start": null,
+    "end": null,
+    "ongoing": true,
+    "decision": "unreviewed"
+   },
+   "candidates": [
+    {
+     "id": "candidate:93bc716e81da57969c3cabcc2e472ad2",
+     "type": "employment",
+     "roles": {
+      "employee": "Pia Holm",
+      "employer": "Halden"
+     },
+     "values": {
+      "job-title": "Designer"
+     },
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": "direct",
+     "asserted_by": null,
+     "times": [
+      [
+       "holds-at",
+       "works",
+       "2025-07-01T12:05:00+00:00",
+       "2025-07-01T12:05:00+00:00"
+      ]
+     ],
+     "relations": [],
+     "passage": "Pia Holm works at Halden as a Designer.",
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:0e26179393c0a5eda664e5667d5f4ef8",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "mapped_valid_time": [
+      null,
+      null,
+      "2025-07-01T12:05:00+00:00",
+      null
+     ],
+     "unmappable": null,
+     "believed_now": true,
+     "stored_valid_time": [
+      null,
+      null,
+      "2025-07-01T12:05:00+00:00",
+      null
+     ]
+    }
+   ],
+   "not_extracted": [],
+   "invalid_in_store": [],
+   "said": "2025-07-01T12:05:00+00:00"
+  },
+  "w3-1": {
+   "text": "Leah Ortiz has reported to Omar Fry since June 2025.",
+   "gold": {
+    "message": "w3-1",
+    "type": "reporting",
+    "roles": {
+     "report": "Leah Ortiz",
+     "manager": "Omar Fry"
+    },
+    "values": {},
+    "start": [
+     "2025-06-01",
+     "2025-07-01"
+    ],
+    "end": null,
+    "ongoing": true
+   },
+   "candidates": [
+    {
+     "id": "candidate:7300bf5c802f2f999ab4ab3af891e5fc",
+     "type": "reporting",
+     "roles": {
+      "report": "Leah Ortiz",
+      "manager": "Omar Fry"
+     },
+     "values": {},
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": "direct",
+     "asserted_by": null,
+     "times": [
+      [
+       "holds-since",
+       "June 2025",
+       "2025-06-01T00:00:00+00:00",
+       "2025-07-01T00:00:00+00:00"
+      ],
+      [
+       "holds-at",
+       "has reported",
+       "2025-08-20T15:00:00+00:00",
+       "2025-08-20T15:00:00+00:00"
+      ]
+     ],
+     "relations": [],
+     "passage": "Leah Ortiz has reported to Omar Fry since June 2025.",
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:f3c87deeea6c7a6b6d713833d61cd825",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "mapped_valid_time": [
+      null,
+      "2025-07-01T00:00:00+00:00",
+      "2025-08-20T15:00:00+00:00",
+      null
+     ],
+     "unmappable": null,
+     "believed_now": true,
+     "stored_valid_time": [
+      null,
+      "2025-07-01T00:00:00+00:00",
+      "2025-08-20T15:00:00+00:00",
+      null
+     ]
+    }
+   ],
+   "not_extracted": [],
+   "invalid_in_store": [],
+   "said": "2025-08-20T15:00:00+00:00"
+  },
+  "w3-2": {
+   "text": "Ivo Marsh stopped reporting to Leah Ortiz in July 2025.",
+   "gold": {
+    "message": "w3-2",
+    "type": "reporting",
+    "roles": {
+     "report": "Ivo Marsh",
+     "manager": "Leah Ortiz"
+    },
+    "values": {},
+    "start": null,
+    "end": [
+     "2025-07-01",
+     "2025-08-01"
+    ],
+    "ongoing": false
+   },
+   "candidates": [
+    {
+     "id": "candidate:2458007f87146520e3d099f982cc0080",
+     "type": "reporting",
+     "roles": {
+      "report": "Ivo Marsh",
+      "manager": "Leah Ortiz"
+     },
+     "values": {},
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": "direct",
+     "asserted_by": null,
+     "times": [
+      [
+       "end",
+       "July 2025",
+       "2025-07-01T00:00:00+00:00",
+       "2025-08-01T00:00:00+00:00"
+      ]
+     ],
+     "relations": [],
+     "passage": "Ivo Marsh stopped reporting to Leah Ortiz in July 2025.",
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:a467a50d9ffa8bc4140f410ea4fad9d0",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "mapped_valid_time": [
+      null,
+      null,
+      "2025-07-01T00:00:00+00:00",
+      "2025-08-01T00:00:00+00:00"
+     ],
+     "unmappable": null,
+     "believed_now": true,
+     "stored_valid_time": [
+      null,
+      null,
+      "2025-07-01T00:00:00+00:00",
+      "2025-08-01T00:00:00+00:00"
+     ]
+    }
+   ],
+   "not_extracted": [],
+   "invalid_in_store": [],
+   "said": "2025-08-20T15:05:00+00:00"
+  },
+  "w3-3": {
+   "text": "Since March 2025, Nora Vance works at Halden as CTO.",
+   "gold": {
+    "message": "w3-3",
+    "type": "employment",
+    "roles": {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "values": {
+     "job-title": "CTO"
+    },
+    "start": [
+     "2025-03-01",
+     "2025-04-01"
+    ],
+    "end": null,
+    "ongoing": true
+   },
+   "candidates": [
+    {
+     "id": "candidate:d280cdb21144e3f12ad85b9407eef11b",
+     "type": "employment",
+     "roles": {
+      "employee": "Nora Vance",
+      "employer": "Halden"
+     },
+     "values": {
+      "job-title": "CTO"
+     },
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": "direct",
+     "asserted_by": null,
+     "times": [
+      [
+       "holds-since",
+       "March 2025",
+       "2025-03-01T00:00:00+00:00",
+       "2025-04-01T00:00:00+00:00"
+      ],
+      [
+       "holds-at",
+       "works",
+       "2025-08-20T15:10:00+00:00",
+       "2025-08-20T15:10:00+00:00"
+      ]
+     ],
+     "relations": [],
+     "passage": "Since March 2025, Nora Vance works at Halden as CTO.",
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:bf831e3c1cb95d882fe5102ee6a2e677",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "mapped_valid_time": [
+      null,
+      "2025-04-01T00:00:00+00:00",
+      "2025-08-20T15:10:00+00:00",
+      null
+     ],
+     "unmappable": null,
+     "believed_now": true,
+     "stored_valid_time": [
+      null,
+      "2025-04-01T00:00:00+00:00",
+      "2025-08-20T15:10:00+00:00",
+      null
+     ]
+    }
+   ],
+   "not_extracted": [],
+   "invalid_in_store": [],
+   "said": "2025-08-20T15:10:00+00:00"
+  }
+ }
+}
