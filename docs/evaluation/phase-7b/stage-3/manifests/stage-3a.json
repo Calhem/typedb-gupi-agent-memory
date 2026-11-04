@@ -1,0 +1,214 @@
+{
+ "manifest": "gupi.stage3a-manifest/1",
+ "created": "2026-11-04",
+ "repository": {
+  "commit": "d6bd912ac947c6f190bc58790291ea48fbdb3227",
+  "branch": "feature/phase-7b-stage-3a-evaluation",
+  "clean": true
+ },
+ "environment": {
+  "python": "3.13.17",
+  "platform": "Darwin arm64",
+  "typedb": "3.14.1",
+  "typedb_driver": "3.14.0"
+ },
+ "formats": {
+  "candidate": "gupi.candidate/1.1",
+  "response": "gupi.model-response/1.1",
+  "parser": "model:candidate-v1.1",
+  "extraction_contract": "gupi.stage3-extraction/1",
+  "passages": "gupi.stage3-passages/1",
+  "gold": "gupi.stage3-gold/1"
+ },
+ "passages": {
+  "count": 32,
+  "file_sha256": "56f5354cde16e7420c72737d18bff55970a84c8f7e80de4ac05ceecd7b772fd6",
+  "items": [
+   {
+    "passage_id": "X3-01",
+    "text_sha256": "c884dbfc0a154f55f0665e7474341662fb92809332a5ffe7dd2ade77d37b2876"
+   },
+   {
+    "passage_id": "X3-02",
+    "text_sha256": "a0f1f0cf31a1535625270debec366a1de85bf2fad1d2f980a24abf94f5de3598"
+   },
+   {
+    "passage_id": "X3-03",
+    "text_sha256": "f2871939aa7ddf7af2b97dcb6ffe321c7e09e2af640323aa8edb5c23722e3dbb"
+   },
+   {
+    "passage_id": "X3-04",
+    "text_sha256": "57cad525ffd3e9a55af256a56a20671a501658807501fef00c69611656a55f3d"
+   },
+   {
+    "passage_id": "X3-05",
+    "text_sha256": "8a8bc35cfdb9530318a2a40f8a1e6a41eab09793b3a62265f37e4d6ababa1f30"
+   },
+   {
+    "passage_id": "X3-06",
+    "text_sha256": "65df53e1e37ff2a473c63b0a816e6d31e34d026af36c21da14969558a994524d"
+   },
+   {
+    "passage_id": "X3-07",
+    "text_sha256": "4d13480c1436cc4fb6613c3708552ccf8004940dc50631473a001955deeb6533"
+   },
+   {
+    "passage_id": "X3-08",
+    "text_sha256": "035ad3932f627f3f12ef46cd8a28d08e75a7e134142c0b3ba13ae6c0db889150"
+   },
+   {
+    "passage_id": "X3-09",
+    "text_sha256": "da91689883da8140f33e291a60b8e06ba2d8118d82712fccb8bbd73e9a6b642c"
+   },
+   {
+    "passage_id": "X3-10",
+    "text_sha256": "e50e292f5b1fcbb31174ced14b1ab1c79e07ef8b982a10a6f518682e41c9740c"
+   },
+   {
+    "passage_id": "X3-11",
+    "text_sha256": "f2b6627d04adcfe27505aabf92d5040b5196e4245d9e93e0ec91b66c4385fc9a"
+   },
+   {
+    "passage_id": "X3-12",
+    "text_sha256": "513fb7bb33d728005d64e21dc8ee6316d2368b9868437636741100643df440e7"
+   },
+   {
+    "passage_id": "X3-13",
+    "text_sha256": "7ee4e326ed399a680f7819c4ae4124641462ed9150fd1fd4bb8fb5b2372ed56d"
+   },
+   {
+    "passage_id": "X3-14",
+    "text_sha256": "5c4dd644e0f92c33f3183c76603f3812e1b42978b9295fcb7a6e6bcdeab99055"
+   },
+   {
+    "passage_id": "X3-15",
+    "text_sha256": "11faf9883b853aa2e5bd97ab146128198c68bf3320987d026b1d5372c53d79f7"
+   },
+   {
+    "passage_id": "X3-16",
+    "text_sha256": "d6eddc34abb734d8c170704386ed2f6666199dcf976b16652abcb992b5797b40"
+   },
+   {
+    "passage_id": "X3-17",
+    "text_sha256": "111f8ccf5a7d938a10ec0d8b19d7a8f10201b639e9a60d4ebfc0a98227624b15"
+   },
+   {
+    "passage_id": "X3-18",
+    "text_sha256": "eb4f1ce3de389b710eeeb53e8a7a8aa973a743eba49147ac91bac04092a52c19"
+   },
+   {
+    "passage_id": "X3-19",
+    "text_sha256": "4e7969a4d88d93cfdb156cc33ad81b4f1e21f1290ea5d00dd4b51e3e9635ab30"
+   },
+   {
+    "passage_id": "X3-20",
+    "text_sha256": "410453d79a4cd50b879c27a9f220da9b0c3ec0f51550fbb3f9da09ea9c51f357"
+   },
+   {
+    "passage_id": "X3-21",
+    "text_sha256": "0c882355be22d86537fc9477cbb31027ebd0682c7161c1458d5e5026f2057178"
+   },
+   {
+    "passage_id": "X3-22",
+    "text_sha256": "5754809f547a4afd42ecd2dd2d2edd18db1006c96275b23eb138eb5dd5e5c285"
+   },
+   {
+    "passage_id": "X3-23",
+    "text_sha256": "b134e42f28a4cd57cf1f01c551c226931bc025d8cf74238179d4dee661972b5a"
+   },
+   {
+    "passage_id": "X3-24",
+    "text_sha256": "84d18f24b45ea8e2a63a067a96a28da9a892a6aecf745b81069489af2cfd2106"
+   },
+   {
+    "passage_id": "X3-25",
+    "text_sha256": "4ca0a4f1bdbe2288a0182e2ed40ccd7046f3c13f35e96ae1e491a7474c638779"
+   },
+   {
+    "passage_id": "X3-26",
+    "text_sha256": "9e642c823a3d79ccc17abe616fa9bfe990b043c192b40fa3c08f20f87d343eff"
+   },
+   {
+    "passage_id": "X3-27",
+    "text_sha256": "b34caecf0dae2edd2f46707eacf9a3a829a01cf709909f5ae736bfa329adc182"
+   },
+   {
+    "passage_id": "X3-28",
+    "text_sha256": "5e896015fa854f2ee671c018ee17330a4ff5ac561bf444acf44b42f61061ecf5"
+   },
+   {
+    "passage_id": "X3-29",
+    "text_sha256": "d10afc4d803855d7851bd853b84668e2ace1f33b9c44251d3b5184153fce4651"
+   },
+   {
+    "passage_id": "X3-30",
+    "text_sha256": "3b30c53ab60052aff000851ff09f0006853b159efa92f5c9e9eb066c85466052"
+   },
+   {
+    "passage_id": "X3-31",
+    "text_sha256": "feaba12295c497a2de781a3dcc62b5c2ec81f507370cd523dacb66e7a9e8332f"
+   },
+   {
+    "passage_id": "X3-32",
+    "text_sha256": "90dad0371addbfa09d81a95eec7ff11f038554e9247eed865d37ec17f521950e"
+   }
+  ]
+ },
+ "public_files": {
+  "passages.jsonl": "56f5354cde16e7420c72737d18bff55970a84c8f7e80de4ac05ceecd7b772fd6",
+  "response-format.md": "7aaa88969c173209bd690d06d3be1680cd7409010290ee7b266329964347ab6e",
+  "extraction-instructions.md": "db17377aa8e1ca010ac30ac2874441418499eca80f41429568fd7e46db4d2f4c",
+  "README.md": "8b089033836942985ac856031d38162995e657238d8728a13e7cf6806dc95637",
+  "claude-settings.json": "a5c054657ca7ca6d7733ffaea66f74b382920e74c0a7a2e3b38cd9132726494a"
+ },
+ "bundle": {
+  "files": {
+   "passages.jsonl": "56f5354cde16e7420c72737d18bff55970a84c8f7e80de4ac05ceecd7b772fd6",
+   "response-format.md": "7aaa88969c173209bd690d06d3be1680cd7409010290ee7b266329964347ab6e",
+   "extraction-instructions.md": "db17377aa8e1ca010ac30ac2874441418499eca80f41429568fd7e46db4d2f4c",
+   "README.md": "8b089033836942985ac856031d38162995e657238d8728a13e7cf6806dc95637",
+   ".claude/settings.json": "a5c054657ca7ca6d7733ffaea66f74b382920e74c0a7a2e3b38cd9132726494a"
+  },
+  "commit": "d644cc1ccf925096b46e3f3a3cecb188e1e46864",
+  "remotes": null
+ },
+ "gold": {
+  "version": "v1",
+  "assertions": 39,
+  "gold_sha256": "dc5a9ac5fb0b369c768e7186fd01cffd5fcb45355fbce120a7a241b5d9928edd",
+  "categories_sha256": "2198046a2f9956e96e1285c3f55d0fcb22b7d91243ba8c50d4ced9cab0eb3d2b",
+  "annotation_notes_sha256": "b172a218e33d40ae0288f154402831314e927ab30254d7eb437b0b444a2eaf65",
+  "private_commit": "84c63321ac8e11ac3d04d0ff087f8b11aad321f7",
+  "private_remotes": null,
+  "provenance": "developer-authored (Claude, Stage 3A session); not independently annotated"
+ },
+ "scoring": {
+  "scorer": "phase7b-stage3-scorer/1",
+  "base_scorer": "phase7b-scorer/1",
+  "code_sha256": {
+   "src/gupi/benchmarks/phase7b/stage3.py": "81b63c8d01caef5d8b0f9d67ba0a13196802d009a72d0ad3af1116caea8c15e0",
+   "src/gupi/benchmarks/phase7b/harness.py": "54ac709f6f0ad707d492fa39531af8d7b6f1f413b8e9ec7fdb56ab11438549c6",
+   "src/gupi/benchmarks/phase7b/annotations.py": "a2ed2c0ba9aa31445965802999dacfc7efeb685bf7bf14ce6389d0c871fd87a1",
+   "src/gupi/formation/model_candidate.py": "83b08fa87f744030bea4468afb9af16107350e4ccdf6c34df95aac14d39c7e0f",
+   "src/gupi/formation/candidate.py": "cdb98407d9d134ac2c062a3c81fb7351a6328cc5612e675fd7327cbde1de6da7",
+   "src/gupi/formation/validate.py": "c8f9cf41ea242513331b7c9bf8b578d59b3606255199c75b27b772f08ea61471",
+   "src/gupi/formation/form.py": "3c2eda8a6e75e451a45237e702a71bf243bb094f12bb5050d2f70b4aa1ce87d4",
+   "src/gupi/formation/store.py": "26dbf7c84d66537b76dc60a62603c877ec51f01c1deba250fe40a566b503abd3",
+   "src/gupi/formation/rules_v21.py": "3ea79c8d9150a3149ca941ae0f53ff79d9b30c42c9791cc777aa865951057a58",
+   "src/gupi/formation/rules_v2.py": "98fd1f19ea4bedf3a2179354c315d25b6b1c024454236186dad650b13a2ae921",
+   "src/gupi/timeexpr.py": "9f67d80b08f9cea23ebeccfc086ae3c9c98c8e49b56a5c66501b09b6f1bb0a65"
+  }
+ },
+ "baseline": {
+  "extractor": "rules:v2.1",
+  "unchanged_for_this_corpus": true
+ },
+ "categories": {
+  "ambiguous identities and adversarial cases": 5,
+  "contradictions and uncertainty": 6,
+  "forwarding and independent corroboration": 5,
+  "reported claims and source attribution": 5,
+  "straightforward assertions and relationships": 5,
+  "temporal changes and corrections": 6
+ }
+}
