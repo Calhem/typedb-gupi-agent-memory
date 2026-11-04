@@ -195,3 +195,22 @@ def test_the_audit_accepts_only_bundle_reads_and_writes(tmp_path):
     empty = tmp_path / "none"
     empty.mkdir()
     assert not stage3.audit(empty, b)["valid"]                     # no transcript: nothing proves the isolation
+
+
+def test_the_manifest_records_hashes_never_gold_content(tmp_path):
+    import subprocess
+    pub, priv, _ = syn.write(fresh(tmp_path))
+    (priv / "annotation-notes.md").write_text("notes\n")
+    b = tmp_path / "bundle"
+    stage3.bundle(pub, b)
+    for d in (priv, b):
+        subprocess.run(["git", "-C", str(d), "init", "-q"], check=True)
+        subprocess.run(["git", "-C", str(d), "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "--allow-empty", "-m", "x"], check=True)
+    repo = Path(__file__).resolve().parents[2]
+    m = stage3.manifest(pub, priv, b, tmp_path / "m.json", repo, "3.14.1")
+    text = (tmp_path / "m.json").read_text()
+    assert m["gold"]["assertions"] == len(syn.GOLD) and m["passages"]["count"] == len(syn.PASSAGES)
+    assert m["bundle"]["remotes"] is None and m["gold"]["private_remotes"] is None
+    assert "Tamsin Oduya" not in text and "general counsel" not in text      # no passage text, no gold content
+    with pytest.raises(FileExistsError):
+        stage3.manifest(pub, priv, b, tmp_path / "m.json", repo, "3.14.1")

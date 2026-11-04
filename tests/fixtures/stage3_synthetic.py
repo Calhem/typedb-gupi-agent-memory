@@ -73,7 +73,8 @@ GOLD = [
          source_speaker="Wen Abara", independent_origin="no", relation_to_earlier="repeats", target_assertion_id="S-09-a1",
          expected_admission="withheld"),
 ]
-CATEGORIES = {p["passage_id"]: {"categories": ["synthetic"], "negative_control": p["passage_id"] == "S-08"} for p in PASSAGES}
+CATEGORIES = {p["passage_id"]: {"primary": "synthetic", "categories": ["synthetic"], "negative_control": p["passage_id"] == "S-08"}
+              for p in PASSAGES}
 
 
 def assertion(evidence, participants, relation="employment", times=(), claimant=None, claimant_kind=None,

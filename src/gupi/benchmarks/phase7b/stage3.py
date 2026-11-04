@@ -153,6 +153,8 @@ def load(public, private=None):
         problems += check_gold(gold, passages)
         problems += [f"categories: unknown passage {k}" for k in categories if k not in {p["passage_id"] for p in passages}]
         problems += [f"categories: no category for {p['passage_id']}" for p in passages if p["passage_id"] not in categories]
+        problems += [f"categories: {k} needs primary, categories and negative_control" for k, v in categories.items()
+                     if set(v) != {"primary", "categories", "negative_control"}]
     if problems:
         raise ValueError("the evaluation fails the structural check:\n" + "\n".join(problems))
     return passages, gold, categories
@@ -435,9 +437,62 @@ def audit(transcripts, bundle_dir):
             "valid": bool(files) and not violations}
 
 
+CODE = ("src/gupi/benchmarks/phase7b/stage3.py", "src/gupi/benchmarks/phase7b/harness.py",
+        "src/gupi/benchmarks/phase7b/annotations.py", "src/gupi/formation/model_candidate.py",
+        "src/gupi/formation/candidate.py", "src/gupi/formation/validate.py", "src/gupi/formation/form.py",
+        "src/gupi/formation/store.py", "src/gupi/formation/rules_v21.py", "src/gupi/formation/rules_v2.py",
+        "src/gupi/timeexpr.py")
+EXTRACTION_CONTRACT = "gupi.stage3-extraction/1"
+
+
+def manifest(public, private, bundle_dir, out, repo, typedb_version=None):
+    """The Stage 3A freeze record: hashes only, never gold content. Refuses to overwrite."""
+    import platform
+    import subprocess
+    from importlib.metadata import version
+
+    from gupi.formation.candidate import IR_VERSION_1_1
+    out, public, private, bundle_dir, repo = map(Path, (out, public, private, bundle_dir, repo))
+    if out.exists():
+        raise FileExistsError(f"{out} exists: a manifest is written once; a new freeze is a new version")
+    passages, gold, categories = load(public, private)
+
+    def git(folder, *args):
+        return subprocess.run(["git", "-C", str(folder), *args], capture_output=True, text=True, check=True).stdout.strip()
+    record = {
+        "manifest": "gupi.stage3a-manifest/1",
+        "created": datetime.now(timezone.utc).date().isoformat(),
+        "repository": {"commit": git(repo, "rev-parse", "HEAD"), "branch": git(repo, "branch", "--show-current"),
+                       "clean": git(repo, "status", "--porcelain") == ""},
+        "environment": {"python": platform.python_version(), "platform": platform.system() + " " + platform.machine(),
+                        "typedb": typedb_version, "typedb_driver": version("typedb-driver")},
+        "formats": {"candidate": IR_VERSION_1_1, "response": RESPONSE_FORMAT, "parser": MODEL_METHOD,
+                    "extraction_contract": EXTRACTION_CONTRACT, "passages": PASSAGE_FORMAT, "gold": GOLD_FORMAT},
+        "passages": {"count": len(passages), "file_sha256": file_hash(public / "passages.jsonl"),
+                     "items": [{"passage_id": p["passage_id"], "text_sha256": p["sha256"]} for p in passages]},
+        "public_files": {name: file_hash(public / name) for name in BUNDLE_FILES + ("claude-settings.json",)},
+        "bundle": {"files": {name: file_hash(bundle_dir / name) for name in BUNDLE_FILES}
+                   | {".claude/settings.json": file_hash(bundle_dir / ".claude" / "settings.json")},
+                   "commit": git(bundle_dir, "rev-parse", "HEAD"), "remotes": git(bundle_dir, "remote") or None},
+        "gold": {"version": "v1", "assertions": len(gold), "gold_sha256": file_hash(private / "gold.jsonl"),
+                 "categories_sha256": file_hash(private / "categories.json"),
+                 "annotation_notes_sha256": file_hash(private / "annotation-notes.md"),
+                 "private_commit": git(private, "rev-parse", "HEAD"), "private_remotes": git(private, "remote") or None,
+                 "provenance": "developer-authored (Claude, Stage 3A session); not independently annotated"},
+        "scoring": {"scorer": SCORER_VERSION, "base_scorer": harness.SCORER_VERSION,
+                    "code_sha256": {f: file_hash(repo / f) for f in CODE}},
+        "baseline": {"extractor": "rules:v2.1", "unchanged_for_this_corpus": True},
+        "categories": {k: sum(1 for v in categories.values() if v["primary"] == k)
+                       for k in sorted({v["primary"] for v in categories.values()})},
+    }
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(record, indent=1) + "\n")
+    return record
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    p.add_argument("command", choices=("check", "bundle", "score", "audit"))
+    p.add_argument("command", choices=("check", "bundle", "score", "audit", "manifest"))
     p.add_argument("--public")
     p.add_argument("--private")
     p.add_argument("--responses")
@@ -446,7 +501,12 @@ def main(argv=None):
     p.add_argument("--json")
     p.add_argument("--transcripts")
     p.add_argument("--bundle")
+    p.add_argument("--typedb")
     args = p.parse_args(argv)
+    if args.command == "manifest":
+        r = manifest(args.public, args.private, args.bundle, args.out, Path.cwd(), args.typedb)
+        print(json.dumps({k: r[k] for k in ("repository", "formats", "gold")}, indent=1))
+        return 0
     if args.command == "check":
         passages, gold, categories = load(args.public, args.private)
         print(json.dumps({"passages": len(passages), "gold_assertions": len(gold), "categorised": len(categories),
