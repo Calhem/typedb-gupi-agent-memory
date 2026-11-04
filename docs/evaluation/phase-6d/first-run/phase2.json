@@ -1,0 +1,641 @@
+{
+ "meta": {
+  "phase": "6D",
+  "part": "D2 Phase 2 held-out",
+  "run_label": "first-run",
+  "git": {
+   "commit": "a77a19480b5add1a01cf7d5b93be410fa9eea5c1",
+   "branch": "feature/phase-6d-evaluation",
+   "dirty": false
+  },
+  "started": "2026-11-04T03:12:13+00:00",
+  "peak_rss_bytes_at_start": 310198272,
+  "wall_seconds": 0.91
+ },
+ "totals": {
+  "expected": 12,
+  "extracted": 5,
+  "matched": 5,
+  "role_assignment_correct": 5,
+  "mentions_gold": 22,
+  "mentions_extracted": 10,
+  "mentions_matched": 10,
+  "start_correct": 4,
+  "end_correct": 5,
+  "both_correct": 4,
+  "time_scored": 5,
+  "accepted_claim": 5,
+  "candidate_only": 0,
+  "absent": 7
+ },
+ "policy_outcomes": {
+  "formed": 5,
+  "withheld": 0,
+  "review": 0,
+  "rejected": 0
+ },
+ "final_outcomes": {
+  "formed": 5,
+  "withheld": 0,
+  "review": 0,
+  "rejected": 0,
+  "not_stored": 0
+ },
+ "database": {
+  "observation": 12,
+  "memory-candidate": 5,
+  "formation-decision": 5,
+  "formed-into": 5,
+  "claim": 5,
+  "review": 5,
+  "correction-suggestion": 0,
+  "embedding": 0,
+  "claims_with_candidate_but_no_store_link": 0,
+  "database": "gupi-6d-d2-a69fb1eb",
+  "bytes": 21356544
+ },
+ "timings": {
+  "ingest": 0.1211,
+  "extract": 0.0019,
+  "submit": 0.2459
+ },
+ "rows": [
+  {
+   "message": "h1-1",
+   "text": "Welcome Jonas Berg, who joined Lumen Labs as CFO on 3 March 2025!",
+   "pairs": [],
+   "missed": [
+    {
+     "message": "h1-1",
+     "type": "employment",
+     "roles": {
+      "employee": "Jonas Berg",
+      "employer": "Lumen Labs"
+     },
+     "values": {
+      "job-title": "CFO"
+     },
+     "start": [
+      "2025-03-03",
+      "2025-03-04"
+     ],
+     "end": null,
+     "ongoing": false
+    }
+   ],
+   "extra": [],
+   "not_extracted": [
+    [
+     "Welcome Jonas Berg, who joined Lumen Labs as CFO on 3 March 2025",
+     "a domain verb, but no supported pattern (missing role player, pronoun or unsupported phrasing)"
+    ]
+   ]
+  },
+  {
+   "message": "h1-2",
+   "text": "Jonas Berg reports to Mia Chen.",
+   "pairs": [
+    {
+     "gold": {
+      "message": "h1-2",
+      "type": "reporting",
+      "roles": {
+       "report": "Jonas Berg",
+       "manager": "Mia Chen"
+      },
+      "values": {},
+      "start": null,
+      "end": null,
+      "ongoing": true
+     },
+     "candidate": {
+      "id": "candidate:ce22110aa37e0d9620f8f18c7fbad0b9",
+      "type": "reporting",
+      "roles": {
+       "report": "Jonas Berg",
+       "manager": "Mia Chen"
+      },
+      "values": {},
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "certain",
+      "attribution": "direct",
+      "asserted_by": null,
+      "times": [
+       [
+        "holds-at",
+        "reports",
+        "2025-04-07T09:02:00+00:00",
+        "2025-04-07T09:02:00+00:00"
+       ]
+      ],
+      "relations": [],
+      "passage": "Jonas Berg reports to Mia Chen."
+     },
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:f5bc0117ae60f1ee9b7db74bf6131d24",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "valid_time": [
+      null,
+      null,
+      "2025-04-07T09:02:00+00:00",
+      null
+     ],
+     "gold_valid_time": [
+      null,
+      null,
+      "2025-04-07T09:02:00+00:00",
+      null
+     ],
+     "unmappable": null,
+     "start_ok": true,
+     "end_ok": true
+    }
+   ],
+   "missed": [],
+   "extra": [],
+   "not_extracted": []
+  },
+  {
+   "message": "h1-3",
+   "text": "Mia Chen left Lumen Labs last month.",
+   "pairs": [
+    {
+     "gold": {
+      "message": "h1-3",
+      "type": "employment",
+      "roles": {
+       "employee": "Mia Chen",
+       "employer": "Lumen Labs"
+      },
+      "values": {},
+      "start": null,
+      "end": [
+       "2025-07-01",
+       "2025-08-01"
+      ],
+      "ongoing": false
+     },
+     "candidate": {
+      "id": "candidate:23e043560097d44a7380e576fdc60529",
+      "type": "employment",
+      "roles": {
+       "employee": "Mia Chen",
+       "employer": "Lumen Labs"
+      },
+      "values": {},
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "certain",
+      "attribution": "direct",
+      "asserted_by": null,
+      "times": [
+       [
+        "end",
+        "last month",
+        "2025-07-01T00:00:00+00:00",
+        "2025-08-01T00:00:00+00:00"
+       ]
+      ],
+      "relations": [],
+      "passage": "Mia Chen left Lumen Labs last month."
+     },
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:444a1b11a1e6823ff91f22d9c5775c37",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "valid_time": [
+      null,
+      null,
+      "2025-07-01T00:00:00+00:00",
+      "2025-08-01T00:00:00+00:00"
+     ],
+     "gold_valid_time": [
+      null,
+      null,
+      "2025-07-01T00:00:00+00:00",
+      "2025-08-01T00:00:00+00:00"
+     ],
+     "unmappable": null,
+     "start_ok": true,
+     "end_ok": true
+    }
+   ],
+   "missed": [],
+   "extra": [],
+   "not_extracted": []
+  },
+  {
+   "message": "h1-4",
+   "text": "From August 2025 Jonas Berg reports to Omar Haddad.",
+   "pairs": [
+    {
+     "gold": {
+      "message": "h1-4",
+      "type": "reporting",
+      "roles": {
+       "report": "Jonas Berg",
+       "manager": "Omar Haddad"
+      },
+      "values": {},
+      "start": [
+       "2025-08-01",
+       "2025-09-01"
+      ],
+      "end": null,
+      "ongoing": true
+     },
+     "candidate": {
+      "id": "candidate:90dda5d36e0383ee62df0ffc42187d8f",
+      "type": "reporting",
+      "roles": {
+       "report": "Jonas Berg",
+       "manager": "Omar Haddad"
+      },
+      "values": {},
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "certain",
+      "attribution": "direct",
+      "asserted_by": null,
+      "times": [
+       [
+        "start",
+        "August 2025",
+        "2025-08-01T00:00:00+00:00",
+        "2025-09-01T00:00:00+00:00"
+       ],
+       [
+        "holds-at",
+        "reports",
+        "2025-08-01T10:05:00+00:00",
+        "2025-08-01T10:05:00+00:00"
+       ]
+      ],
+      "relations": [],
+      "passage": "From August 2025 Jonas Berg reports to Omar Haddad."
+     },
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:cd3ee035d549ecd143295a23d829e1da",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "valid_time": [
+      "2025-08-01T00:00:00+00:00",
+      "2025-09-01T00:00:00+00:00",
+      "2025-08-01T10:05:00+00:00",
+      null
+     ],
+     "gold_valid_time": [
+      "2025-08-01T00:00:00+00:00",
+      "2025-09-01T00:00:00+00:00",
+      "2025-08-01T10:05:00+00:00",
+      null
+     ],
+     "unmappable": null,
+     "start_ok": true,
+     "end_ok": true
+    }
+   ],
+   "missed": [],
+   "extra": [],
+   "not_extracted": []
+  },
+  {
+   "message": "h2-1",
+   "text": "Lena Fischer is the Product Lead at Orbit.",
+   "pairs": [],
+   "missed": [
+    {
+     "message": "h2-1",
+     "type": "employment",
+     "roles": {
+      "employee": "Lena Fischer",
+      "employer": "Orbit"
+     },
+     "values": {
+      "job-title": "Product Lead"
+     },
+     "start": null,
+     "end": null,
+     "ongoing": true
+    }
+   ],
+   "extra": [],
+   "not_extracted": []
+  },
+  {
+   "message": "h2-2",
+   "text": "Lena Fischer's manager is Raj Patel.",
+   "pairs": [],
+   "missed": [
+    {
+     "message": "h2-2",
+     "type": "reporting",
+     "roles": {
+      "report": "Lena Fischer",
+      "manager": "Raj Patel"
+     },
+     "values": {},
+     "start": null,
+     "end": null,
+     "ongoing": true
+    }
+   ],
+   "extra": [],
+   "not_extracted": []
+  },
+  {
+   "message": "h2-3",
+   "text": "Update: Lena Fischer stopped reporting to Raj Patel in June.",
+   "pairs": [],
+   "missed": [
+    {
+     "message": "h2-3",
+     "type": "reporting",
+     "roles": {
+      "report": "Lena Fischer",
+      "manager": "Raj Patel"
+     },
+     "values": {},
+     "start": null,
+     "end": [
+      "2025-06-01",
+      "2025-07-01"
+     ],
+     "ongoing": false
+    }
+   ],
+   "extra": [],
+   "not_extracted": [
+    [
+     "Update: Lena Fischer stopped reporting to Raj Patel in June",
+     "a domain verb, but no supported pattern (missing role player, pronoun or unsupported phrasing)"
+    ]
+   ]
+  },
+  {
+   "message": "h2-4",
+   "text": "Lena Fischer works for Orbit as Head of Product.",
+   "pairs": [
+    {
+     "gold": {
+      "message": "h2-4",
+      "type": "employment",
+      "roles": {
+       "employee": "Lena Fischer",
+       "employer": "Orbit"
+      },
+      "values": {
+       "job-title": "Head of Product"
+      },
+      "start": null,
+      "end": null,
+      "ongoing": true
+     },
+     "candidate": {
+      "id": "candidate:680c20d834e39f8386906c91e233cd85",
+      "type": "employment",
+      "roles": {
+       "employee": "Lena Fischer",
+       "employer": "Orbit"
+      },
+      "values": {
+       "job-title": "Head of Product"
+      },
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "certain",
+      "attribution": "direct",
+      "asserted_by": null,
+      "times": [
+       [
+        "holds-at",
+        "works",
+        "2025-10-02T14:01:00+00:00",
+        "2025-10-02T14:01:00+00:00"
+       ]
+      ],
+      "relations": [],
+      "passage": "Lena Fischer works for Orbit as Head of Product."
+     },
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:9090969cb12f50699222df3fffc7ba33",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "valid_time": [
+      null,
+      null,
+      "2025-10-02T14:01:00+00:00",
+      null
+     ],
+     "gold_valid_time": [
+      null,
+      null,
+      "2025-10-02T14:01:00+00:00",
+      null
+     ],
+     "unmappable": null,
+     "start_ok": true,
+     "end_ok": true
+    }
+   ],
+   "missed": [],
+   "extra": [],
+   "not_extracted": []
+  },
+  {
+   "message": "h3-1",
+   "text": "Kim has worked at Vector since 2022.",
+   "pairs": [
+    {
+     "gold": {
+      "message": "h3-1",
+      "type": "employment",
+      "roles": {
+       "employee": "Kim",
+       "employer": "Vector"
+      },
+      "values": {},
+      "start": [
+       "2022-01-01",
+       "2023-01-01"
+      ],
+      "end": null,
+      "ongoing": true
+     },
+     "candidate": {
+      "id": "candidate:fa52b0a044280a8d6359b070d01dc1f8",
+      "type": "employment",
+      "roles": {
+       "employee": "Kim",
+       "employer": "Vector"
+      },
+      "values": {},
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "certain",
+      "attribution": "direct",
+      "asserted_by": null,
+      "times": [
+       [
+        "holds-since",
+        "2022",
+        "2022-01-01T00:00:00+00:00",
+        "2023-01-01T00:00:00+00:00"
+       ],
+       [
+        "holds-at",
+        "has worked",
+        "2025-11-03T12:00:00+00:00",
+        "2025-11-03T12:00:00+00:00"
+       ]
+      ],
+      "relations": [],
+      "passage": "Kim has worked at Vector since 2022."
+     },
+     "state": {
+      "stored": true,
+      "status": "formed",
+      "claim": "claim:908e455bc670f2007494c4c978ec57e6",
+      "decisions": [
+       [
+        "formed",
+        "formation:v1",
+        "an asserted actual condition or event"
+       ]
+      ],
+      "suggestions": []
+     },
+     "valid_time": [
+      null,
+      "2023-01-01T00:00:00+00:00",
+      "2025-11-03T12:00:00+00:00",
+      null
+     ],
+     "gold_valid_time": [
+      "2022-01-01T00:00:00+00:00",
+      "2023-01-01T00:00:00+00:00",
+      "2025-11-03T12:00:00+00:00",
+      null
+     ],
+     "unmappable": null,
+     "start_ok": false,
+     "end_ok": true
+    }
+   ],
+   "missed": [],
+   "extra": [],
+   "not_extracted": []
+  },
+  {
+   "message": "h3-2",
+   "text": "Kim lives in Lisbon.",
+   "pairs": [],
+   "missed": [
+    {
+     "message": "h3-2",
+     "type": "statement",
+     "roles": {
+      "subject": "Kim"
+     },
+     "values": {
+      "predicate-text": "lives in",
+      "object-text": "Lisbon"
+     },
+     "start": null,
+     "end": null,
+     "ongoing": true
+    }
+   ],
+   "extra": [],
+   "not_extracted": []
+  },
+  {
+   "message": "h3-3",
+   "text": "Noah manages Kim.",
+   "pairs": [],
+   "missed": [
+    {
+     "message": "h3-3",
+     "type": "reporting",
+     "roles": {
+      "report": "Kim",
+      "manager": "Noah"
+     },
+     "values": {},
+     "start": null,
+     "end": null,
+     "ongoing": true
+    }
+   ],
+   "extra": [],
+   "not_extracted": [
+    [
+     "Noah manages Kim",
+     "a domain verb, but no supported pattern (missing role player, pronoun or unsupported phrasing)"
+    ]
+   ]
+  },
+  {
+   "message": "h3-4",
+   "text": "She also mentors two interns.",
+   "pairs": [],
+   "missed": [
+    {
+     "message": "h3-4",
+     "type": "statement",
+     "roles": {
+      "subject": "Kim"
+     },
+     "values": {
+      "predicate-text": "mentors",
+      "object-text": "two interns"
+     },
+     "start": null,
+     "end": null,
+     "ongoing": true
+    }
+   ],
+   "extra": [],
+   "not_extracted": []
+  }
+ ],
+ "note": "Phase 2 gold encodes 'since X' as a start window; rules:v2 maps 'since' to a latest start only."
+}
