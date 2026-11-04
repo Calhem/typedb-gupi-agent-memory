@@ -59,6 +59,18 @@ class FormationResult:
         return {o: len(self.by(o)) for o in OUTCOMES}
 
 
+def live_schema(memory):
+    """The live schema of a Memory's database, read once per Memory object (schema changes need a migration,
+    which reopens memory)."""
+    cached = getattr(memory, "_formation_schema", None)
+    if cached is None:
+        from gupi.extraction.contract import SchemaInfo
+        with transaction(memory.driver, memory.database, TransactionType.READ) as tx:
+            cached = SchemaInfo.load(tx, memory.packs)
+        memory._formation_schema = cached
+    return cached
+
+
 def decide(candidate, issues, approvals, rejections=None, copy_of=None):
     """The formation policy for one candidate. Pure: writes nothing.
 
@@ -121,6 +133,7 @@ def form(memory, observation, cset, approvals=None, schema=None, scope=None, rej
                          "(submit/review), not form(); the two paths are not mixed")
     scope = scope or observation.context_id or observation.id
     issues = {}
+    schema = schema or live_schema(memory)  # the same admissibility as schema-aware validation (C1)
     for i in validate(cset, observation, schema):
         issues.setdefault(i.where, []).append(i)
     set_issues = issues.get("set", [])
