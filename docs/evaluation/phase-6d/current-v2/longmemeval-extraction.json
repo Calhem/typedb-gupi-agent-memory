@@ -1,0 +1,30 @@
+{
+ "meta": {
+  "phase": "6D",
+  "part": "D6 LongMemEval held-out, extraction only",
+  "run_label": "current-v2",
+  "git": {
+   "commit": "168c59b026dbd96dd60a7eb8bf0bb29ec097f215",
+   "branch": "feature/phase-7b-offline-harness",
+   "dirty": false
+  },
+  "started": "2026-11-04T17:37:05+00:00",
+  "peak_rss_bytes_at_start": 2329919488,
+  "wall_seconds": 38.54,
+  "manifest": {
+   "path": "docs/evaluation/phase-6d/manifest-v2.json",
+   "sha256": "986ab45d82f2f18b6e3faeef58f9cdd42e36ee38b0caf916dfa25e864b929056"
+  }
+ },
+ "questions": 447,
+ "turns": 220178,
+ "turns_with_domain_verb": 40268,
+ "turns_with_candidates": 0,
+ "candidates": 0,
+ "candidate_kinds": {},
+ "answer_turns": 816,
+ "answer_turns_with_candidates": 0,
+ "extract_seconds": 32.41,
+ "turns_per_second": 6793.0,
+ "peak_python_rss_bytes": 2329919488
+}

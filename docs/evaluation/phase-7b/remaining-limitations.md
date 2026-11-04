@@ -5,7 +5,7 @@
 |---|---|---|---|
 | **C2** | organisational and unknown-kind claimants are stored as people | `gupi.candidate/1.1` adds an optional `Attribution.asserted_by_kind`; persistence uses it; absent means person for version 1 and unclassified for version 1.1 (contract-corrections.md) | `model:candidate-v1` refuses non-person claimants (`claimant-kind-not-representable`): lost recall, no false person; rules:v2.x unchanged |
 | **D3 extension** | a correction with no resolvable target and no leading cue cannot be routed to review | `gupi.candidate/1.1` allows `target = null` for corrects, retracts and updates; formation always reviews it | `model:candidate-v1` produces no candidate (`correction-target-unresolved`) |
-| **Inferred basis** | formation:v1 forms an `inferred` candidate without review | policy: `basis = inferred` routes to review (a formation policy change) | `model:candidate-v1` refuses inferred assertions (`inferred-not-admissible`) |
+| **Inferred basis** | formation:v1 forms an `inferred` candidate without review | either route `basis = inferred` to review (a formation policy change), or keep deferring inferred statements until their evidence can be represented safely. **Inferred statements are never admitted automatically** | `model:candidate-v1` refuses inferred assertions (`inferred-not-admissible`) |
 
 ## Findings recorded, not fixed
 | Id | Finding | Evidence | Proposed regression test |
@@ -26,6 +26,12 @@
 - **Correction targets** match only on identical participant surfaces and type. A correction that names a
   person differently ("Omar" against "Omar Siddiq") is unresolved, which is safe but loses recall.
 - **No coreference, by design:** pronoun-carried facts are refused, never resolved.
+
+## Limits of the Phase 6D comparison tool
+- **What it misses:** `gupi.benchmarks.e2e.compare` does not ignore the scale probe's per-observation timing
+  fields (`*_s_per_obs`). Reruns therefore show them as differences, although they are timings.
+- **Why it is not fixed now:** manifest version 2 records the tool's hash, so fixing it means a version 3.
+- **Where this is stated:** docs/evaluation/phase-6d/REPRODUCTION.md.
 
 ## Limits of the harness
 - **Surface matching:**
