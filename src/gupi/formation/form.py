@@ -103,6 +103,8 @@ def decide(candidate, issues, approvals, rejections=None, copy_of=None):
         needs.append(f"hedged by the source ({candidate.commitment})")
     if candidate.attribution.mode == "rumour":
         needs.append("unattributed hearsay")
+    if candidate.basis == "inferred":
+        needs.append("inferred by the extractor, not stated by the source")  # never formed automatically
     if any(r.kind in ("corrects", "retracts", "updates") and r.target is None for r in candidate.relations):
         needs.append("a stated correction whose target is not established")   # D3 (format 1.1)
     elif any(r.kind in ("corrects", "retracts") for r in candidate.relations):

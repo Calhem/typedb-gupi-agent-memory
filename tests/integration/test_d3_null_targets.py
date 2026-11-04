@@ -173,3 +173,18 @@ def test_resubmission_is_idempotent(memory, clock):
     store.submit(memory, obs, cset)
     again = store.get(memory, fix.candidate.id)
     assert (len(again.decisions), len(again.suggestions)) == (1, 1)
+
+
+def test_an_inferred_candidate_is_never_formed_automatically(memory, clock):
+    """Policy kept (Stage 2B): an inferred statement is representable (basis "inferred"), so it goes to review,
+    never into automatic formation."""
+    import dataclasses
+    t = Talk(memory, clock)
+    obs = t.observe("Nora Vance joined Halden in March 2025.")
+    cset, _ = extractors.get("rules:v2.1").extract(obs)
+    c = dataclasses.replace(cset.candidates[0], basis="inferred")
+    inferred = CandidateSet(obs.id, cset.content_hash, cset.extractor, (c,), cset.ir_version)
+    clock.now += timedelta(minutes=1)
+    store.submit(memory, obs, inferred)
+    s = store.get(memory, c.id)
+    assert s.status == "review" and "inferred" in s.decisions[0].reason and not memory.all_claims()
