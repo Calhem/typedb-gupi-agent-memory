@@ -1,0 +1,637 @@
+{
+ "meta": {
+  "phase": "7A",
+  "part": "Phase 7A pipeline audit",
+  "run_label": "audit",
+  "git": {
+   "commit": "b7d108f863f394d045dc19379b2443682fc4440b",
+   "branch": "feature/phase-7a-extraction-diagnosis",
+   "dirty": false
+  },
+  "started": "2026-11-04T10:55:08+00:00",
+  "peak_rss_bytes_at_start": 38060032
+ },
+ "adapters": {
+  "locomo/dev": {
+   "raw_turns": 788,
+   "observations": 788,
+   "empty_text": 0,
+   "text_equals_raw_plus_caption": 788,
+   "text_shorter_than_raw": 0,
+   "turns_with_caption": 188,
+   "unique_keys": 788,
+   "unique_observation_ids": 788,
+   "ids_stable_across_two_builds": true,
+   "author_matches_speaker": 788,
+   "speakers_per_conversation": [
+    2
+   ],
+   "order_within_session_increasing": true,
+   "sessions_in_date_order": {
+    "sessions_dated_before_their_predecessor": 0
+   },
+   "evidence_ids_unmatched": 1
+  },
+  "locomo/heldout": {
+   "raw_turns": 5094,
+   "observations": 5094,
+   "empty_text": 0,
+   "text_equals_raw_plus_caption": 5094,
+   "text_shorter_than_raw": 0,
+   "turns_with_caption": 1038,
+   "unique_keys": 5094,
+   "unique_observation_ids": 5094,
+   "ids_stable_across_two_builds": true,
+   "author_matches_speaker": 5094,
+   "speakers_per_conversation": [
+    2
+   ],
+   "order_within_session_increasing": true,
+   "sessions_in_date_order": {
+    "sessions_dated_before_their_predecessor": 0
+   },
+   "evidence_ids_unmatched": 8
+  },
+  "longmemeval/dev": {
+   "questions": 53,
+   "turn_references_in_raw": 26572,
+   "distinct_session_versions": 2605,
+   "observations": 26572,
+   "empty_text": 0,
+   "text_equals_raw": 26572,
+   "unique_observation_ids": 26572,
+   "author_matches_role": 26572,
+   "roles": {
+    "user": 13183,
+    "assistant": 13389
+   },
+   "order_within_session_increasing": true
+  },
+  "longmemeval/heldout": {
+   "questions": 447,
+   "turn_references_in_raw": 220178,
+   "distinct_session_versions": 21262,
+   "observations": 220178,
+   "empty_text": 12,
+   "text_equals_raw": 220178,
+   "unique_observation_ids": 220178,
+   "author_matches_role": 220178,
+   "roles": {
+    "user": 109233,
+    "assistant": 110945
+   },
+   "order_within_session_increasing": true
+  }
+ },
+ "typedb_round_trip": [
+  {
+   "set": "locomo/dev (all 788 turns)",
+   "sent": 788,
+   "read_back": 788,
+   "content_identical": 788,
+   "observed_at_identical": 788,
+   "author_preserved": 788,
+   "context_preserved": 788,
+   "longest_content_chars": 434
+  },
+  {
+   "set": "longmemeval/dev (200 longest turns)",
+   "sent": 200,
+   "read_back": 200,
+   "content_identical": 200,
+   "observed_at_identical": 200,
+   "author_preserved": 200,
+   "context_preserved": 200,
+   "longest_content_chars": 19257
+  }
+ ],
+ "extractor": {
+  "locomo/dev": {
+   "extractor_calls": 788,
+   "observations": 788,
+   "exceptions": 0,
+   "exception_examples": [],
+   "sentences": 2644,
+   "sentences_with_domain_verb": 74,
+   "turns_with_domain_verb": 72,
+   "turns_with_newlines": 0,
+   "candidates": 0,
+   "turns_with_candidates": 0,
+   "notes": 0,
+   "clauses_domain_verb_no_pattern": 74,
+   "why_no_pattern (diagnostic heuristic)": {
+    "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')": 57,
+    "the subject is a pronoun or possessive": 17
+   },
+   "domain_verbs_in_rejected_clauses": {
+    "work": 46,
+    "working": 20,
+    "worked": 3,
+    "joined": 2,
+    "works": 2,
+    "manage": 1
+   },
+   "validation_and_kept": {}
+  },
+  "locomo/heldout": {
+   "extractor_calls": 5094,
+   "observations": 5094,
+   "exceptions": 0,
+   "exception_examples": [],
+   "sentences": 15694,
+   "sentences_with_domain_verb": 462,
+   "turns_with_domain_verb": 431,
+   "turns_with_newlines": 37,
+   "candidates": 0,
+   "turns_with_candidates": 0,
+   "notes": 0,
+   "clauses_domain_verb_no_pattern": 462,
+   "why_no_pattern (diagnostic heuristic)": {
+    "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')": 350,
+    "the subject is a pronoun or possessive": 103,
+    "other phrasing": 9
+   },
+   "domain_verbs_in_rejected_clauses": {
+    "work": 270,
+    "working": 108,
+    "worked": 28,
+    "joined": 19,
+    "manage": 17,
+    "works": 14,
+    "left": 8,
+    "promoted": 1,
+    "report": 1,
+    "reports": 1
+   },
+   "validation_and_kept": {}
+  },
+  "longmemeval/dev": {
+   "extractor_calls": 26572,
+   "observations": 26572,
+   "exceptions": 0,
+   "exception_examples": [],
+   "sentences": 362622,
+   "sentences_with_domain_verb": 7813,
+   "turns_with_domain_verb": 4761,
+   "turns_with_newlines": 12347,
+   "candidates": 0,
+   "turns_with_candidates": 0,
+   "notes": 0,
+   "clauses_domain_verb_no_pattern": 7815,
+   "why_no_pattern (diagnostic heuristic)": {
+    "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')": 6241,
+    "the subject is a pronoun or possessive": 1011,
+    "other phrasing": 562,
+    "a supported phrase inside a longer clause (the patterns must match the whole clause)": 1
+   },
+   "domain_verbs_in_rejected_clauses": {
+    "work": 3997,
+    "works": 1247,
+    "working": 1054,
+    "manage": 543,
+    "report": 350,
+    "left": 304,
+    "worked": 188,
+    "reports": 172,
+    "reporting": 147,
+    "reported": 59,
+    "joined": 34,
+    "promoted": 21,
+    "manages": 17,
+    "hired": 7
+   },
+   "validation_and_kept": {}
+  },
+  "longmemeval/heldout": {
+   "extractor_calls": 220178,
+   "observations": 220178,
+   "exceptions": 0,
+   "exception_examples": [],
+   "sentences": 3053998,
+   "sentences_with_domain_verb": 66950,
+   "turns_with_domain_verb": 40268,
+   "turns_with_newlines": 103342,
+   "candidates": 0,
+   "turns_with_candidates": 0,
+   "notes": 0,
+   "clauses_domain_verb_no_pattern": 66973,
+   "why_no_pattern (diagnostic heuristic)": {
+    "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')": 53836,
+    "the subject is a pronoun or possessive": 8586,
+    "other phrasing": 4533,
+    "a supported phrase inside a longer clause (the patterns must match the whole clause)": 18
+   },
+   "domain_verbs_in_rejected_clauses": {
+    "work": 33662,
+    "works": 10088,
+    "working": 9611,
+    "manage": 4545,
+    "report": 3410,
+    "left": 2281,
+    "worked": 1897,
+    "reports": 1704,
+    "reporting": 1361,
+    "reported": 536,
+    "promoted": 243,
+    "joined": 242,
+    "hired": 122,
+    "manages": 111,
+    "rejoined": 10
+   },
+   "validation_and_kept": {}
+  },
+  "phase2/heldout (reference)": {
+   "extractor_calls": 12,
+   "observations": 12,
+   "exceptions": 0,
+   "exception_examples": [],
+   "sentences": 12,
+   "sentences_with_domain_verb": 8,
+   "turns_with_domain_verb": 8,
+   "turns_with_newlines": 0,
+   "candidates": 5,
+   "turns_with_candidates": 5,
+   "clauses_domain_verb_no_pattern": 3,
+   "notes": 0,
+   "why_no_pattern (diagnostic heuristic)": {
+    "other phrasing": 2,
+    "a supported phrase inside a longer clause (the patterns must match the whole clause)": 1
+   },
+   "domain_verbs_in_rejected_clauses": {
+    "joined": 1,
+    "reporting": 1,
+    "manages": 1
+   },
+   "validation_and_kept": {
+    "kept reporting": 2,
+    "kept employment": 3
+   }
+  }
+ },
+ "traces": [
+  {
+   "set": "phase2/heldout (synthetic, shown in full)",
+   "key": "h1-1",
+   "chars": 65,
+   "text_sha256_16": "3c77cdccb8b5c261",
+   "text": "Welcome Jonas Berg, who joined Lumen Labs as CFO on 3 March 2025!",
+   "author_present": false,
+   "context_present": true,
+   "sentences": 1,
+   "domain_verbs": [
+    "joined"
+   ],
+   "extractor": {
+    "candidates": 0,
+    "rejected": [
+     [
+      "Welcome Jonas Berg, who joined Lumen Labs as CFO on 3 March 2025",
+      "a domain verb, but no supported pattern (missing role player, pronoun or unsupported phrasing)"
+     ]
+    ]
+   },
+   "validation_invalid_in_store": 0,
+   "store_states": [],
+   "typedb": {
+    "observation": 1,
+    "memory-candidate": 0,
+    "formation-decision": 0,
+    "claim": 0
+   }
+  },
+  {
+   "set": "phase2/heldout (synthetic, shown in full)",
+   "key": "h1-2",
+   "chars": 31,
+   "text_sha256_16": "3a739fca9bb3688f",
+   "text": "Jonas Berg reports to Mia Chen.",
+   "author_present": false,
+   "context_present": true,
+   "sentences": 1,
+   "domain_verbs": [
+    "reports"
+   ],
+   "extractor": {
+    "candidates": 1,
+    "rejected": []
+   },
+   "validation_invalid_in_store": 0,
+   "store_states": [
+    [
+     "candidate:ce22110aa37e0d9620f8f18c7fbad0b9",
+     "formed"
+    ]
+   ],
+   "typedb": {
+    "observation": 1,
+    "memory-candidate": 1,
+    "formation-decision": 1,
+    "claim": 1
+   }
+  },
+  {
+   "set": "phase2/heldout (synthetic, shown in full)",
+   "key": "h1-3",
+   "chars": 36,
+   "text_sha256_16": "cfe3c39568c04887",
+   "text": "Mia Chen left Lumen Labs last month.",
+   "author_present": false,
+   "context_present": true,
+   "sentences": 1,
+   "domain_verbs": [
+    "left"
+   ],
+   "extractor": {
+    "candidates": 1,
+    "rejected": []
+   },
+   "validation_invalid_in_store": 0,
+   "store_states": [
+    [
+     "candidate:23e043560097d44a7380e576fdc60529",
+     "formed"
+    ]
+   ],
+   "typedb": {
+    "observation": 1,
+    "memory-candidate": 1,
+    "formation-decision": 1,
+    "claim": 1
+   }
+  },
+  {
+   "set": "phase2/heldout (synthetic, shown in full)",
+   "key": "h1-4",
+   "chars": 51,
+   "text_sha256_16": "b2c852c9be8976e9",
+   "text": "From August 2025 Jonas Berg reports to Omar Haddad.",
+   "author_present": false,
+   "context_present": true,
+   "sentences": 1,
+   "domain_verbs": [
+    "reports"
+   ],
+   "extractor": {
+    "candidates": 1,
+    "rejected": []
+   },
+   "validation_invalid_in_store": 0,
+   "store_states": [
+    [
+     "candidate:90dda5d36e0383ee62df0ffc42187d8f",
+     "formed"
+    ]
+   ],
+   "typedb": {
+    "observation": 1,
+    "memory-candidate": 1,
+    "formation-decision": 1,
+    "claim": 1
+   }
+  },
+  {
+   "set": "locomo/dev (text withheld)",
+   "key": "conv-30:D14:2",
+   "chars": 165,
+   "text_sha256_16": "a468aa5829308f15",
+   "author_present": true,
+   "context_present": true,
+   "sentences": 6,
+   "domain_verbs": [
+    "working"
+   ],
+   "extractor": {
+    "candidates": 0,
+    "rejected": [
+     "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+    ]
+   },
+   "validation_invalid_in_store": 0,
+   "store_states": [],
+   "typedb": {
+    "observation": 1,
+    "memory-candidate": 0,
+    "formation-decision": 0,
+    "claim": 0
+   }
+  },
+  {
+   "set": "locomo/dev (text withheld)",
+   "key": "conv-30:D9:4",
+   "chars": 186,
+   "text_sha256_16": "94e69843deb027e9",
+   "author_present": true,
+   "context_present": true,
+   "sentences": 4,
+   "domain_verbs": [
+    "worked"
+   ],
+   "extractor": {
+    "candidates": 0,
+    "rejected": [
+     "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+    ]
+   },
+   "validation_invalid_in_store": 0,
+   "store_states": [],
+   "typedb": {
+    "observation": 1,
+    "memory-candidate": 0,
+    "formation-decision": 0,
+    "claim": 0
+   }
+  },
+  {
+   "set": "locomo/dev (text withheld)",
+   "key": "conv-26:D9:6",
+   "chars": 208,
+   "text_sha256_16": "3a571f4efbb00361",
+   "author_present": true,
+   "context_present": true,
+   "sentences": 3,
+   "domain_verbs": [
+    "working"
+   ],
+   "extractor": {
+    "candidates": 0,
+    "rejected": [
+     "the subject is a pronoun or possessive"
+    ]
+   },
+   "validation_invalid_in_store": 0,
+   "store_states": [],
+   "typedb": {
+    "observation": 1,
+    "memory-candidate": 0,
+    "formation-decision": 0,
+    "claim": 0
+   }
+  },
+  {
+   "set": "locomo/dev (text withheld)",
+   "key": "conv-26:D19:1",
+   "chars": 152,
+   "text_sha256_16": "62f006dfe6df4e92",
+   "author_present": true,
+   "context_present": true,
+   "sentences": 4,
+   "domain_verbs": [],
+   "extractor": {
+    "candidates": 0,
+    "rejected": []
+   },
+   "validation_invalid_in_store": 0,
+   "store_states": [],
+   "typedb": {
+    "observation": 1,
+    "memory-candidate": 0,
+    "formation-decision": 0,
+    "claim": 0
+   }
+  },
+  {
+   "set": "locomo/dev (text withheld)",
+   "key": "conv-30:D18:6",
+   "chars": 245,
+   "text_sha256_16": "2dbcc694e7f833a8",
+   "author_present": true,
+   "context_present": true,
+   "sentences": 5,
+   "domain_verbs": [],
+   "extractor": {
+    "candidates": 0,
+    "rejected": []
+   },
+   "validation_invalid_in_store": 0,
+   "store_states": [],
+   "typedb": {
+    "observation": 1,
+    "memory-candidate": 0,
+    "formation-decision": 0,
+    "claim": 0
+   }
+  },
+  {
+   "set": "longmemeval/dev (text withheld)",
+   "key": "lme:dd5991c1:2ee36dcf367a:5",
+   "chars": 2705,
+   "text_sha256_16": "4cad63433f6a5ce6",
+   "author_present": true,
+   "context_present": true,
+   "sentences": 41,
+   "domain_verbs": [
+    "works"
+   ],
+   "extractor": {
+    "candidates": 0,
+    "rejected": [
+     "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+    ]
+   },
+   "validation_invalid_in_store": 0,
+   "store_states": [],
+   "typedb": {
+    "observation": 1,
+    "memory-candidate": 0,
+    "formation-decision": 0,
+    "claim": 0
+   }
+  },
+  {
+   "set": "longmemeval/dev (text withheld)",
+   "key": "lme:3ab79434_2:081c65d8c010:3",
+   "chars": 3160,
+   "text_sha256_16": "3d32583513cfc596",
+   "author_present": true,
+   "context_present": true,
+   "sentences": 52,
+   "domain_verbs": [
+    "working"
+   ],
+   "extractor": {
+    "candidates": 0,
+    "rejected": [
+     "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+    ]
+   },
+   "validation_invalid_in_store": 0,
+   "store_states": [],
+   "typedb": {
+    "observation": 1,
+    "memory-candidate": 0,
+    "formation-decision": 0,
+    "claim": 0
+   }
+  },
+  {
+   "set": "longmemeval/dev (text withheld)",
+   "key": "lme:ultrachat_268576:31866cc2481a:3",
+   "chars": 790,
+   "text_sha256_16": "9cd9c7c3ad98f3f5",
+   "author_present": true,
+   "context_present": true,
+   "sentences": 5,
+   "domain_verbs": [
+    "work"
+   ],
+   "extractor": {
+    "candidates": 0,
+    "rejected": [
+     "the subject is a pronoun or possessive"
+    ]
+   },
+   "validation_invalid_in_store": 0,
+   "store_states": [],
+   "typedb": {
+    "observation": 1,
+    "memory-candidate": 0,
+    "formation-decision": 0,
+    "claim": 0
+   }
+  },
+  {
+   "set": "longmemeval/dev (text withheld)",
+   "key": "lme:ultrachat_105990:ffcb3c5939b2:3",
+   "chars": 646,
+   "text_sha256_16": "a372bec485097dd0",
+   "author_present": true,
+   "context_present": true,
+   "sentences": 4,
+   "domain_verbs": [],
+   "extractor": {
+    "candidates": 0,
+    "rejected": []
+   },
+   "validation_invalid_in_store": 0,
+   "store_states": [],
+   "typedb": {
+    "observation": 1,
+    "memory-candidate": 0,
+    "formation-decision": 0,
+    "claim": 0
+   }
+  },
+  {
+   "set": "longmemeval/dev (text withheld)",
+   "key": "lme:ultrachat_139429:1038a84ee8ac:4",
+   "chars": 109,
+   "text_sha256_16": "ddc96d067e2f2adf",
+   "author_present": true,
+   "context_present": true,
+   "sentences": 3,
+   "domain_verbs": [],
+   "extractor": {
+    "candidates": 0,
+    "rejected": []
+   },
+   "validation_invalid_in_store": 0,
+   "store_states": [],
+   "typedb": {
+    "observation": 1,
+    "memory-candidate": 0,
+    "formation-decision": 0,
+    "claim": 0
+   }
+  }
+ ]
+}

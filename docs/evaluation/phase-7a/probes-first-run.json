@@ -1,0 +1,1566 @@
+{
+ "meta": {
+  "phase": "7A",
+  "part": "Phase 7A probes",
+  "run_label": "probes",
+  "git": {
+   "commit": "c63b2cd0351dd02547ed385ca19024508e121e88",
+   "branch": "feature/phase-7a-extraction-diagnosis",
+   "dirty": false
+  },
+  "started": "2026-11-04T11:34:38+00:00",
+  "peak_rss_bytes_at_start": 39256064
+ },
+ "probes": 53,
+ "verdicts": {
+  "correct: nothing extracted": 3,
+  "match": 15,
+  "missed": 31,
+  "wrong participants or type": 2,
+  "wrong: extracted where nothing should be": 2
+ },
+ "by_proposition": {
+  "P1": {
+   "match": 7,
+   "missed": 12,
+   "wrong: extracted where nothing should be": 1,
+   "wrong participants or type": 2
+  },
+  "P2": {
+   "match": 1,
+   "missed": 5,
+   "correct: nothing extracted": 1
+  },
+  "P3": {
+   "match": 2,
+   "missed": 4,
+   "wrong: extracted where nothing should be": 1,
+   "correct: nothing extracted": 1
+  },
+  "P4": {
+   "match": 1,
+   "missed": 5
+  },
+  "P5": {
+   "match": 1,
+   "missed": 1,
+   "correct: nothing extracted": 1
+  },
+  "P6": {
+   "match": 2,
+   "missed": 1
+  },
+  "P7": {
+   "match": 1,
+   "missed": 3
+  }
+ },
+ "rows": [
+  {
+   "id": "p1-01",
+   "proposition": "P1",
+   "variation": "supported phrasing",
+   "text": "Nora Vance joined Halden in March 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "match",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "Nora Vance",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "start",
+       "March 2025",
+       "2025-03-01",
+       "2025-04-01"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p1-02",
+   "proposition": "P1",
+   "variation": "synonym: began working for",
+   "text": "Nora Vance began working for Halden in March 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "other phrasing"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p1-03",
+   "proposition": "P1",
+   "variation": "synonym: started at (supported)",
+   "text": "Nora Vance started at Halden in March 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "match",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "Nora Vance",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "start",
+       "March 2025",
+       "2025-03-01",
+       "2025-04-01"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p1-04",
+   "proposition": "P1",
+   "variation": "passive: was hired by (supported)",
+   "text": "Nora Vance was hired by Halden in March 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "match",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "Nora Vance",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "start",
+       "March 2025",
+       "2025-03-01",
+       "2025-04-01"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p1-05",
+   "proposition": "P1",
+   "variation": "synonym: took a job at",
+   "text": "Nora Vance took a job at Halden in March 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p1-06",
+   "proposition": "P1",
+   "variation": "synonym: came on board at",
+   "text": "Nora Vance came on board at Halden in March 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p1-07",
+   "proposition": "P1",
+   "variation": "appointment with title",
+   "text": "Nora Vance was appointed CTO of Halden in March 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p1-08",
+   "proposition": "P1",
+   "variation": "leading time, then subject",
+   "text": "In March 2025, Nora Vance joined Halden.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "a supported phrase inside a longer clause (the patterns must match the whole clause)"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p1-09",
+   "proposition": "P1",
+   "variation": "conversational lead-in",
+   "text": "So, Nora Vance joined Halden in March 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "a supported phrase inside a longer clause (the patterns must match the whole clause)"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p1-10",
+   "proposition": "P1",
+   "variation": "trailing clause",
+   "text": "Nora Vance joined Halden in March 2025, which surprised everyone.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "a supported phrase inside a longer clause (the patterns must match the whole clause)"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p1-11",
+   "proposition": "P1",
+   "variation": "exclamation and emoji",
+   "text": "Nora Vance joined Halden in March 2025!! \ud83c\udf89",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "match",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "Nora Vance",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "start",
+       "March 2025",
+       "2025-03-01",
+       "2025-04-01"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p1-12",
+   "proposition": "P1",
+   "variation": "day-month-year date",
+   "text": "Nora Vance joined Halden on 3 March 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "match",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "Nora Vance",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "start",
+       "3 March 2025",
+       "2025-03-03",
+       "2025-03-04"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p1-13",
+   "proposition": "P1",
+   "variation": "early-month qualifier",
+   "text": "Nora Vance joined Halden in early March 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "match",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "Nora Vance",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "start",
+       "March 2025",
+       "2025-03-01",
+       "2025-04-01"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p1-14",
+   "proposition": "P1",
+   "variation": "numeric date",
+   "text": "Nora Vance joined Halden on 2025-03-03.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "a supported phrase inside a longer clause (the patterns must match the whole clause)"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p1-15",
+   "proposition": "P1",
+   "variation": "relative date",
+   "text": "Nora Vance joined Halden five months ago.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "a supported phrase inside a longer clause (the patterns must match the whole clause)"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p1-16",
+   "proposition": "P1",
+   "variation": "lowercase organisation",
+   "text": "Nora Vance joined halden in March 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "halden"
+    },
+    "start"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "other phrasing"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p1-17",
+   "proposition": "P1",
+   "variation": "three-word organisation name",
+   "text": "Nora Vance joined Halden Data Systems in March 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden Data Systems"
+    },
+    "start"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "a supported phrase inside a longer clause (the patterns must match the whole clause)"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p1-18",
+   "proposition": "P1",
+   "variation": "organisation with '&'",
+   "text": "Nora Vance joined Halden & Co in March 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden & Co"
+    },
+    "start"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "a supported phrase inside a longer clause (the patterns must match the whole clause)"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p1-19",
+   "proposition": "P1",
+   "variation": "first name only",
+   "text": "Nora joined Halden in March 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "match",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "Nora",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "start",
+       "March 2025",
+       "2025-03-01",
+       "2025-04-01"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p1-20",
+   "proposition": "P1",
+   "variation": "pronoun subject, no context",
+   "text": "She joined Halden in March 2025.",
+   "context": [],
+   "expect": null,
+   "verdict": "wrong: extracted where nothing should be",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "She",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "start",
+       "March 2025",
+       "2025-03-01",
+       "2025-04-01"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p1-21",
+   "proposition": "P1",
+   "variation": "pronoun subject, antecedent in the previous message",
+   "text": "She joined Halden in March 2025.",
+   "context": [
+    "Have you met Nora Vance?"
+   ],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "wrong participants or type",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "She",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "start",
+       "March 2025",
+       "2025-03-01",
+       "2025-04-01"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p1-22",
+   "proposition": "P1",
+   "variation": "two sentences, pronoun in the second",
+   "text": "Nora Vance is great. She joined Halden in March 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "wrong participants or type",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "She",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "start",
+       "March 2025",
+       "2025-03-01",
+       "2025-04-01"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p2-01",
+   "proposition": "P2",
+   "variation": "supported phrasing",
+   "text": "Nora Vance left Halden in May 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "end"
+   ],
+   "verdict": "match",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "Nora Vance",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "end",
+       "May 2025",
+       "2025-05-01",
+       "2025-06-01"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p2-02",
+   "proposition": "P2",
+   "variation": "synonym: quit",
+   "text": "Nora Vance quit Halden in May 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "end"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p2-03",
+   "proposition": "P2",
+   "variation": "synonym: resigned from",
+   "text": "Nora Vance resigned from Halden in May 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "end"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p2-04",
+   "proposition": "P2",
+   "variation": "stopped working for",
+   "text": "Nora Vance stopped working for Halden in May 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "end"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "other phrasing"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p2-05",
+   "proposition": "P2",
+   "variation": "passive: was let go by",
+   "text": "Nora Vance was let go by Halden in May 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "end"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p2-06",
+   "proposition": "P2",
+   "variation": "possessive: last day",
+   "text": "Nora Vance's last day at Halden was in May 2025.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "end"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p2-07",
+   "proposition": "P2",
+   "variation": "first person, employer unnamed",
+   "text": "I lost my job in May.",
+   "context": [],
+   "expect": null,
+   "verdict": "correct: nothing extracted",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p3-01",
+   "proposition": "P3",
+   "variation": "supported phrasing",
+   "text": "Nora Vance works at Halden.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "holds-at"
+   ],
+   "verdict": "match",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "Nora Vance",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "holds-at",
+       "works",
+       "2025-08-20",
+       "2025-08-20"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p3-02",
+   "proposition": "P3",
+   "variation": "works for (supported)",
+   "text": "Nora Vance works for Halden.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "holds-at"
+   ],
+   "verdict": "match",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "Nora Vance",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "holds-at",
+       "works",
+       "2025-08-20",
+       "2025-08-20"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p3-03",
+   "proposition": "P3",
+   "variation": "is employed by",
+   "text": "Nora Vance is employed by Halden.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "holds-at"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p3-04",
+   "proposition": "P3",
+   "variation": "title at organisation",
+   "text": "Nora Vance is the CTO at Halden.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "holds-at"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p3-05",
+   "proposition": "P3",
+   "variation": "apposition",
+   "text": "Nora Vance, Halden's CTO, spoke today.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "holds-at"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p3-06",
+   "proposition": "P3",
+   "variation": "embedded in a longer sentence",
+   "text": "I heard from Sam that Nora Vance works at Halden and loves it.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "holds-at"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "a supported phrase inside a longer clause (the patterns must match the whole clause)"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p3-07",
+   "proposition": "P3",
+   "variation": "pronoun subject, no context",
+   "text": "She works at Halden.",
+   "context": [],
+   "expect": null,
+   "verdict": "wrong: extracted where nothing should be",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "She",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "holds-at",
+       "works",
+       "2025-08-20",
+       "2025-08-20"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p3-08",
+   "proposition": "P3",
+   "variation": "they (pronoun) subject",
+   "text": "They work at Halden.",
+   "context": [],
+   "expect": null,
+   "verdict": "correct: nothing extracted",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "the subject is a pronoun or possessive"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p4-01",
+   "proposition": "P4",
+   "variation": "supported phrasing",
+   "text": "Ivo Marsh reports to Nora Vance.",
+   "context": [],
+   "expect": [
+    "reporting",
+    {
+     "report": "Ivo Marsh",
+     "manager": "Nora Vance"
+    },
+    "holds-at"
+   ],
+   "verdict": "match",
+   "candidates": [
+    {
+     "type": "reporting",
+     "roles": {
+      "report": "Ivo Marsh",
+      "manager": "Nora Vance"
+     },
+     "times": [
+      [
+       "holds-at",
+       "reports",
+       "2025-08-20",
+       "2025-08-20"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p4-02",
+   "proposition": "P4",
+   "variation": "inverse: manages",
+   "text": "Nora Vance manages Ivo Marsh.",
+   "context": [],
+   "expect": [
+    "reporting",
+    {
+     "report": "Ivo Marsh",
+     "manager": "Nora Vance"
+    },
+    "holds-at"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "other phrasing"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p4-03",
+   "proposition": "P4",
+   "variation": "possessive: manager is",
+   "text": "Ivo Marsh's manager is Nora Vance.",
+   "context": [],
+   "expect": [
+    "reporting",
+    {
+     "report": "Ivo Marsh",
+     "manager": "Nora Vance"
+    },
+    "holds-at"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p4-04",
+   "proposition": "P4",
+   "variation": "boss",
+   "text": "Nora Vance is Ivo Marsh's boss.",
+   "context": [],
+   "expect": [
+    "reporting",
+    {
+     "report": "Ivo Marsh",
+     "manager": "Nora Vance"
+    },
+    "holds-at"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p4-05",
+   "proposition": "P4",
+   "variation": "first person",
+   "text": "I report to Nora Vance.",
+   "context": [],
+   "expect": [
+    "reporting",
+    {
+     "report": "I",
+     "manager": "Nora Vance"
+    },
+    "holds-at"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "other phrasing"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p4-06",
+   "proposition": "P4",
+   "variation": "first person possessive",
+   "text": "My manager is Nora Vance.",
+   "context": [],
+   "expect": [
+    "reporting",
+    {
+     "report": "My",
+     "manager": "Nora Vance"
+    },
+    "holds-at"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p5-01",
+   "proposition": "P5",
+   "variation": "supported correction",
+   "text": "Correction: Nora Vance joined Halden in April 2025, not March.",
+   "context": [
+    "Nora Vance joined Halden in March 2025."
+   ],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "match",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "Nora Vance",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "start",
+       "April 2025",
+       "2025-04-01",
+       "2025-05-01"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [
+      "corrects:named"
+     ],
+     "status": "review",
+     "reason": "needs a review decision before forming: a stated correction",
+     "claim_believed": false
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p5-02",
+   "proposition": "P5",
+   "variation": "sorry-style correction",
+   "text": "Sorry, I meant Nora Vance joined Halden in April 2025.",
+   "context": [
+    "Nora Vance joined Halden in March 2025."
+   ],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "a supported phrase inside a longer clause (the patterns must match the whole clause)"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p5-03",
+   "proposition": "P5",
+   "variation": "elliptical correction",
+   "text": "Actually it was April, not March.",
+   "context": [
+    "Nora Vance joined Halden in March 2025."
+   ],
+   "expect": null,
+   "verdict": "correct: nothing extracted",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p6-01",
+   "proposition": "P6",
+   "variation": "supported negation",
+   "text": "Nora Vance no longer works at Halden.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "holds-at"
+   ],
+   "verdict": "match",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "Nora Vance",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "holds-at",
+       "no longer works",
+       "2025-08-20",
+       "2025-08-20"
+      ]
+     ],
+     "polarity": "negative",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p6-02",
+   "proposition": "P6",
+   "variation": "isn't with ... anymore (supported)",
+   "text": "Nora Vance isn't with Halden anymore.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "holds-at"
+   ],
+   "verdict": "match",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "Nora Vance",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "holds-at",
+       "isn't",
+       "2025-08-20",
+       "2025-08-20"
+      ]
+     ],
+     "polarity": "negative",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p6-03",
+   "proposition": "P6",
+   "variation": "has left (perfect tense)",
+   "text": "Nora Vance has left Halden.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "end"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "other phrasing"
+   ],
+   "notes": []
+  },
+  {
+   "id": "p7-01",
+   "proposition": "P7",
+   "variation": "first person, supported",
+   "text": "I joined Halden in June 2024.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "I",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "match",
+   "candidates": [
+    {
+     "type": "employment",
+     "roles": {
+      "employee": "I",
+      "employer": "Halden"
+     },
+     "times": [
+      [
+       "start",
+       "June 2024",
+       "2024-06-01",
+       "2024-07-01"
+      ]
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "relations": [],
+     "status": "formed",
+     "reason": "an asserted actual condition or event",
+     "claim_believed": true
+    }
+   ],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p7-02",
+   "proposition": "P7",
+   "variation": "first person, conversational",
+   "text": "I've been at Halden since June 2024, loving it so far!",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "I",
+     "employer": "Halden"
+    },
+    "holds-since"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p7-03",
+   "proposition": "P7",
+   "variation": "first person, started my new job",
+   "text": "I started my new job at Halden in June 2024.",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "I",
+     "employer": "Halden"
+    },
+    "start"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [],
+   "notes": []
+  },
+  {
+   "id": "p7-04",
+   "proposition": "P7",
+   "variation": "first person, lowercase sentence",
+   "text": "i joined halden in june 2024",
+   "context": [],
+   "expect": [
+    "employment",
+    {
+     "employee": "i",
+     "employer": "halden"
+    },
+    "start"
+   ],
+   "verdict": "missed",
+   "candidates": [],
+   "invalid": 0,
+   "not_extracted": [
+    "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+   ],
+   "notes": []
+  }
+ ]
+}

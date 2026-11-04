@@ -1,0 +1,2634 @@
+{
+ "meta": {
+  "phase": "7A",
+  "part": "Phase 7A classification",
+  "run_label": "classification",
+  "git": {
+   "commit": "124a57bc40747770208916cf415e800e57f26619",
+   "branch": "feature/phase-7a-extraction-diagnosis",
+   "dirty": false
+  },
+  "started": "2026-11-04T11:32:49+00:00",
+  "peak_rss_bytes_at_start": 1929969664
+ },
+ "results": {
+  "locomo/representative": {
+   "summary": {
+    "turns": 30,
+    "turns_with_any_memory": 16,
+    "turns_with_supported_A": 0,
+    "turns_with_ambiguous_A_or_B": 6,
+    "turns_with_representable_unsupported_B": 11,
+    "turns_with_no_relevant_information_C": 14,
+    "assertions": 23,
+    "assertions_by_category": {
+     "B": 16,
+     "A?": 7
+    },
+    "assertions_by_stage": {
+     "2": 16,
+     "2|3": 7
+    },
+    "assertions_needing": {
+     "cross-turn": 8,
+     "pronoun": 1,
+     "relative time": 2
+    },
+    "assertions_about": {
+     "addressee": 8,
+     "speaker": 15
+    },
+    "explicit_vs_implicit": {
+     "implicit": 11,
+     "explicit": 12
+    },
+    "turns_with_domain_verb": 8,
+    "candidates": 0
+   },
+   "rows": [
+    {
+     "key": "conv-26:D1:12",
+     "stratum": "conv-26/long",
+     "chars": 196,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "career aspiration",
+       "about": "addressee",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "praise implies the addressee wants to work as a counsellor",
+       "observed_stage": 2
+      },
+      {
+       "category": "B",
+       "domain": "activity (shared image)",
+       "about": "speaker",
+       "explicit": "implicit",
+       "needs": [],
+       "stage": 2,
+       "note": "image caption: a photo of a painting",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D17:14",
+     "stratum": "conv-26/long",
+     "chars": 219,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "hobby",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [
+        "pronoun"
+       ],
+       "stage": 2,
+       "note": "painted the earlier-mentioned painting ('it')",
+       "observed_stage": 2
+      },
+      {
+       "category": "B",
+       "domain": "hobby",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "has done an abstract painting",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D11:7",
+     "stratum": "conv-26/long",
+     "chars": 324,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "event",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [
+        "relative time"
+       ],
+       "stage": 2,
+       "note": "attended a music event last night (caption)",
+       "observed_stage": 2
+      },
+      {
+       "category": "B",
+       "domain": "family",
+       "about": "speaker",
+       "explicit": "implicit",
+       "needs": [],
+       "stage": 2,
+       "note": "has children ('our kids')",
+       "observed_stage": 2
+      },
+      {
+       "category": "B",
+       "domain": "occupation/identity",
+       "about": "addressee",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "question presupposes the addressee is an artist",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D11:14",
+     "stratum": "conv-26/long",
+     "chars": 191,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "personal identity",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "speaker refers to their gender transition",
+       "observed_stage": 2
+      },
+      {
+       "category": "B",
+       "domain": "hobby",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "makes art",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "the subject is a pronoun or possessive"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D13:15",
+     "stratum": "conv-26/long",
+     "chars": 204,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "values/activism",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "promotes LGBTQ rights; wants to help others",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D10:6",
+     "stratum": "conv-26/medium",
+     "chars": 170,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "membership",
+       "about": "addressee",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "refers to the addressee's group",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D8:33",
+     "stratum": "conv-26/medium",
+     "chars": 155,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D16:14",
+     "stratum": "conv-26/medium",
+     "chars": 170,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "hobby",
+       "about": "addressee",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "addressee's painting progress",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D9:4",
+     "stratum": "conv-26/medium",
+     "chars": 154,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "volunteering role",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "mentoring young people (no organisation named); 'the mentoring' refers back",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D15:8",
+     "stratum": "conv-26/medium",
+     "chars": 119,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D15:15",
+     "stratum": "conv-26/short",
+     "chars": 40,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D12:21",
+     "stratum": "conv-26/short",
+     "chars": 71,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "plan",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "an upcoming trip, details elsewhere",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D5:9",
+     "stratum": "conv-26/short",
+     "chars": 90,
+     "facts": [],
+     "domain_verbs": [
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "the subject is a pronoun or possessive"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D8:20",
+     "stratum": "conv-26/short",
+     "chars": 50,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D8:13",
+     "stratum": "conv-26/short",
+     "chars": 76,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "family",
+       "about": "addressee",
+       "explicit": "implicit",
+       "needs": [],
+       "stage": 2,
+       "note": "addressee's wedding (married)",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D9:4",
+     "stratum": "conv-30/long",
+     "chars": 186,
+     "facts": [],
+     "domain_verbs": [
+      "worked"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D7:6",
+     "stratum": "conv-30/long",
+     "chars": 235,
+     "facts": [
+      {
+       "category": "A?",
+       "domain": "runs own business (store)",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": "2|3",
+       "note": "ownership of an unnamed store: employment schema has no owner role; employer would be unnamed",
+       "observed_stage": "2|3"
+      },
+      {
+       "category": "A?",
+       "domain": "runs own business (dance studio)",
+       "about": "addressee",
+       "explicit": "implicit",
+       "needs": [],
+       "stage": "2|3",
+       "note": "question presupposes the addressee's studio business",
+       "observed_stage": "2|3"
+      }
+     ],
+     "domain_verbs": [
+      "working"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D13:5",
+     "stratum": "conv-30/long",
+     "chars": 268,
+     "facts": [
+      {
+       "category": "A?",
+       "domain": "opened own business (dance studio)",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": "2|3",
+       "note": "opening = a start; unnamed studio",
+       "observed_stage": "2|3"
+      }
+     ],
+     "domain_verbs": [
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "the subject is a pronoun or possessive"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D8:12",
+     "stratum": "conv-30/long",
+     "chars": 414,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "plan (marketing)",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [
+        "relative time"
+       ],
+       "stage": 2,
+       "note": "plans with influencers and ads in the next months",
+       "observed_stage": 2
+      },
+      {
+       "category": "A?",
+       "domain": "runs own business (store)",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": "2|3",
+       "note": "same store as elsewhere",
+       "observed_stage": "2|3"
+      }
+     ],
+     "domain_verbs": [
+      "working"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D11:12",
+     "stratum": "conv-30/long",
+     "chars": 176,
+     "facts": [
+      {
+       "category": "A?",
+       "domain": "plans own business (studio)",
+       "about": "addressee",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": "2|3",
+       "note": "the addressee's planned studio",
+       "observed_stage": "2|3"
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D18:12",
+     "stratum": "conv-30/medium",
+     "chars": 159,
+     "facts": [
+      {
+       "category": "A?",
+       "domain": "runs own business (dance studio)",
+       "about": "speaker",
+       "explicit": "implicit",
+       "needs": [],
+       "stage": "2|3",
+       "note": "asks for marketing help for 'the dance studio'",
+       "observed_stage": "2|3"
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D11:10",
+     "stratum": "conv-30/medium",
+     "chars": 107,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D16:9",
+     "stratum": "conv-30/medium",
+     "chars": 128,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D3:13",
+     "stratum": "conv-30/medium",
+     "chars": 137,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D18:20",
+     "stratum": "conv-30/medium",
+     "chars": 114,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D8:7",
+     "stratum": "conv-30/short",
+     "chars": 64,
+     "facts": [
+      {
+       "category": "A?",
+       "domain": "runs own business (clothing + dance)",
+       "about": "addressee",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": "2|3",
+       "note": "question presupposes the addressee's clothing business",
+       "observed_stage": "2|3"
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D11:20",
+     "stratum": "conv-30/short",
+     "chars": 52,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D8:11",
+     "stratum": "conv-30/short",
+     "chars": 86,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D10:3",
+     "stratum": "conv-30/short",
+     "chars": 77,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D15:15",
+     "stratum": "conv-30/short",
+     "chars": 38,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    }
+   ]
+  },
+  "locomo/targeted": {
+   "summary": {
+    "turns": 20,
+    "turns_with_any_memory": 18,
+    "turns_with_supported_A": 6,
+    "turns_with_ambiguous_A_or_B": 9,
+    "turns_with_representable_unsupported_B": 11,
+    "turns_with_no_relevant_information_C": 2,
+    "assertions": 28,
+    "assertions_by_category": {
+     "A": 6,
+     "B": 13,
+     "A?": 9
+    },
+    "assertions_by_stage": {
+     "3": 6,
+     "2": 13,
+     "2|3": 9
+    },
+    "assertions_needing": {
+     "cross-turn": 6,
+     "relative time": 3
+    },
+    "assertions_about": {
+     "speaker": 25,
+     "addressee": 3
+    },
+    "explicit_vs_implicit": {
+     "explicit": 25,
+     "implicit": 3
+    },
+    "turns_with_domain_verb": 12,
+    "candidates": 0
+   },
+   "rows": [
+    {
+     "key": "conv-26:D1:2",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 98,
+     "facts": [
+      {
+       "category": "A",
+       "domain": "employment (has a job)",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 3,
+       "note": "'swamped with ... work': employed, employer unnamed; representable only with a placeholder employer",
+       "observed_stage": 3
+      },
+      {
+       "category": "B",
+       "domain": "family",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "has children",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D4:11",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 201,
+     "facts": [
+      {
+       "category": "A?",
+       "domain": "career intention (counselling)",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": "2|3",
+       "note": "considering a career field; no organisation; planned/possible",
+       "observed_stage": "2|3"
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D14:8",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 162,
+     "facts": [
+      {
+       "category": "A",
+       "domain": "employment ended",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 3,
+       "note": "'lost my job' (employer unnamed); the turn answers the previous one",
+       "observed_stage": 3
+      },
+      {
+       "category": "A?",
+       "domain": "started own business (online store)",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": "2|3",
+       "note": "opened an online clothing store; 'my own boss'",
+       "observed_stage": "2|3"
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D4:11",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 290,
+     "facts": [
+      {
+       "category": "A?",
+       "domain": "runs own business",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": "2|3",
+       "note": "'working on my business'",
+       "observed_stage": "2|3"
+      },
+      {
+       "category": "B",
+       "domain": "plan/event",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "rehearsing for an upcoming show",
+       "observed_stage": 2
+      },
+      {
+       "category": "B",
+       "domain": "hobby",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "dancing",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "working"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D15:3",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 54,
+     "facts": [
+      {
+       "category": "A?",
+       "domain": "plans own business (studio)",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": "2|3",
+       "note": "still working on opening a studio: planned start",
+       "observed_stage": "2|3"
+      }
+     ],
+     "domain_verbs": [
+      "working"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D12:1",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 92,
+     "facts": [
+      {
+       "category": "A",
+       "domain": "employment start (internship)",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [
+        "relative time"
+       ],
+       "stage": 3,
+       "note": "accepted for a fashion internship; organisation unnamed; accepted, not yet started (modality)",
+       "observed_stage": 3
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D12:11",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 109,
+     "facts": [],
+     "domain_verbs": [
+      "working"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D18:2",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 229,
+     "facts": [
+      {
+       "category": "A",
+       "domain": "employment start (temporary job)",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 3,
+       "note": "'got a temp job' (employer unnamed)",
+       "observed_stage": 3
+      },
+      {
+       "category": "B",
+       "domain": "business status",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "studio on tenuous grounds; looking for investors",
+       "observed_stage": 2
+      },
+      {
+       "category": "A?",
+       "domain": "runs own business (store)",
+       "about": "addressee",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": "2|3",
+       "note": "congratulations on the addressee's store",
+       "observed_stage": "2|3"
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D9:3",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 130,
+     "facts": [
+      {
+       "category": "A",
+       "domain": "employment ended",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 3,
+       "note": "'losing my job' (employer unnamed)",
+       "observed_stage": 3
+      },
+      {
+       "category": "A?",
+       "domain": "runs own business (studio)",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": "2|3",
+       "note": "'this studio'",
+       "observed_stage": "2|3"
+      }
+     ],
+     "domain_verbs": [
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D4:13",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 418,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "career intention",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "thinking of working with trans people (possible)",
+       "observed_stage": 2
+      },
+      {
+       "category": "B",
+       "domain": "event",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [
+        "relative time"
+       ],
+       "stage": 2,
+       "note": "attended a counselling workshop last Friday",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "work",
+      "working"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "the subject is a pronoun or possessive"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D3:3",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 155,
+     "facts": [
+      {
+       "category": "A?",
+       "domain": "own business (store location)",
+       "about": "addressee",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": "2|3",
+       "note": "the addressee found a spot for their store",
+       "observed_stage": "2|3"
+      }
+     ],
+     "domain_verbs": [
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D2:6",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 128,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D1:9",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 77,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "plan (education/career)",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "continue education, explore career options",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D14:14",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 226,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "past activity",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "used to dance (photo)",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-26:D3:4",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 292,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "activism",
+       "about": "addressee",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "the addressee speaks up for the trans community",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D19:1",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 146,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "activity",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "rehearsing; working on business plans",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "working"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D18:10",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 160,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "activity/plan",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "revising a business plan; pitching to investors; building a platform",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "working"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D5:5",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 333,
+     "facts": [
+      {
+       "category": "A?",
+       "domain": "runs own business (online store)",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": "2|3",
+       "note": "'my online store'",
+       "observed_stage": "2|3"
+      },
+      {
+       "category": "B",
+       "domain": "collaboration",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "teamed up with a local artist (unnamed)",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "working"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D16:8",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 152,
+     "facts": [
+      {
+       "category": "A",
+       "domain": "employment ended",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 3,
+       "note": "'since I lost my job' (employer unnamed)",
+       "observed_stage": 3
+      },
+      {
+       "category": "A?",
+       "domain": "runs own business",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": "2|3",
+       "note": "'my business'",
+       "observed_stage": "2|3"
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "conv-30:D1:13",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 51,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "plan (meeting)",
+       "about": "speaker",
+       "explicit": "explicit",
+       "needs": [
+        "cross-turn",
+        "relative time"
+       ],
+       "stage": 2,
+       "note": "agrees to meet next Friday",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "works"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    }
+   ]
+  },
+  "longmemeval/representative": {
+   "summary": {
+    "turns": 30,
+    "turns_with_any_memory": 12,
+    "turns_with_supported_A": 1,
+    "turns_with_ambiguous_A_or_B": 0,
+    "turns_with_representable_unsupported_B": 11,
+    "turns_with_no_relevant_information_C": 18,
+    "assertions": 16,
+    "assertions_by_category": {
+     "B": 15,
+     "A": 1
+    },
+    "assertions_by_stage": {
+     "2": 15,
+     "3": 1
+    },
+    "assertions_needing": {
+     "cross-turn": 4,
+     "duration": 1,
+     "relative time": 1
+    },
+    "assertions_about": {
+     "user": 14,
+     "third parties": 1,
+     "third party": 1
+    },
+    "explicit_vs_implicit": {
+     "implicit": 4,
+     "explicit": 12
+    },
+    "turns_with_domain_verb": 8,
+    "candidates": 0
+   },
+   "rows": [
+    {
+     "key": "lme:4344c2f1_1:57d6b5d8cd86:5",
+     "stratum": "assistant/long",
+     "chars": 2252,
+     "facts": [],
+     "domain_verbs": [
+      "manage"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:37141183:29ad356052b1:5",
+     "stratum": "assistant/long",
+     "chars": 2734,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:15a346c1_2:03dd5bbe54d4:7",
+     "stratum": "assistant/long",
+     "chars": 2340,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "possession/event",
+       "about": "user",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "assistant restates that the user found their scarf",
+       "observed_stage": 2
+      },
+      {
+       "category": "B",
+       "domain": "purchase consideration",
+       "about": "user",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "user is considering high-end cookware",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:211bb1c2_1:03a77339f237:11",
+     "stratum": "assistant/long",
+     "chars": 2911,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "hobby",
+       "about": "user",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "advice presupposes the user does street photography",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "work",
+      "worked"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:0232f77d:bee7133a93c3:3",
+     "stratum": "assistant/long",
+     "chars": 2861,
+     "facts": [],
+     "domain_verbs": [
+      "works"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "the subject is a pronoun or possessive"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_eVmxjQZ_0:9012efba98f6:1",
+     "stratum": "assistant/medium",
+     "chars": 433,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:ultrachat_345394:2f22dc124f11:9",
+     "stratum": "assistant/medium",
+     "chars": 666,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_uNuzBLK_0:5e5e00ccef14:5",
+     "stratum": "assistant/medium",
+     "chars": 1075,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:ultrachat_501941:2102032c7984:7",
+     "stratum": "assistant/medium",
+     "chars": 670,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "world knowledge (history)",
+       "about": "third parties",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "historical figures and their legacies: general knowledge, not memory about participants",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "left"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_F8CLI1Y_13:e4c5a729db3b:4",
+     "stratum": "assistant/medium",
+     "chars": 885,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_YeoNsEt_17:938e696ebaf0:8",
+     "stratum": "assistant/short",
+     "chars": 165,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_k3yQrLH_0:62435a5da5f5:1",
+     "stratum": "assistant/short",
+     "chars": 80,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_UbMVpdp_93:220278eb4150:4",
+     "stratum": "assistant/short",
+     "chars": 76,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "event (bereavement)",
+       "about": "third party",
+       "explicit": "explicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "a named person suffered a loss; details in an earlier turn",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_zwfSWfk_0:6aec4adccd0d:1",
+     "stratum": "assistant/short",
+     "chars": 178,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_1thv0EM_0:f4194b726a85:1",
+     "stratum": "assistant/short",
+     "chars": 9,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_7mz4EV7_0:4e3c7c2e414d:2",
+     "stratum": "user/long",
+     "chars": 3274,
+     "facts": [],
+     "domain_verbs": [
+      "manage"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_R79o5xs_0:60c21d6130ea:2",
+     "stratum": "user/long",
+     "chars": 1966,
+     "facts": [],
+     "domain_verbs": [
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "other phrasing"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_igR6Bmm_0:0d1b1c2e72be:0",
+     "stratum": "user/long",
+     "chars": 19257,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "habit",
+       "about": "user",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "keeps interesting sentences in a note app (the rest is a pasted article)",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "left",
+      "reported",
+      "reporting",
+      "reports",
+      "work",
+      "working"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "the subject is a pronoun or possessive",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_YvsQDjp_0:f27bdbada369:2",
+     "stratum": "user/long",
+     "chars": 2429,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_XYtuANl_9:ed77c62015b6:1",
+     "stratum": "user/long",
+     "chars": 5325,
+     "facts": [],
+     "domain_verbs": [
+      "report",
+      "working"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "the subject is a pronoun or possessive"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:9f8c432e_1:83052b381db7:0",
+     "stratum": "user/medium",
+     "chars": 258,
+     "facts": [
+      {
+       "category": "A",
+       "domain": "employment with title and named organisation",
+       "about": "user",
+       "explicit": "explicit",
+       "needs": [
+        "duration ('for about 6 weeks')"
+       ],
+       "stage": 3,
+       "note": "the user is the new Senior Marketing Manager at a named company, for about six weeks: in domain, unsupported syntax; the name contains '&'",
+       "observed_stage": 3
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:answer_7cb94507:8eb842fccb8b:6",
+     "stratum": "user/medium",
+     "chars": 707,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "shopping habit",
+       "about": "user",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "browses at named retailers",
+       "observed_stage": 2
+      },
+      {
+       "category": "B",
+       "domain": "plan (cancel subscription)",
+       "about": "user",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "considering cancelling a monthly beauty box ($50/month)",
+       "observed_stage": 2
+      },
+      {
+       "category": "B",
+       "domain": "shopping habit",
+       "about": "user",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "buys beauty products at a discount store",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:b9361a4f_1:0407b0bcc7e2:0",
+     "stratum": "user/medium",
+     "chars": 282,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "plan (purchase)",
+       "about": "user",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "looking to buy a coffee maker",
+       "observed_stage": 2
+      },
+      {
+       "category": "B",
+       "domain": "event/possession",
+       "about": "user",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "received a coupon book from a named retailer",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:1cafd864_3:8a5980818177:8",
+     "stratum": "user/medium",
+     "chars": 249,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "residence (moved)",
+       "about": "user",
+       "explicit": "explicit",
+       "needs": [
+        "relative time"
+       ],
+       "stage": 2,
+       "note": "just moved into a new apartment in a named district",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:3b5205b6_1:4eaca794bddb:10",
+     "stratum": "user/medium",
+     "chars": 343,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "plan",
+       "about": "user",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "will talk to relatives about family history",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:e627b1aa_4:6183f508e72d:2",
+     "stratum": "user/short",
+     "chars": 195,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "preference/plan (education)",
+       "about": "user",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "interested in online degree programmes at two named providers",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:ultrachat_556010:f449f2697a43:0",
+     "stratum": "user/short",
+     "chars": 81,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:ultrachat_518651:6844edf749f8:6",
+     "stratum": "user/short",
+     "chars": 181,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:ultrachat_443538:9127a878bd62:0",
+     "stratum": "user/short",
+     "chars": 71,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:6ea1541e_1:cb3b9cc73472:10",
+     "stratum": "user/short",
+     "chars": 189,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "interest (entrepreneurship funding)",
+       "about": "user",
+       "explicit": "implicit",
+       "needs": [],
+       "stage": 2,
+       "note": "asks about a named charity's microloans for entrepreneurs",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    }
+   ]
+  },
+  "longmemeval/targeted": {
+   "summary": {
+    "turns": 20,
+    "turns_with_any_memory": 16,
+    "turns_with_supported_A": 1,
+    "turns_with_ambiguous_A_or_B": 1,
+    "turns_with_representable_unsupported_B": 15,
+    "turns_with_no_relevant_information_C": 4,
+    "assertions": 18,
+    "assertions_by_category": {
+     "B": 16,
+     "A?": 1,
+     "A": 1
+    },
+    "assertions_by_stage": {
+     "2": 16,
+     "2|3": 1,
+     "3": 1
+    },
+    "assertions_needing": {
+     "cross-turn": 6,
+     "dates": 1
+    },
+    "assertions_about": {
+     "third parties": 9,
+     "user": 9
+    },
+    "explicit_vs_implicit": {
+     "explicit": 10,
+     "implicit": 8
+    },
+    "turns_with_domain_verb": 13,
+    "candidates": 0
+   },
+   "rows": [
+    {
+     "key": "lme:495cf518_2:3487e1b09b6b:3",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2642,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "world knowledge (books and authors)",
+       "about": "third parties",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "book authorship and authors' positions",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:bd8708e2_2:0750ad9a8a4e:9",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2846,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "plan (volunteering)",
+       "about": "user",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "advice presupposes the user will volunteer at a charity event",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "report",
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:c625cff4_3:dccec659c52e:3",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2026,
+     "facts": [],
+     "domain_verbs": [
+      "works"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:ultrachat_322794:bd4ae323f6c9:13",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 1520,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "world knowledge (infrastructure)",
+       "about": "third parties",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "named projects, cost and places",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "works"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "other phrasing"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:a6b6067b:f6e930d7a5bc:11",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2654,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "world knowledge (works and authors)",
+       "about": "third parties",
+       "explicit": "explicit",
+       "needs": [
+        "dates"
+       ],
+       "stage": 2,
+       "note": "plays, their authors and premiere dates",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "other phrasing"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:27e262d5_1:97864eaf60f1:10",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 228,
+     "facts": [
+      {
+       "category": "A?",
+       "domain": "role (teaching assistantship)",
+       "about": "user",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": "2|3",
+       "note": "has been a teaching assistant for a course; institution unnamed",
+       "observed_stage": "2|3"
+      },
+      {
+       "category": "B",
+       "domain": "education",
+       "about": "user",
+       "explicit": "implicit",
+       "needs": [],
+       "stage": 2,
+       "note": "a PhD student",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:ultrachat_237047:bd92eceaddb7:1",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 1609,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "world knowledge (places)",
+       "about": "third parties",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "redevelopment of named areas",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:959e6cb0_7:9806658db042:11",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 3130,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "hobby",
+       "about": "user",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "presupposes the user builds tracks in a game editor",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:ultrachat_278874:5df1c20983e7:3",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 1597,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "world knowledge (history)",
+       "about": "third parties",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "a region's history",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "left"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_koRE8H2_0:871d420dc0e2:5",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 1418,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "world knowledge (music)",
+       "about": "third parties",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "composers' styles (partly opinion)",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "works"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:2aeb1268:4652fb99268e:7",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2676,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "possession",
+       "about": "user",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "presupposes the user owns a camera",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "working"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_fnuLBKl_133:fb9efe21fa3d:0",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2735,
+     "facts": [],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_sXKNzPE_0:9d6b8f4cbfd6:7",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 895,
+     "facts": [
+      {
+       "category": "A",
+       "domain": "people in roles at named organisations (table)",
+       "about": "third parties",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 3,
+       "note": "about seven person-organisation rows asserted by the assistant in a table; unsupported layout; reliability of the assistant's claims unverified",
+       "observed_stage": 3
+      }
+     ],
+     "domain_verbs": [
+      "working"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "the subject is a pronoun or possessive"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:e30307d8_2:60fe9d1e1e89:3",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2251,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "world knowledge (statistics)",
+       "about": "third parties",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "average employee ages by industry",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:ultrachat_237018:0062ec553aa7:9",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 859,
+     "facts": [],
+     "domain_verbs": [
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:edfa358d_1:84caeedd9da0:11",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 1017,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "event",
+       "about": "user",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "the user made a costume piece at a seminar",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "working"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:sharegpt_eyjhBv3_0:6975202e654e:1",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 1768,
+     "facts": [],
+     "domain_verbs": [
+      "manage",
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "the subject is a pronoun or possessive",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')",
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:07e363d9_3:e9f9f9cca1e9:6",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 268,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "work relationship (colleagues)",
+       "about": "user",
+       "explicit": "implicit",
+       "needs": [],
+       "stage": 2,
+       "note": "has colleagues from a named country: a coworker relation, not employment or reporting",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    },
+    {
+     "key": "lme:6aaf298d:3365e0847b03:11",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2919,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "world knowledge (books)",
+       "about": "third parties",
+       "explicit": "explicit",
+       "needs": [],
+       "stage": 2,
+       "note": "books and their authors",
+       "observed_stage": 2
+      },
+      {
+       "category": "B",
+       "domain": "reading",
+       "about": "user",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "the user is reading a named novel",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [
+      "work"
+     ],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": [
+       "no capitalised name after the domain verb (e.g. 'a hospital', 'my team')"
+      ]
+     },
+     "store": null
+    },
+    {
+     "key": "lme:ad3d0815_1:0347bde3f54a:7",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 3007,
+     "facts": [
+      {
+       "category": "B",
+       "domain": "hobby",
+       "about": "user",
+       "explicit": "implicit",
+       "needs": [
+        "cross-turn"
+       ],
+       "stage": 2,
+       "note": "learning fingerstyle guitar",
+       "observed_stage": 2
+      }
+     ],
+     "domain_verbs": [],
+     "extractor": {
+      "candidates": 0,
+      "candidate_kinds": [],
+      "rejected_clauses": []
+     },
+     "store": null
+    }
+   ]
+  }
+ }
+}

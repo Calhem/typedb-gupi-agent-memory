@@ -1,0 +1,124 @@
+dataset,sample,turn_key,stratum,chars,extractor_candidates,domain_verbs,extractor_rejected_clauses,fact,category,domain,about,explicit,needs,earliest_stage,label
+locomo,representative,conv-26:D1:12,conv-26/long,196,0,work,1,1,B,career aspiration,addressee,implicit,cross-turn,2,praise implies the addressee wants to work as a counsellor
+locomo,representative,conv-26:D1:12,conv-26/long,196,0,work,1,2,B,activity (shared image),speaker,implicit,,2,image caption: a photo of a painting
+locomo,representative,conv-26:D17:14,conv-26/long,219,0,,0,1,B,hobby,speaker,explicit,pronoun,2,painted the earlier-mentioned painting ('it')
+locomo,representative,conv-26:D17:14,conv-26/long,219,0,,0,2,B,hobby,speaker,explicit,,2,has done an abstract painting
+locomo,representative,conv-26:D11:7,conv-26/long,324,0,work,1,1,B,event,speaker,explicit,relative time,2,attended a music event last night (caption)
+locomo,representative,conv-26:D11:7,conv-26/long,324,0,work,1,2,B,family,speaker,implicit,,2,has children ('our kids')
+locomo,representative,conv-26:D11:7,conv-26/long,324,0,work,1,3,B,occupation/identity,addressee,implicit,cross-turn,2,question presupposes the addressee is an artist
+locomo,representative,conv-26:D11:14,conv-26/long,191,0,work,1,1,B,personal identity,speaker,explicit,,2,speaker refers to their gender transition
+locomo,representative,conv-26:D11:14,conv-26/long,191,0,work,1,2,B,hobby,speaker,explicit,,2,makes art
+locomo,representative,conv-26:D13:15,conv-26/long,204,0,,0,1,B,values/activism,speaker,explicit,,2,promotes LGBTQ rights; wants to help others
+locomo,representative,conv-26:D10:6,conv-26/medium,170,0,,0,1,B,membership,addressee,implicit,cross-turn,2,refers to the addressee's group
+locomo,representative,conv-26:D8:33,conv-26/medium,155,0,,0,0,C,,,,,,no relevant extractable fact
+locomo,representative,conv-26:D16:14,conv-26/medium,170,0,,0,1,B,hobby,addressee,implicit,cross-turn,2,addressee's painting progress
+locomo,representative,conv-26:D9:4,conv-26/medium,154,0,,0,1,B,volunteering role,speaker,explicit,cross-turn,2,mentoring young people (no organisation named); 'the mentoring' refers back
+locomo,representative,conv-26:D15:8,conv-26/medium,119,0,,0,0,C,,,,,,no relevant extractable fact
+locomo,representative,conv-26:D15:15,conv-26/short,40,0,,0,0,C,,,,,,no relevant extractable fact
+locomo,representative,conv-26:D12:21,conv-26/short,71,0,,0,1,B,plan,speaker,explicit,cross-turn,2,"an upcoming trip, details elsewhere"
+locomo,representative,conv-26:D5:9,conv-26/short,90,0,work,1,0,C,,,,,,no relevant extractable fact
+locomo,representative,conv-26:D8:20,conv-26/short,50,0,,0,0,C,,,,,,no relevant extractable fact
+locomo,representative,conv-26:D8:13,conv-26/short,76,0,,0,1,B,family,addressee,implicit,,2,addressee's wedding (married)
+locomo,representative,conv-30:D9:4,conv-30/long,186,0,worked,1,0,C,,,,,,no relevant extractable fact
+locomo,representative,conv-30:D7:6,conv-30/long,235,0,working,1,1,A?,runs own business (store),speaker,explicit,,2|3,ownership of an unnamed store: employment schema has no owner role; employer would be unnamed
+locomo,representative,conv-30:D7:6,conv-30/long,235,0,working,1,2,A?,runs own business (dance studio),addressee,implicit,,2|3,question presupposes the addressee's studio business
+locomo,representative,conv-30:D13:5,conv-30/long,268,0,work,1,1,A?,opened own business (dance studio),speaker,explicit,,2|3,opening = a start; unnamed studio
+locomo,representative,conv-30:D8:12,conv-30/long,414,0,working,1,1,B,plan (marketing),speaker,explicit,relative time,2,plans with influencers and ads in the next months
+locomo,representative,conv-30:D8:12,conv-30/long,414,0,working,1,2,A?,runs own business (store),speaker,explicit,,2|3,same store as elsewhere
+locomo,representative,conv-30:D11:12,conv-30/long,176,0,,0,1,A?,plans own business (studio),addressee,implicit,cross-turn,2|3,the addressee's planned studio
+locomo,representative,conv-30:D18:12,conv-30/medium,159,0,,0,1,A?,runs own business (dance studio),speaker,implicit,,2|3,asks for marketing help for 'the dance studio'
+locomo,representative,conv-30:D11:10,conv-30/medium,107,0,,0,0,C,,,,,,no relevant extractable fact
+locomo,representative,conv-30:D16:9,conv-30/medium,128,0,,0,0,C,,,,,,no relevant extractable fact
+locomo,representative,conv-30:D3:13,conv-30/medium,137,0,,0,0,C,,,,,,no relevant extractable fact
+locomo,representative,conv-30:D18:20,conv-30/medium,114,0,,0,0,C,,,,,,no relevant extractable fact
+locomo,representative,conv-30:D8:7,conv-30/short,64,0,,0,1,A?,runs own business (clothing + dance),addressee,implicit,cross-turn,2|3,question presupposes the addressee's clothing business
+locomo,representative,conv-30:D11:20,conv-30/short,52,0,,0,0,C,,,,,,no relevant extractable fact
+locomo,representative,conv-30:D8:11,conv-30/short,86,0,,0,0,C,,,,,,no relevant extractable fact
+locomo,representative,conv-30:D10:3,conv-30/short,77,0,,0,0,C,,,,,,no relevant extractable fact
+locomo,representative,conv-30:D15:15,conv-30/short,38,0,,0,0,C,,,,,,no relevant extractable fact
+locomo,targeted,conv-26:D1:2,targeted/work-vocabulary,98,0,work,1,1,A,employment (has a job),speaker,explicit,,3,"'swamped with ... work': employed, employer unnamed; representable only with a placeholder employer"
+locomo,targeted,conv-26:D1:2,targeted/work-vocabulary,98,0,work,1,2,B,family,speaker,explicit,,2,has children
+locomo,targeted,conv-26:D4:11,targeted/work-vocabulary,201,0,,0,1,A?,career intention (counselling),speaker,explicit,,2|3,considering a career field; no organisation; planned/possible
+locomo,targeted,conv-30:D14:8,targeted/work-vocabulary,162,0,,0,1,A,employment ended,speaker,explicit,cross-turn,3,'lost my job' (employer unnamed); the turn answers the previous one
+locomo,targeted,conv-30:D14:8,targeted/work-vocabulary,162,0,,0,2,A?,started own business (online store),speaker,explicit,,2|3,opened an online clothing store; 'my own boss'
+locomo,targeted,conv-30:D4:11,targeted/work-vocabulary,290,0,working,1,1,A?,runs own business,speaker,explicit,,2|3,'working on my business'
+locomo,targeted,conv-30:D4:11,targeted/work-vocabulary,290,0,working,1,2,B,plan/event,speaker,explicit,,2,rehearsing for an upcoming show
+locomo,targeted,conv-30:D4:11,targeted/work-vocabulary,290,0,working,1,3,B,hobby,speaker,explicit,,2,dancing
+locomo,targeted,conv-30:D15:3,targeted/work-vocabulary,54,0,working,1,1,A?,plans own business (studio),speaker,explicit,,2|3,still working on opening a studio: planned start
+locomo,targeted,conv-30:D12:1,targeted/work-vocabulary,92,0,,0,1,A,employment start (internship),speaker,explicit,relative time,3,"accepted for a fashion internship; organisation unnamed; accepted, not yet started (modality)"
+locomo,targeted,conv-30:D12:11,targeted/work-vocabulary,109,0,working,1,0,C,,,,,,no relevant extractable fact
+locomo,targeted,conv-30:D18:2,targeted/work-vocabulary,229,0,,0,1,A,employment start (temporary job),speaker,explicit,,3,'got a temp job' (employer unnamed)
+locomo,targeted,conv-30:D18:2,targeted/work-vocabulary,229,0,,0,2,B,business status,speaker,explicit,,2,studio on tenuous grounds; looking for investors
+locomo,targeted,conv-30:D18:2,targeted/work-vocabulary,229,0,,0,3,A?,runs own business (store),addressee,implicit,cross-turn,2|3,congratulations on the addressee's store
+locomo,targeted,conv-30:D9:3,targeted/work-vocabulary,130,0,work,1,1,A,employment ended,speaker,explicit,,3,'losing my job' (employer unnamed)
+locomo,targeted,conv-30:D9:3,targeted/work-vocabulary,130,0,work,1,2,A?,runs own business (studio),speaker,explicit,cross-turn,2|3,'this studio'
+locomo,targeted,conv-26:D4:13,targeted/work-vocabulary,418,0,work working,2,1,B,career intention,speaker,explicit,,2,thinking of working with trans people (possible)
+locomo,targeted,conv-26:D4:13,targeted/work-vocabulary,418,0,work working,2,2,B,event,speaker,explicit,relative time,2,attended a counselling workshop last Friday
+locomo,targeted,conv-30:D3:3,targeted/work-vocabulary,155,0,work,1,1,A?,own business (store location),addressee,implicit,cross-turn,2|3,the addressee found a spot for their store
+locomo,targeted,conv-26:D2:6,targeted/work-vocabulary,128,0,,0,0,C,,,,,,no relevant extractable fact
+locomo,targeted,conv-26:D1:9,targeted/work-vocabulary,77,0,,0,1,B,plan (education/career),speaker,explicit,,2,"continue education, explore career options"
+locomo,targeted,conv-30:D14:14,targeted/work-vocabulary,226,0,,0,1,B,past activity,speaker,explicit,,2,used to dance (photo)
+locomo,targeted,conv-26:D3:4,targeted/work-vocabulary,292,0,work,1,1,B,activism,addressee,implicit,cross-turn,2,the addressee speaks up for the trans community
+locomo,targeted,conv-30:D19:1,targeted/work-vocabulary,146,0,working,1,1,B,activity,speaker,explicit,,2,rehearsing; working on business plans
+locomo,targeted,conv-30:D18:10,targeted/work-vocabulary,160,0,working,1,1,B,activity/plan,speaker,explicit,,2,revising a business plan; pitching to investors; building a platform
+locomo,targeted,conv-30:D5:5,targeted/work-vocabulary,333,0,working,1,1,A?,runs own business (online store),speaker,explicit,,2|3,'my online store'
+locomo,targeted,conv-30:D5:5,targeted/work-vocabulary,333,0,working,1,2,B,collaboration,speaker,explicit,,2,teamed up with a local artist (unnamed)
+locomo,targeted,conv-30:D16:8,targeted/work-vocabulary,152,0,,0,1,A,employment ended,speaker,explicit,,3,'since I lost my job' (employer unnamed)
+locomo,targeted,conv-30:D16:8,targeted/work-vocabulary,152,0,,0,2,A?,runs own business,speaker,explicit,,2|3,'my business'
+locomo,targeted,conv-30:D1:13,targeted/work-vocabulary,51,0,works,1,1,B,plan (meeting),speaker,explicit,cross-turn; relative time,2,agrees to meet next Friday
+longmemeval,representative,lme:4344c2f1_1:57d6b5d8cd86:5,assistant/long,2252,0,manage,1,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:37141183:29ad356052b1:5,assistant/long,2734,0,,0,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:15a346c1_2:03dd5bbe54d4:7,assistant/long,2340,0,,0,1,B,possession/event,user,implicit,cross-turn,2,assistant restates that the user found their scarf
+longmemeval,representative,lme:15a346c1_2:03dd5bbe54d4:7,assistant/long,2340,0,,0,2,B,purchase consideration,user,implicit,cross-turn,2,user is considering high-end cookware
+longmemeval,representative,lme:211bb1c2_1:03a77339f237:11,assistant/long,2911,0,work worked,3,1,B,hobby,user,implicit,cross-turn,2,advice presupposes the user does street photography
+longmemeval,representative,lme:0232f77d:bee7133a93c3:3,assistant/long,2861,0,works,1,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:sharegpt_eVmxjQZ_0:9012efba98f6:1,assistant/medium,433,0,,0,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:ultrachat_345394:2f22dc124f11:9,assistant/medium,666,0,,0,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:sharegpt_uNuzBLK_0:5e5e00ccef14:5,assistant/medium,1075,0,,0,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:ultrachat_501941:2102032c7984:7,assistant/medium,670,0,left,1,1,B,world knowledge (history),third parties,explicit,,2,"historical figures and their legacies: general knowledge, not memory about participants"
+longmemeval,representative,lme:sharegpt_F8CLI1Y_13:e4c5a729db3b:4,assistant/medium,885,0,,0,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:sharegpt_YeoNsEt_17:938e696ebaf0:8,assistant/short,165,0,,0,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:sharegpt_k3yQrLH_0:62435a5da5f5:1,assistant/short,80,0,,0,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:sharegpt_UbMVpdp_93:220278eb4150:4,assistant/short,76,0,,0,1,B,event (bereavement),third party,explicit,cross-turn,2,a named person suffered a loss; details in an earlier turn
+longmemeval,representative,lme:sharegpt_zwfSWfk_0:6aec4adccd0d:1,assistant/short,178,0,,0,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:sharegpt_1thv0EM_0:f4194b726a85:1,assistant/short,9,0,,0,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:sharegpt_7mz4EV7_0:4e3c7c2e414d:2,user/long,3274,0,manage,1,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:sharegpt_R79o5xs_0:60c21d6130ea:2,user/long,1966,0,work,1,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:sharegpt_igR6Bmm_0:0d1b1c2e72be:0,user/long,19257,0,left reported reporting reports work working,11,1,B,habit,user,explicit,,2,keeps interesting sentences in a note app (the rest is a pasted article)
+longmemeval,representative,lme:sharegpt_YvsQDjp_0:f27bdbada369:2,user/long,2429,0,,0,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:sharegpt_XYtuANl_9:ed77c62015b6:1,user/long,5325,0,report working,4,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:9f8c432e_1:83052b381db7:0,user/medium,258,0,,0,1,A,employment with title and named organisation,user,explicit,duration ('for about 6 weeks'),3,"the user is the new Senior Marketing Manager at a named company, for about six weeks: in domain, unsupported syntax; the name contains '&'"
+longmemeval,representative,lme:answer_7cb94507:8eb842fccb8b:6,user/medium,707,0,,0,1,B,shopping habit,user,explicit,,2,browses at named retailers
+longmemeval,representative,lme:answer_7cb94507:8eb842fccb8b:6,user/medium,707,0,,0,2,B,plan (cancel subscription),user,explicit,,2,considering cancelling a monthly beauty box ($50/month)
+longmemeval,representative,lme:answer_7cb94507:8eb842fccb8b:6,user/medium,707,0,,0,3,B,shopping habit,user,explicit,,2,buys beauty products at a discount store
+longmemeval,representative,lme:b9361a4f_1:0407b0bcc7e2:0,user/medium,282,0,,0,1,B,plan (purchase),user,explicit,,2,looking to buy a coffee maker
+longmemeval,representative,lme:b9361a4f_1:0407b0bcc7e2:0,user/medium,282,0,,0,2,B,event/possession,user,explicit,,2,received a coupon book from a named retailer
+longmemeval,representative,lme:1cafd864_3:8a5980818177:8,user/medium,249,0,,0,1,B,residence (moved),user,explicit,relative time,2,just moved into a new apartment in a named district
+longmemeval,representative,lme:3b5205b6_1:4eaca794bddb:10,user/medium,343,0,,0,1,B,plan,user,explicit,,2,will talk to relatives about family history
+longmemeval,representative,lme:e627b1aa_4:6183f508e72d:2,user/short,195,0,,0,1,B,preference/plan (education),user,explicit,,2,interested in online degree programmes at two named providers
+longmemeval,representative,lme:ultrachat_556010:f449f2697a43:0,user/short,81,0,,0,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:ultrachat_518651:6844edf749f8:6,user/short,181,0,,0,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:ultrachat_443538:9127a878bd62:0,user/short,71,0,,0,0,C,,,,,,no relevant extractable fact
+longmemeval,representative,lme:6ea1541e_1:cb3b9cc73472:10,user/short,189,0,,0,1,B,interest (entrepreneurship funding),user,implicit,,2,asks about a named charity's microloans for entrepreneurs
+longmemeval,targeted,lme:495cf518_2:3487e1b09b6b:3,targeted/work-vocabulary,2642,0,work,1,1,B,world knowledge (books and authors),third parties,explicit,,2,book authorship and authors' positions
+longmemeval,targeted,lme:bd8708e2_2:0750ad9a8a4e:9,targeted/work-vocabulary,2846,0,report work,2,1,B,plan (volunteering),user,implicit,cross-turn,2,advice presupposes the user will volunteer at a charity event
+longmemeval,targeted,lme:c625cff4_3:dccec659c52e:3,targeted/work-vocabulary,2026,0,works,1,0,C,,,,,,no relevant extractable fact
+longmemeval,targeted,lme:ultrachat_322794:bd4ae323f6c9:13,targeted/work-vocabulary,1520,0,works,1,1,B,world knowledge (infrastructure),third parties,explicit,,2,"named projects, cost and places"
+longmemeval,targeted,lme:a6b6067b:f6e930d7a5bc:11,targeted/work-vocabulary,2654,0,work,1,1,B,world knowledge (works and authors),third parties,explicit,dates,2,"plays, their authors and premiere dates"
+longmemeval,targeted,lme:27e262d5_1:97864eaf60f1:10,targeted/work-vocabulary,228,0,,0,1,A?,role (teaching assistantship),user,explicit,,2|3,has been a teaching assistant for a course; institution unnamed
+longmemeval,targeted,lme:27e262d5_1:97864eaf60f1:10,targeted/work-vocabulary,228,0,,0,2,B,education,user,implicit,,2,a PhD student
+longmemeval,targeted,lme:ultrachat_237047:bd92eceaddb7:1,targeted/work-vocabulary,1609,0,,0,1,B,world knowledge (places),third parties,explicit,,2,redevelopment of named areas
+longmemeval,targeted,lme:959e6cb0_7:9806658db042:11,targeted/work-vocabulary,3130,0,,0,1,B,hobby,user,implicit,cross-turn,2,presupposes the user builds tracks in a game editor
+longmemeval,targeted,lme:ultrachat_278874:5df1c20983e7:3,targeted/work-vocabulary,1597,0,left,1,1,B,world knowledge (history),third parties,explicit,,2,a region's history
+longmemeval,targeted,lme:sharegpt_koRE8H2_0:871d420dc0e2:5,targeted/work-vocabulary,1418,0,works,2,1,B,world knowledge (music),third parties,explicit,,2,composers' styles (partly opinion)
+longmemeval,targeted,lme:2aeb1268:4652fb99268e:7,targeted/work-vocabulary,2676,0,working,1,1,B,possession,user,implicit,cross-turn,2,presupposes the user owns a camera
+longmemeval,targeted,lme:sharegpt_fnuLBKl_133:fb9efe21fa3d:0,targeted/work-vocabulary,2735,0,,0,0,C,,,,,,no relevant extractable fact
+longmemeval,targeted,lme:sharegpt_sXKNzPE_0:9d6b8f4cbfd6:7,targeted/work-vocabulary,895,0,working,1,1,A,people in roles at named organisations (table),third parties,explicit,,3,about seven person-organisation rows asserted by the assistant in a table; unsupported layout; reliability of the assistant's claims unverified
+longmemeval,targeted,lme:e30307d8_2:60fe9d1e1e89:3,targeted/work-vocabulary,2251,0,,0,1,B,world knowledge (statistics),third parties,explicit,,2,average employee ages by industry
+longmemeval,targeted,lme:ultrachat_237018:0062ec553aa7:9,targeted/work-vocabulary,859,0,work,1,0,C,,,,,,no relevant extractable fact
+longmemeval,targeted,lme:edfa358d_1:84caeedd9da0:11,targeted/work-vocabulary,1017,0,working,1,1,B,event,user,implicit,cross-turn,2,the user made a costume piece at a seminar
+longmemeval,targeted,lme:sharegpt_eyjhBv3_0:6975202e654e:1,targeted/work-vocabulary,1768,0,manage work,3,0,C,,,,,,no relevant extractable fact
+longmemeval,targeted,lme:07e363d9_3:e9f9f9cca1e9:6,targeted/work-vocabulary,268,0,,0,1,B,work relationship (colleagues),user,implicit,,2,"has colleagues from a named country: a coworker relation, not employment or reporting"
+longmemeval,targeted,lme:6aaf298d:3365e0847b03:11,targeted/work-vocabulary,2919,0,work,1,1,B,world knowledge (books),third parties,explicit,,2,books and their authors
+longmemeval,targeted,lme:6aaf298d:3365e0847b03:11,targeted/work-vocabulary,2919,0,work,1,2,B,reading,user,implicit,cross-turn,2,the user is reading a named novel
+longmemeval,targeted,lme:ad3d0815_1:0347bde3f54a:7,targeted/work-vocabulary,3007,0,,0,1,B,hobby,user,implicit,cross-turn,2,learning fingerstyle guitar
