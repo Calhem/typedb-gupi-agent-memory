@@ -30,7 +30,7 @@ Date: 2026-11-04.
 ## Tests
 | Point | Result |
 |---|---|
-| start (`3d8cc72`) | 463 passed, 20 expected failures |
+| start (`3d8cc72`) | 467 passed, 20 expected failures (measured on main before the merge) |
 | end (`e034b52` plus docs) | **513 passed, 19 expected failures** |
 
 **The expected failures:**
