@@ -1,0 +1,215 @@
+{
+ "phase": "6D",
+ "frozen": "2026-11-04",
+ "protocol": "docs/evaluation/phase-6d/PLAN.md",
+ "datasets": {
+  "D1": {
+   "name": "Phase 4 frozen retrieval world and questions",
+   "files": {
+    "tests/fixtures/retrieval/world.json": {
+     "sha256": "dd03746fe382dc0412fdbe633f933355c1eb401e2614914ce5c9fb3b10f71275",
+     "bytes": 3571
+    },
+    "tests/fixtures/retrieval/questions.json": {
+     "sha256": "906e84a63e16a217432dd65c32c9d44b42cf19bb987478bf709295c4fe677b97",
+     "bytes": 3676
+    }
+   },
+   "split": "all 15 questions, 11 messages",
+   "frozen_in": "be7c01a",
+   "prior_use": "implementer-written; answer semantics v1/v2 developed and reported on it; not used to write rules:v2",
+   "independent": false
+  },
+  "D2": {
+   "name": "Phase 2 held-out conversations",
+   "files": {
+    "tests/fixtures/conversations/heldout/h1-new-cfo.json": {
+     "sha256": "f4bc096e4be3724dde35c44460551b9e0bdb0fe801378f4a220ecc32c33fcc2e",
+     "bytes": 1809
+    },
+    "tests/fixtures/conversations/heldout/h2-product-lead.json": {
+     "sha256": "4054c08a7fed6cb7121314eb7631f3d142c174030afbca06755621c4f554c697",
+     "bytes": 1799
+    },
+    "tests/fixtures/conversations/heldout/h3-pronouns-and-generic.json": {
+     "sha256": "4698c1fe53f53d6c1ed92065d5b5d7357e9af358306ba077bc15e9ef77ffb167",
+     "bytes": 1520
+    }
+   },
+   "split": "held-out (12 messages, 12 gold claims)",
+   "frozen_in": "814f501",
+   "prior_use": "written before any extractor; rules:v2 held-out recall reported once in 6B",
+   "independent": true
+  },
+  "D3": {
+   "name": "Phase 6B frozen extraction set",
+   "files": {
+    "tests/fixtures/formation/eval-v1.json": {
+     "sha256": "fe2a4596025b90f86cd42111c8ea91ae33e9d83f3f8c239cdc412d52861e7404",
+     "bytes": 8726
+    }
+   },
+   "split": "all 32 passages",
+   "frozen_in": "a5a1671",
+   "prior_use": "implementer-written just before rules:v2 with its scope in mind; first run reported in 6B",
+   "independent": false
+  },
+  "D4": {
+   "name": "Phase 6C adversarial cases (development tests)",
+   "files": {
+    "tests/fixtures/formation/adversarial-v1.json": {
+     "sha256": "85fa41ce4a257e15d6ea9d0087731d6d7db63008503d801cef462fdc6627dbab",
+     "bytes": 11009
+    }
+   },
+   "split": "all 17 cases",
+   "frozen_in": "b510a32",
+   "prior_use": "development tests written by the qualification's designer; first run 17/17 via form()",
+   "independent": false
+  },
+  "D5": {
+   "name": "LoCoMo",
+   "files": {
+    ".data/locomo/locomo10.json": {
+     "sha256": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
+     "bytes": 2805274
+    }
+   },
+   "split": "held-out conversations (split.json)",
+   "prior_use": "Phase 5 held-out retrieval first run reported; second exposure, no tuning",
+   "licence": "CC BY-NC 4.0 (research use; content never committed)",
+   "independent": true
+  },
+  "D6": {
+   "name": "LongMemEval S cleaned",
+   "files": {
+    ".data/longmemeval/longmemeval_s_cleaned.json": {
+     "sha256": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442",
+     "bytes": 277383467
+    }
+   },
+   "split": "held-out (447); TypeDB run on the pre-registered 64-question subset (config.json)",
+   "prior_use": "Phase 5 held-out retrieval first run reported; second exposure, no tuning",
+   "licence": "MIT",
+   "independent": true
+  }
+ },
+ "splits": {
+  "locomo_heldout": [
+   "conv-41",
+   "conv-42",
+   "conv-43",
+   "conv-44",
+   "conv-47",
+   "conv-48",
+   "conv-49",
+   "conv-50"
+  ],
+  "longmemeval_heldout_count": 447,
+  "longmemeval_typedb_subset": "benchmarks/config.json amendment 4 (embedding_subset, 64 ids)"
+ },
+ "code": {
+  "extractor rules:v2": {
+   "path": "src/gupi/formation/rules_v2.py",
+   "sha256": "98fd1f19ea4bedf3a2179354c315d25b6b1c024454236186dad650b13a2ae921"
+  },
+  "candidate IR gupi.candidate/1": {
+   "path": "src/gupi/formation/candidate.py",
+   "sha256": "c66c68616ea873c7049cf5c96ab1497016286f4022d23cbf8a1317c569453824"
+  },
+  "validation": {
+   "path": "src/gupi/formation/validate.py",
+   "sha256": "9a3a5c909f44e13a2fbac35dd9a9e21a96a176fd55094ae0fd81f71a0ebf399c"
+  },
+  "policy formation:v1": {
+   "path": "src/gupi/formation/form.py",
+   "sha256": "236a73e4ec733359451fa4b1bb2bd119f1d0dd878011ad72b81d0712980a95fa"
+  },
+  "candidate store (core/0012)": {
+   "path": "src/gupi/formation/store.py",
+   "sha256": "d4ad0b76a2503050316dd808d0257c2ed709ae40c169ae2e65f942bc6bff4ff3"
+  },
+  "answer semantics v2": {
+   "path": "src/gupi/answering_v2.py",
+   "sha256": "e2721ab3df52436374c3f110d19bc51d160627ee3b6e012b8d294bc719d33cd6"
+  },
+  "query": {
+   "path": "src/gupi/query.py",
+   "sha256": "6fffb97e0f9c62e0269d9c5a0f730bf6a5118790f9f73f17ed6a95200e25213c"
+  },
+  "qualification": {
+   "path": "src/gupi/qualification.py",
+   "sha256": "43129a0c8c5b502a3aa09fb3ab4bf04360ecb57ed12580f0bffb4eef141d1fd5"
+  },
+  "evidence retrievers (Phase 5)": {
+   "path": "src/gupi/evidence.py",
+   "sha256": "572776b611698807e691d804a43865cbf5486a75d5fa21751af5f5ed21c2e7b1"
+  },
+  "keyword answer baseline and Phase 4 scorer": {
+   "path": "src/gupi/retrieval_eval.py",
+   "sha256": "e558e0538808e442ab3e67d6f61a91218c51eefad3f35328f4e35dd3a2e7eb26"
+  },
+  "rules:v1 (Phase 4 pipeline)": {
+   "path": "src/gupi/extraction/rules.py",
+   "sha256": "3cf0cb20fb2856945e07c18ffb9f46feb54f4a57d36754f643293ce6eeb259fe"
+  },
+  "time expressions": {
+   "path": "src/gupi/timeexpr.py",
+   "sha256": "9f67d80b08f9cea23ebeccfc086ae3c9c98c8e49b56a5c66501b09b6f1bb0a65"
+  },
+  "6B scorer": {
+   "path": "src/gupi/formation/evaluation.py",
+   "sha256": "d1b7717759089b2a8bb10a823a8413f9bc662c4bef90deb1e7c7f5c8b26f8aab"
+  },
+  "6C adversarial scorer": {
+   "path": "scripts/evaluate_adversarial.py",
+   "sha256": "b45ea7e76fa0fd9afa154312e20586ad3116a5e0a940b3be9565680ed08f3197"
+  },
+  "retrieval benchmark config": {
+   "path": "benchmarks/config.json",
+   "sha256": "3b65d41770747d3dbe9f7a90f89a540df1deb76326ef5024752dff6b5fe0e84f"
+  },
+  "retrieval benchmark split": {
+   "path": "benchmarks/split.json",
+   "sha256": "a2cd4ab359e198ecbe27921797554f509f810e8b9512bbe37180c408720af224"
+  }
+ },
+ "scoring": {
+  "formation_match": "one-to-one greedy by claim type and role surfaces (case-folded); D3 also polarity (frozen 6B scorer)",
+  "temporal": "stored claim start window, end window and ongoing-at-observation, each exactly equal to the gold (D1, D2)",
+  "representation": "gold claim -> accepted claim in TypeDB | stored candidate only | absent",
+  "retrieval": "recall@k = |gold in top k| / |gold|; precision@5 = |gold in top 5| / 5; GUPI citations: set precision/recall",
+  "answers": "frozen gupi.retrieval_eval.score; missing (error or none) counted apart from incorrect",
+  "unsupported_definitive": "definitive TRUE/FALSE where gold is UNKNOWN/NOT_YET_KNOWN/CONTESTED, or any deciding evidence not direct",
+  "adversarial": "frozen scripts/evaluate_adversarial.score, through the candidate store",
+  "llm_judge": "none"
+ },
+ "runtime": {
+  "python": "3.13.17",
+  "platform": "macOS-26.5.2",
+  "machine": "Mac14,9",
+  "cpu": "Apple M2 Pro",
+  "cpu_count": "10",
+  "memory_bytes": "17179869184",
+  "packages": {
+   "typedb-driver": "3.14.0",
+   "fastembed": "0.9.1",
+   "onnxruntime": "1.31.1",
+   "numpy": "2.5.4"
+  },
+  "typedb": "typedb/typedb:3.14.1 in Docker (compose.yaml), 127.0.0.1:1734",
+  "embedding_model": {
+   "provider": "fastembed",
+   "model": "BAAI/bge-small-en-v1.5",
+   "dimension": 384,
+   "unit": "turn",
+   "similarity": "cosine, exact"
+  }
+ },
+ "not_used": [
+  "specialist M1 materials",
+  "paid APIs",
+  "LLM judges",
+  "new downloads"
+ ]
+}
