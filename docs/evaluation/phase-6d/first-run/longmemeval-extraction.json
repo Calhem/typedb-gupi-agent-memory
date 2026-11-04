@@ -1,0 +1,26 @@
+{
+ "meta": {
+  "phase": "6D",
+  "part": "D6 LongMemEval held-out, extraction only",
+  "run_label": "first-run",
+  "git": {
+   "commit": "a77a19480b5add1a01cf7d5b93be410fa9eea5c1",
+   "branch": "feature/phase-6d-evaluation",
+   "dirty": false
+  },
+  "started": "2026-11-04T03:29:17+00:00",
+  "peak_rss_bytes_at_start": 2124185600,
+  "wall_seconds": 36.02
+ },
+ "questions": 447,
+ "turns": 220178,
+ "turns_with_domain_verb": 40268,
+ "turns_with_candidates": 0,
+ "candidates": 0,
+ "candidate_kinds": {},
+ "answer_turns": 816,
+ "answer_turns_with_candidates": 0,
+ "extract_seconds": 30.67,
+ "turns_per_second": 7179.7,
+ "peak_python_rss_bytes": 2124185600
+}
