@@ -193,6 +193,18 @@ def test_a_correction_needs_exactly_one_target():
     assert not cset.candidates and kinds(report) == ["correction-target-unresolved"]
 
 
+def test_a_correction_whose_subject_is_a_pronoun_is_never_resolved():
+    """D3, pronoun case: "Sorry, she joined in April" names neither its subject nor its target. No candidate is
+    produced (the pronoun is not resolved), so no target can be guessed and no earlier claim is touched."""
+    first = "Nora Vance joined Halden in March 2025."
+    earlier, _ = run(first, response(assertion(first.rstrip("."), NORA, times=[("March 2025", "start")])))
+    text = "Sorry, she joined Halden in April 2025."
+    fix = assertion("she joined Halden in April 2025", [("employee", "she", "person"), ("employer", "Halden", "organization")],
+                    times=[("April 2025", "start")], correction={"kind": "corrects", "cue": "Sorry,", "earlier_statement": None})
+    cset, report = run(text, response(fix), prior=(earlier,))
+    assert not cset.candidates and kinds(report) == ["ambiguous-reference"]
+
+
 def test_inferred_assertions_and_reported_problems_are_explicit():
     text = "Our new CFO starts Monday."
     a = assertion("Our new CFO starts Monday", [("employee", "CFO", "person"), ("employer", "Halden", "organization")])
