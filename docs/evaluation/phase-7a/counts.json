@@ -1,0 +1,75 @@
+{
+ "meta": {
+  "phase": "7A",
+  "part": "Phase 7A independent counts",
+  "run_label": "counts",
+  "git": {
+   "commit": "f887863df3d93350343dcd655368c58cf245dc26",
+   "branch": "feature/phase-7a-extraction-diagnosis",
+   "dirty": false
+  },
+  "started": "2026-11-04T11:50:54+00:00",
+  "peak_rss_bytes_at_start": 37371904
+ },
+ "subset_rule": "sha256('phase7a-counts-v1|<dataset>|<key>') mod 20 == 0",
+ "locomo": {
+  "subset": {
+   "turns_examined": 289,
+   "turns_passed_to_extractor": 289,
+   "raw_candidates": 0,
+   "passing_validation": 0,
+   "rejected_by_validation": 0,
+   "unparsed_in_domain_clauses": 32,
+   "stored": 0,
+   "formed": 0,
+   "withheld": 0,
+   "review": 0,
+   "rejected_by_policy": 0,
+   "exceptions": 0
+  },
+  "complete": {
+   "turns_examined": 5882,
+   "turns_passed_to_extractor": 5882,
+   "raw_candidates": 0,
+   "passing_validation": 0,
+   "rejected_by_validation": 0,
+   "unparsed_in_domain_clauses": 536,
+   "stored": 0,
+   "formed": 0,
+   "withheld": 0,
+   "review": 0,
+   "rejected_by_policy": 0,
+   "exceptions": 0
+  }
+ },
+ "longmemeval": {
+  "subset": {
+   "turns_examined": 12563,
+   "turns_passed_to_extractor": 12563,
+   "raw_candidates": 0,
+   "passing_validation": 0,
+   "rejected_by_validation": 0,
+   "unparsed_in_domain_clauses": 3850,
+   "stored": 0,
+   "formed": 0,
+   "withheld": 0,
+   "review": 0,
+   "rejected_by_policy": 0,
+   "exceptions": 0
+  },
+  "complete": {
+   "turns_examined": 246750,
+   "turns_passed_to_extractor": 246750,
+   "raw_candidates": 0,
+   "passing_validation": 0,
+   "rejected_by_validation": 0,
+   "unparsed_in_domain_clauses": 74788,
+   "stored": 0,
+   "formed": 0,
+   "withheld": 0,
+   "review": 0,
+   "rejected_by_policy": 0,
+   "exceptions": 0
+  }
+ }
+}
