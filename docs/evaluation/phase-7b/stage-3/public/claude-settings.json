@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(./**)",
+      "Write(./responses/**)"
+    ],
+    "deny": [
+      "Bash",
+      "WebFetch",
+      "WebSearch",
+      "Agent",
+      "Task",
+      "NotebookEdit",
+      "Edit",
+      "Read(~/Desktop/**)",
+      "Read(~/Documents/**)",
+      "Read(~/Downloads/**)",
+      "Read(~/Library/**)",
+      "Read(~/.claude/**)",
+      "Read(~/.config/**)",
+      "Read(//private/**)",
+      "Read(//tmp/**)",
+      "Read(//Volumes/**)",
+      "Read(../**)",
+      "Write(../**)",
+      "mcp__terminal",
+      "mcp__Claude_Browser",
+      "mcp__claude-in-chrome",
+      "mcp__computer-use",
+      "mcp__ccd_session",
+      "mcp__ccd_session_mgmt",
+      "mcp__ccd_directory",
+      "mcp__ccd_host",
+      "mcp__mcp-registry",
+      "mcp__scheduled-tasks",
+      "mcp__visualize"
+    ]
+  }
+}

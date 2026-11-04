@@ -189,6 +189,9 @@ def test_the_audit_accepts_only_bundle_reads_and_writes(tmp_path):
                      ("Read", {"file_path": str(b / ".." / "private" / "gold.jsonl")}))
     v = stage3.audit(bad, b)
     assert not v["valid"] and [x["problem"] for x in v["violations"]] == ["outside the bundle", "tool not allowed", "outside the bundle"]
+    twice = transcript(fresh(tmp_path), ("Write", {"file_path": str(b / "responses/X.json")}),
+                       ("Write", {"file_path": str(b / "responses/X.json")}), ("Edit", {"file_path": str(b / "responses/X.json")}))
+    assert [x["problem"] for x in stage3.audit(twice, b)["violations"]] == ["response rewritten", "tool not allowed"]
     empty = tmp_path / "none"
     empty.mkdir()
     assert not stage3.audit(empty, b)["valid"]                     # no transcript: nothing proves the isolation

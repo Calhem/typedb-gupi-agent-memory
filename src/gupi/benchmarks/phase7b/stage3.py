@@ -43,7 +43,7 @@ CLAIMANT_KINDS = ("person", "organisation", "unknown")
 CORRECTION_KINDS = ("corrects", "retracts", "updates", "contradicts")
 BUNDLE_FILES = ("passages.jsonl", "response-format.md", "extraction-instructions.md", "README.md")
 # what a Stage 3B extraction session may use; anything else in its transcripts invalidates the run
-AUDIT_ALLOWED_TOOLS = {"Read", "Write", "Edit", "Glob", "Grep", "TodoWrite"}
+AUDIT_ALLOWED_TOOLS = {"Read", "Write", "Glob", "Grep", "TodoWrite"}
 
 SEVERE = {
     "invented entity": "a participant not in the text, or not a referent of the gold assertion",
@@ -399,9 +399,10 @@ def bundle(public, out):
 
 def audit(transcripts, bundle_dir):
     """Every tool call in an extraction session's transcripts (JSONL files, subagents included): a call to a
-    tool outside AUDIT_ALLOWED_TOOLS, or a path outside the bundle, makes the run invalid."""
+    tool outside AUDIT_ALLOWED_TOOLS, a path outside the bundle, or a response written more than once (a
+    regenerated output) makes the run invalid."""
     bundle_dir = str(Path(bundle_dir).resolve())
-    calls, violations, files = [], [], sorted(Path(transcripts).rglob("*.jsonl"))
+    calls, violations, files, written = [], [], sorted(Path(transcripts).rglob("*.jsonl")), {}
     for f in files:
         for line in f.read_text(encoding="utf-8").splitlines():
             try:
@@ -422,6 +423,11 @@ def audit(transcripts, bundle_dir):
                         violations.append({"file": f.name, "tool": name, "path": inp[key], "problem": "outside the bundle"})
                 if name == "Glob" and str(inp.get("pattern", "")).startswith(("/", "~", "..")):
                     violations.append({"file": f.name, "tool": name, "pattern": inp["pattern"], "problem": "outside the bundle"})
+                if name == "Write" and "file_path" in inp:
+                    target = str(Path(inp["file_path"]).resolve())
+                    written[target] = written.get(target, 0) + 1
+                    if written[target] == 2:
+                        violations.append({"file": f.name, "tool": name, "path": inp["file_path"], "problem": "response rewritten"})
     counts = {}
     for c in calls:
         counts[c] = counts.get(c, 0) + 1
