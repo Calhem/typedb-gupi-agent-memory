@@ -101,3 +101,13 @@ Defects found are documented with a regression-test proposal, not fixed.
 ## Cost
 Local only: `rules:v2`, the already-downloaded bge-small model, TypeDB in Docker. No paid API, no new
 download, no LLM judge. The $10 ledger is not touched.
+
+## Amendments after the feasibility run (before the first run)
+Recorded in `feasibility/` and `feasibility-repeat/`, both kept unchanged.
+1. **Failure attribution, stage 6.** The fixed rule blamed retrieval (stage 6) whenever a formed gold-evidence
+   message was not cited. In feasibility q03 that was wrong: under v2 nothing decides the queried instant,
+   and GUPI on gold claims cites nothing either. Stage 6 now requires that `gupi-gold` cites the message;
+   otherwise the message adds no stage and the earlier rules decide. Evaluation code only.
+2. **Run comparison** (`gupi.benchmarks.e2e.compare`) added for the reproducibility check. It ignores
+   timings, sizes, database names and dates.
+No production code, measure definition, dataset or system changed.

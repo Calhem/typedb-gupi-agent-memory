@@ -275,9 +275,11 @@ def attribute(questions, scored, trace, gold_scored):
                 elif c["mapped_valid_time"] != gold_vt(g, t['said']):
                     stages.append(3)
                     notes.append(f"{key}: valid time {c['mapped_valid_time']} vs gold {gold_vt(g, t['said'])}")
-                elif key not in r["cited"]:
+                elif key not in r["cited"] and key in gold_rows[q["id"]]["cited"]:
                     stages.append(6)
-                    notes.append(f"{key}: formed and believed, not cited")
+                    notes.append(f"{key}: formed and believed, not cited (gupi-gold cites it)")
+                elif key not in r["cited"]:
+                    notes.append(f"{key}: formed and believed; not cited, and gupi-gold does not cite it either")
         for key in r["cited"]:
             if key in evidence_keys:
                 continue
