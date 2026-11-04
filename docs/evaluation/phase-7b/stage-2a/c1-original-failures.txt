@@ -1,0 +1,10 @@
+# C1 regression tests run before the fix (2026-11-04). The test asserting a subject-only statement is malformed was removed before the fix: the schema allows a statement with no object.
+FAILED tests/integration/test_c1_schema_validation.py::test_a_well_formed_statement_is_valid_with_the_schema
+FAILED tests/integration/test_c1_schema_validation.py::test_malformed_statements_and_misplaced_values_are_rejected[values0-None-statement-statement]
+FAILED tests/integration/test_c1_schema_validation.py::test_malformed_statements_and_misplaced_values_are_rejected[values1-None-statement-statement]
+FAILED tests/integration/test_c1_schema_validation.py::test_malformed_statements_and_misplaced_values_are_rejected[values2-participants2-statement-statement]
+FAILED tests/integration/test_c1_schema_validation.py::test_malformed_statements_and_misplaced_values_are_rejected[values3-participants3-statement-statement]
+FAILED tests/integration/test_c1_schema_validation.py::test_malformed_statements_and_misplaced_values_are_rejected[values5-None-statement-value]
+FAILED tests/integration/test_c1_schema_validation.py::test_malformed_statements_and_misplaced_values_are_rejected[values6-participants6-employment-value]
+FAILED tests/integration/test_c1_schema_validation.py::test_the_store_applies_the_live_schema
+8 failed, 3 passed in 3.88s

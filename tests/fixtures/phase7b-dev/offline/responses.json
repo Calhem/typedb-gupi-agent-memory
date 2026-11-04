@@ -1,0 +1,1018 @@
+{
+ "_about": "Recorded model-shaped responses, written by hand by the developer to exercise model:candidate-v1. NOT model output and NOT evaluation evidence. 'faults' lists the deliberately faulty ones.",
+ "format": "gupi.model-response/1",
+ "responses": {
+  "DEV-101": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Mara Quist joined Pellwick as head of research in February 2025",
+     "relation": "employment",
+     "participants": [
+      {
+       "role": "employee",
+       "text": "Mara Quist",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "employer",
+       "text": "Pellwick",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "February 2025",
+       "kind": "start"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit",
+     "title": "head of research"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-102": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Teo Brandt has worked at Arnholt Systems since 2023",
+     "relation": "employment",
+     "participants": [
+      {
+       "role": "employee",
+       "text": "Teo Brandt",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "employer",
+       "text": "Arnholt Systems",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "2023",
+       "kind": "holds-since"
+      },
+      {
+       "text": "has worked",
+       "kind": "holds-at"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-103": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Ilsa Moreno reports to Teo Brandt",
+     "relation": "reporting",
+     "participants": [
+      {
+       "role": "report",
+       "text": "Ilsa Moreno",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "manager",
+       "text": "Teo Brandt",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "reports",
+       "kind": "holds-at"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-104": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Halden Holdings owns a majority stake in Pellwick",
+     "relation": "statement",
+     "participants": [
+      {
+       "role": "subject",
+       "text": "Halden Holdings",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "object",
+       "text": "Pellwick",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "owns",
+       "kind": "holds-at"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit",
+     "predicate": "owns a majority stake in"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-105": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Omar Siddiq is alleged to have misled investors",
+     "relation": "statement",
+     "participants": [
+      {
+       "role": "subject",
+       "text": "Omar Siddiq",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "unknown",
+     "attribution": {
+      "mode": "reported",
+      "claimant": "Halden Press",
+      "claimant_kind": "organization",
+      "via": []
+     },
+     "basis": "explicit",
+     "predicate": "is alleged to have misled investors",
+     "allegation": true
+    }
+   ],
+   "problems": []
+  },
+  "DEV-106": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Mara Quist reports to her now",
+     "relation": "reporting",
+     "participants": [
+      {
+       "role": "report",
+       "text": "Mara Quist",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "manager",
+       "text": "Dana Okoro",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "reports",
+       "kind": "holds-at"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "reported",
+      "claimant": "Dana Okoro",
+      "claimant_kind": "person",
+      "via": []
+     },
+     "basis": "inferred"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-107": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Omar Siddiq left Arnholt Systems in June 2025",
+     "relation": "employment",
+     "participants": [
+      {
+       "role": "employee",
+       "text": "Omar Siddiq",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "employer",
+       "text": "Arnholt Systems",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "June 2025",
+       "kind": "end"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "forwarded",
+      "claimant": "Dana Okoro",
+      "claimant_kind": "person",
+      "via": []
+     },
+     "basis": "explicit"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-108": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Omar Siddiq left Arnholt Systems in June 2025",
+     "relation": "employment",
+     "participants": [
+      {
+       "role": "employee",
+       "text": "Omar Siddiq",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "employer",
+       "text": "Arnholt Systems",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "June 2025",
+       "kind": "end"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": "Dana Okoro",
+      "claimant_kind": "person",
+      "via": []
+     },
+     "basis": "explicit"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-109": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Teo Brandt joined Pellwick in March 2025",
+     "relation": "employment",
+     "participants": [
+      {
+       "role": "employee",
+       "text": "Teo Brandt",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "employer",
+       "text": "Pellwick",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "March 2025",
+       "kind": "start"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-110": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Teo Brandt joined Pellwick in April 2025, not March",
+     "relation": "employment",
+     "participants": [
+      {
+       "role": "employee",
+       "text": "Teo Brandt",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "employer",
+       "text": "Pellwick",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "April 2025",
+       "kind": "start"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit",
+     "correction": {
+      "kind": "corrects",
+      "cue": "Correction:",
+      "earlier_statement": "March"
+     }
+    }
+   ],
+   "problems": []
+  },
+  "DEV-111": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Ilsa Moreno does not report to Omar Siddiq",
+     "relation": "reporting",
+     "participants": [
+      {
+       "role": "report",
+       "text": "Ilsa Moreno",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "manager",
+       "text": "Omar Siddiq",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "does not report",
+       "kind": "holds-at"
+      }
+     ],
+     "polarity": "negative",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-112": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Ravi Menon works at Halden Holdings",
+     "relation": "employment",
+     "participants": [
+      {
+       "role": "employee",
+       "text": "Ravi Menon",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "employer",
+       "text": "Halden Holdings",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "works",
+       "kind": "holds-at"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit",
+     "evidence_occurrence": 1
+    }
+   ],
+   "problems": []
+  },
+  "DEV-113": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Mara Quist will join Halden Holdings in January 2026, if the board approves",
+     "relation": "employment",
+     "participants": [
+      {
+       "role": "employee",
+       "text": "Mara Quist",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "employer",
+       "text": "Halden Holdings",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "January 2026",
+       "kind": "start"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "conditional",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-114": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "If Teo Brandt had stayed at Arnholt Systems",
+     "relation": "employment",
+     "participants": [
+      {
+       "role": "employee",
+       "text": "Teo Brandt",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "employer",
+       "text": "Arnholt Systems",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-115": "{\"format\": \"gupi.model-response/1\", \"outcome\": \"no-relevant-assertion\", \"assertions\": [], \"problems\": [}",
+  "DEV-116": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Great work on the launch, everyone",
+     "relation": "employment",
+     "participants": [
+      {
+       "role": "employee",
+       "text": "everyone",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "employer",
+       "text": "launch",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-117": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Dana from finance has moved to the Pellwick team",
+     "relation": "statement",
+     "participants": [
+      {
+       "role": "subject",
+       "text": "Dana Okoro",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit",
+     "predicate": "has moved to",
+     "object_text": "the Pellwick team"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-118": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Omar Siddiq started at Halden Holdings around 2019",
+     "relation": "employment",
+     "participants": [
+      {
+       "role": "employee",
+       "text": "Omar Siddiq",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "employer",
+       "text": "Halden Holdings",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "around 2019",
+       "kind": "start"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-119": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Ilsa Moreno left Pellwick last month",
+     "relation": "employment",
+     "participants": [
+      {
+       "role": "employee",
+       "text": "Ilsa Moreno",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "employer",
+       "text": "Pellwick",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "July 2025",
+       "kind": "end"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-120": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Ravi Menon has reported to Mara Quist since May 2025",
+     "relation": "reporting",
+     "participants": [
+      {
+       "role": "report",
+       "text": "Ravi Menon",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "manager",
+       "text": "Mara Quist",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "May 2025",
+       "kind": "holds-since"
+      },
+      {
+       "text": "has reported",
+       "kind": "holds-at"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-121": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Ravi Menon reports to Teo Brandt, not Mara",
+     "relation": "reporting",
+     "participants": [
+      {
+       "role": "report",
+       "text": "Ravi Menon",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "manager",
+       "text": "Teo Brandt",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "reports",
+       "kind": "holds-at"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-122": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Teo Brandt was promoted to CTO at Arnholt Systems in January 2025",
+     "relation": "employment",
+     "participants": [
+      {
+       "role": "employee",
+       "text": "Teo Brandt",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "employer",
+       "text": "Arnholt Systems",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "January 2025",
+       "kind": "start"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit",
+     "title": "CTO",
+     "start": 0,
+     "end": 64
+    }
+   ],
+   "problems": []
+  },
+  "DEV-123": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Pellwick is under investigation by regulators",
+     "relation": "statement",
+     "participants": [
+      {
+       "role": "subject",
+       "text": "Pellwick",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "unknown",
+     "attribution": {
+      "mode": "rumour",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit",
+     "predicate": "is under investigation by",
+     "object_text": "regulators",
+     "allegation": true
+    }
+   ],
+   "problems": []
+  },
+  "DEV-124": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "I started at Halden Holdings in June 2024",
+     "relation": "employment",
+     "participants": [
+      {
+       "role": "employee",
+       "text": "I",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      },
+      {
+       "role": "employer",
+       "text": "Halden Holdings",
+       "kind": "organization",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "June 2024",
+       "kind": "start"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-125": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Omar Siddiq leads the audit committee at Halden Holdings",
+     "relation": "statement",
+     "participants": [
+      {
+       "role": "subject",
+       "text": "Omar Siddiq",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [
+      {
+       "text": "leads",
+       "kind": "holds-at"
+      }
+     ],
+     "polarity": "positive",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit",
+     "predicate": "leads the audit committee at",
+     "object_text": "Halden Holdings"
+    }
+   ],
+   "problems": []
+  },
+  "DEV-126": {
+   "format": "gupi.model-response/1",
+   "outcome": "assertions",
+   "assertions": [
+    {
+     "evidence": "Please disregard my earlier note about Omar and the audit committee",
+     "relation": "statement",
+     "participants": [
+      {
+       "role": "subject",
+       "text": "Omar",
+       "kind": "person",
+       "is_pronoun_or_vague": false
+      }
+     ],
+     "times": [],
+     "polarity": "negative",
+     "modality": "actual",
+     "commitment": "certain",
+     "attribution": {
+      "mode": "direct",
+      "claimant": null,
+      "claimant_kind": null,
+      "via": []
+     },
+     "basis": "explicit",
+     "predicate": "leads the audit committee at",
+     "correction": {
+      "kind": "retracts",
+      "cue": "Please disregard",
+      "earlier_statement": null
+     }
+    }
+   ],
+   "problems": []
+  }
+ },
+ "faults": {
+  "DEV-106": "resolves 'her' to Dana Okoro (a participant surface that is not in the evidence) and says basis inferred",
+  "DEV-108": "calls a forwarded copy direct (code forces forwarded; formation must withhold the copy)",
+  "DEV-112": "omits the 'I think' hedge: chose evidence without it and kept commitment certain (unsupported certainty)",
+  "DEV-114": "calls a counterfactual actual (cue conflict)",
+  "DEV-115": "malformed JSON",
+  "DEV-116": "invents an employment from praise (a vague 'everyone')",
+  "DEV-117": "completes 'Dana' to 'Dana Okoro' (an invented identity, not in the text)",
+  "DEV-119": "supplies a resolved date ('July 2025') that is not in the text",
+  "DEV-122": "includes offsets (refused: offsets are computed by code)",
+  "DEV-126": "a retraction whose target cannot be matched by participants ('Omar' vs 'Omar Siddiq')"
+ }
+}

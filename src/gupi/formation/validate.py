@@ -16,6 +16,14 @@ from gupi.formation.candidate import (
 from gupi.temporal import ValidTime
 
 LABEL = re.compile(r"^[a-z][a-z0-9-]*$")
+# A generic statement carries its predicate and object text as candidate values (candidate-ir.md); the
+# extraction contract's SchemaInfo.attributes leaves these core attributes out, so they are checked against
+# what the type really owns (SchemaInfo.owned).
+STATEMENT_VALUES = ("predicate-text", "object-text")
+# Attributes formation sets from the candidate's own fields: never supplied as values.
+SET_BY_FORMATION = frozenset({"polarity", "commitment", "attribution-mode", "candidate-id", "valid-from-basis",
+                              "reason", "gupi-id", "proposition-key", "time-precision", "valid-to-basis", "method",
+                              "extraction-basis"})
 SINCE_BEFORE = re.compile(r"\b(?:ever )?since\s+$", re.I)
 
 
@@ -72,6 +80,12 @@ def _candidate(c, where, text, observation_id, known, schema, bad):
     for attr, value in c.values:
         if not LABEL.match(attr) or not isinstance(value, str) or not value.strip():
             bad(where, "value", f"value {attr!r} needs a label and non-empty text")
+        elif attr in SET_BY_FORMATION:
+            bad(where, "value", f"{attr!r} is set by formation from the candidate's own fields, not given as a value")
+        elif attr in STATEMENT_VALUES and c.claim_type != "statement":
+            bad(where, "value", f"{attr!r} belongs to a generic statement, not to {c.claim_type!r}")
+    if c.claim_type == "statement":
+        _statement(c, where, bad)
     _enum(where, "polarity", c.polarity, POLARITIES, bad)
     _enum(where, "modality", c.modality, MODALITIES, bad)
     _enum(where, "commitment", c.commitment, COMMITMENTS, bad)
@@ -126,9 +140,25 @@ def _schema(c, where, schema, bad):
             bad(where, "schema", f"{c.claim_type} has no role {p.role!r}")
         elif p.kind not in roles[p.role]:
             bad(where, "schema", f"a {p.kind} cannot play {c.claim_type}:{p.role}")
+    owned = set(schema.attributes.get(c.claim_type, ()))
+    if c.claim_type == "statement":
+        owned |= set(STATEMENT_VALUES) & set(schema.owned.get(c.claim_type, ()))
     for attr, _ in c.values:
-        if attr not in schema.attributes.get(c.claim_type, ()):
+        if attr not in owned and attr not in SET_BY_FORMATION:
             bad(where, "schema", f"{c.claim_type} has no attribute {attr!r}")
+
+
+def _statement(c, where, bad):
+    """A generic statement: one subject or more, exactly one predicate, an object participant or object text
+    (or neither: "Kim retired"), and nothing else."""
+    roles = {p.role for p in c.participants}
+    predicates = [v for a, v in c.values if a == "predicate-text"]
+    if "subject" not in roles:
+        bad(where, "statement", "a generic statement needs a subject")
+    if len(predicates) != 1:
+        bad(where, "statement", f"a generic statement needs exactly one predicate-text (has {len(predicates)})")
+    if sum(a == "object-text" for a, _ in c.values) > 1:
+        bad(where, "statement", "a generic statement has at most one object-text")
 
 
 def _enum(where, name, value, allowed, bad):

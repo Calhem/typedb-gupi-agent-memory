@@ -24,6 +24,16 @@ reliable memories from unfamiliar evidence. It is tested on two things together:
 
 Branch `feature/phase-7b-extraction-design`, from main `0d3ca00`. It is not merged.
 
+## Stage 2A (branch `feature/phase-7b-offline-harness`, not merged)
+| File | Contents |
+|---|---|
+| [stage-2a-results.md](stage-2a-results.md) | the summary, tests, before and after, reproduction |
+| [contract-corrections.md](contract-corrections.md) | C1 fixed; D3 enforced (one extension awaiting approval); organisational-claimant diagnosis (extension awaiting approval) |
+| [offline-extractor-interface.md](offline-extractor-interface.md) | `model:candidate-v1` and the `gupi.model-response/1` format (offline; no model connected) |
+| [offline-harness.md](offline-harness.md) | the harness that scores rules:v2.1 against recorded model outputs |
+| [development-fixtures.md](development-fixtures.md) | the developer-authored engineering fixtures (not evidence) |
+| [remaining-limitations.md](remaining-limitations.md) | the decisions awaiting approval, findings (F1), limits, and the blockers before a live evaluation |
+
 ## Documents
 | File | Contents |
 |---|---|

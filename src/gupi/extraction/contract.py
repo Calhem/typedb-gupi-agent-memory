@@ -41,6 +41,7 @@ class SchemaInfo:
     roles: dict          # claim type -> {role -> frozenset of referent types that may play it}
     attributes: dict     # claim type -> frozenset of string attributes it owns (beyond the core ones)
     mappings: dict = field(default_factory=dict)  # normalised predicate -> {"type", "subject", "object"}
+    owned: dict = field(default_factory=dict)     # claim type -> every string attribute it owns, core ones included
 
     @classmethod
     def load(cls, tx, packs):
@@ -61,6 +62,7 @@ class SchemaInfo:
             roles={t: {role: frozenset(p) for role, p in rs.items()} for t, rs in roles.items()},
             attributes={t: frozenset(a - CORE_CLAIM_ATTRIBUTES) for t, a in attributes.items()},
             mappings=mappings,
+            owned={t: frozenset(a) for t, a in attributes.items()},
         )
 
     def describe(self):

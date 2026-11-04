@@ -9,6 +9,7 @@ TypeDB; local only (no paid API, no LLM judge). Set GUPI_DOCKER for database siz
 """
 
 import argparse
+import hashlib
 import json
 import sys
 import time
@@ -57,10 +58,14 @@ def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--label", required=True, help="run label, e.g. feasibility, first-run, repeat-1")
     p.add_argument("--parts", nargs="+", default=["all"], choices=("all",) + PARTS)
+    p.add_argument("--manifest", default=str(manifest.OUT),
+                   help="the frozen manifest this run must match (default: the original, version 1)")
     args = p.parse_args(argv)
-    if manifest.main([]) != 0:
-        print("the frozen manifest no longer matches: refusing to run", file=sys.stderr)
+    if manifest.main(["--path", args.manifest]) != 0:
+        print("the frozen manifest does not match the current tree: refusing to run", file=sys.stderr)
         return 1
+    used = {"path": args.manifest.replace(str(ROOT) + "/", ""),
+            "sha256": hashlib.sha256(Path(args.manifest).read_bytes()).hexdigest()}
     # "all" is every part of the full run; the LoCoMo development slice belongs to the feasibility run only
     parts = tuple(x for x in PARTS if x != "locomo-dev-slice") if "all" in args.parts else args.parts
     out = OUT / args.label
@@ -78,6 +83,7 @@ def main(argv=None):
             result = {"meta": common.meta(args.label, part), "failed": f"{type(e).__name__}: {e}",
                       "traceback": traceback.format_exc()}
         result.setdefault("meta", {})["wall_seconds"] = round(time.perf_counter() - t0, 2)
+        result["meta"]["manifest"] = used
         text = json.dumps(result, indent=1, default=str) + "\n"
         path.write_text(text.replace(str(ROOT), "<repo>").replace(str(Path.home()), "~"))  # public repo: no local paths
         print(f"{part}: {'FAILED ' + result['failed'] if 'failed' in result else 'done'} in {result['meta']['wall_seconds']}s -> {path}",

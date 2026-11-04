@@ -1,0 +1,945 @@
+{
+ "meta": {
+  "phase": "6D",
+  "part": "D3 frozen 6B set",
+  "run_label": "current-v2",
+  "git": {
+   "commit": "168c59b026dbd96dd60a7eb8bf0bb29ec097f215",
+   "branch": "feature/phase-7b-offline-harness",
+   "dirty": false
+  },
+  "started": "2026-11-04T17:19:34+00:00",
+  "peak_rss_bytes_at_start": 305463296,
+  "wall_seconds": 1.66,
+  "manifest": {
+   "path": "docs/evaluation/phase-6d/manifest-v2.json",
+   "sha256": "986ab45d82f2f18b6e3faeef58f9cdd42e36ee38b0caf916dfa25e864b929056"
+  }
+ },
+ "frozen_scorer": {
+  "passages": 32,
+  "expected": 31,
+  "extracted": 30,
+  "matched": 30,
+  "precision": 1.0,
+  "recall": 0.968,
+  "correct_rejections": 5,
+  "empty_passages": 5,
+  "fields": {
+   "times": {
+    "correct": 12,
+    "of": 30
+   },
+   "modality": {
+    "correct": 30,
+    "of": 30
+   },
+   "commitment": {
+    "correct": 30,
+    "of": 30
+   },
+   "attribution": {
+    "correct": 30,
+    "of": 30
+   },
+   "asserted_by": {
+    "correct": 30,
+    "of": 30
+   },
+   "relations": {
+    "correct": 30,
+    "of": 30
+   }
+  }
+ },
+ "frozen_scorer_rows": [
+  {
+   "id": "p01",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p02",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": [
+    {
+     "field": "times",
+     "expected": [
+      [
+       "holds-since",
+       "2023"
+      ]
+     ],
+     "got": [
+      [
+       "holds-at",
+       "has worked"
+      ],
+      [
+       "holds-since",
+       "2023"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p03",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": [
+    {
+     "field": "times",
+     "expected": [
+      [
+       "holds-since",
+       "last spring"
+      ]
+     ],
+     "got": [
+      [
+       "holds-at",
+       "has been reporting"
+      ],
+      [
+       "holds-since",
+       "last spring"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p04",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p05",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p06",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": [
+    {
+     "field": "times",
+     "expected": [],
+     "got": [
+      [
+       "holds-at",
+       "no longer works"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p07",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": [
+    {
+     "field": "times",
+     "expected": [],
+     "got": [
+      [
+       "holds-at",
+       "reports"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p08",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p09",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p10",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": [
+    {
+     "field": "times",
+     "expected": [],
+     "got": [
+      [
+       "holds-at",
+       "does not report"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p11",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": [
+    {
+     "field": "times",
+     "expected": [
+      [
+       "holds-since",
+       "april 2025"
+      ]
+     ],
+     "got": [
+      [
+       "holds-at",
+       "has reported"
+      ],
+      [
+       "holds-since",
+       "april 2025"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p12",
+   "expected": 2,
+   "extracted": 2,
+   "matched": 2,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": [
+    {
+     "field": "times",
+     "expected": [
+      [
+       "holds-since",
+       "april 2025"
+      ]
+     ],
+     "got": [
+      [
+       "holds-at",
+       "has reported"
+      ],
+      [
+       "holds-since",
+       "april 2025"
+      ]
+     ]
+    },
+    {
+     "field": "times",
+     "expected": [
+      [
+       "holds-since",
+       "april 2025"
+      ]
+     ],
+     "got": [
+      [
+       "holds-at",
+       "has reported"
+      ],
+      [
+       "holds-since",
+       "april 2025"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p13",
+   "expected": 0,
+   "extracted": 0,
+   "matched": 0,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p14",
+   "expected": 0,
+   "extracted": 0,
+   "matched": 0,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p15",
+   "expected": 0,
+   "extracted": 0,
+   "matched": 0,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p16",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p17",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p18",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": [
+    {
+     "field": "times",
+     "expected": [],
+     "got": [
+      [
+       "holds-at",
+       "works"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p19",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": [
+    {
+     "field": "times",
+     "expected": [],
+     "got": [
+      [
+       "holds-at",
+       "reports"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p20",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": [
+    {
+     "field": "times",
+     "expected": [],
+     "got": [
+      [
+       "start",
+       "later this year"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p21",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p22",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": [
+    {
+     "field": "times",
+     "expected": [],
+     "got": [
+      [
+       "holds-at",
+       "isn't"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p23",
+   "expected": 2,
+   "extracted": 2,
+   "matched": 2,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": [
+    {
+     "field": "times",
+     "expected": [
+      [
+       "holds-since",
+       "2024"
+      ]
+     ],
+     "got": [
+      [
+       "holds-at",
+       "has been"
+      ],
+      [
+       "holds-since",
+       "2024"
+      ]
+     ]
+    },
+    {
+     "field": "times",
+     "expected": [],
+     "got": [
+      [
+       "holds-at",
+       "reports"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p24",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p25",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p26",
+   "expected": 0,
+   "extracted": 0,
+   "matched": 0,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p27",
+   "expected": 0,
+   "extracted": 0,
+   "matched": 0,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p28",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": [
+    {
+     "field": "times",
+     "expected": [],
+     "got": [
+      [
+       "start",
+       "smarch 2025"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p29",
+   "expected": 2,
+   "extracted": 2,
+   "matched": 2,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": [
+    {
+     "field": "times",
+     "expected": [],
+     "got": [
+      [
+       "holds-at",
+       "reports"
+      ]
+     ]
+    },
+    {
+     "field": "times",
+     "expected": [],
+     "got": [
+      [
+       "holds-at",
+       "reports"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p30",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": [
+    {
+     "field": "times",
+     "expected": [
+      [
+       "start",
+       "march 2025"
+      ]
+     ],
+     "got": [
+      [
+       "holds-at",
+       "has been reporting"
+      ],
+      [
+       "start",
+       "march 2025"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p31",
+   "expected": 1,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [],
+   "field_errors": []
+  },
+  {
+   "id": "p32",
+   "expected": 2,
+   "extracted": 1,
+   "matched": 1,
+   "false_positives": [],
+   "misses": [
+    "employment(employee=he, employer=arnholt systems)"
+   ],
+   "field_errors": []
+  }
+ ],
+ "extract_seconds": 0.0067,
+ "policy_outcomes": {
+  "formed": 20,
+  "withheld": 4,
+  "review": 6,
+  "rejected": 0
+ },
+ "representation": {
+  "accepted_claim": 20,
+  "candidate_only": 10,
+  "absent": 1
+ },
+ "expected_states": [
+  {
+   "passage": "p01",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p02",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p03",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "review",
+   "state": "candidate_only",
+   "reason": "needs a review decision before forming: a stated time could not be read"
+  },
+  {
+   "passage": "p04",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p05",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [
+    "corrects"
+   ],
+   "status": "review",
+   "state": "candidate_only",
+   "reason": "needs a review decision before forming: a stated correction"
+  },
+  {
+   "passage": "p06",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "reported",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p07",
+   "modality": "actual",
+   "commitment": "probable",
+   "attribution": "direct",
+   "relations": [],
+   "status": "review",
+   "state": "candidate_only",
+   "reason": "needs a review decision before forming: hedged by the source (probable)"
+  },
+  {
+   "passage": "p08",
+   "modality": "planned",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "withheld",
+   "state": "candidate_only",
+   "reason": "a planned statement: kept as a candidate, never formed into a claim about what is the case"
+  },
+  {
+   "passage": "p09",
+   "modality": "planned",
+   "commitment": "probable",
+   "attribution": "direct",
+   "relations": [],
+   "status": "withheld",
+   "state": "candidate_only",
+   "reason": "a planned statement: kept as a candidate, never formed into a claim about what is the case"
+  },
+  {
+   "passage": "p10",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p11",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "forwarded",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p12",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p12",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "forwarded",
+   "relations": [
+    "repeats"
+   ],
+   "status": "withheld",
+   "state": "candidate_only",
+   "reason": "repeats candidate:a85dd97a859dcf8142c225946ef700c1 (a forwarded or quoted copy): not an independent attestation"
+  },
+  {
+   "passage": "p16",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p17",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p18",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p19",
+   "modality": "actual",
+   "commitment": "probable",
+   "attribution": "direct",
+   "relations": [],
+   "status": "review",
+   "state": "candidate_only",
+   "reason": "needs a review decision before forming: hedged by the source (probable)"
+  },
+  {
+   "passage": "p20",
+   "modality": "planned",
+   "commitment": "possible",
+   "attribution": "direct",
+   "relations": [],
+   "status": "withheld",
+   "state": "candidate_only",
+   "reason": "a planned statement: kept as a candidate, never formed into a claim about what is the case"
+  },
+  {
+   "passage": "p21",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p22",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p23",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p23",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p24",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "reported",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p25",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [
+    "corrects"
+   ],
+   "status": "review",
+   "state": "candidate_only",
+   "reason": "needs a review decision before forming: a stated correction"
+  },
+  {
+   "passage": "p28",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "review",
+   "state": "candidate_only",
+   "reason": "needs a review decision before forming: a stated time could not be read"
+  },
+  {
+   "passage": "p29",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p29",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p30",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p31",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p32",
+   "modality": "actual",
+   "commitment": "certain",
+   "attribution": "direct",
+   "relations": [],
+   "status": "formed",
+   "state": "accepted_claim",
+   "reason": "an asserted actual condition or event"
+  },
+  {
+   "passage": "p32",
+   "state": "absent"
+  }
+ ],
+ "database": {
+  "observation": 32,
+  "memory-candidate": 30,
+  "formation-decision": 30,
+  "formed-into": 20,
+  "claim": 20,
+  "review": 20,
+  "correction-suggestion": 2,
+  "embedding": 0,
+  "claims_with_candidate_but_no_store_link": 0,
+  "database": "gupi-6d-d3-f96d837c",
+  "bytes": 21479424
+ },
+ "timings": {
+  "submit": 0.7797
+ }
+}

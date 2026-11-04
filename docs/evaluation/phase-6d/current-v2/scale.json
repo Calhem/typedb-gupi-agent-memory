@@ -1,0 +1,209 @@
+{
+ "meta": {
+  "phase": "6D",
+  "part": "operational probe (synthetic load)",
+  "run_label": "current-v2",
+  "git": {
+   "commit": "168c59b026dbd96dd60a7eb8bf0bb29ec097f215",
+   "branch": "feature/phase-7b-offline-harness",
+   "dirty": false
+  },
+  "started": "2026-11-04T17:40:58+00:00",
+  "peak_rss_bytes_at_start": 2329919488,
+  "wall_seconds": 38.09,
+  "manifest": {
+   "path": "docs/evaluation/phase-6d/manifest-v2.json",
+   "sha256": "986ab45d82f2f18b6e3faeef58f9cdd42e36ee38b0caf916dfa25e864b929056"
+  }
+ },
+ "steps": [
+  {
+   "copies": 4,
+   "observations": 128,
+   "candidates": 120,
+   "decisions": 120,
+   "claims": 80,
+   "pending": 24,
+   "pending_seconds": 0.0267,
+   "query_latency": {
+    "n": 4,
+    "p50": 0.01439,
+    "p95": 0.0335,
+    "max": 0.0335,
+    "total": 0.075
+   },
+   "last_copy": {
+    "ingest_s_per_obs": 0.00677,
+    "extract_s_per_obs": 0.000193,
+    "submit_s_per_obs": 0.01905
+   },
+   "database_bytes": 21954560
+  },
+  {
+   "copies": 8,
+   "observations": 256,
+   "candidates": 240,
+   "decisions": 240,
+   "claims": 160,
+   "pending": 48,
+   "pending_seconds": 0.0419,
+   "query_latency": {
+    "n": 8,
+    "p50": 0.014,
+    "p95": 0.0296,
+    "max": 0.0296,
+    "total": 0.126
+   },
+   "last_copy": {
+    "ingest_s_per_obs": 0.00722,
+    "extract_s_per_obs": 0.000207,
+    "submit_s_per_obs": 0.02028
+   },
+   "database_bytes": 22597632
+  },
+  {
+   "copies": 12,
+   "observations": 384,
+   "candidates": 360,
+   "decisions": 360,
+   "claims": 240,
+   "pending": 72,
+   "pending_seconds": 0.0856,
+   "query_latency": {
+    "n": 12,
+    "p50": 0.01547,
+    "p95": 0.03591,
+    "max": 0.03591,
+    "total": 0.209
+   },
+   "last_copy": {
+    "ingest_s_per_obs": 0.0071,
+    "extract_s_per_obs": 0.000212,
+    "submit_s_per_obs": 0.02115
+   },
+   "database_bytes": 23236608
+  },
+  {
+   "copies": 16,
+   "observations": 512,
+   "candidates": 480,
+   "decisions": 480,
+   "claims": 320,
+   "pending": 96,
+   "pending_seconds": 0.0986,
+   "query_latency": {
+    "n": 16,
+    "p50": 0.01384,
+    "p95": 0.03916,
+    "max": 0.03916,
+    "total": 0.246
+   },
+   "last_copy": {
+    "ingest_s_per_obs": 0.0297,
+    "extract_s_per_obs": 0.000677,
+    "submit_s_per_obs": 0.12025
+   },
+   "database_bytes": 23879680
+  },
+  {
+   "copies": 20,
+   "observations": 640,
+   "candidates": 600,
+   "decisions": 600,
+   "claims": 400,
+   "pending": 120,
+   "pending_seconds": 0.1,
+   "query_latency": {
+    "n": 20,
+    "p50": 0.01362,
+    "p95": 0.03449,
+    "max": 0.03449,
+    "total": 0.293
+   },
+   "last_copy": {
+    "ingest_s_per_obs": 0.00737,
+    "extract_s_per_obs": 0.000203,
+    "submit_s_per_obs": 0.0192
+   },
+   "database_bytes": 24522752
+  },
+  {
+   "copies": 24,
+   "observations": 768,
+   "candidates": 720,
+   "decisions": 720,
+   "claims": 480,
+   "pending": 144,
+   "pending_seconds": 0.1329,
+   "query_latency": {
+    "n": 20,
+    "p50": 0.01294,
+    "p95": 0.03626,
+    "max": 0.03626,
+    "total": 0.284
+   },
+   "last_copy": {
+    "ingest_s_per_obs": 0.0064,
+    "extract_s_per_obs": 0.00019,
+    "submit_s_per_obs": 0.01805
+   },
+   "database_bytes": 25165824
+  },
+  {
+   "copies": 28,
+   "observations": 896,
+   "candidates": 840,
+   "decisions": 840,
+   "claims": 560,
+   "pending": 168,
+   "pending_seconds": 0.2438,
+   "query_latency": {
+    "n": 20,
+    "p50": 0.01365,
+    "p95": 0.02969,
+    "max": 0.02969,
+    "total": 0.311
+   },
+   "last_copy": {
+    "ingest_s_per_obs": 0.01016,
+    "extract_s_per_obs": 0.000341,
+    "submit_s_per_obs": 0.02697
+   },
+   "database_bytes": 25804800
+  },
+  {
+   "copies": 31,
+   "observations": 992,
+   "candidates": 930,
+   "decisions": 930,
+   "claims": 620,
+   "pending": 186,
+   "pending_seconds": 0.7176,
+   "query_latency": {
+    "n": 20,
+    "p50": 0.01538,
+    "p95": 0.07827,
+    "max": 0.07827,
+    "total": 0.376
+   },
+   "last_copy": {
+    "ingest_s_per_obs": 0.00961,
+    "extract_s_per_obs": 0.000327,
+    "submit_s_per_obs": 0.02752
+   },
+   "database_bytes": 26288128
+  }
+ ],
+ "total_seconds": 36.78,
+ "resubmission": {
+  "submissions": 32,
+  "seconds": 0.519,
+  "decisions_before": 930,
+  "decisions_after": 930,
+  "candidates_before": 930,
+  "candidates_after": 930,
+  "claims_before": 620,
+  "claims_after": 620
+ },
+ "note": "Synthetic renamed copies of D3: operational measurements only, no accuracy."
+}

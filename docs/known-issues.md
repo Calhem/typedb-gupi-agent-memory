@@ -85,3 +85,14 @@ error, and the frozen gold and scorer are unchanged, so both count as misses.
 | q03 | FALSE | UNKNOWN | the gold treats a later start as evidence of falsity earlier; v2 does not (ADR 0009, Q1) |
 
 **To resolve them:** an adjudication by someone independent of GUPI. Until then, report them as open.
+
+## Phase 7B Stage 2A findings (recorded, not fixed)
+- **F1: a second forwarded copy is formed.**
+  - **What happens:** a forwarded copy of a statement that itself arrived forwarded is formed, not withheld.
+    `_existing_copies` only withholds copies of first-hand claims.
+  - **What it affects:** answers still count one originator. Memory, though, holds two claims for one
+    attestation.
+  - **The proposed regression test:** docs/evaluation/phase-7b/remaining-limitations.md.
+- **Organisational claimants are stored as people (C2).**
+  - **The diagnosis:** a candidate-contract limitation plus a persistence-mapping defect.
+  - **The proposed extension:** in docs/evaluation/phase-7b/contract-corrections.md, awaiting approval.

@@ -89,6 +89,7 @@ def submit(memory, observation, cset, schema=None):
     """Store the valid candidates of an ingested observation, each with the policy's decision. Idempotent:
     a candidate already stored is not stored again, and an unchanged decision is not recorded again."""
     issues = {}
+    schema = schema or policy.live_schema(memory)  # the same admissibility as schema-aware validation (C1)
     for i in validate(cset, observation, schema):
         issues.setdefault(i.where, []).append(i)
     if issues.get("set"):
