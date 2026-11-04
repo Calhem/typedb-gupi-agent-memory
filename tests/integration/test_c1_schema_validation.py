@@ -9,7 +9,7 @@ from typedb.driver import TransactionType
 from gupi import ids
 from gupi.extraction.contract import SchemaInfo
 from gupi.formation import evaluation, extractors, store
-from gupi.formation.candidate import Attribution, Candidate, CandidateSet, Participant, Passage
+from gupi.formation.candidate import Candidate, CandidateSet, Participant, Passage
 from gupi.formation.validate import validate
 from gupi.records import Batch, Context, Observation, Source
 from gupi.typedb.connection import transaction

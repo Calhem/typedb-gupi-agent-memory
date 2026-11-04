@@ -1,0 +1,4 @@
+# D3 scenario tests run before the fix (2026-11-04): 5 of 7 already behaved correctly; these 2 did not.
+FAILED tests/integration/test_d3_correction_targets.py::test_several_plausible_targets_are_ambiguous_even_when_the_extractor_named_one
+FAILED tests/integration/test_d3_correction_targets.py::test_a_superseded_target_is_not_suggested_as_resolved
+2 failed, 5 passed in 2.38s

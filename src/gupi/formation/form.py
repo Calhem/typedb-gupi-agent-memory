@@ -252,6 +252,7 @@ def _suggest_corrections(memory, cset, decisions, drafts):
         recorded = retrieval.recorded_with_keys(tx, keys, memory.clock())
         believed = retrieval.believed_among(tx, recorded, memory.clock())
         views = {v.id: v for v in retrieval.claims_by_ids(tx, believed)}
+        named_believed = set(retrieval.believed_among(tx, list(formed_from.values()), memory.clock()))
     out = []
     for d in decisions:
         c = by_id[d.candidate_id]
@@ -260,17 +261,21 @@ def _suggest_corrections(memory, cset, decisions, drafts):
         if d.outcome not in ("formed", "review") or not cued:
             out.append(d)
             continue
-        if rel is not None and formed_from.get(rel.target):
-            targets = [formed_from[rel.target]]
-        else:
-            key = drafts[c.id].proposition_key if c.id in drafts else None
-            targets = sorted(v.id for v in views.values() if v.proposition_key == key and v.id != d.claim_id)
+        key = drafts[c.id].proposition_key if c.id in drafts else None
+        # D3: every believed claim this could plausibly correct is listed; the extractor's named target is
+        # never taken alone when others are plausible, and is not offered at all once it is no longer believed
+        plausible = sorted(v.id for v in views.values() if v.proposition_key == key and v.id != d.claim_id)
+        named = formed_from.get(rel.target) if rel is not None else None
+        note = ""
+        if named and named not in named_believed:
+            note = f" (the named target {named} is no longer believed)"
+        targets = sorted(set(plausible) | ({named} if named in named_believed else set()))
         cue = rel.cue if rel is not None and rel.cue else "Correction"
         out.append(Decision(d.candidate_id, d.outcome, d.reason, d.decided_by, d.claim_id, {
             "old": targets[0] if len(targets) == 1 else None, "possible_targets": targets,
             "ambiguous": len(targets) > 1, "new": d.claim_id,
             "reason": f"{cue}: candidate {d.candidate_id}" + (f" {rel.kind} {rel.target}" if rel else "")
-                      + ("" if targets else " (no claim in memory matches its target)")}))
+                      + note + ("" if targets else " (no claim in memory matches its target)")}))
     return out
 
 
