@@ -72,3 +72,14 @@ existing data. They matter when formation is used.
   - **`rules:v2`'s narrow coverage** is documented in docs/formation/rules-v2.md and
     docs/evaluation/phase-6b-extraction.md.
 
+
+## Unresolved evaluation disagreements: Phase 4 questions q01 and q03
+Recorded 2026-11-04 (Phase 6D; docs/evaluation/phase-6d/failure-attribution.md). Neither is a proven gold
+error, and the frozen gold and scorer are unchanged, so both count as misses.
+
+| Question | Frozen gold | v2 answer | The disagreement |
+|---|---|---|---|
+| q01 | TRUE | PRESUMED end to end (UNKNOWN on gold claims) | the gold counts a period joined from a start and a later end as TRUE; v2 deliberately calls it PRESUMED |
+| q03 | FALSE | UNKNOWN | the gold treats a later start as evidence of falsity earlier; v2 does not (ADR 0009, Q1) |
+
+**To resolve them:** an adjudication by someone independent of GUPI. Until then, report them as open.

@@ -39,6 +39,20 @@ unchanged, and so are every frozen question, gold answer and earlier result.
 - **D2** (the Phase 2 held-out conversations) is the only independent text with claim-level gold. It has no
   questions.
 
+**Which results are independent evidence:**
+
+| Result | Material | Status |
+|---|---|---|
+| End-to-end answers, 13/15; contradiction, abstention, belief-time, open-role | D1 | **development** (implementer-written; answer semantics developed on it) |
+| Qualification, attribution and independence, 17/17 | D4 | **development tests** |
+| Extraction precision 30/30, recall 30/31; field accuracy | D3 | **development-adjacent** (implementer-written, with the extractor's scope in mind) |
+| Formation recall 5/12, precision 5/5; entities 10/22 | D2 | **independent** (written before any extractor; seen once before, in 6B) |
+| Retrieval; 0 candidates from 5,094 turns | D5 LoCoMo held-out | **independent** (second exposure, no tuning) |
+| Retrieval on 64 questions; 0 candidates from 220,178 turns | D6 LongMemEval held-out | **independent** (second exposure, no tuning) |
+
+Every favourable answer-level result comes from development material. The independent results all
+concern formation and retrieval, and they are the unfavourable ones.
+
 ## Results
 ### C. Answers (D1, 15 questions)
 | System | Correct | Incorrect | Missing | Abstained when it should | Unsupported definitive | Citation P / R |
@@ -58,8 +72,12 @@ unchanged, and so are every frozen question, gold answer and earlier result.
 - **Keyword heuristic:** 0/2, 2/6, 2/2 and 0/3 in the same categories.
 
 **The two GUPI misses** are q01 (PRESUMED where the gold says TRUE) and q03 (UNKNOWN where the gold says
-FALSE). Both are more cautious answers, not confident errors. Both gold answers were written under v1
-rules that v2 replaced deliberately. See [failure-attribution.md](failure-attribution.md).
+FALSE). Both are more cautious answers, not confident errors.
+- **Recorded as unresolved evaluation disagreements, not proven gold errors.** The gold reasons as v1 did,
+  and v2 deliberately reads the evidence differently. Neither side has been shown to be wrong, and no one
+  independent has adjudicated them.
+- **They still count as misses:** the frozen gold and scorer are unchanged. See
+  [failure-attribution.md](failure-attribution.md).
 
 **End to end differs from gold claims only on q01:**
 - **The difference:** `rules:v2` reads "Since March 2025, ..." as *held since*, not as a start in March. So

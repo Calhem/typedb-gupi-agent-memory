@@ -25,14 +25,24 @@ are no unsupported definitive answers and no missing answers.
 
 | Question | Gold | GUPI e2e | Rule | Manual | Why |
 |---|---|---|---|---|---|
-| q01 | TRUE | PRESUMED | 7 | **9** | gold written under v1, which counted a joined period as TRUE; v2 deliberately returns PRESUMED |
-| q03 | FALSE | UNKNOWN | 7 | **9** | gold relies on v1's "a later start makes earlier times FALSE"; v2 removed it (ADR 0009, Q1) |
+| q01 | TRUE | PRESUMED | 7 | **9, unresolved** | the gold reasons as v1 did, counting a joined period as TRUE; v2 deliberately returns PRESUMED |
+| q03 | FALSE | UNKNOWN | 7 | **9, unresolved** | the gold reasons as v1 did, "a later start makes earlier times FALSE"; v2 removed that rule (ADR 0009, Q1) |
 
-**Why each was reassigned:**
-- **The general reason:** both rule assignments are 7, "the answer follows from the semantics". That is
-  accurate, but the semantics did what the approved decisions require.
-- **q01:** the disagreement is between the gold convention and the approved semantics, so it is stage 9.
-- **q03:** the FALSE is the v1 rule that v2 was designed to remove, so it is stage 9.
+**Status: unresolved evaluation disagreements, not proven gold errors.**
+- **Why they are open:** the gold answers and GUPI's v2 answers follow different, defensible readings of
+  the same evidence.
+- **What they are not:** they are not established mistakes in the gold. Nothing in this evaluation shows
+  that v2's readings are the right ones; v2's rules are the owner's decisions, not facts about the world.
+  No independent annotator has adjudicated either question.
+- **What stays as it is:** the frozen gold and the frozen scorer, so both still count as misses (13/15).
+- **What would resolve them:** an adjudication by someone independent of GUPI, for example through the
+  human trial's guidelines.
+
+**Why each was reassigned from 7 to 9:**
+- **Rule 7 is accurate:** "the answer follows from the semantics". The semantics did what the approved
+  decisions require.
+- **Stage 9 records where the disagreement lies:** between the gold's reasoning and the approved semantics.
+  It does not say which side is right.
 - **What a stricter reader could say:** that both belong to stage 7, a semantics that disagrees with how the
   question's author reasoned. Either way, neither is an extraction, storage or retrieval failure.
 
@@ -124,8 +134,10 @@ candidates keep the evidence, so a reviewer can still form them.
   - **The consequence:** even perfect extraction would leave most questions without a structural handle.
     This is Phase 5's finding, unchanged.
 
-## Gold or evaluation problems noticed (not changed)
-- **Two D1 gold answers (q01, q03)** encode v1 rules, as documented in Phase 4 v2.
+## Unresolved evaluation disagreements (gold not changed)
+- **Two D1 gold answers (q01, q03)** reason as v1 did, as documented in Phase 4 v2. They are unresolved
+  disagreements, not proven gold errors (see above).
 - **The Phase 2 gold encodes "since X" as a start,** which disagrees with the deliberate "since" reading.
+  This is also unresolved: both readings are defensible.
 - **No D1 question covers the periods of w2-1 and w2-3,** so the frozen questions cannot detect the
   difference between policy formation and the recorded review decisions.
