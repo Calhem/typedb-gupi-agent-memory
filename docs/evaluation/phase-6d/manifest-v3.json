@@ -123,7 +123,7 @@
   },
   "policy formation:v1": {
    "path": "src/gupi/formation/form.py",
-   "sha256": "a8d20dc5f91fc26a1994ad69ae0c999cded2686b44590e8909b33d598a2365d4"
+   "sha256": "3c2eda8a6e75e451a45237e702a71bf243bb094f12bb5050d2f70b4aa1ce87d4"
   },
   "candidate store (core/0012)": {
    "path": "src/gupi/formation/store.py",
@@ -213,7 +213,7 @@
   "new downloads"
  ],
  "manifest_version": 3,
- "commit": "fe95b6c50cae31bfc6d43c1a12d9b2fc2a7eb42d",
+ "commit": "6d4cda225e736e91c1d3b23aa7546778e708f55f",
  "supersedes": null,
  "historical_manifest": "docs/evaluation/phase-6d/manifest.json (version 1, kept unchanged)",
  "supplementary_code": {
