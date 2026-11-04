@@ -143,9 +143,11 @@ def test_forwarded_text_is_forwarded_whatever_the_model_says():
     (c,) = cset.candidates
     assert (c.attribution.mode, c.attribution.asserted_by) == ("forwarded", "Dana Okoro")
     assert [f["kind"] for f in report.flags] == ["mode-forced-forwarded"]
-    # the header names a sender but not what kind of entity it is: not assumed to be a person
+    assert c.attribution.asserted_by_kind == "person"
+    # the header names a sender but not what kind of entity it is: an unknown-kind claimant, not a person
     cset, report = run(text, response(assertion(ev, NORA, times=[("March 2025", "start")])))
-    assert not cset.candidates and kinds(report) == ["claimant-kind-not-representable"]
+    (c,) = cset.candidates
+    assert (c.attribution.asserted_by, c.attribution.asserted_by_kind, c.attribution.mode) == ("Dana Okoro", "unknown", "forwarded")
     other = {"mode": "forwarded", "claimant": "Nora Vance", "claimant_kind": "person", "via": []}
     cset, report = run(text, response(assertion(ev, NORA, times=[("March 2025", "start")], attribution=other)))
     assert not cset.candidates and kinds(report) == ["cue-conflict"]
@@ -156,9 +158,14 @@ def test_claimants_must_be_in_the_text_and_representable():
     reported = {"mode": "reported", "claimant": "Dana Okoro", "claimant_kind": "person", "via": []}
     (c,) = run(text, response(assertion("Nora Vance joined Halden in March 2025", NORA, attribution=reported)))[0].candidates
     assert (c.attribution.mode, c.attribution.asserted_by) == ("reported", "Dana Okoro")
-    for claimant, kind, outcome in (("Dana Okoro", "organization", "claimant-kind-not-representable"),
-                                    ("Dana Okoro", "unclassified", "claimant-kind-not-representable"),
-                                    ("Reuters", "organization", "grounding-failure"),
+    assert c.attribution.asserted_by_kind == "person"
+    for claimant, kind, want in (("Dana Okoro", "organization", "organisation"),     # format 1 vocabulary, mapped
+                                 ("Dana Okoro", "unclassified", "unknown")):
+        at = {"mode": "reported", "claimant": claimant, "claimant_kind": kind, "via": []}
+        r1 = dict(response(assertion("Nora Vance joined Halden in March 2025", NORA, attribution=at)), format="gupi.model-response/1")
+        (c,) = run(text, r1)[0].candidates
+        assert c.attribution.asserted_by_kind == want
+    for claimant, kind, outcome in (("Reuters", "organisation", "grounding-failure"),
                                     ("She", "person", "ambiguous-reference")):
         at = {"mode": "reported", "claimant": claimant, "claimant_kind": kind, "via": []}
         cset, report = run(text, response(assertion("Nora Vance joined Halden in March 2025", NORA, attribution=at)))
@@ -173,11 +180,16 @@ def test_a_correction_needs_exactly_one_target():
                     correction={"kind": "corrects", "cue": "Correction:", "earlier_statement": None})
     (c,) = run(fix_text, response(fix), prior=(earlier_a,))[0].candidates
     assert [(r.kind, r.target) for r in c.relations] == [("corrects", earlier_a.candidates[0].id)]
-    cset, report = run(fix_text, response(fix))                                      # no earlier statement
-    assert not cset.candidates and kinds(report) == ["correction-target-unresolved"]
+    # D3 (format 1.1): no single target -> a null target, which formation always reviews; never a guess
+    (c,) = run(fix_text, response(fix))[0].candidates                               # no earlier statement
+    assert [(r.kind, r.target) for r in c.relations] == [("corrects", None)]
     other_text = "Nora Vance joined Halden in February 2025."
     earlier_b, _ = run(other_text, response(assertion(other_text.rstrip("."), NORA, times=[("February 2025", "start")])))
     cset, report = run(fix_text, response(fix), prior=(earlier_a, earlier_b))     # two possible targets
+    assert [(r.kind, r.target) for r in cset.candidates[0].relations] == [("corrects", None)]
+    assert [f["kind"] for f in report.flags] == ["correction-target-unresolved"]
+    contra = dict(fix, correction={"kind": "contradicts", "cue": "Correction:", "earlier_statement": None})
+    cset, report = run(fix_text, response(contra))                                 # a contradiction must name one
     assert not cset.candidates and kinds(report) == ["correction-target-unresolved"]
 
 
@@ -221,3 +233,16 @@ def test_a_present_tense_verb_holds_at_the_moment_it_was_written():
         assertion("Ilsa Moreno reported to Teo Brandt", [("report", "Ilsa Moreno", "person"), ("manager", "Teo Brandt", "person")],
                   relation="reporting", times=[("reported", "holds-at")])))
     assert cset.candidates[0].times[0].precision == "unknown" and [f["kind"] for f in report.flags] == ["unreadable-time"]
+
+
+def test_format_1_1_output_and_both_response_formats():
+    text = "According to Halden Press, Nora Vance joined Halden in March 2025."
+    at11 = {"mode": "reported", "claimant": "Halden Press", "claimant_kind": "organisation", "via": []}
+    r11 = dict(response(assertion("Nora Vance joined Halden in March 2025", NORA, attribution=at11)), format="gupi.model-response/1.1")
+    cset, _ = run(text, r11)
+    assert cset.ir_version == "gupi.candidate/1.1" and cset.candidates[0].attribution.asserted_by_kind == "organisation"
+    bad = dict(r11, assertions=[dict(r11["assertions"][0], attribution=dict(at11, claimant_kind="organization"))])
+    assert kinds(run(text, bad)[1]) == ["invalid-model-output"]                  # each format has its own vocabulary
+    old = dict(response(assertion("Nora Vance joined Halden in March 2025", NORA,
+                                  attribution=dict(at11, claimant_kind="organization"))), format="gupi.model-response/1")
+    assert run(text, old)[0].candidates[0].attribution.asserted_by_kind == "organisation"
