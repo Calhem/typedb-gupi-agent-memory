@@ -20,16 +20,19 @@ from dataclasses import dataclass, field
 from gupi import ids, timeexpr
 from gupi.formation import rules_v2
 from gupi.formation.candidate import (
-    ATTRIBUTION_MODES, COMMITMENTS, MODALITIES, POLARITIES, Attribution, Candidate, CandidateSet, Participant,
-    Passage, Relation, TimeEvidence,
+    ATTRIBUTION_MODES, COMMITMENTS, IR_VERSION_1_1, MODALITIES, NULLABLE_TARGET_KINDS, POLARITIES, Attribution,
+    Candidate, CandidateSet, Participant, Passage, Relation, TimeEvidence,
 )
 from gupi.formation.rules_v21 import PRONOUNS
 from gupi.formation.validate import validate
 
-METHOD = "model:candidate-v1"
-RESPONSE_FORMAT = "gupi.model-response/1"
+METHOD = "model:candidate-v1.1"          # emits gupi.candidate/1.1 (Stage 2B)
+RESPONSE_FORMAT = "gupi.model-response/1.1"
+RESPONSE_FORMATS = ("gupi.model-response/1", RESPONSE_FORMAT)   # format 1 recordings stay readable
 RELATIONS = ("employment", "reporting", "statement")
-KINDS = ("person", "organization", "unclassified")
+KINDS = ("person", "organization", "unclassified")          # participant kinds (referent types)
+CLAIMANT_KINDS = {"gupi.model-response/1": {"person": "person", "organization": "organisation", "unclassified": "unknown"},
+                  "gupi.model-response/1.1": {"person": "person", "organisation": "organisation", "unknown": "unknown"}}
 TIME_KINDS = ("start", "end", "holds-since", "holds-at")
 CORRECTIONS = ("corrects", "retracts", "updates", "contradicts")
 PROBLEM_KINDS = ("unsupported-domain", "ambiguous-reference", "insufficient-evidence")
@@ -40,8 +43,7 @@ OUTCOMES = (
     "grounding-failure",           # a quoted string is not in the message (or not inside the evidence)
     "ambiguous-span",              # a quoted string occurs more than once and no occurrence selects one
     "ambiguous-reference",         # a pronoun, vague reference or unknown author where a participant is needed
-    "claimant-kind-not-representable",  # an organisational or unknown-kind claimant (C2, pending approval)
-    "correction-target-unresolved",     # a stated correction with no single resolvable target (D3)
+    "correction-target-unresolved",     # a "contradicts" with no single resolvable target (cannot be null)
     "inferred-not-admissible",     # the model says it inferred the assertion: no route to review exists
     "cue-conflict",                # the evidence contradicts the model's polarity or modality
     "unsupported-domain",          # reported by the model
@@ -49,7 +51,7 @@ OUTCOMES = (
     "validation",                  # the candidate failed gupi.formation.validate
 )
 FLAGS = ("unreadable-time", "commitment-downgraded", "mode-forced-forwarded", "forwarded-unmarked",
-         "predicate-paraphrased", "allegation")
+         "predicate-paraphrased", "allegation", "correction-target-unresolved")
 
 HEDGE = re.compile(r"\b(?:probably|possibly|perhaps|maybe|might|could|apparently|reportedly|allegedly|"
                    r"supposedly|rumou?red|I think|I believe|it seems|likely|unconfirmed|not official)\b", re.I)
@@ -100,7 +102,8 @@ class ModelCandidateV1:
 
     def extract(self, observation, prior=(), schema=None, response=None):
         report = Report()
-        cset = CandidateSet(observation.id, ids.content_hash(observation.content), f"{METHOD}:{self.source}", ())
+        cset = CandidateSet(observation.id, ids.content_hash(observation.content), f"{METHOD}:{self.source}", (),
+                            IR_VERSION_1_1)
         if response is None:
             response = self.responses.get(observation.id, self.responses.get(observation.record_key))
         try:
@@ -118,7 +121,7 @@ class ModelCandidateV1:
         made = []
         for n, a in enumerate(data["assertions"]):
             try:
-                c = _candidate(a, n, observation, earlier + made, report)
+                c = _candidate(a, n, observation, earlier + made, report, data["format"])
             except _Stop as stop:
                 report.outcomes.append({"kind": stop.kind, "assertion": n, "evidence": a.get("evidence"),
                                         "detail": stop.detail})
@@ -126,13 +129,14 @@ class ModelCandidateV1:
             made.append(c)
         kept = []
         for c in dict.fromkeys(made):
-            issues = validate(CandidateSet(cset.observation_id, cset.content_hash, cset.extractor, (c,)), observation, schema)
+            issues = validate(CandidateSet(cset.observation_id, cset.content_hash, cset.extractor, (c,), IR_VERSION_1_1),
+                              observation, schema)
             if issues:
                 report.outcomes.append({"kind": "validation", "assertion": made.index(c), "evidence": c.passage.text,
                                         "detail": "; ".join(f"{i.code}: {i.message}" for i in issues)})
             else:
                 kept.append(c)
-        return CandidateSet(cset.observation_id, cset.content_hash, cset.extractor, tuple(kept)), report
+        return CandidateSet(cset.observation_id, cset.content_hash, cset.extractor, tuple(kept), IR_VERSION_1_1), report
 
 
 # --- parsing: the response format, strictly -----------------------------------------------------------
@@ -148,8 +152,8 @@ def _parse(response):
     if not isinstance(response, dict):
         raise ResponseError("the response must be a JSON object")
     _keys(response, TOP, TOP, "response")
-    if response["format"] != RESPONSE_FORMAT:
-        raise ResponseError(f"format must be {RESPONSE_FORMAT!r}")
+    if response["format"] not in RESPONSE_FORMATS:
+        raise ResponseError(f"format must be one of {', '.join(RESPONSE_FORMATS)}")
     if response["outcome"] not in ("assertions", "no-relevant-assertion"):
         raise ResponseError("outcome must be 'assertions' or 'no-relevant-assertion'")
     if not isinstance(response["assertions"], list) or not isinstance(response["problems"], list):
@@ -195,7 +199,7 @@ def _parse(response):
         _enum(at["mode"], ATTRIBUTION_MODES, f"{where} attribution mode")
         if at["claimant"] is not None:
             _text(at["claimant"], f"{where} claimant")
-            _enum(at["claimant_kind"], KINDS, f"{where} claimant_kind")
+            _enum(at["claimant_kind"], tuple(CLAIMANT_KINDS[response["format"]]), f"{where} claimant_kind")
         elif at["claimant_kind"] is not None:
             raise ResponseError(f"{where}: claimant_kind without a claimant")
         if not isinstance(at["via"], list) or not all(isinstance(v, str) and v.strip() for v in at["via"]):
@@ -257,7 +261,7 @@ def _find(text, needle, lo, hi, what, occurrence=None):
     return starts[0], starts[0] + len(needle)
 
 
-def _candidate(a, n, obs, earlier, report):
+def _candidate(a, n, obs, earlier, report, fmt):
     text = obs.content
     s, e = _find(text, a["evidence"], 0, len(text), "evidence", a.get("evidence_occurrence"))
     passage = Passage(obs.id, s, e, text[s:e])
@@ -326,13 +330,13 @@ def _candidate(a, n, obs, earlier, report):
     if a.get("allegation"):
         report.flags.append({"kind": "allegation", "assertion": n, "detail": "no contract field for an allegation (C4)"})
 
-    attribution = _attribution(a["attribution"], obs, s, e, n, report)
-    relations = _correction(a, n, obs, participants, times, earlier)
+    attribution = _attribution(a["attribution"], obs, s, e, n, report, fmt)
+    relations = _correction(a, n, obs, participants, times, earlier, report)
     return Candidate(a["relation"], passage, tuple(participants), tuple(sorted(values)), tuple(times), a["polarity"],
                      a["modality"], commitment, attribution, relations, "explicit", None)
 
 
-def _attribution(at, obs, s, e, n, report):
+def _attribution(at, obs, s, e, n, report, fmt):
     text, mode, claimant = obs.content, at["mode"], at["claimant"]
     via = []
     for v in at["via"]:
@@ -358,17 +362,17 @@ def _attribution(at, obs, s, e, n, report):
             raise _Stop("ambiguous-reference", f"the claimant {claimant!r} is a pronoun")
         if claimant not in text:
             raise _Stop("grounding-failure", f"claimant {claimant!r} is not in the message")
-        kind = at["claimant_kind"] if at["claimant"] is not None else None   # a header sender's kind is unknown
-        if kind != "person":
-            raise _Stop("claimant-kind-not-representable",
-                        f"claimant {claimant!r} is {kind or 'of unknown kind'}; GUPI would store it as a person (C2)")
+        # C2: the kind the model states, in the 1.1 vocabulary; a forward header's sender is of unknown kind
+        kind = CLAIMANT_KINDS[fmt][at["claimant_kind"]] if at["claimant"] is not None else "unknown"
+    else:
+        kind = None
     # via, nearest first: the message's author (as rules:v2 records it), then intermediaries the text names
     nearest = (obs.author_id,) if obs.author_id and mode != "direct" else ()
     return Attribution(claimant, mode, nearest + tuple(v for v in via if v not in nearest),
-                       ("forwarded",) if mode == "forwarded" else ())
+                       ("forwarded",) if mode == "forwarded" else (), kind)
 
 
-def _correction(a, n, obs, participants, times, earlier):
+def _correction(a, n, obs, participants, times, earlier, report):
     corr = a.get("correction")
     if corr is None:
         return ()
@@ -379,8 +383,12 @@ def _correction(a, n, obs, participants, times, earlier):
     matches = [c for c in earlier if c.claim_type == a["relation"]
                and sorted((p.role, p.surface.casefold()) for p in c.participants) == roles
                and (not kinds or kinds & {t.kind for t in c.times})]
-    if len(matches) != 1:
+    if len(matches) == 1:
+        return (Relation(corr["kind"], matches[0].id, "stated", corr["cue"]),)
+    if corr["kind"] not in NULLABLE_TARGET_KINDS:
         raise _Stop("correction-target-unresolved",
-                    f"{len(matches)} earlier candidates could be the target; a correction is never attached to a guessed "
-                    "target, and the contract cannot yet send an unresolved one to review (D3)")
-    return (Relation(corr["kind"], matches[0].id, "stated", corr["cue"]),)
+                    f"{len(matches)} earlier candidates could be the target of a {corr['kind']!r}, which must name one")
+    # D3 (format 1.1): never a guessed target; a null target, which formation always sends to review
+    report.flags.append({"kind": "correction-target-unresolved", "assertion": n,
+                         "detail": f"{len(matches)} earlier candidates could be the target: left unestablished"})
+    return (Relation(corr["kind"], None, "stated", corr["cue"]),)

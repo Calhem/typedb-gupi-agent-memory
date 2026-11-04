@@ -54,7 +54,7 @@ def gold(pid, n, span, who, org, **kw):
 
 
 def model(result):
-    return result["systems"]["model:candidate-v1"]
+    return result["systems"][harness.MODEL_METHOD]
 
 
 def test_matching_tiers_duplicates_unsupported_and_severe_errors(tmp_path):
@@ -99,7 +99,7 @@ def test_the_harness_runs_without_network_access(monkeypatch):
     monkeypatch.setattr(socket, "create_connection", refuse)
     a = harness.run(FIX, responses=FIX / "responses.json")
     b = harness.run(FIX, responses=FIX / "responses.json")
-    assert a == b and set(a["systems"]) == {"rules:v2.1", "model:candidate-v1"}
+    assert a == b and set(a["systems"]) == {"rules:v2.1", harness.MODEL_METHOD}
     assert "anthropic" not in " ".join(sorted(__import__("sys").modules))
 
 

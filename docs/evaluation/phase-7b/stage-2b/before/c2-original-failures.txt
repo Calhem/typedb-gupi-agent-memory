@@ -1,0 +1,9 @@
+# C2 tests run before the persistence change (2026-11-04).
+FAILED tests/integration/test_c2_claimants.py::test_an_organisation_issuing_a_statement
+FAILED tests/integration/test_c2_claimants.py::test_a_person_forwarding_an_organisational_statement
+FAILED tests/integration/test_c2_claimants.py::test_an_organisation_forwarding_another_organisations_statement
+FAILED tests/integration/test_c2_claimants.py::test_an_unknown_kind_stays_unknown
+FAILED tests/integration/test_c2_claimants.py::test_a_legacy_1_0_claimant_without_a_kind_is_not_made_a_person
+FAILED tests/integration/test_c2_claimants.py::test_a_person_and_an_organisation_with_the_same_name_stay_distinct
+FAILED tests/integration/test_c2_claimants.py::test_claimant_identity_and_kind_are_not_merged_without_review
+7 failed, 4 passed, 1 xfailed in 4.84s

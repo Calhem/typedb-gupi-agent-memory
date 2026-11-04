@@ -1,0 +1,5 @@
+# F1 tests run before the formation change (2026-11-04): exactly the copy cases failed; the independent cases already passed.
+FAILED tests/integration/test_f1_forwarded.py::test_a_forwarded_copy_forwarded_again
+FAILED tests/integration/test_f1_forwarded.py::test_one_original_in_several_documents
+FAILED tests/integration/test_f1_forwarded.py::test_forwarded_copies_with_incomplete_provenance_are_not_corroboration
+3 failed, 7 passed in 4.51s

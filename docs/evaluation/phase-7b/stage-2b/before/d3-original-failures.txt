@@ -1,0 +1,13 @@
+# D3 null-target tests run before the change (2026-11-04): a null target crashed the suggestion lookup (TypeError: unsupported parameter type: NoneType), so none reached review.
+FAILED tests/integration/test_d3_null_targets.py::test_no_identified_target_is_kept_and_reviewed_without_inventing_one
+FAILED tests/integration/test_d3_null_targets.py::test_one_plausible_target_is_listed_but_not_resolved
+FAILED tests/integration/test_d3_null_targets.py::test_several_plausible_targets_are_all_listed
+FAILED tests/integration/test_d3_null_targets.py::test_a_retraction_without_a_target
+FAILED tests/integration/test_d3_null_targets.py::test_a_target_in_another_conversation_is_not_matched
+FAILED tests/integration/test_d3_null_targets.py::test_a_superseded_assertion_is_not_offered
+FAILED tests/integration/test_d3_null_targets.py::test_two_corrections_of_the_same_assertion
+FAILED tests/integration/test_d3_null_targets.py::test_a_reviewer_assigns_the_target_later_and_it_is_audited
+FAILED tests/integration/test_d3_null_targets.py::test_target_assignment_refuses_what_it_cannot_justify
+FAILED tests/integration/test_d3_null_targets.py::test_approving_an_unresolved_correction_changes_no_prior_claim
+FAILED tests/integration/test_d3_null_targets.py::test_resubmission_is_idempotent
+11 failed, 1 passed in 4.85s

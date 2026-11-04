@@ -1,0 +1,55 @@
+{
+ "adversarial": {
+  "identical": true,
+  "differences": []
+ },
+ "frozen-6b": {
+  "identical": true,
+  "differences": []
+ },
+ "locomo-heldout": {
+  "identical": true,
+  "differences": []
+ },
+ "longmemeval-extraction": {
+  "identical": true,
+  "differences": []
+ },
+ "longmemeval-subset": {
+  "identical": true,
+  "differences": []
+ },
+ "phase2": {
+  "identical": true,
+  "differences": []
+ },
+ "scale": {
+  "identical": false,
+  "differences": [
+   ".steps[0].last_copy.extract_s_per_obs",
+   ".steps[0].last_copy.ingest_s_per_obs",
+   ".steps[0].last_copy.submit_s_per_obs",
+   ".steps[1].last_copy.extract_s_per_obs",
+   ".steps[1].last_copy.ingest_s_per_obs",
+   ".steps[1].last_copy.submit_s_per_obs",
+   ".steps[2].last_copy.extract_s_per_obs",
+   ".steps[2].last_copy.ingest_s_per_obs",
+   ".steps[2].last_copy.submit_s_per_obs",
+   ".steps[3].last_copy.extract_s_per_obs",
+   ".steps[3].last_copy.ingest_s_per_obs",
+   ".steps[3].last_copy.submit_s_per_obs",
+   ".steps[4].last_copy.extract_s_per_obs",
+   ".steps[4].last_copy.ingest_s_per_obs",
+   ".steps[4].last_copy.submit_s_per_obs",
+   ".steps[5].last_copy.extract_s_per_obs",
+   ".steps[5].last_copy.ingest_s_per_obs",
+   ".steps[5].last_copy.submit_s_per_obs",
+   ".steps[6].last_copy.extract_s_per_obs",
+   ".steps[6].last_copy.ingest_s_per_obs"
+  ]
+ },
+ "world": {
+  "identical": true,
+  "differences": []
+ }
+}

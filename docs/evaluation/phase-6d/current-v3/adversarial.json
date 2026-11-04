@@ -1,0 +1,875 @@
+{
+ "meta": {
+  "phase": "6D",
+  "part": "D4 adversarial (development tests, via the candidate store)",
+  "run_label": "current-v3",
+  "git": {
+   "commit": "b2f67da8a37745c36fcc72c16677dfa70b90ddb6",
+   "branch": "feature/phase-7b-evidence-integrity",
+   "dirty": false
+  },
+  "started": "2026-11-04T18:17:59+00:00",
+  "peak_rss_bytes_at_start": 288522240,
+  "wall_seconds": 7.12,
+  "manifest": {
+   "path": "docs/evaluation/phase-6d/manifest-v3.json",
+   "sha256": "0a0203d1c3b69cb09c828f466cf2e1ace38993f8ec5a62497a7df012c7ce5671"
+  }
+ },
+ "summary": {
+  "cases": 17,
+  "temporal": "17/17",
+  "qualification": "17/17",
+  "attribution": "17/17",
+  "independence": "17/17",
+  "citations": "17/17",
+  "unsupported_definitive": "0/17",
+  "definitive_withheld_where_warranted": "0/7",
+  "latency": {
+   "n": 17,
+   "p50": 0.0181,
+   "p95": 0.02292,
+   "max": 0.02292,
+   "total": 0.292
+  }
+ },
+ "rows": [
+  {
+   "id": "a01",
+   "about": "direct assertion",
+   "expected": {
+    "answer": "TRUE",
+    "standing": "direct",
+    "qualifiers": [],
+    "asserters": [],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": true
+   },
+   "got": {
+    "answer": "TRUE",
+    "standing": "direct",
+    "qualifiers": [],
+    "asserters": [],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": true,
+    "explanation": "Evidential standing: direct; at least one deciding claim was asserted directly and without hedging. Independent originators: 1. Admitted into memory by formation:v1; admission is not verification.",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "formed"
+     ]
+    ],
+    "seconds": 0.018099999986588955,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a02",
+   "about": "hedged assertion, approved by a reviewer",
+   "expected": {
+    "answer": "TRUE",
+    "standing": "qualified",
+    "qualifiers": [
+     "hedged:probable"
+    ],
+    "asserters": [],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": false
+   },
+   "got": {
+    "answer": "TRUE",
+    "standing": "qualified",
+    "qualifiers": [
+     "hedged:probable"
+    ],
+    "asserters": [],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": false,
+    "explanation": "Evidential standing: qualified; every deciding claim is hedged, reported, forwarded or rumoured. Qualifiers: hedged:probable. Independent originators: 1. Admitted into memory by reviewer-a; admission is not verification. This TRUE is not definitive: it rests only on qualified evidence.",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "formed"
+     ]
+    ],
+    "seconds": 0.017442416865378618,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a03",
+   "about": "hedged assertion, not reviewed",
+   "expected": {
+    "answer": "NOT_YET_KNOWN",
+    "standing": "n/a",
+    "qualifiers": [],
+    "asserters": [],
+    "independent": 0,
+    "cited": [],
+    "definitive": false
+   },
+   "got": {
+    "answer": "NOT_YET_KNOWN",
+    "standing": "n/a",
+    "qualifiers": [],
+    "asserters": [],
+    "independent": 0,
+    "cited": [],
+    "definitive": false,
+    "explanation": "Evidential standing: not applicable (no claim decides this answer).",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "review"
+     ]
+    ],
+    "seconds": 0.008599374908953905,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a04",
+   "about": "reported speech",
+   "expected": {
+    "answer": "FALSE",
+    "standing": "qualified",
+    "qualifiers": [
+     "reported"
+    ],
+    "asserters": [
+     "Ravi"
+    ],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": false
+   },
+   "got": {
+    "answer": "FALSE",
+    "standing": "qualified",
+    "qualifiers": [
+     "reported"
+    ],
+    "asserters": [
+     "Ravi"
+    ],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": false,
+    "explanation": "Evidential standing: qualified; every deciding claim is hedged, reported, forwarded or rumoured. Qualifiers: reported. Originated by: Ravi. Independent originators: 1. Admitted into memory by formation:v1; admission is not verification. This FALSE is not definitive: it rests only on qualified evidence.",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "formed"
+     ]
+    ],
+    "seconds": 0.02053650002926588,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a05",
+   "about": "the author's own direct statement",
+   "expected": {
+    "answer": "FALSE",
+    "standing": "direct",
+    "qualifiers": [],
+    "asserters": [
+     "Wen Abara"
+    ],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": true
+   },
+   "got": {
+    "answer": "FALSE",
+    "standing": "direct",
+    "qualifiers": [],
+    "asserters": [
+     "Wen Abara"
+    ],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": true,
+    "explanation": "Evidential standing: direct; at least one deciding claim was asserted directly and without hedging. Originated by: Wen Abara. Independent originators: 1. Admitted into memory by formation:v1; admission is not verification.",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "formed"
+     ]
+    ],
+    "seconds": 0.019063582876697183,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a06",
+   "about": "known only through a forward",
+   "expected": {
+    "answer": "TRUE",
+    "standing": "qualified",
+    "qualifiers": [
+     "forwarded"
+    ],
+    "asserters": [
+     "Bo Kim"
+    ],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": false
+   },
+   "got": {
+    "answer": "TRUE",
+    "standing": "qualified",
+    "qualifiers": [
+     "forwarded"
+    ],
+    "asserters": [
+     "Bo Kim"
+    ],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": false,
+    "explanation": "Evidential standing: qualified; every deciding claim is hedged, reported, forwarded or rumoured. Qualifiers: forwarded. Originated by: Bo Kim. Independent originators: 1. Admitted into memory by formation:v1; admission is not verification. This TRUE is not definitive: it rests only on qualified evidence.",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "formed"
+     ]
+    ],
+    "seconds": 0.02153245802037418,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a07",
+   "about": "an original, then a later forward of the same statement",
+   "expected": {
+    "answer": "TRUE",
+    "standing": "direct",
+    "qualifiers": [],
+    "asserters": [
+     "Bo Kim"
+    ],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": true
+   },
+   "got": {
+    "answer": "TRUE",
+    "standing": "direct",
+    "qualifiers": [],
+    "asserters": [
+     "Bo Kim"
+    ],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": true,
+    "explanation": "Evidential standing: direct; at least one deciding claim was asserted directly and without hedging. Originated by: Bo Kim. Independent originators: 1. Admitted into memory by formation:v1; admission is not verification.",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "formed"
+     ],
+     [
+      "m2",
+      "withheld"
+     ]
+    ],
+    "seconds": 0.015809083823114634,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a08",
+   "about": "two independent direct sources",
+   "expected": {
+    "answer": "TRUE",
+    "standing": "direct",
+    "qualifiers": [],
+    "asserters": [
+     "Bo Kim",
+     "Wen Abara"
+    ],
+    "independent": 2,
+    "cited": [
+     "m1",
+     "m2"
+    ],
+    "definitive": true
+   },
+   "got": {
+    "answer": "TRUE",
+    "standing": "direct",
+    "qualifiers": [],
+    "asserters": [
+     "Bo Kim",
+     "Wen Abara"
+    ],
+    "independent": 2,
+    "cited": [
+     "m1",
+     "m2"
+    ],
+    "definitive": true,
+    "explanation": "Evidential standing: direct; at least one deciding claim was asserted directly and without hedging. Originated by: Bo Kim, Wen Abara. Independent originators: 2. Admitted into memory by formation:v1; admission is not verification.",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "formed"
+     ],
+     [
+      "m2",
+      "formed"
+     ]
+    ],
+    "seconds": 0.01825720793567598,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a09",
+   "about": "the same speaker in two documents is one originator",
+   "expected": {
+    "answer": "TRUE",
+    "standing": "direct",
+    "qualifiers": [],
+    "asserters": [
+     "Wen Abara"
+    ],
+    "independent": 1,
+    "cited": [
+     "m1",
+     "m2"
+    ],
+    "definitive": true
+   },
+   "got": {
+    "answer": "TRUE",
+    "standing": "direct",
+    "qualifiers": [],
+    "asserters": [
+     "Wen Abara"
+    ],
+    "independent": 1,
+    "cited": [
+     "m1",
+     "m2"
+    ],
+    "definitive": true,
+    "explanation": "Evidential standing: direct; at least one deciding claim was asserted directly and without hedging. Originated by: Wen Abara. Independent originators: 1. Admitted into memory by formation:v1; admission is not verification.",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "formed"
+     ],
+     [
+      "m2",
+      "formed"
+     ]
+    ],
+    "seconds": 0.01653054216876626,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a10",
+   "about": "a direct statement contradicted by a reported one",
+   "expected": {
+    "answer": "CONTESTED",
+    "standing": "direct",
+    "qualifiers": [
+     "reported"
+    ],
+    "asserters": [
+     "Ravi",
+     "Wen Abara"
+    ],
+    "independent": 2,
+    "cited": [
+     "m1",
+     "m2"
+    ],
+    "definitive": false
+   },
+   "got": {
+    "answer": "CONTESTED",
+    "standing": "direct",
+    "qualifiers": [
+     "reported"
+    ],
+    "asserters": [
+     "Ravi",
+     "Wen Abara"
+    ],
+    "independent": 2,
+    "cited": [
+     "m1",
+     "m2"
+    ],
+    "definitive": false,
+    "explanation": "Evidential standing: direct; at least one deciding claim was asserted directly and without hedging. Qualifiers: reported. Originated by: Ravi, Wen Abara. Independent originators: 2. Admitted into memory by formation:v1; admission is not verification.",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "formed"
+     ],
+     [
+      "m2",
+      "formed"
+     ]
+    ],
+    "seconds": 0.018396124942228198,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a11",
+   "about": "a rumour, approved by a reviewer",
+   "expected": {
+    "answer": "FALSE",
+    "standing": "qualified",
+    "qualifiers": [
+     "rumour",
+     "hedged:unknown"
+    ],
+    "asserters": [],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": false
+   },
+   "got": {
+    "answer": "FALSE",
+    "standing": "qualified",
+    "qualifiers": [
+     "hedged:unknown",
+     "rumour"
+    ],
+    "asserters": [],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": false,
+    "explanation": "Evidential standing: qualified; every deciding claim is hedged, reported, forwarded or rumoured. Qualifiers: hedged:unknown, rumour. Independent originators: 1. Admitted into memory by reviewer-a; admission is not verification. This FALSE is not definitive: it rests only on qualified evidence.",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "formed"
+     ]
+    ],
+    "seconds": 0.022916417103260756,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a12",
+   "about": "a pending correction of an existing claim does not rewrite it",
+   "expected": {
+    "answer": "TRUE",
+    "standing": "direct",
+    "qualifiers": [],
+    "asserters": [],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": true
+   },
+   "got": {
+    "answer": "TRUE",
+    "standing": "direct",
+    "qualifiers": [],
+    "asserters": [],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": true,
+    "explanation": "Evidential standing: direct; at least one deciding claim was asserted directly and without hedging. Independent originators: 1. Admitted into memory by formation:v1; admission is not verification.",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "formed"
+     ]
+    ],
+    "seconds": 0.017748582875356078,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a13",
+   "about": "asked as of a belief time before the evidence arrived",
+   "expected": {
+    "answer": "NOT_YET_KNOWN",
+    "standing": "n/a",
+    "qualifiers": [],
+    "asserters": [],
+    "independent": 0,
+    "cited": [],
+    "definitive": false
+   },
+   "got": {
+    "answer": "NOT_YET_KNOWN",
+    "standing": "n/a",
+    "qualifiers": [],
+    "asserters": [],
+    "independent": 0,
+    "cited": [],
+    "definitive": false,
+    "explanation": "Evidential standing: not applicable (no claim decides this answer).",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "formed"
+     ]
+    ],
+    "seconds": 0.008584624854847789,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a14",
+   "about": "a hedged and a direct statement agree",
+   "expected": {
+    "answer": "TRUE",
+    "standing": "direct",
+    "qualifiers": [
+     "hedged:probable"
+    ],
+    "asserters": [
+     "Bo Kim",
+     "Wen Abara"
+    ],
+    "independent": 2,
+    "cited": [
+     "m1",
+     "m2"
+    ],
+    "definitive": true
+   },
+   "got": {
+    "answer": "TRUE",
+    "standing": "direct",
+    "qualifiers": [
+     "hedged:probable"
+    ],
+    "asserters": [
+     "Bo Kim",
+     "Wen Abara"
+    ],
+    "independent": 2,
+    "cited": [
+     "m1",
+     "m2"
+    ],
+    "definitive": true,
+    "explanation": "Evidential standing: direct; at least one deciding claim was asserted directly and without hedging. Qualifiers: hedged:probable. Originated by: Bo Kim, Wen Abara. Independent originators: 2. Admitted into memory by formation:v1, reviewer-a; admission is not verification.",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "formed"
+     ],
+     [
+      "m2",
+      "formed"
+     ]
+    ],
+    "seconds": 0.02048741700127721,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a15",
+   "about": "a stated date that cannot be read",
+   "expected": {
+    "answer": "NOT_YET_KNOWN",
+    "standing": "n/a",
+    "qualifiers": [],
+    "asserters": [],
+    "independent": 0,
+    "cited": [],
+    "definitive": false
+   },
+   "got": {
+    "answer": "NOT_YET_KNOWN",
+    "standing": "n/a",
+    "qualifiers": [],
+    "asserters": [],
+    "independent": 0,
+    "cited": [],
+    "definitive": false,
+    "explanation": "Evidential standing: not applicable (no claim decides this answer).",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "review"
+     ]
+    ],
+    "seconds": 0.013332249829545617,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a16",
+   "about": "reported lower-bound continuity",
+   "expected": {
+    "answer": "TRUE",
+    "standing": "qualified",
+    "qualifiers": [
+     "reported"
+    ],
+    "asserters": [
+     "Bo Kim"
+    ],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": false
+   },
+   "got": {
+    "answer": "TRUE",
+    "standing": "qualified",
+    "qualifiers": [
+     "reported"
+    ],
+    "asserters": [
+     "Bo Kim"
+    ],
+    "independent": 1,
+    "cited": [
+     "m1"
+    ],
+    "definitive": false,
+    "explanation": "Evidential standing: qualified; every deciding claim is hedged, reported, forwarded or rumoured. Qualifiers: reported. Originated by: Bo Kim. Independent originators: 1. Admitted into memory by formation:v1; admission is not verification. This TRUE is not definitive: it rests only on qualified evidence.",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "formed"
+     ]
+    ],
+    "seconds": 0.021763624856248498,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  },
+  {
+   "id": "a17",
+   "about": "the same name in another conversation is not merged",
+   "expected": {
+    "answer": "UNKNOWN",
+    "standing": "n/a",
+    "qualifiers": [],
+    "asserters": [],
+    "independent": 0,
+    "cited": [],
+    "definitive": false
+   },
+   "got": {
+    "answer": "UNKNOWN",
+    "standing": "n/a",
+    "qualifiers": [],
+    "asserters": [],
+    "independent": 0,
+    "cited": [],
+    "definitive": false,
+    "explanation": "Evidential standing: not applicable (no claim decides this answer).",
+    "candidate_outcomes": [
+     [
+      "m1",
+      "formed"
+     ],
+     [
+      "m2",
+      "formed"
+     ]
+    ],
+    "seconds": 0.012447332963347435,
+    "store_used": true,
+    "claims_without_store_link": 0
+   },
+   "checks": {
+    "temporal": true,
+    "qualification": true,
+    "attribution": true,
+    "independence": true,
+    "citations": true
+   },
+   "unsupported_definitive": false
+  }
+ ],
+ "note": "Development tests written by the qualification's designer: not independent evidence."
+}

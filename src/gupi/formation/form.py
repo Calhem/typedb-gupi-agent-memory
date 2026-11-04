@@ -32,6 +32,8 @@ from gupi.records import Batch, Claim, Evidence, Mention, Referent
 from gupi.typedb.connection import transaction
 
 POLICY = "formation:v1"
+# gupi.candidate/1.1 claimant kinds -> referent types; anything else (unknown, or not stated) is unclassified
+CLAIMANT_REFERENT_KIND = {"person": "person", "organisation": "organization"}
 CORRECTION_CUE = re.compile(r"\s*(?:correction|erratum|update to my last|to correct)\b", re.I)
 OUTCOMES = ("formed", "withheld", "review", "rejected")
 
@@ -101,7 +103,11 @@ def decide(candidate, issues, approvals, rejections=None, copy_of=None):
         needs.append(f"hedged by the source ({candidate.commitment})")
     if candidate.attribution.mode == "rumour":
         needs.append("unattributed hearsay")
-    if any(r.kind in ("corrects", "retracts") for r in candidate.relations):
+    if candidate.basis == "inferred":
+        needs.append("inferred by the extractor, not stated by the source")  # never formed automatically
+    if any(r.kind in ("corrects", "retracts", "updates") and r.target is None for r in candidate.relations):
+        needs.append("a stated correction whose target is not established")   # D3 (format 1.1)
+    elif any(r.kind in ("corrects", "retracts") for r in candidate.relations):
         needs.append("a stated correction")
     elif CORRECTION_CUE.match(candidate.passage.text):
         needs.append("a stated correction whose target could not be identified")  # the passage still says so
@@ -198,8 +204,11 @@ def _claim(c, obs, method, scope):
         roles.setdefault(p.role, []).append(rid)
     asserter = None
     if c.attribution.asserted_by:
-        asserter = referent_id(scope, "person", c.attribution.asserted_by)
-        refs.append(Referent(asserter, "person", c.attribution.asserted_by))
+        # C2: the claimant's referent kind is what the candidate establishes; an absent kind (format 1.0, or 1.1
+        # without asserted_by_kind) is not evidence that the claimant is a person
+        kind = CLAIMANT_REFERENT_KIND.get(c.attribution.asserted_by_kind, "unclassified")
+        asserter = referent_id(scope, kind, c.attribution.asserted_by)
+        refs.append(Referent(asserter, kind, c.attribution.asserted_by))
     vt, to_basis = valid_time(c)
     read = [t for t in c.times if t.earliest is not None or t.latest is not None]
     kinds = {t.kind for t in read}
@@ -226,13 +235,27 @@ def _existing_copies(memory, cset, drafts):
                                        "evidence (supported: $c, support: $o); $c isa claim, has gupi-id $cid;",
                                    [{"p": c.passage.text}])
             ids_ = sorted({r.get("cid").get_string() for r in rows} - {drafts[c.id].id})
-            same = [x for x in retrieval.claims_by_ids(tx, ids_)
-                    if x.type == c.claim_type and x.polarity == c.polarity
-                    and x.attribution_mode not in ("forwarded", "quoted")
-                    and any(_words(e.quote) == _words(c.passage.text) for e in x.evidence)]
+            views = [x for x in retrieval.claims_by_ids(tx, ids_)
+                     if x.type == c.claim_type and x.polarity == c.polarity
+                     and any(_words(e.quote) == _words(c.passage.text) for e in x.evidence)]
+            claimants = _claimant_labels(tx, [x.id for x in views])
+            # a copy of a first-hand claim, or (F1) of an earlier copy of the same original claimant's
+            # statement; a copy naming no claimant is the same unknown origin, never a new one
+            same = [x for x in views if x.attribution_mode not in ("forwarded", "quoted")
+                    or _words(claimants.get(x.id)) == _words(c.attribution.asserted_by)]
             if same:
-                out[c.id] = same[0].id
+                out[c.id] = sorted(same, key=lambda x: (x.recorded_at, x.id))[0].id
     return out
+
+
+def _claimant_labels(tx, claim_ids):
+    """{claim id: the label of its asserter} for claims that record one."""
+    found = retrieval.asserters(tx, claim_ids)
+    label = {}
+    for a in sorted(set(found.values())):
+        docs = typeql.documents(tx, 'match $a has gupi-id == $id, has label $l; fetch { "l": $l };', {"id": a})
+        label[a] = docs[0]["l"] if docs else None
+    return {cid: label[a] for cid, a in found.items()}
 
 
 def _words(text):
@@ -245,7 +268,8 @@ def _suggest_corrections(memory, cset, decisions, drafts):
     every believed claim about the same proposition is listed, and more than one is flagged as ambiguous.
     Nothing is superseded."""
     by_id = {c.id: c for c in cset.candidates}
-    named = {r.target for c in cset.candidates for r in c.relations if r.kind in ("corrects", "retracts")}
+    named = {r.target for c in cset.candidates for r in c.relations
+             if r.kind in ("corrects", "retracts", "updates") and r.target is not None}
     keys = {drafts[c.id].proposition_key for c in cset.candidates if c.id in drafts}
     with transaction(memory.driver, memory.database, TransactionType.READ) as tx:
         formed_from = retrieval.claim_ids_formed_from(tx, named)
@@ -256,7 +280,8 @@ def _suggest_corrections(memory, cset, decisions, drafts):
     out = []
     for d in decisions:
         c = by_id[d.candidate_id]
-        rel = next((r for r in c.relations if r.kind in ("corrects", "retracts")), None)
+        rel = next((r for r in c.relations if r.kind in ("corrects", "retracts")
+                    or (r.kind == "updates" and r.target is None)), None)
         cued = rel is not None or CORRECTION_CUE.match(c.passage.text)
         if d.outcome not in ("formed", "review") or not cued:
             out.append(d)
@@ -265,16 +290,19 @@ def _suggest_corrections(memory, cset, decisions, drafts):
         # D3: every believed claim this could plausibly correct is listed; the extractor's named target is
         # never taken alone when others are plausible, and is not offered at all once it is no longer believed
         plausible = sorted(v.id for v in views.values() if v.proposition_key == key and v.id != d.claim_id)
-        named = formed_from.get(rel.target) if rel is not None else None
-        note = ""
+        named = formed_from.get(rel.target) if rel is not None and rel.target is not None else None
+        unestablished = rel is not None and rel.target is None
+        note = " (its target is not established by the source: listed for review, never resolved)" if unestablished else ""
         if named and named not in named_believed:
             note = f" (the named target {named} is no longer believed)"
         targets = sorted(set(plausible) | ({named} if named in named_believed else set()))
         cue = rel.cue if rel is not None and rel.cue else "Correction"
+        resolution = ("ambiguous" if targets else "missing") if unestablished else \
+            ("resolved" if len(targets) == 1 else "ambiguous" if targets else "missing")
         out.append(Decision(d.candidate_id, d.outcome, d.reason, d.decided_by, d.claim_id, {
-            "old": targets[0] if len(targets) == 1 else None, "possible_targets": targets,
-            "ambiguous": len(targets) > 1, "new": d.claim_id,
-            "reason": f"{cue}: candidate {d.candidate_id}" + (f" {rel.kind} {rel.target}" if rel else "")
+            "old": targets[0] if resolution == "resolved" else None, "possible_targets": targets,
+            "ambiguous": resolution == "ambiguous", "resolution": resolution, "new": d.claim_id,
+            "reason": f"{cue}: candidate {d.candidate_id}" + (f" {rel.kind} {rel.target or 'an unestablished target'}" if rel else "")
                       + note + ("" if targets else " (no claim in memory matches its target)")}))
     return out
 
