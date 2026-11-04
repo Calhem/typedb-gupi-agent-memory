@@ -1,0 +1,39 @@
+{
+ "_about": "Phase 7A section 6 probes, written and committed before any was run: the brief's ten expressions of 'Nora Vance began working for Halden in March 2025', which do not all assert the same thing, plus sampled benchmark turns referenced by id only (their text is read from .data/ at run time and never written). 'expect' states what a correct extractor within the candidate contract should produce from the message (with its context): type, roles, time kinds, attribution mode, commitment, relations; null where nothing should be extracted. Each probe runs on Path A (RulesV2.extract directly) and Path B (wrapped as a LoCoMo conversation and as a LongMemEval session, through the dataset adapters and the Phase 6D extraction and store pathway).",
+ "frozen": "2026-11-04",
+ "said_at": "2025-08-20T09:00:00Z",
+ "speaker": "Ivo Marsh",
+ "probes": [
+  {"id": "n01", "text": "Nora Vance joined Halden in March 2025.",
+   "expect": {"type": "employment", "roles": {"employee": "Nora Vance", "employer": "Halden"}, "times": ["start"], "mode": "direct", "commitment": "certain"}},
+  {"id": "n02", "text": "Nora started working for Halden in March 2025.",
+   "expect": {"type": "employment", "roles": {"employee": "Nora", "employer": "Halden"}, "times": ["start"], "mode": "direct", "commitment": "certain"}},
+  {"id": "n03", "text": "Nora has worked at Halden since March 2025.",
+   "expect": {"type": "employment", "roles": {"employee": "Nora", "employer": "Halden"}, "times": ["holds-since", "holds-at"], "mode": "direct", "commitment": "certain"},
+   "note": "held since March, still holds; not a stated start"},
+  {"id": "n04", "text": "Since March 2025, Nora has been with Halden.",
+   "expect": {"type": "employment", "roles": {"employee": "Nora", "employer": "Halden"}, "times": ["holds-since", "holds-at"], "mode": "direct", "commitment": "certain"}},
+  {"id": "n05", "text": "Nora's been at Halden since March.",
+   "expect": {"type": "employment", "roles": {"employee": "Nora", "employer": "Halden"}, "times": ["holds-since", "holds-at"], "mode": "direct", "commitment": "certain"},
+   "note": "month without a year: the most recent past March"},
+  {"id": "n06", "text": "She joined them last spring.", "expect": null,
+   "note": "pronoun subject and 'them' with no antecedent: nothing can be attributed to anyone"},
+  {"id": "n07", "text": "I started working there last March.", "expect": null,
+   "note": "first person is the speaker, but 'there' has no antecedent: no employer"},
+  {"id": "n08", "text": "Nora told me she joined Halden in March.",
+   "expect": {"type": "employment", "roles": {"employee": "Nora", "employer": "Halden"}, "times": ["start"], "mode": "reported", "asserted_by": "Nora", "commitment": "certain"},
+   "note": "'she' resolves to Nora within the sentence; reported speech"},
+  {"id": "n09", "text": "Apparently Nora started at Halden in March.",
+   "expect": {"type": "employment", "roles": {"employee": "Nora", "employer": "Halden"}, "times": ["start"], "mode": "direct", "commitment": "probable"}},
+  {"id": "n10", "context": ["Nora joined Halden in March."], "text": "Correction: Nora joined Halden in April, not March.",
+   "expect": {"type": "employment", "roles": {"employee": "Nora", "employer": "Halden"}, "times": ["start"], "mode": "direct", "commitment": "certain", "relations": ["corrects"]}}
+ ],
+ "benchmark_turns": [
+  {"dataset": "longmemeval", "key": "lme:9f8c432e_1:83052b381db7:0", "why": "the one representative in-domain assertion (title at a named company, for about six weeks)"},
+  {"dataset": "longmemeval", "key": "lme:sharegpt_sXKNzPE_0:9d6b8f4cbfd6:7", "why": "people in roles at named organisations, in a table"},
+  {"dataset": "longmemeval", "key": "lme:27e262d5_1:97864eaf60f1:10", "why": "a role at an unnamed institution"},
+  {"dataset": "locomo", "key": "conv-30:D14:8", "why": "employment ended, employer unnamed; started own business"},
+  {"dataset": "locomo", "key": "conv-30:D18:2", "why": "employment started (temporary job), employer unnamed"},
+  {"dataset": "locomo", "key": "conv-30:D12:1", "why": "internship accepted, organisation unnamed"}
+ ]
+}
