@@ -1,0 +1,666 @@
+{
+ "phase": "7A",
+ "frozen": "2026-11-04",
+ "protocol": "docs/evaluation/phase-7a/SAMPLING.md",
+ "sources": {
+  "locomo": {
+   ".data/locomo/locomo10.json": {
+    "sha256": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
+    "bytes": 2805274
+   }
+  },
+  "longmemeval": {
+   ".data/longmemeval/longmemeval_s_cleaned.json": {
+    "sha256": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442",
+    "bytes": 277383467
+   }
+  },
+  "versions": {
+   "locomo": "github.com/snap-research/locomo commit cbfbc1dba6bc53d00625212a0f22d55ffee7c1fc",
+   "longmemeval": "huggingface.co/datasets/xiaowu0162/longmemeval-cleaned revision 98d7416c24c778c2fee6e6f3006e7a073259d48f"
+  }
+ },
+ "splits_used": {
+  "locomo": "development: conv-26, conv-30 (benchmarks/split.json)",
+  "longmemeval": "development: sha256(question_id) mod 10 == 0 (benchmarks/split.json)"
+ },
+ "sampling": {
+  "seed": "phase7a-sample-v1",
+  "rank": "sha256('<seed>|<dataset>|<turn key>'), lowest first",
+  "representative": "LoCoMo: conversation x length tercile x 5; LongMemEval: role x length tercile x 5",
+  "targeted": "20 per dataset matching the WORK pattern in gupi/benchmarks/diagnosis/sample.py, kept separate",
+  "counts_subset": "sha256('phase7a-counts-v1|<dataset>|<key>') mod 20 == 0 (gupi/benchmarks/diagnosis/counts.py)"
+ },
+ "files": {
+  "sample.json": "d3b7b396a24146230e1f0094b017ebe9ef0d10d7c79c86defb631a51e97075c6",
+  "annotations.json": "e24e9e3f784b8faeb413263ee72dcf280fe3480aee8b347dc150279a8a26dc42",
+  "probes-v1.json": "fdf629da3ee5fe9591ee2f20a11ba387b0f0796ae133128e449f6b75f88905b8",
+  "probes-v2.json": "481ae072734b5ef94d182a08b7c82e7e905ab7425e00068ee79d21529de1ba93"
+ },
+ "sample": {
+  "locomo": {
+   "eligible_turns": 788,
+   "length_tercile_cuts_chars": [
+    92,
+    174
+   ],
+   "targeted_pool": 95,
+   "representative": [
+    {
+     "key": "conv-26:D1:12",
+     "stratum": "conv-26/long",
+     "chars": 196,
+     "text_sha256": "d094f62bb8bceac9a33d5f1c2a91bf7b7a8020896b8c695f5514d93cc2690246"
+    },
+    {
+     "key": "conv-26:D17:14",
+     "stratum": "conv-26/long",
+     "chars": 219,
+     "text_sha256": "9a50600efde14af4a53db450cdff1e4db5aa6ae5af5194058dc0331fefb0fde5"
+    },
+    {
+     "key": "conv-26:D11:7",
+     "stratum": "conv-26/long",
+     "chars": 324,
+     "text_sha256": "a9d1385185f36f169b24d73dde0f1cbb6fe4c61d5d875f3c408215ae28577375"
+    },
+    {
+     "key": "conv-26:D11:14",
+     "stratum": "conv-26/long",
+     "chars": 191,
+     "text_sha256": "85498795f8ff2725c18831c101277598a8a4f6066da6de02933f867e2d06e0db"
+    },
+    {
+     "key": "conv-26:D13:15",
+     "stratum": "conv-26/long",
+     "chars": 204,
+     "text_sha256": "81a05705d60d39cf3159a23839c42e6a56c8c760ad8fc041f7a40a70bcd30f2e"
+    },
+    {
+     "key": "conv-26:D10:6",
+     "stratum": "conv-26/medium",
+     "chars": 170,
+     "text_sha256": "3e1b51532be195ad3519e7f34ebca2a9b2ff00476219ddb4adfe66428f69c820"
+    },
+    {
+     "key": "conv-26:D8:33",
+     "stratum": "conv-26/medium",
+     "chars": 155,
+     "text_sha256": "193311edd67369f94f83744c4ab2bf254df521b96ffb887be7c5c926251f50e1"
+    },
+    {
+     "key": "conv-26:D16:14",
+     "stratum": "conv-26/medium",
+     "chars": 170,
+     "text_sha256": "ece099e78c961e037e90bfd5c92d72bc81078376eae0782c657840f884cf45a4"
+    },
+    {
+     "key": "conv-26:D9:4",
+     "stratum": "conv-26/medium",
+     "chars": 154,
+     "text_sha256": "6ce71e508be0d88da3231680cfed5434c7e634efef3b302e4d528cf88c926094"
+    },
+    {
+     "key": "conv-26:D15:8",
+     "stratum": "conv-26/medium",
+     "chars": 119,
+     "text_sha256": "632a2636462ab0006e59d860d28709d0885dc1741657f0501876d12d9f4b02b4"
+    },
+    {
+     "key": "conv-26:D15:15",
+     "stratum": "conv-26/short",
+     "chars": 40,
+     "text_sha256": "56814163fd8915bd58e02c926f1c4ab89f2d856cc470ea9d59ab51f68a0a15d1"
+    },
+    {
+     "key": "conv-26:D12:21",
+     "stratum": "conv-26/short",
+     "chars": 71,
+     "text_sha256": "abb2c408dbe63eedc4ef4a3262abf2bfda61dcf261a3ccafa8ec398ab7006a24"
+    },
+    {
+     "key": "conv-26:D5:9",
+     "stratum": "conv-26/short",
+     "chars": 90,
+     "text_sha256": "3f3bafe79d4b7063458da4ddf765340af70b75e3bf0b6d80b437e34a83ed6429"
+    },
+    {
+     "key": "conv-26:D8:20",
+     "stratum": "conv-26/short",
+     "chars": 50,
+     "text_sha256": "3a77ac22fc7e975a9a215170a8992586c6c80cc95f7bfc902195a8c2528ef10f"
+    },
+    {
+     "key": "conv-26:D8:13",
+     "stratum": "conv-26/short",
+     "chars": 76,
+     "text_sha256": "df937ac0801086170af272e26563295ccd13b5f69a6e9061e528cf9dc5cfa7af"
+    },
+    {
+     "key": "conv-30:D9:4",
+     "stratum": "conv-30/long",
+     "chars": 186,
+     "text_sha256": "94e69843deb027e9cd0ff2049cd9b646bebe21054b8f8b3963ca379fc6c006cb"
+    },
+    {
+     "key": "conv-30:D7:6",
+     "stratum": "conv-30/long",
+     "chars": 235,
+     "text_sha256": "66f999d0c050859ee961a335c37f0bfdbaefd1acc0994eff1a05f38919fc2a22"
+    },
+    {
+     "key": "conv-30:D13:5",
+     "stratum": "conv-30/long",
+     "chars": 268,
+     "text_sha256": "0375e9d0cc724dae82d867786dd3a8c0bf17170a472f3a87f40c3c23cde556b1"
+    },
+    {
+     "key": "conv-30:D8:12",
+     "stratum": "conv-30/long",
+     "chars": 414,
+     "text_sha256": "61b91b83e930d7ccc10945c2c4a5629f715a1c5947883a426e8e05f8246cd234"
+    },
+    {
+     "key": "conv-30:D11:12",
+     "stratum": "conv-30/long",
+     "chars": 176,
+     "text_sha256": "ca88b733126ba9faf5830228b303266ad3e012be2516c0e196e89091c9019470"
+    },
+    {
+     "key": "conv-30:D18:12",
+     "stratum": "conv-30/medium",
+     "chars": 159,
+     "text_sha256": "f7a762934066d61d70ce2f866fe11b3bc99562814031e2df9228c2b91decb7f3"
+    },
+    {
+     "key": "conv-30:D11:10",
+     "stratum": "conv-30/medium",
+     "chars": 107,
+     "text_sha256": "d52baae944c79c95872f4c4ddcbf5e39e38a1603765a53fe39a753e102265315"
+    },
+    {
+     "key": "conv-30:D16:9",
+     "stratum": "conv-30/medium",
+     "chars": 128,
+     "text_sha256": "9e1bf89dfe8adb838ff242b3eeb5ac16a38176a1e5cce0c799ed1adb71002fc9"
+    },
+    {
+     "key": "conv-30:D3:13",
+     "stratum": "conv-30/medium",
+     "chars": 137,
+     "text_sha256": "eb7fd6e7819977114f70e3e8297573c292fdb993f923d251a90af2362a7c05f9"
+    },
+    {
+     "key": "conv-30:D18:20",
+     "stratum": "conv-30/medium",
+     "chars": 114,
+     "text_sha256": "275a9e6136b45b5c4c35390a6b9240319652b1f93eb54249886732e0f14e747a"
+    },
+    {
+     "key": "conv-30:D8:7",
+     "stratum": "conv-30/short",
+     "chars": 64,
+     "text_sha256": "e543d3bab46e718a608a0faec34b3ce272421cb6550ae1a086ddc49503be9526"
+    },
+    {
+     "key": "conv-30:D11:20",
+     "stratum": "conv-30/short",
+     "chars": 52,
+     "text_sha256": "86c3a62802f3de2bd692c9ea3d5346642d2c502147c7ec1a07bbc1a5def05628"
+    },
+    {
+     "key": "conv-30:D8:11",
+     "stratum": "conv-30/short",
+     "chars": 86,
+     "text_sha256": "1536bb559e62c8ce0df2f0e4fc0b493359dea28e4d45b4b402ef855812273c66"
+    },
+    {
+     "key": "conv-30:D10:3",
+     "stratum": "conv-30/short",
+     "chars": 77,
+     "text_sha256": "299fd959e4584f9a27eacdba8c9bb5aaa89e29d3ae33f74a2885c5e0bdec5ae6"
+    },
+    {
+     "key": "conv-30:D15:15",
+     "stratum": "conv-30/short",
+     "chars": 38,
+     "text_sha256": "615d98fca33183fb483168e70bd2104b773bdc902cb792a1791dfbc59b95cf6a"
+    }
+   ],
+   "targeted": [
+    {
+     "key": "conv-26:D1:2",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 98,
+     "text_sha256": "ec05770efa25dbcfb1a95f9be34700314568b21bcf27646a4235a50d3eaf9891"
+    },
+    {
+     "key": "conv-26:D4:11",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 201,
+     "text_sha256": "bd7e54d8e98fd8c2ba9781a5715443e8fa8a86a389b2a49bc9b2cc0de2eeec4c"
+    },
+    {
+     "key": "conv-30:D14:8",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 162,
+     "text_sha256": "612c85da00e0f2b944b28d5b8d6984666f44d2c261bbf67c7cf1b3aa196ab380"
+    },
+    {
+     "key": "conv-30:D4:11",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 290,
+     "text_sha256": "2269041dc23cc7ada50b5b0a78c8dc8cc8bf90db5611f00c654be3374a93220e"
+    },
+    {
+     "key": "conv-30:D15:3",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 54,
+     "text_sha256": "22fd407138c7cbeb27c61499b39e10078fa9341d3437ddae8468577214fe7bb3"
+    },
+    {
+     "key": "conv-30:D12:1",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 92,
+     "text_sha256": "9797d187aa04adecbda46b7ed9ed6f891080f801e72d5a59af8958835b656c6e"
+    },
+    {
+     "key": "conv-30:D12:11",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 109,
+     "text_sha256": "fc6d617c41513a8da6e8ddec641a93a5943705bf295f544af10d27f00e3a1d38"
+    },
+    {
+     "key": "conv-30:D18:2",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 229,
+     "text_sha256": "262c23fc6b3539e136a98c6a844fd8038f51bf4ea2629283bb2c4c132f1f7027"
+    },
+    {
+     "key": "conv-30:D9:3",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 130,
+     "text_sha256": "0531e955edc3abf05fa26e5854ea6acc4946301897f888efd566d52c6595afb1"
+    },
+    {
+     "key": "conv-26:D4:13",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 418,
+     "text_sha256": "edf7e31b927bbeef1406e21373ddf4af36a0574c75a76c496ff2637a75ae4223"
+    },
+    {
+     "key": "conv-30:D3:3",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 155,
+     "text_sha256": "55dc3a670dc15e314f5060f02191521e01160f505512053621c1a3b8e626bab1"
+    },
+    {
+     "key": "conv-26:D2:6",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 128,
+     "text_sha256": "4270ff8a1fa6e98b228f628f3493315932c9087f4617da050d704118e1711ba0"
+    },
+    {
+     "key": "conv-26:D1:9",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 77,
+     "text_sha256": "8f71790fc7d3fccd1c31f97441841d00d371bf7979119098d71cbc55be6a152e"
+    },
+    {
+     "key": "conv-30:D14:14",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 226,
+     "text_sha256": "c079847f29d44d6b1bb23ca2b41773def1b01e45ec7b06508d71b21716fe2ff1"
+    },
+    {
+     "key": "conv-26:D3:4",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 292,
+     "text_sha256": "9ce401ea0da61a77119ed5e80ad5aec6f342ee52d7a657d6d35de348abc96ae0"
+    },
+    {
+     "key": "conv-30:D19:1",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 146,
+     "text_sha256": "240667adfea181e66dfb0075f3eff41f392e3242141970c7b422bf9f58141215"
+    },
+    {
+     "key": "conv-30:D18:10",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 160,
+     "text_sha256": "a444a132f55fa71557e7aca31c70f091b4b8a51578240d6b9764094b16d48ee0"
+    },
+    {
+     "key": "conv-30:D5:5",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 333,
+     "text_sha256": "f9c3ce15687e172df473283504971da63d7709e54298a18d94b1ba5e384c0cbd"
+    },
+    {
+     "key": "conv-30:D16:8",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 152,
+     "text_sha256": "235f0436490b6cc17ffe0adddc396d7c7d856ac5d480f5dd0e3cc8ed5c809d96"
+    },
+    {
+     "key": "conv-30:D1:13",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 51,
+     "text_sha256": "0f7e5ded7892f9c429d1e7ebd7544a0f6913c278f4b068e535810d6e4efbbcc5"
+    }
+   ]
+  },
+  "longmemeval": {
+   "eligible_turns": 26572,
+   "length_tercile_cuts_chars": [
+    222,
+    1245
+   ],
+   "targeted_pool": 6459,
+   "representative": [
+    {
+     "key": "lme:4344c2f1_1:57d6b5d8cd86:5",
+     "stratum": "assistant/long",
+     "chars": 2252,
+     "text_sha256": "e85e5119b951938351905f13ccd5f35398b369e755d6b49138e92a040d11552e"
+    },
+    {
+     "key": "lme:37141183:29ad356052b1:5",
+     "stratum": "assistant/long",
+     "chars": 2734,
+     "text_sha256": "8ef8c51682502f384d08f5e158b8e8a85e199cabd93c833b0ef1360adc9d8da8"
+    },
+    {
+     "key": "lme:15a346c1_2:03dd5bbe54d4:7",
+     "stratum": "assistant/long",
+     "chars": 2340,
+     "text_sha256": "814155ce6e0ccbc069cf66d69efac9751466b876be3927ae5beaa0d1249fc0ba"
+    },
+    {
+     "key": "lme:211bb1c2_1:03a77339f237:11",
+     "stratum": "assistant/long",
+     "chars": 2911,
+     "text_sha256": "1cc3d0f4fd81d9ca1e026880ae2aac002f37c865b9f3d77bbbfc8b0a48c4dc16"
+    },
+    {
+     "key": "lme:0232f77d:bee7133a93c3:3",
+     "stratum": "assistant/long",
+     "chars": 2861,
+     "text_sha256": "39045b4103bf59919c26c9c860e045cdd50a803ba6722eb9ddbceb83a88bd85b"
+    },
+    {
+     "key": "lme:sharegpt_eVmxjQZ_0:9012efba98f6:1",
+     "stratum": "assistant/medium",
+     "chars": 433,
+     "text_sha256": "57da80684c3ae49da2bd3bbbc15077dabbe273add293b9d2f6d0c565fd119180"
+    },
+    {
+     "key": "lme:ultrachat_345394:2f22dc124f11:9",
+     "stratum": "assistant/medium",
+     "chars": 666,
+     "text_sha256": "b3422d7708de527613dc325cf755d565138726ccd1738b42230439c80757205b"
+    },
+    {
+     "key": "lme:sharegpt_uNuzBLK_0:5e5e00ccef14:5",
+     "stratum": "assistant/medium",
+     "chars": 1075,
+     "text_sha256": "1ef003cb50db029b553e7f82fb4da0c1e505a78a8a238bbee89aa35a31fb0592"
+    },
+    {
+     "key": "lme:ultrachat_501941:2102032c7984:7",
+     "stratum": "assistant/medium",
+     "chars": 670,
+     "text_sha256": "c5d3356b307c9abcf2f9f0e6e366b178c1d005eb0f0a432eae3a8f0a7d60a014"
+    },
+    {
+     "key": "lme:sharegpt_F8CLI1Y_13:e4c5a729db3b:4",
+     "stratum": "assistant/medium",
+     "chars": 885,
+     "text_sha256": "1d37c7de3b8a807f29fb55f337facad760b1866aa23abbdd370b0f0a7b0c1112"
+    },
+    {
+     "key": "lme:sharegpt_YeoNsEt_17:938e696ebaf0:8",
+     "stratum": "assistant/short",
+     "chars": 165,
+     "text_sha256": "fc2a59c501dd565183312f8e4fae9bd313e56f9b69f50bb02403bcc5c901f624"
+    },
+    {
+     "key": "lme:sharegpt_k3yQrLH_0:62435a5da5f5:1",
+     "stratum": "assistant/short",
+     "chars": 80,
+     "text_sha256": "f60499e8465cb4ffe0c230166308cf3b48fdbbd6ff7c1de0ba5bccb797735366"
+    },
+    {
+     "key": "lme:sharegpt_UbMVpdp_93:220278eb4150:4",
+     "stratum": "assistant/short",
+     "chars": 76,
+     "text_sha256": "8f8e41d574e2bf5f3620aa67809acf3e3c4c8b7d848a3b499aa0de00e3eca0e0"
+    },
+    {
+     "key": "lme:sharegpt_zwfSWfk_0:6aec4adccd0d:1",
+     "stratum": "assistant/short",
+     "chars": 178,
+     "text_sha256": "da3a419cced8a5f31f81bca447f7ccd7314428903f389160adec0957ef97c793"
+    },
+    {
+     "key": "lme:sharegpt_1thv0EM_0:f4194b726a85:1",
+     "stratum": "assistant/short",
+     "chars": 9,
+     "text_sha256": "fe92788858aeb140fbceec0a4d4a6350403cf3f735748892dce000454626469a"
+    },
+    {
+     "key": "lme:sharegpt_7mz4EV7_0:4e3c7c2e414d:2",
+     "stratum": "user/long",
+     "chars": 3274,
+     "text_sha256": "b7c1e85cd22107a772bdf6162b6939d2704044542e1f4aa268715dfa2f6c997f"
+    },
+    {
+     "key": "lme:sharegpt_R79o5xs_0:60c21d6130ea:2",
+     "stratum": "user/long",
+     "chars": 1966,
+     "text_sha256": "ebe660041bb6ab020b7b5e7e2a2371158d88795593dc68c1cb6b9b0aed0bcd5d"
+    },
+    {
+     "key": "lme:sharegpt_igR6Bmm_0:0d1b1c2e72be:0",
+     "stratum": "user/long",
+     "chars": 19257,
+     "text_sha256": "9e1515f71e895b91ece15964a995e930a897a10b35b14411a6d1429c54792a27"
+    },
+    {
+     "key": "lme:sharegpt_YvsQDjp_0:f27bdbada369:2",
+     "stratum": "user/long",
+     "chars": 2429,
+     "text_sha256": "3e8f75e789ce328937bef3c5b25980a5f580586fad5bc915ebd93c55a7ecbc1b"
+    },
+    {
+     "key": "lme:sharegpt_XYtuANl_9:ed77c62015b6:1",
+     "stratum": "user/long",
+     "chars": 5325,
+     "text_sha256": "c092986cef3f34ebd97befdd7bc94bf2263c09462ad183f8f96a56c80419f702"
+    },
+    {
+     "key": "lme:9f8c432e_1:83052b381db7:0",
+     "stratum": "user/medium",
+     "chars": 258,
+     "text_sha256": "66528cd29081e4ecffaad382a2c610a9d3219770b2ac5535f52012e70dbd37ab"
+    },
+    {
+     "key": "lme:answer_7cb94507:8eb842fccb8b:6",
+     "stratum": "user/medium",
+     "chars": 707,
+     "text_sha256": "e96304d1d1761278fadbd513f6b0bf299cd1d10908e5da43e19391ef2313b456"
+    },
+    {
+     "key": "lme:b9361a4f_1:0407b0bcc7e2:0",
+     "stratum": "user/medium",
+     "chars": 282,
+     "text_sha256": "070d812d6cdac6a1c577cfdb2178aefc3e42e683ca406b2e41802b4bc189cd37"
+    },
+    {
+     "key": "lme:1cafd864_3:8a5980818177:8",
+     "stratum": "user/medium",
+     "chars": 249,
+     "text_sha256": "907b01a9b57eb1c73539aaf6541230195e182ce8c2f8595c7b2ddcd06296d455"
+    },
+    {
+     "key": "lme:3b5205b6_1:4eaca794bddb:10",
+     "stratum": "user/medium",
+     "chars": 343,
+     "text_sha256": "4a48f0665807fddef4cc35ad7cfb1e56de0fac594df2ef67aa586f77884d66ec"
+    },
+    {
+     "key": "lme:e627b1aa_4:6183f508e72d:2",
+     "stratum": "user/short",
+     "chars": 195,
+     "text_sha256": "6a16015f09d41a889acda318e5001bd8f565b2248324c024468f86d4b9b497c7"
+    },
+    {
+     "key": "lme:ultrachat_556010:f449f2697a43:0",
+     "stratum": "user/short",
+     "chars": 81,
+     "text_sha256": "4fddba49c1a808e54322080a48216daa57aabf02e1958ab3e40bb0f3418b3356"
+    },
+    {
+     "key": "lme:ultrachat_518651:6844edf749f8:6",
+     "stratum": "user/short",
+     "chars": 181,
+     "text_sha256": "f20d2f6b2562414df8b9617439bfaac377d63ad08551bda6549023583748d7c5"
+    },
+    {
+     "key": "lme:ultrachat_443538:9127a878bd62:0",
+     "stratum": "user/short",
+     "chars": 71,
+     "text_sha256": "7218ef2fb0e356da307d94313b4fb8e49b885f5c15d0cd7a0f26063e7c34ee83"
+    },
+    {
+     "key": "lme:6ea1541e_1:cb3b9cc73472:10",
+     "stratum": "user/short",
+     "chars": 189,
+     "text_sha256": "713d4eca3bd4eb72d6f32f492437758c2aaae2f929b5c1632e254c557e95d9ad"
+    }
+   ],
+   "targeted": [
+    {
+     "key": "lme:495cf518_2:3487e1b09b6b:3",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2642,
+     "text_sha256": "b0298555c9d8eda590afbfd1cc95bc11212c72f502af989717ae80eb5ecb5c11"
+    },
+    {
+     "key": "lme:bd8708e2_2:0750ad9a8a4e:9",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2846,
+     "text_sha256": "d9aab5ea2a9d97e8f891868622206ba6b6250806797579395f9398c96e6dde43"
+    },
+    {
+     "key": "lme:c625cff4_3:dccec659c52e:3",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2026,
+     "text_sha256": "2982de09722a41848aad2863e87bc2cefeaf432a538835fae3e5918dccec7ca3"
+    },
+    {
+     "key": "lme:ultrachat_322794:bd4ae323f6c9:13",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 1520,
+     "text_sha256": "35845c6301a6d926151ff1b9df1fe5d44062e7dd0f0b020897a9ce4664404beb"
+    },
+    {
+     "key": "lme:a6b6067b:f6e930d7a5bc:11",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2654,
+     "text_sha256": "543c05e389354d5a6626165b1ef0fcdb9aa0551447c82bc9480703e02166369e"
+    },
+    {
+     "key": "lme:27e262d5_1:97864eaf60f1:10",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 228,
+     "text_sha256": "f7f954c76d23dbec98bba03866411201519e125c0abc9286e682473d62af3c56"
+    },
+    {
+     "key": "lme:ultrachat_237047:bd92eceaddb7:1",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 1609,
+     "text_sha256": "37be3743726a4bf15620bda620bbbe157b0b18d73d54b68c058a7aea91b25bbe"
+    },
+    {
+     "key": "lme:959e6cb0_7:9806658db042:11",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 3130,
+     "text_sha256": "013c445021f0b10d84808c989795b70d4c8b78d8b6eab24a766f500facc0ccf5"
+    },
+    {
+     "key": "lme:ultrachat_278874:5df1c20983e7:3",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 1597,
+     "text_sha256": "0956ad6a1ca3abde696ce1567cd4d98d6257793b627949964fd8bca599d20c50"
+    },
+    {
+     "key": "lme:sharegpt_koRE8H2_0:871d420dc0e2:5",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 1418,
+     "text_sha256": "fb79e00196e18165cf4ee87b06fbf3817a750c5b9d5db32774a570298def80f8"
+    },
+    {
+     "key": "lme:2aeb1268:4652fb99268e:7",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2676,
+     "text_sha256": "3a318d08ff7d1153359b75037761a153063eae39b4fe410b1b6c4f714722a2ef"
+    },
+    {
+     "key": "lme:sharegpt_fnuLBKl_133:fb9efe21fa3d:0",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2735,
+     "text_sha256": "64ea1bd11f6837b990dc9be1f41b22b394a3515597fb3632b4d9f1c5d8f6ef0c"
+    },
+    {
+     "key": "lme:sharegpt_sXKNzPE_0:9d6b8f4cbfd6:7",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 895,
+     "text_sha256": "b514515f4b4c87011033592ee15703c96f0d42b38c03fdb5469cbd98df4ed366"
+    },
+    {
+     "key": "lme:e30307d8_2:60fe9d1e1e89:3",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2251,
+     "text_sha256": "29e736cd29a4ae91d45803496309f30e2a3959d752746d859de8cf554e1ac241"
+    },
+    {
+     "key": "lme:ultrachat_237018:0062ec553aa7:9",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 859,
+     "text_sha256": "d4f395e61c1fcea8c323bf202a220764678ed809705b0430f8225a181f024b1c"
+    },
+    {
+     "key": "lme:edfa358d_1:84caeedd9da0:11",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 1017,
+     "text_sha256": "c9c44f1dab99f0e037836287d789fadf91dc29d41291a7df9f086019b583f298"
+    },
+    {
+     "key": "lme:sharegpt_eyjhBv3_0:6975202e654e:1",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 1768,
+     "text_sha256": "9b7ed505f2bddd8134edf1aad5b5e355faeab0032a260a73f917803f7ddb0b42"
+    },
+    {
+     "key": "lme:07e363d9_3:e9f9f9cca1e9:6",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 268,
+     "text_sha256": "1693583e031841d9e29f8ecba9571b76d8dc5e38e02255519215efb9ae1c3dfb"
+    },
+    {
+     "key": "lme:6aaf298d:3365e0847b03:11",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 2919,
+     "text_sha256": "6cade52d3bbacce70d198c304edd8689b0e469e3931a58a9cf28aee62bf25fd3"
+    },
+    {
+     "key": "lme:ad3d0815_1:0347bde3f54a:7",
+     "stratum": "targeted/work-vocabulary",
+     "chars": 3007,
+     "text_sha256": "b3f828375b5d1071700af624a525949db9244f4dc0ab0195f1199c34738faa14"
+    }
+   ]
+  }
+ }
+}
