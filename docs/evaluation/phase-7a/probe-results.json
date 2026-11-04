@@ -1,0 +1,779 @@
+{
+ "meta": {
+  "phase": "7A",
+  "part": "Phase 7A path comparison",
+  "run_label": "probes-v2",
+  "git": {
+   "commit": "a3366f2fb789fa1caaf12564ac64557c17583b07",
+   "branch": "feature/phase-7a-extraction-diagnosis",
+   "dirty": false
+  },
+  "started": "2026-11-04T11:50:12+00:00",
+  "peak_rss_bytes_at_start": 2581463040
+ },
+ "probes": [
+  {
+   "id": "n01",
+   "text": "Nora Vance joined Halden in March 2025.",
+   "context": [],
+   "expect": {
+    "type": "employment",
+    "roles": {
+     "employee": "Nora Vance",
+     "employer": "Halden"
+    },
+    "times": [
+     "start"
+    ],
+    "mode": "direct",
+    "commitment": "certain"
+   },
+   "note": null,
+   "path_a": {
+    "extracted": 1,
+    "invalid": 0,
+    "not_extracted": 0,
+    "candidates": [
+     {
+      "type": "employment",
+      "roles": {
+       "employee": "Nora Vance",
+       "employer": "Halden"
+      },
+      "times": [
+       [
+        "start",
+        "2025-03-01",
+        "2025-04-01"
+       ]
+      ],
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "certain",
+      "mode": "direct",
+      "asserted_by": null,
+      "relations": [],
+      "status": "formed",
+      "reason": "an asserted actual condition or event"
+     }
+    ]
+   },
+   "path_b_locomo": {
+    "extracted": 1,
+    "not_extracted": 0,
+    "candidates": [
+     {
+      "type": "employment",
+      "roles": {
+       "employee": "Nora Vance",
+       "employer": "Halden"
+      },
+      "times": [
+       [
+        "start",
+        "2025-03-01",
+        "2025-04-01"
+       ]
+      ],
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "certain",
+      "mode": "direct",
+      "asserted_by": null,
+      "relations": [],
+      "status": "formed",
+      "reason": "an asserted actual condition or event"
+     }
+    ]
+   },
+   "path_b_longmemeval": {
+    "extracted": 1,
+    "not_extracted": 0,
+    "candidates": [
+     {
+      "type": "employment",
+      "roles": {
+       "employee": "Nora Vance",
+       "employer": "Halden"
+      },
+      "times": [
+       [
+        "start",
+        "2025-03-01",
+        "2025-04-01"
+       ]
+      ],
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "certain",
+      "mode": "direct",
+      "asserted_by": null,
+      "relations": [],
+      "status": "formed",
+      "reason": "an asserted actual condition or event"
+     }
+    ]
+   },
+   "verdict_path_a": "match",
+   "path_b_locomo_same_as_a": true,
+   "path_b_longmemeval_same_as_a": true
+  },
+  {
+   "id": "n02",
+   "text": "Nora started working for Halden in March 2025.",
+   "context": [],
+   "expect": {
+    "type": "employment",
+    "roles": {
+     "employee": "Nora",
+     "employer": "Halden"
+    },
+    "times": [
+     "start"
+    ],
+    "mode": "direct",
+    "commitment": "certain"
+   },
+   "note": null,
+   "path_a": {
+    "extracted": 0,
+    "invalid": 0,
+    "not_extracted": 1,
+    "candidates": []
+   },
+   "path_b_locomo": {
+    "extracted": 0,
+    "not_extracted": 1,
+    "candidates": []
+   },
+   "path_b_longmemeval": {
+    "extracted": 0,
+    "not_extracted": 1,
+    "candidates": []
+   },
+   "verdict_path_a": "missed",
+   "path_b_locomo_same_as_a": true,
+   "path_b_longmemeval_same_as_a": true
+  },
+  {
+   "id": "n03",
+   "text": "Nora has worked at Halden since March 2025.",
+   "context": [],
+   "expect": {
+    "type": "employment",
+    "roles": {
+     "employee": "Nora",
+     "employer": "Halden"
+    },
+    "times": [
+     "holds-since",
+     "holds-at"
+    ],
+    "mode": "direct",
+    "commitment": "certain"
+   },
+   "note": "held since March, still holds; not a stated start",
+   "path_a": {
+    "extracted": 1,
+    "invalid": 0,
+    "not_extracted": 0,
+    "candidates": [
+     {
+      "type": "employment",
+      "roles": {
+       "employee": "Nora",
+       "employer": "Halden"
+      },
+      "times": [
+       [
+        "holds-at",
+        "2025-08-20",
+        "2025-08-20"
+       ],
+       [
+        "holds-since",
+        "2025-03-01",
+        "2025-04-01"
+       ]
+      ],
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "certain",
+      "mode": "direct",
+      "asserted_by": null,
+      "relations": [],
+      "status": "formed",
+      "reason": "an asserted actual condition or event"
+     }
+    ]
+   },
+   "path_b_locomo": {
+    "extracted": 1,
+    "not_extracted": 0,
+    "candidates": [
+     {
+      "type": "employment",
+      "roles": {
+       "employee": "Nora",
+       "employer": "Halden"
+      },
+      "times": [
+       [
+        "holds-at",
+        "2025-08-20",
+        "2025-08-20"
+       ],
+       [
+        "holds-since",
+        "2025-03-01",
+        "2025-04-01"
+       ]
+      ],
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "certain",
+      "mode": "direct",
+      "asserted_by": null,
+      "relations": [],
+      "status": "formed",
+      "reason": "an asserted actual condition or event"
+     }
+    ]
+   },
+   "path_b_longmemeval": {
+    "extracted": 1,
+    "not_extracted": 0,
+    "candidates": [
+     {
+      "type": "employment",
+      "roles": {
+       "employee": "Nora",
+       "employer": "Halden"
+      },
+      "times": [
+       [
+        "holds-at",
+        "2025-08-20",
+        "2025-08-20"
+       ],
+       [
+        "holds-since",
+        "2025-03-01",
+        "2025-04-01"
+       ]
+      ],
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "certain",
+      "mode": "direct",
+      "asserted_by": null,
+      "relations": [],
+      "status": "formed",
+      "reason": "an asserted actual condition or event"
+     }
+    ]
+   },
+   "verdict_path_a": "match",
+   "path_b_locomo_same_as_a": true,
+   "path_b_longmemeval_same_as_a": true
+  },
+  {
+   "id": "n04",
+   "text": "Since March 2025, Nora has been with Halden.",
+   "context": [],
+   "expect": {
+    "type": "employment",
+    "roles": {
+     "employee": "Nora",
+     "employer": "Halden"
+    },
+    "times": [
+     "holds-since",
+     "holds-at"
+    ],
+    "mode": "direct",
+    "commitment": "certain"
+   },
+   "note": null,
+   "path_a": {
+    "extracted": 0,
+    "invalid": 0,
+    "not_extracted": 0,
+    "candidates": []
+   },
+   "path_b_locomo": {
+    "extracted": 0,
+    "not_extracted": 0,
+    "candidates": []
+   },
+   "path_b_longmemeval": {
+    "extracted": 0,
+    "not_extracted": 0,
+    "candidates": []
+   },
+   "verdict_path_a": "missed",
+   "path_b_locomo_same_as_a": true,
+   "path_b_longmemeval_same_as_a": true
+  },
+  {
+   "id": "n05",
+   "text": "Nora's been at Halden since March.",
+   "context": [],
+   "expect": {
+    "type": "employment",
+    "roles": {
+     "employee": "Nora",
+     "employer": "Halden"
+    },
+    "times": [
+     "holds-since",
+     "holds-at"
+    ],
+    "mode": "direct",
+    "commitment": "certain"
+   },
+   "note": "month without a year: the most recent past March",
+   "path_a": {
+    "extracted": 0,
+    "invalid": 0,
+    "not_extracted": 0,
+    "candidates": []
+   },
+   "path_b_locomo": {
+    "extracted": 0,
+    "not_extracted": 0,
+    "candidates": []
+   },
+   "path_b_longmemeval": {
+    "extracted": 0,
+    "not_extracted": 0,
+    "candidates": []
+   },
+   "verdict_path_a": "missed",
+   "path_b_locomo_same_as_a": true,
+   "path_b_longmemeval_same_as_a": true
+  },
+  {
+   "id": "n06",
+   "text": "She joined them last spring.",
+   "context": [],
+   "expect": null,
+   "note": "pronoun subject and 'them' with no antecedent: nothing can be attributed to anyone",
+   "path_a": {
+    "extracted": 0,
+    "invalid": 0,
+    "not_extracted": 1,
+    "candidates": []
+   },
+   "path_b_locomo": {
+    "extracted": 0,
+    "not_extracted": 1,
+    "candidates": []
+   },
+   "path_b_longmemeval": {
+    "extracted": 0,
+    "not_extracted": 1,
+    "candidates": []
+   },
+   "verdict_path_a": "correct (nothing)",
+   "path_b_locomo_same_as_a": true,
+   "path_b_longmemeval_same_as_a": true
+  },
+  {
+   "id": "n07",
+   "text": "I started working there last March.",
+   "context": [],
+   "expect": null,
+   "note": "first person is the speaker, but 'there' has no antecedent: no employer",
+   "path_a": {
+    "extracted": 0,
+    "invalid": 0,
+    "not_extracted": 1,
+    "candidates": []
+   },
+   "path_b_locomo": {
+    "extracted": 0,
+    "not_extracted": 1,
+    "candidates": []
+   },
+   "path_b_longmemeval": {
+    "extracted": 0,
+    "not_extracted": 1,
+    "candidates": []
+   },
+   "verdict_path_a": "correct (nothing)",
+   "path_b_locomo_same_as_a": true,
+   "path_b_longmemeval_same_as_a": true
+  },
+  {
+   "id": "n08",
+   "text": "Nora told me she joined Halden in March.",
+   "context": [],
+   "expect": {
+    "type": "employment",
+    "roles": {
+     "employee": "Nora",
+     "employer": "Halden"
+    },
+    "times": [
+     "start"
+    ],
+    "mode": "reported",
+    "asserted_by": "Nora",
+    "commitment": "certain"
+   },
+   "note": "'she' resolves to Nora within the sentence; reported speech",
+   "path_a": {
+    "extracted": 0,
+    "invalid": 0,
+    "not_extracted": 1,
+    "candidates": []
+   },
+   "path_b_locomo": {
+    "extracted": 0,
+    "not_extracted": 1,
+    "candidates": []
+   },
+   "path_b_longmemeval": {
+    "extracted": 0,
+    "not_extracted": 1,
+    "candidates": []
+   },
+   "verdict_path_a": "missed",
+   "path_b_locomo_same_as_a": true,
+   "path_b_longmemeval_same_as_a": true
+  },
+  {
+   "id": "n09",
+   "text": "Apparently Nora started at Halden in March.",
+   "context": [],
+   "expect": {
+    "type": "employment",
+    "roles": {
+     "employee": "Nora",
+     "employer": "Halden"
+    },
+    "times": [
+     "start"
+    ],
+    "mode": "direct",
+    "commitment": "probable"
+   },
+   "note": null,
+   "path_a": {
+    "extracted": 1,
+    "invalid": 0,
+    "not_extracted": 0,
+    "candidates": [
+     {
+      "type": "employment",
+      "roles": {
+       "employee": "Nora",
+       "employer": "Halden"
+      },
+      "times": [
+       [
+        "start",
+        "2025-03-01",
+        "2025-04-01"
+       ]
+      ],
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "probable",
+      "mode": "direct",
+      "asserted_by": null,
+      "relations": [],
+      "status": "review",
+      "reason": "needs a review decision before forming: hedged by the source (probable)"
+     }
+    ]
+   },
+   "path_b_locomo": {
+    "extracted": 1,
+    "not_extracted": 0,
+    "candidates": [
+     {
+      "type": "employment",
+      "roles": {
+       "employee": "Nora",
+       "employer": "Halden"
+      },
+      "times": [
+       [
+        "start",
+        "2025-03-01",
+        "2025-04-01"
+       ]
+      ],
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "probable",
+      "mode": "direct",
+      "asserted_by": null,
+      "relations": [],
+      "status": "review",
+      "reason": "needs a review decision before forming: hedged by the source (probable)"
+     }
+    ]
+   },
+   "path_b_longmemeval": {
+    "extracted": 1,
+    "not_extracted": 0,
+    "candidates": [
+     {
+      "type": "employment",
+      "roles": {
+       "employee": "Nora",
+       "employer": "Halden"
+      },
+      "times": [
+       [
+        "start",
+        "2025-03-01",
+        "2025-04-01"
+       ]
+      ],
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "probable",
+      "mode": "direct",
+      "asserted_by": null,
+      "relations": [],
+      "status": "review",
+      "reason": "needs a review decision before forming: hedged by the source (probable)"
+     }
+    ]
+   },
+   "verdict_path_a": "match",
+   "path_b_locomo_same_as_a": true,
+   "path_b_longmemeval_same_as_a": true
+  },
+  {
+   "id": "n10",
+   "text": "Correction: Nora joined Halden in April, not March.",
+   "context": [
+    "Nora joined Halden in March."
+   ],
+   "expect": {
+    "type": "employment",
+    "roles": {
+     "employee": "Nora",
+     "employer": "Halden"
+    },
+    "times": [
+     "start"
+    ],
+    "mode": "direct",
+    "commitment": "certain",
+    "relations": [
+     "corrects"
+    ]
+   },
+   "note": null,
+   "path_a": {
+    "extracted": 1,
+    "invalid": 0,
+    "not_extracted": 0,
+    "candidates": [
+     {
+      "type": "employment",
+      "roles": {
+       "employee": "Nora",
+       "employer": "Halden"
+      },
+      "times": [
+       [
+        "start",
+        "2025-04-01",
+        "2025-05-01"
+       ]
+      ],
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "certain",
+      "mode": "direct",
+      "asserted_by": null,
+      "relations": [
+       "corrects"
+      ],
+      "status": "review",
+      "reason": "needs a review decision before forming: a stated correction"
+     }
+    ]
+   },
+   "path_b_locomo": {
+    "extracted": 1,
+    "not_extracted": 0,
+    "candidates": [
+     {
+      "type": "employment",
+      "roles": {
+       "employee": "Nora",
+       "employer": "Halden"
+      },
+      "times": [
+       [
+        "start",
+        "2025-04-01",
+        "2025-05-01"
+       ]
+      ],
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "certain",
+      "mode": "direct",
+      "asserted_by": null,
+      "relations": [
+       "corrects"
+      ],
+      "status": "review",
+      "reason": "needs a review decision before forming: a stated correction"
+     }
+    ]
+   },
+   "path_b_longmemeval": {
+    "extracted": 1,
+    "not_extracted": 0,
+    "candidates": [
+     {
+      "type": "employment",
+      "roles": {
+       "employee": "Nora",
+       "employer": "Halden"
+      },
+      "times": [
+       [
+        "start",
+        "2025-04-01",
+        "2025-05-01"
+       ]
+      ],
+      "polarity": "positive",
+      "modality": "actual",
+      "commitment": "certain",
+      "mode": "direct",
+      "asserted_by": null,
+      "relations": [
+       "corrects"
+      ],
+      "status": "review",
+      "reason": "needs a review decision before forming: a stated correction"
+     }
+    ]
+   },
+   "verdict_path_a": "match",
+   "path_b_locomo_same_as_a": true,
+   "path_b_longmemeval_same_as_a": true
+  }
+ ],
+ "benchmark_turns": [
+  {
+   "dataset": "longmemeval",
+   "key": "lme:9f8c432e_1:83052b381db7:0",
+   "why": "the one representative in-domain assertion (title at a named company, for about six weeks)",
+   "path_a": {
+    "extracted": 0,
+    "not_extracted": 0
+   },
+   "path_b": {
+    "extracted": 0,
+    "not_extracted": 0,
+    "observation_text_identical_to_path_a": true,
+    "turns_in_path_b": 12
+   },
+   "same": true
+  },
+  {
+   "dataset": "longmemeval",
+   "key": "lme:sharegpt_sXKNzPE_0:9d6b8f4cbfd6:7",
+   "why": "people in roles at named organisations, in a table",
+   "path_a": {
+    "extracted": 0,
+    "not_extracted": 1
+   },
+   "path_b": {
+    "extracted": 0,
+    "not_extracted": 1,
+    "observation_text_identical_to_path_a": true,
+    "turns_in_path_b": 12
+   },
+   "same": true
+  },
+  {
+   "dataset": "longmemeval",
+   "key": "lme:27e262d5_1:97864eaf60f1:10",
+   "why": "a role at an unnamed institution",
+   "path_a": {
+    "extracted": 0,
+    "not_extracted": 0
+   },
+   "path_b": {
+    "extracted": 0,
+    "not_extracted": 0,
+    "observation_text_identical_to_path_a": true,
+    "turns_in_path_b": 12
+   },
+   "same": true
+  },
+  {
+   "dataset": "locomo",
+   "key": "conv-30:D14:8",
+   "why": "employment ended, employer unnamed; started own business",
+   "path_a": {
+    "extracted": 0,
+    "not_extracted": 0
+   },
+   "path_b": {
+    "extracted": 0,
+    "not_extracted": 0,
+    "observation_text_identical_to_path_a": true,
+    "turns_in_path_b": 369
+   },
+   "same": true
+  },
+  {
+   "dataset": "locomo",
+   "key": "conv-30:D18:2",
+   "why": "employment started (temporary job), employer unnamed",
+   "path_a": {
+    "extracted": 0,
+    "not_extracted": 0
+   },
+   "path_b": {
+    "extracted": 0,
+    "not_extracted": 0,
+    "observation_text_identical_to_path_a": true,
+    "turns_in_path_b": 369
+   },
+   "same": true
+  },
+  {
+   "dataset": "locomo",
+   "key": "conv-30:D12:1",
+   "why": "internship accepted, organisation unnamed",
+   "path_a": {
+    "extracted": 0,
+    "not_extracted": 0
+   },
+   "path_b": {
+    "extracted": 0,
+    "not_extracted": 0,
+    "observation_text_identical_to_path_a": true,
+    "turns_in_path_b": 369
+   },
+   "same": true
+  }
+ ],
+ "summary": {
+  "probes": 10,
+  "path_a_verdicts": {
+   "correct (nothing)": 2,
+   "match": 4,
+   "missed": 4
+  },
+  "path_b_locomo_identical": 10,
+  "path_b_longmemeval_identical": 10,
+  "benchmark_turns_identical": 6
+ }
+}
