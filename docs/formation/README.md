@@ -13,6 +13,7 @@ and the candidate store, core/0011 and core/0012) done on `feature/phase-6-memor
 | [integrity-and-schema.md](integrity-and-schema.md) | What TypeDB enforces against what the application checks; the original schema proposal |
 | [plan-6b-6d.md](plan-6b-6d.md) | Milestones 6B-6D |
 | [rules-v2.md](rules-v2.md) | 6B: the offline candidate extractor `rules:v2`, its scope, cues and known limits |
+| [rules-v2.1.md](rules-v2.1.md) | `rules:v2.1`: the D1 (pronouns) and D2 (unsupported expressions) corrections; how to select a version |
 | [6c-design-checkpoint.md](6c-design-checkpoint.md) | 6C: the minimum fields to form candidates into claims; the split into 0011 and 0012 |
 | [formation.md](formation.md) | 6C: the formation pathway and its policy (`formation:v1`) |
 | [6c-dev-demo.md](6c-dev-demo.md) | 6C: the development-only end-to-end demonstration (not a benchmark) |

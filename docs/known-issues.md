@@ -69,6 +69,8 @@ existing data. They matter when formation is used.
 - **Also:**
   - **v1 answers are not qualified.** Only v2 carries the evidential qualification.
   - **The asserter is always created as a person.**
+  - **Pronouns read as names (D1) and silently dropped employment expressions (D2)** in `rules:v2`: corrected
+    in `rules:v2.1` (docs/formation/rules-v2.1.md). `rules:v2` keeps both, for reproducibility.
   - **`rules:v2`'s narrow coverage** is documented in docs/formation/rules-v2.md and
     docs/evaluation/phase-6b-extraction.md.
 

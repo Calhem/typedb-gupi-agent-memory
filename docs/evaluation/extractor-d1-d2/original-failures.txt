@@ -1,0 +1,22 @@
+# Original failures: tests/unit/test_formation_rules_v21.py run with rules:v2.1 as a no-correction stub (a subclass of rules:v2 changing only its name), before the corrections were written. 2026-11-04.
+# The 16 xfailed are the same checks run against rules:v2 itself (strict expected failures).
+FAILED tests/unit/test_formation_rules_v21.py::test_d1_capitalised_pronouns_never_become_people[v2.1-She works at Acme Labs.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d1_capitalised_pronouns_never_become_people[v2.1-He joined Acme in May 2025.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d1_capitalised_pronouns_never_become_people[v2.1-It works for Acme.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d1_capitalised_pronouns_never_become_people[v2.1-We joined Acme in 2024.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d1_capitalised_pronouns_never_become_people[v2.1-Great news! She joined Acme in May 2025.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d1_capitalised_pronouns_never_become_people[v2.1-Nora Vance is great. She joined Halden in March 2025.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d1_capitalised_pronouns_never_become_people[v2.1-Nora Vance reports to Him.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d1_capitalised_pronouns_never_become_people[v2.1-She told me that Nora Vance works at Halden.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d1_they_is_rejected_and_reported[They joined Acme in 2024.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d1_first_person_needs_a_known_author
+FAILED tests/unit/test_formation_rules_v21.py::test_d2_unsupported_expressions_are_reported_not_extracted[Nora Vance began working for Halden in March 2025.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d2_unsupported_expressions_are_reported_not_extracted[Nora Vance took a job at Halden in March 2025.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d2_unsupported_expressions_are_reported_not_extracted[Nora Vance quit Halden in May 2025.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d2_unsupported_expressions_are_reported_not_extracted[Nora Vance quit her job in May.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d2_unsupported_expressions_are_reported_not_extracted[Nora Vance resigned from Halden in May 2025.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d2_unsupported_expressions_are_reported_not_extracted[Nora Vance was appointed CTO of Halden in March 2025.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d2_unsupported_expressions_are_reported_not_extracted[Nora Vance is employed by Halden.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d2_unsupported_expressions_are_reported_not_extracted[Nora Vance was let go by Halden in May 2025.]
+FAILED tests/unit/test_formation_rules_v21.py::test_d2_unsupported_expressions_are_reported_not_extracted[Nora Vance is Ivo Marsh's boss.]
+19 failed, 22 passed, 16 xfailed in 0.15s
