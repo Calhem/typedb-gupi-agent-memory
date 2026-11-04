@@ -10,8 +10,8 @@ from dataclasses import dataclass
 
 from gupi import ids
 from gupi.formation.candidate import (
-    ATTRIBUTION_MODES, BASES, COMMITMENTS, IR_VERSION, MODALITIES, POLARITIES, PRECISIONS, RELATION_KINDS,
-    TIME_KINDS, TRANSMISSION,
+    ATTRIBUTION_MODES, BASES, CLAIMANT_KINDS, COMMITMENTS, IR_VERSION, IR_VERSION_1_1, IR_VERSIONS, MODALITIES,
+    NULLABLE_TARGET_KINDS, POLARITIES, PRECISIONS, RELATION_KINDS, TIME_KINDS, TRANSMISSION,
 )
 from gupi.temporal import ValidTime
 
@@ -45,8 +45,8 @@ def validate(cset, observation, schema=None):
     def bad(where, code, message):
         issues.append(Issue(where, code, message))
 
-    if cset.ir_version != IR_VERSION:
-        bad("set", "version", f"ir_version {cset.ir_version!r} is not {IR_VERSION!r}")
+    if cset.ir_version not in IR_VERSIONS:
+        bad("set", "version", f"ir_version {cset.ir_version!r} is not one of {', '.join(IR_VERSIONS)}")
     if cset.observation_id != observation.id:
         bad("set", "observation", "observation_id does not match the observation")
     if cset.content_hash != ids.content_hash(text):
@@ -59,6 +59,7 @@ def validate(cset, observation, schema=None):
         bad("set", "duplicate", f"candidate {dup} appears more than once")
     for n, c in enumerate(cset.candidates):
         _candidate(c, f"candidate {n}", text, observation.id, set(known), schema, bad)
+        _version_1_1(c, f"candidate {n}", cset.ir_version, text, bad)
     return issues  # relations cannot form cycles: a candidate's id includes its relations' targets
 
 
@@ -99,12 +100,31 @@ def _candidate(c, where, text, observation_id, known, schema, bad):
     for r in c.relations:
         _enum(where, "relation", r.kind, RELATION_KINDS, bad)
         _enum(where, "relation-marked", r.marked, ("stated", "inferred"), bad)
+        if r.target is None:
+            continue  # a null target: checked by _version_1_1
         if r.target == c.id:
             bad(where, "relation", "a candidate cannot relate to itself")
         elif r.target not in known and not r.target.startswith(("claim:", "candidate:")):
             bad(where, "relation", f"relation target {r.target!r} is neither a candidate nor a claim id")
     if schema is not None:
         _schema(c, where, schema, bad)
+
+
+def _version_1_1(c, where, version, text, bad):
+    """The 1.1 fields: allowed only in a 1.1 set, each with its own rule."""
+    kind, null_targets = c.attribution.asserted_by_kind, [r for r in c.relations if r.target is None]
+    if version != IR_VERSION_1_1 and (kind is not None or null_targets):
+        bad(where, "version", f"asserted_by_kind and null relation targets need {IR_VERSION_1_1}")
+    if kind is not None:
+        if kind not in CLAIMANT_KINDS:
+            bad(where, "attribution", f"asserted_by_kind {kind!r} is not one of {', '.join(CLAIMANT_KINDS)}")
+        if c.attribution.asserted_by is None:
+            bad(where, "attribution", "asserted_by_kind without a claimant (asserted_by)")
+    if version == IR_VERSION_1_1 and c.attribution.asserted_by is not None and c.attribution.asserted_by not in text:
+        bad(where, "attribution", f"claimant {c.attribution.asserted_by!r} does not occur in the observation")
+    for r in null_targets:
+        if r.kind not in NULLABLE_TARGET_KINDS:
+            bad(where, "relation", f"only {', '.join(NULLABLE_TARGET_KINDS)} may have an unresolved (null) target")
 
 
 def _times(c, where, text, bad):

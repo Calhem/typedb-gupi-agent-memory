@@ -21,6 +21,10 @@ from datetime import datetime
 from gupi import ids
 
 IR_VERSION = "gupi.candidate/1"
+IR_VERSION_1_1 = "gupi.candidate/1.1"   # adds asserted_by_kind and null correction targets (additive)
+IR_VERSIONS = (IR_VERSION, IR_VERSION_1_1)
+CLAIMANT_KINDS = ("person", "organisation", "unknown")
+NULLABLE_TARGET_KINDS = ("corrects", "retracts", "updates")
 
 TIME_KINDS = {
     "start": "the state began inside the window (\"joined in March\")",
@@ -83,6 +87,7 @@ class Attribution:
     mode: str = "direct"
     via: tuple = ()                 # intermediaries, nearest first
     transmission: tuple = ()
+    asserted_by_kind: str | None = None  # 1.1: person | organisation | unknown; None: not established
 
 
 @dataclass(frozen=True)
@@ -90,7 +95,7 @@ class Relation:
     """How this candidate bears on another candidate in its set, or on an existing claim ("claim:...")."""
 
     kind: str
-    target: str
+    target: str | None              # 1.1: None for a stated correction whose target is not established
     marked: str = "stated"          # "stated" (the text says so, e.g. "Correction:") or "inferred"
     cue: str | None = None
 
@@ -148,7 +153,7 @@ def from_dict(d):
             tuple(tuple(v) for v in c.get("values", ())), times(c.get("times", ())), c.get("polarity", "positive"),
             c.get("modality", "actual"), c.get("commitment", "certain"),
             Attribution(a.get("asserted_by"), a.get("mode", "direct"), tuple(a.get("via", ())),
-                        tuple(a.get("transmission", ()))),
+                        tuple(a.get("transmission", ())), a.get("asserted_by_kind")),
             tuple(Relation(**r) for r in c.get("relations", ())), c.get("basis", "explicit"), c.get("confidence"))
     return CandidateSet(d["observation_id"], d["content_hash"], d["extractor"],
                         tuple(candidate(c) for c in d.get("candidates", ())), d.get("ir_version"))
@@ -163,7 +168,10 @@ def _plain(c):
         "times": [{**vars(t), "earliest": _iso(t.earliest), "latest": _iso(t.latest)} for t in c.times],
         "polarity": c.polarity, "modality": c.modality, "commitment": c.commitment,
         "attribution": {"asserted_by": c.attribution.asserted_by, "mode": c.attribution.mode,
-                        "via": list(c.attribution.via), "transmission": list(c.attribution.transmission)},
+                        "via": list(c.attribution.via), "transmission": list(c.attribution.transmission),
+                        # 1.1 only, and only when set, so a 1.0 candidate's id is unchanged
+                        **({"asserted_by_kind": c.attribution.asserted_by_kind}
+                           if c.attribution.asserted_by_kind is not None else {})},
         "relations": [vars(r) for r in c.relations],
         "basis": c.basis, "confidence": c.confidence,
     }
