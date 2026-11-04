@@ -61,6 +61,12 @@ def test_d1_they_is_rejected_and_reported(text):
     assert not candidates and rejected  # "They work" never matched; "They joined" did in rules:v2
 
 
+@pytest.mark.parametrize("text", ["She told me she loves painting.", "He said the weather was lovely."])
+def test_d1_a_pronoun_speaker_alone_is_not_reported_as_unresolved(text):
+    # nothing in the domain would be extracted, so there is no reference to resolve
+    assert all(reason_kind(r) != "unresolved-reference" for _, r in run("rules:v2.1", text)[1])
+
+
 def test_d1_first_person_needs_a_known_author():
     candidates, _ = run("rules:v2.1", "I joined Acme in 2024.")
     assert [p.surface for p in candidates[0].participants if p.role == "employee"] == ["I"]   # the author
@@ -92,8 +98,11 @@ UNSUPPORTED_SENTENCES = [
     "Nora Vance is employed by Halden.",
     "Nora Vance was let go by Halden in May 2025.",
     "Nora Vance is Ivo Marsh's boss.",
+    "I lost my job in May.",                              # the Phase 7A sample's in-domain phrasings
+    "I got a temp job to cover expenses.",
+    "I just got accepted for a fashion internship!",
 ]
-SILENT_IN_V2 = {UNSUPPORTED_SENTENCES[i] for i in (1, 2, 3, 4, 5, 6, 7, 8)}
+SILENT_IN_V2 = {UNSUPPORTED_SENTENCES[i] for i in (1, 2, 3, 4, 5, 6, 7, 8, 10, 11)}
 
 
 @pytest.mark.parametrize("text", UNSUPPORTED_SENTENCES)

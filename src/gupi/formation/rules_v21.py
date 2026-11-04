@@ -8,7 +8,8 @@ representation, same validation; `rules:v2` itself is unchanged and stays select
   before; with no known author it is now reported as such instead of under a generic reason.
 - **D2 (diagnostic coverage):** a sentence with an employment or reporting expression the patterns do not
   support ("began working for", "took a job at", "quit", "resigned from", "was appointed", "is employed by",
-  "was let go", "boss") is reported as an unsupported expression. Nothing new is extracted, and reporting never
+  "was let go", "boss", and the Phase 7A sample's "lost my job", "got a temp job", "accepted for an internship")
+  is reported as an unsupported expression. Nothing new is extracted, and reporting never
   changes which candidates exist or how they are formed. Unrelated uses ("It began to rain", "quit smoking",
   "the appointed time") are not reported.
 
@@ -45,6 +46,9 @@ UNSUPPORTED_EXPRESSIONS = re.compile("|".join([
     r"\b(?:was|were|been|being|got|get|gets) let go\b",
     r"\b(?:was|were|been|got|get|gets) (?:laid off|fired)\b",
     r"(?:'s|\bmy|\bhis|\bher|\btheir|\bour|\byour|\bthe new) boss\b(?! fight| level| battle)",
+    rf"\blost (?:my|his|her|their|our|your|a|the) (?:\w+ )?{JOB}\b",            # the Phase 7A sample's phrasings
+    r"\bgot (?:a|an|the) (?:\w+ )?(?:job|position|role|internship|placement)\b",
+    r"\b(?:accepted|hired|selected) (?:for|into) (?:a|an|the) (?:\w+ )?(?:job|position|role|internship|placement)\b",
 ]))
 
 
@@ -82,10 +86,6 @@ class RulesV21(v2.RulesV2):
 
     def _clause(self, text, c_start, c_end, s_start, s_end, obs, cues, subject):
         clause = text[c_start:c_end]
-        if cues.get("mode") == "reported" and cues.get("asserted_by") in PRONOUNS:
-            self._why[clause] = (f"{UNRESOLVED}: the reported speaker {cues['asserted_by']!r} is a pronoun, not a name "
-                                 "(no coreference is attempted)")
-            return None
         result = super()._clause(text, c_start, c_end, s_start, s_end, obs, cues, subject)
         if result is None:
             if not obs.author_id and re.match(r"I\b", clause.lstrip()) and v2.DOMAIN_VERB.search(clause):
@@ -93,7 +93,9 @@ class RulesV21(v2.RulesV2):
             return None
         candidate, _ = result
         bad = sorted({p.surface for p in candidate.participants if p.surface in PRONOUNS})
-        if bad:
+        if candidate.attribution.asserted_by in PRONOUNS:
+            bad.append(f"{candidate.attribution.asserted_by} (the reported speaker)")
+        if bad:  # only when a candidate would otherwise be formed: there is a reference to resolve
             self._why[clause] = (f"{UNRESOLVED}: {', '.join(repr(b) for b in bad)} is a pronoun, not a name "
                                  "(no coreference is attempted)")
             return None
