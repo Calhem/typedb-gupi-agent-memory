@@ -13,6 +13,8 @@ import json
 import platform
 import subprocess
 import sys
+from datetime import date
+from pathlib import Path
 
 from gupi.benchmarks.common import CONFIG, ROOT, SPLIT
 
@@ -110,7 +112,23 @@ def runtime():
             "embedding_model": CONFIG["embedding"]}
 
 
-def build():
+# Version 2 also tracks code version 1 did not (finding of Stage 2A: C1 changed contract.py, which version 1
+# never recorded) and the runner's own modules.
+SUPPLEMENTARY = {
+    "extraction contract (SchemaInfo)": "src/gupi/extraction/contract.py",
+    "candidate IR (registry)": "src/gupi/formation/extractors.py",
+    **{f"e2e runner: {m}": f"src/gupi/benchmarks/e2e/{m}.py" for m in (
+        "__main__", "manifest", "common", "pipeline", "world", "formation_layer", "adversarial", "conversational",
+        "scale", "compare", "report")},
+}
+CHECKED = ("datasets", "code", "scoring", "splits")
+
+
+def _commit():
+    return _cmd("git", "-C", str(ROOT), "rev-parse", "HEAD")
+
+
+def build(version=1):
     data = {}
     for key, d in DATASETS.items():
         files = {}
@@ -128,21 +146,48 @@ def build():
         "scoring": SCORING,
         "runtime": runtime(),
         "not_used": ["specialist M1 materials", "paid APIs", "LLM judges", "new downloads"],
+    } if version == 1 else {
+        **build(1), "manifest_version": version, "frozen": date.today().isoformat(), "commit": _commit(),
+        "supersedes": None, "historical_manifest": "docs/evaluation/phase-6d/manifest.json (version 1, kept unchanged)",
+        "supplementary_code": {name: {"path": p, "sha256": sha256(ROOT / p)} for name, p in SUPPLEMENTARY.items()},
     }
+
+
+def check(path=OUT):
+    """Which checked sections of the current tree differ from the frozen manifest at `path`. Version 2+
+    manifests also check their supplementary code. Never relaxes a check."""
+    frozen = json.loads(Path(path).read_text())
+    now = build(frozen.get("manifest_version", 1))
+    keys = CHECKED + (("supplementary_code",) if "supplementary_code" in frozen else ())
+    return sorted(k for k in keys if frozen.get(k) != now.get(k))
+
+
+def write(path, version):
+    path = Path(path)
+    if path.exists():
+        raise FileExistsError(f"{path} exists: a frozen manifest is never overwritten; write a new version")
+    path.write_text(json.dumps(build(version), indent=1, sort_keys=False) + "\n")
+    return path
 
 
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    p.add_argument("--write", action="store_true")
+    p.add_argument("--write", action="store_true", help="write a new manifest (refuses to overwrite)")
+    p.add_argument("--path", default=str(OUT), help="the manifest file (default: the version 1 manifest)")
+    p.add_argument("--version", type=int, default=1, help="manifest version to write")
     args = p.parse_args(argv)
-    m = build()
     if args.write:
-        OUT.write_text(json.dumps(m, indent=1, sort_keys=False) + "\n")
-        print(f"wrote {OUT}")
+        try:
+            print(f"wrote {write(args.path, args.version)}")
+        except FileExistsError as e:
+            print(e, file=sys.stderr)
+            return 1
         return 0
-    frozen = json.loads(OUT.read_text())
-    drift = sorted(k for k in ("datasets", "code", "scoring", "splits") if frozen.get(k) != m[k])
-    print(json.dumps({"matches_frozen_manifest": not drift, "differs": drift}))
+    drift = check(args.path)
+    shown = Path(args.path).resolve()
+    shown = str(shown.relative_to(ROOT)) if shown.is_relative_to(ROOT) else shown.name
+    print(json.dumps({"manifest": shown,
+                      "matches_frozen_manifest": not drift, "differs": drift}))
     return 1 if drift else 0
 
 
