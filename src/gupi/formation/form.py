@@ -103,7 +103,9 @@ def decide(candidate, issues, approvals, rejections=None, copy_of=None):
         needs.append(f"hedged by the source ({candidate.commitment})")
     if candidate.attribution.mode == "rumour":
         needs.append("unattributed hearsay")
-    if any(r.kind in ("corrects", "retracts") for r in candidate.relations):
+    if any(r.kind in ("corrects", "retracts", "updates") and r.target is None for r in candidate.relations):
+        needs.append("a stated correction whose target is not established")   # D3 (format 1.1)
+    elif any(r.kind in ("corrects", "retracts") for r in candidate.relations):
         needs.append("a stated correction")
     elif CORRECTION_CUE.match(candidate.passage.text):
         needs.append("a stated correction whose target could not be identified")  # the passage still says so
@@ -250,7 +252,8 @@ def _suggest_corrections(memory, cset, decisions, drafts):
     every believed claim about the same proposition is listed, and more than one is flagged as ambiguous.
     Nothing is superseded."""
     by_id = {c.id: c for c in cset.candidates}
-    named = {r.target for c in cset.candidates for r in c.relations if r.kind in ("corrects", "retracts")}
+    named = {r.target for c in cset.candidates for r in c.relations
+             if r.kind in ("corrects", "retracts", "updates") and r.target is not None}
     keys = {drafts[c.id].proposition_key for c in cset.candidates if c.id in drafts}
     with transaction(memory.driver, memory.database, TransactionType.READ) as tx:
         formed_from = retrieval.claim_ids_formed_from(tx, named)
@@ -261,7 +264,8 @@ def _suggest_corrections(memory, cset, decisions, drafts):
     out = []
     for d in decisions:
         c = by_id[d.candidate_id]
-        rel = next((r for r in c.relations if r.kind in ("corrects", "retracts")), None)
+        rel = next((r for r in c.relations if r.kind in ("corrects", "retracts")
+                    or (r.kind == "updates" and r.target is None)), None)
         cued = rel is not None or CORRECTION_CUE.match(c.passage.text)
         if d.outcome not in ("formed", "review") or not cued:
             out.append(d)
@@ -270,16 +274,19 @@ def _suggest_corrections(memory, cset, decisions, drafts):
         # D3: every believed claim this could plausibly correct is listed; the extractor's named target is
         # never taken alone when others are plausible, and is not offered at all once it is no longer believed
         plausible = sorted(v.id for v in views.values() if v.proposition_key == key and v.id != d.claim_id)
-        named = formed_from.get(rel.target) if rel is not None else None
-        note = ""
+        named = formed_from.get(rel.target) if rel is not None and rel.target is not None else None
+        unestablished = rel is not None and rel.target is None
+        note = " (its target is not established by the source: listed for review, never resolved)" if unestablished else ""
         if named and named not in named_believed:
             note = f" (the named target {named} is no longer believed)"
         targets = sorted(set(plausible) | ({named} if named in named_believed else set()))
         cue = rel.cue if rel is not None and rel.cue else "Correction"
+        resolution = ("ambiguous" if targets else "missing") if unestablished else \
+            ("resolved" if len(targets) == 1 else "ambiguous" if targets else "missing")
         out.append(Decision(d.candidate_id, d.outcome, d.reason, d.decided_by, d.claim_id, {
-            "old": targets[0] if len(targets) == 1 else None, "possible_targets": targets,
-            "ambiguous": len(targets) > 1, "new": d.claim_id,
-            "reason": f"{cue}: candidate {d.candidate_id}" + (f" {rel.kind} {rel.target}" if rel else "")
+            "old": targets[0] if resolution == "resolved" else None, "possible_targets": targets,
+            "ambiguous": resolution == "ambiguous", "resolution": resolution, "new": d.claim_id,
+            "reason": f"{cue}: candidate {d.candidate_id}" + (f" {rel.kind} {rel.target or 'an unestablished target'}" if rel else "")
                       + note + ("" if targets else " (no claim in memory matches its target)")}))
     return out
 

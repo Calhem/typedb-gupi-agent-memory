@@ -133,6 +133,39 @@ def review(memory, candidate_id, verdict, reviewer, reason=None):
                   rejections=who if verdict == "reject" else {}, store=False, note=reason)
 
 
+def assign_correction_target(memory, candidate_id, claim_id, reviewer, reason):
+    """A reviewer names the claim a stored correction (or retraction) refers to (D3). Recorded as a new,
+    append-only correction suggestion, resolved to that claim, naming the reviewer and the reason. It
+    supersedes nothing: applying a correction stays a separate reviewed act (Memory.supersede). Repeating
+    the same assignment is a no-op."""
+    if not reviewer:
+        raise ValueError("assigning a correction target needs a reviewer")
+    stored = get(memory, candidate_id)
+    if stored is None:
+        raise KeyError(candidate_id)
+    if not any(r.kind in ("corrects", "retracts", "updates") for r in stored.candidate.relations):
+        raise ValueError(f"{candidate_id} has no stated correction, retraction or update")
+    with transaction(memory.driver, memory.database, TransactionType.READ) as tx:
+        found = retrieval.claims_by_ids(tx, [claim_id])
+        believed = retrieval.believed_among(tx, [claim_id], memory.clock())
+    if not found:
+        raise ValueError(f"{claim_id} is not a claim in memory")
+    if claim_id not in believed:
+        raise ValueError(f"{claim_id} is not believed now: it cannot be a correction's target")
+    if found[0].type != stored.candidate.claim_type:
+        raise ValueError(f"{claim_id} is a {found[0].type} claim; the correction is about {stored.candidate.claim_type}")
+    sid = ids.stable_id("suggestion", candidate_id, [claim_id], "assigned", reviewer)
+    with transaction(memory.driver, memory.database, TransactionType.WRITE) as tx:
+        if typeql.concept_rows(tx, "match $s isa correction-suggestion, has gupi-id == $id;", {"id": sid}):
+            return sid
+        has, params = _has({"gupi-id": sid, "target-resolution": "resolved", "recorded-at": memory.clock(),
+                            "reason": f"target assigned by review ({reviewer}): {reason}"}, "a")
+        typeql.run(tx, f"match $c isa memory-candidate, has gupi-id == $cid; $t isa claim, has gupi-id == $tid; "
+                       f"insert $s isa correction-suggestion (suggested-by: $c, target: $t){has};",
+                   {"cid": candidate_id, "tid": claim_id, **params})
+    return sid
+
+
 def get(memory, candidate_id):
     with transaction(memory.driver, memory.database, TransactionType.READ) as tx:
         docs = typeql.documents(tx, "match $c isa memory-candidate, has gupi-id == $id;" + FETCH, {"id": candidate_id})
@@ -224,7 +257,7 @@ def _insert_suggestion(tx, candidate_id, s, now):
     sid = ids.stable_id("suggestion", candidate_id, targets)
     if typeql.concept_rows(tx, "match $s isa correction-suggestion, has gupi-id == $id;", {"id": sid}):
         return
-    resolution = "resolved" if len(targets) == 1 else "ambiguous" if targets else "missing"
+    resolution = s.get("resolution") or ("resolved" if len(targets) == 1 else "ambiguous" if targets else "missing")
     match = "".join(f" $t{i} isa claim, has gupi-id == $t{i}id;" for i in range(len(targets)))
     links = "".join(f", target: $t{i}" for i in range(len(targets)))
     has, params = _has({"gupi-id": sid, "target-resolution": resolution, "reason": s["reason"], "recorded-at": now}, "a")
@@ -290,4 +323,4 @@ def _observation(memory, observation_id):
     return obs
 
 
-__all__ = ["IR_VERSION", "submit", "review", "get", "pending", "suggestions", "payload"]
+__all__ = ["IR_VERSION", "submit", "review", "assign_correction_target", "get", "pending", "suggestions", "payload"]
