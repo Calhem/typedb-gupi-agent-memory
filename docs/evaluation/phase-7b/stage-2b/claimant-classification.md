@@ -57,4 +57,8 @@
   - which candidates are formed, withheld or reviewed
   - answers, qualification and the independent-originator count. These use the asserter's id, which is still
     one per claimant per conversation.
-- **Where it shows:** the Phase 6D run against manifest v3 (compatibility-results.md).
+- **Where it shows:**
+  - **Phase 6D:** the run against manifest v3 is identical to the first run (compatibility-results.md). Its
+    results record answers, outcomes and counts, not asserter kinds, so the change itself is not visible
+    there. What the run shows is that nothing it measures moved.
+  - **The tests:** the change itself is shown by `test_a_legacy_1_0_claimant_without_a_kind_is_not_made_a_person`.
