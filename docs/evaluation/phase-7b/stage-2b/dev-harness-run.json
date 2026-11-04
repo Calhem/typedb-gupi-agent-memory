@@ -1,0 +1,1640 @@
+{
+ "scorer": "phase7b-scorer/1",
+ "parser": "model:candidate-v1.1",
+ "response_format": "gupi.model-response/1.1",
+ "files": {
+  "passages.csv": "1a6f329f8f53f31a5c00764c171394b597ede767b67ae57ad9a9bea1df1fcb9d",
+  "assertions.csv": "4ed24a575a71661ed6a2096ba5e7276f95125c4d77aaa0e4c40a9f49ca5c196a",
+  "responses.json": "6ed5f0484124188592a37e5d4c5478ef6da19353f94cb84a0e708b88a889de6e"
+ },
+ "sets": [
+  "DEV"
+ ],
+ "passages": 26,
+ "gold_assertions": 24,
+ "formation": true,
+ "systems": {
+  "rules:v2.1": {
+   "summary": {
+    "precision": {
+     "k": 14,
+     "n": 14,
+     "rate": 1.0,
+     "low": 0.7847,
+     "high": 1
+    },
+    "recall": {
+     "k": 14,
+     "n": 24,
+     "rate": 0.5833,
+     "low": 0.3883,
+     "high": 0.7553
+    },
+    "f1": 0.7368,
+    "counts": {
+     "candidates": 14,
+     "matched": 14,
+     "partial": 0,
+     "duplicates": 0,
+     "unsupported": 0,
+     "abstained": 1,
+     "abstained_appropriately": 1,
+     "validation_failures": 0,
+     "invalid_outputs": 0,
+     "grounding_failures": 0,
+     "copies_formed": 0
+    },
+    "fields": {
+     "attribution_mode": {
+      "k": 14,
+      "n": 14,
+      "rate": 1.0,
+      "low": 0.7847,
+      "high": 1
+     },
+     "claimant": {
+      "k": 14,
+      "n": 14,
+      "rate": 1.0,
+      "low": 0.7847,
+      "high": 1
+     },
+     "commitment": {
+      "k": 14,
+      "n": 14,
+      "rate": 1.0,
+      "low": 0.7847,
+      "high": 1
+     },
+     "modality": {
+      "k": 14,
+      "n": 14,
+      "rate": 1.0,
+      "low": 0.7847,
+      "high": 1
+     },
+     "polarity": {
+      "k": 14,
+      "n": 14,
+      "rate": 1.0,
+      "low": 0.7847,
+      "high": 1
+     },
+     "time_expression_preserved": {
+      "k": 10,
+      "n": 10,
+      "rate": 1.0,
+      "low": 0.7225,
+      "high": 1
+     },
+     "time_kind": {
+      "k": 10,
+      "n": 10,
+      "rate": 1.0,
+      "low": 0.7225,
+      "high": 1
+     },
+     "time_window": {
+      "k": 10,
+      "n": 10,
+      "rate": 1.0,
+      "low": 0.7225,
+      "high": 1
+     }
+    },
+    "severe_errors": {
+     "count": 0,
+     "per_100_candidates": 0.0
+    },
+    "grounding_validity": {
+     "k": 14,
+     "n": 14,
+     "rate": 1.0,
+     "low": 0.7847,
+     "high": 1
+    },
+    "formation": {
+     "formed": 11,
+     "withheld": 1,
+     "review": 2
+    },
+    "formation_agrees_with_expected_admission": {
+     "k": 14,
+     "n": 14,
+     "rate": 1.0,
+     "low": 0.7847,
+     "high": 1
+    }
+   },
+   "severe": [],
+   "adjudicate": [],
+   "passages": [
+    {
+     "passage": "DEV-101",
+     "gold": [
+      "DEV-101-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:bd88cc094b554f484ff961da5138b9de",
+       "type": "employment",
+       "participants": {
+        "employee": "Mara Quist",
+        "employer": "Pellwick"
+       },
+       "evidence": "Mara Quist joined Pellwick as head of research in February 2025.",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-101-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-102",
+     "gold": [
+      "DEV-102-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:1dd129fabcd93aa49f7a322340d09f6d",
+       "type": "employment",
+       "participants": {
+        "employee": "Teo Brandt",
+        "employer": "Arnholt Systems"
+       },
+       "evidence": "Teo Brandt has worked at Arnholt Systems since 2023.",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-102-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-103",
+     "gold": [
+      "DEV-103-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:1062441d621b5e2327d54dbee19d239d",
+       "type": "reporting",
+       "participants": {
+        "report": "Ilsa Moreno",
+        "manager": "Teo Brandt"
+       },
+       "evidence": "Ilsa Moreno reports to Teo Brandt.",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-103-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-104",
+     "gold": [
+      "DEV-104-a1"
+     ],
+     "candidates": [],
+     "missed": [
+      "DEV-104-a1"
+     ],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-105",
+     "gold": [
+      "DEV-105-a1"
+     ],
+     "candidates": [],
+     "missed": [
+      "DEV-105-a1"
+     ],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-106",
+     "gold": [
+      "DEV-106-a1"
+     ],
+     "candidates": [],
+     "missed": [
+      "DEV-106-a1"
+     ],
+     "outcomes": [
+      {
+       "kind": "no-pattern",
+       "evidence": "Mara Quist reports to her now",
+       "detail": "a domain verb, but no supported pattern (missing role player, pronoun or unsupported phrasing)"
+      }
+     ],
+     "flags": []
+    },
+    {
+     "passage": "DEV-107",
+     "gold": [
+      "DEV-107-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:27cce2a75cb5f579af2ae7fa29454c9d",
+       "type": "employment",
+       "participants": {
+        "employee": "Omar Siddiq",
+        "employer": "Arnholt Systems"
+       },
+       "evidence": "Omar Siddiq left Arnholt Systems in June 2025.",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-107-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-108",
+     "gold": [
+      "DEV-108-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:8a061138b6f905fe360a3bf2269c09ba",
+       "type": "employment",
+       "participants": {
+        "employee": "Omar Siddiq",
+        "employer": "Arnholt Systems"
+       },
+       "evidence": "Omar Siddiq left Arnholt Systems in June 2025.",
+       "status": "withheld",
+       "result": "matched",
+       "gold": "DEV-108-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-111",
+     "gold": [
+      "DEV-111-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:8ef074ab2c3e3bf495286b523a243145",
+       "type": "reporting",
+       "participants": {
+        "report": "Ilsa Moreno",
+        "manager": "Omar Siddiq"
+       },
+       "evidence": "Ilsa Moreno does not report to Omar Siddiq.",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-111-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-112",
+     "gold": [
+      "DEV-112-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:1e44e4626a45651d4a0c8314435492cd",
+       "type": "employment",
+       "participants": {
+        "employee": "Ravi Menon",
+        "employer": "Halden Holdings"
+       },
+       "evidence": "I think Ravi Menon works at Halden Holdings.",
+       "status": "review",
+       "result": "matched",
+       "gold": "DEV-112-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-113",
+     "gold": [
+      "DEV-113-a1"
+     ],
+     "candidates": [],
+     "missed": [
+      "DEV-113-a1"
+     ],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-114",
+     "gold": [
+      "DEV-114-a1"
+     ],
+     "candidates": [],
+     "missed": [
+      "DEV-114-a1"
+     ],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-115",
+     "gold": [],
+     "candidates": [],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-116",
+     "gold": [],
+     "candidates": [],
+     "missed": [],
+     "outcomes": [
+      {
+       "kind": "no-pattern",
+       "evidence": "Great work on the launch, everyone",
+       "detail": "a domain verb, but no supported pattern (missing role player, pronoun or unsupported phrasing)"
+      }
+     ],
+     "flags": []
+    },
+    {
+     "passage": "DEV-117",
+     "gold": [
+      "DEV-117-a1"
+     ],
+     "candidates": [],
+     "missed": [
+      "DEV-117-a1"
+     ],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-118",
+     "gold": [
+      "DEV-118-a1"
+     ],
+     "candidates": [],
+     "missed": [
+      "DEV-118-a1"
+     ],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-119",
+     "gold": [
+      "DEV-119-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:f9b001401b434e06ce7e2a26c6b6156b",
+       "type": "employment",
+       "participants": {
+        "employee": "Ilsa Moreno",
+        "employer": "Pellwick"
+       },
+       "evidence": "Ilsa Moreno left Pellwick last month.",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-119-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-120",
+     "gold": [
+      "DEV-120-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:3a5eb47e3f4e8383c00fc497854acf32",
+       "type": "reporting",
+       "participants": {
+        "report": "Ravi Menon",
+        "manager": "Mara Quist"
+       },
+       "evidence": "Ravi Menon has reported to Mara Quist since May 2025.",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-120-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-121",
+     "gold": [
+      "DEV-121-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:9b4a45d2a1e8d6c1cf6fb39706518feb",
+       "type": "reporting",
+       "participants": {
+        "report": "Ravi Menon",
+        "manager": "Teo Brandt"
+       },
+       "evidence": "Ravi Menon reports to Teo Brandt, not Mara.",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-121-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-122",
+     "gold": [
+      "DEV-122-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:5148ec2a3f5f4cc7323f54f7dfbf5c70",
+       "type": "employment",
+       "participants": {
+        "employee": "Teo Brandt",
+        "employer": "Arnholt Systems"
+       },
+       "evidence": "Teo Brandt was promoted to CTO at Arnholt Systems in January 2025.",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-122-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-123",
+     "gold": [
+      "DEV-123-a1"
+     ],
+     "candidates": [],
+     "missed": [
+      "DEV-123-a1"
+     ],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-124",
+     "gold": [
+      "DEV-124-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:4ad11478aadafa954fa1e5331317c9a1",
+       "type": "employment",
+       "participants": {
+        "employee": "I",
+        "employer": "Halden Holdings"
+       },
+       "evidence": "I started at Halden Holdings in June 2024.",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-124-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-109",
+     "gold": [
+      "DEV-109-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:14cc51f6d5fe467d4c26c1910e21f039",
+       "type": "employment",
+       "participants": {
+        "employee": "Teo Brandt",
+        "employer": "Pellwick"
+       },
+       "evidence": "Teo Brandt joined Pellwick in March 2025.",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-109-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-110",
+     "gold": [
+      "DEV-110-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:17b0438c6b5a81c7aed3bf3cf012cc44",
+       "type": "employment",
+       "participants": {
+        "employee": "Teo Brandt",
+        "employer": "Pellwick"
+       },
+       "evidence": "Correction: Teo Brandt joined Pellwick in April 2025, not March.",
+       "status": "review",
+       "result": "matched",
+       "gold": "DEV-110-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-125",
+     "gold": [
+      "DEV-125-a1"
+     ],
+     "candidates": [],
+     "missed": [
+      "DEV-125-a1"
+     ],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-126",
+     "gold": [
+      "DEV-126-a1"
+     ],
+     "candidates": [],
+     "missed": [
+      "DEV-126-a1"
+     ],
+     "outcomes": [],
+     "flags": []
+    }
+   ]
+  },
+  "model:candidate-v1.1": {
+   "summary": {
+    "precision": {
+     "k": 18,
+     "n": 19,
+     "rate": 0.9474,
+     "low": 0.7536,
+     "high": 0.9906
+    },
+    "recall": {
+     "k": 18,
+     "n": 24,
+     "rate": 0.75,
+     "low": 0.551,
+     "high": 0.88
+    },
+    "f1": 0.8372,
+    "counts": {
+     "candidates": 19,
+     "matched": 18,
+     "partial": 1,
+     "duplicates": 0,
+     "unsupported": 0,
+     "abstained": 4,
+     "abstained_appropriately": 2,
+     "validation_failures": 0,
+     "invalid_outputs": 2,
+     "grounding_failures": 2,
+     "copies_formed": 0
+    },
+    "fields": {
+     "attribution_mode": {
+      "k": 18,
+      "n": 18,
+      "rate": 1.0,
+      "low": 0.8241,
+      "high": 1
+     },
+     "claimant": {
+      "k": 18,
+      "n": 18,
+      "rate": 1.0,
+      "low": 0.8241,
+      "high": 1
+     },
+     "commitment": {
+      "k": 17,
+      "n": 18,
+      "rate": 0.9444,
+      "low": 0.7424,
+      "high": 0.9901
+     },
+     "modality": {
+      "k": 18,
+      "n": 18,
+      "rate": 1.0,
+      "low": 0.8241,
+      "high": 1
+     },
+     "polarity": {
+      "k": 18,
+      "n": 18,
+      "rate": 1.0,
+      "low": 0.8241,
+      "high": 1
+     },
+     "time_expression_preserved": {
+      "k": 10,
+      "n": 10,
+      "rate": 1.0,
+      "low": 0.7225,
+      "high": 1
+     },
+     "time_kind": {
+      "k": 10,
+      "n": 10,
+      "rate": 1.0,
+      "low": 0.7225,
+      "high": 1
+     },
+     "time_window": {
+      "k": 9,
+      "n": 9,
+      "rate": 1.0,
+      "low": 0.7008,
+      "high": 1
+     }
+    },
+    "severe_errors": {
+     "count": 0,
+     "per_100_candidates": 0.0
+    },
+    "grounding_validity": {
+     "k": 19,
+     "n": 21,
+     "rate": 0.9048,
+     "low": 0.7109,
+     "high": 0.9735
+    },
+    "formation": {
+     "formed": 11,
+     "review": 6,
+     "withheld": 2
+    },
+    "formation_agrees_with_expected_admission": {
+     "k": 18,
+     "n": 18,
+     "rate": 1.0,
+     "low": 0.8241,
+     "high": 1
+    }
+   },
+   "severe": [],
+   "adjudicate": [
+    {
+     "passage": "DEV-126",
+     "candidate": "candidate:6dd318b0de05a5caa934a9ebf8c2fb69",
+     "gold": "DEV-126-a1",
+     "why": "partial match: same type, some participants differ"
+    }
+   ],
+   "passages": [
+    {
+     "passage": "DEV-101",
+     "gold": [
+      "DEV-101-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:d35600d39d5d3a794902c3886754bbb8",
+       "type": "employment",
+       "participants": {
+        "employee": "Mara Quist",
+        "employer": "Pellwick"
+       },
+       "evidence": "Mara Quist joined Pellwick as head of research in February 2025",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-101-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-102",
+     "gold": [
+      "DEV-102-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:701416861273f9686b7ea8b34d9e281e",
+       "type": "employment",
+       "participants": {
+        "employee": "Teo Brandt",
+        "employer": "Arnholt Systems"
+       },
+       "evidence": "Teo Brandt has worked at Arnholt Systems since 2023",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-102-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-103",
+     "gold": [
+      "DEV-103-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:2f210f4751fe04f3311678239117caa3",
+       "type": "reporting",
+       "participants": {
+        "report": "Ilsa Moreno",
+        "manager": "Teo Brandt"
+       },
+       "evidence": "Ilsa Moreno reports to Teo Brandt",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-103-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-104",
+     "gold": [
+      "DEV-104-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:b4e40a1f0c4441b11eee00f6f4b53e31",
+       "type": "statement",
+       "participants": {
+        "subject": "Halden Holdings",
+        "object": "Pellwick"
+       },
+       "evidence": "Halden Holdings owns a majority stake in Pellwick",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-104-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-105",
+     "gold": [
+      "DEV-105-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:361be47c79fd301969fcb6a91f96d650",
+       "type": "statement",
+       "participants": {
+        "subject": "Omar Siddiq"
+       },
+       "evidence": "Omar Siddiq is alleged to have misled investors",
+       "status": "review",
+       "result": "matched",
+       "gold": "DEV-105-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": [
+      {
+       "kind": "allegation",
+       "assertion": 0,
+       "detail": "no contract field for an allegation (C4)"
+      }
+     ]
+    },
+    {
+     "passage": "DEV-106",
+     "gold": [
+      "DEV-106-a1"
+     ],
+     "candidates": [],
+     "missed": [
+      "DEV-106-a1"
+     ],
+     "outcomes": [
+      {
+       "kind": "inferred-not-admissible",
+       "evidence": "Mara Quist reports to her now",
+       "detail": "the model says it inferred this; formation:v1 would form it without review, so it is not admitted"
+      }
+     ],
+     "flags": []
+    },
+    {
+     "passage": "DEV-107",
+     "gold": [
+      "DEV-107-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:e268099db54a0227aaeb2f35b31529ea",
+       "type": "employment",
+       "participants": {
+        "employee": "Omar Siddiq",
+        "employer": "Arnholt Systems"
+       },
+       "evidence": "Omar Siddiq left Arnholt Systems in June 2025",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-107-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-108",
+     "gold": [
+      "DEV-108-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:94315a91ea61e04705cfb97a393d1883",
+       "type": "employment",
+       "participants": {
+        "employee": "Omar Siddiq",
+        "employer": "Arnholt Systems"
+       },
+       "evidence": "Omar Siddiq left Arnholt Systems in June 2025",
+       "status": "withheld",
+       "result": "matched",
+       "gold": "DEV-108-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": [
+      {
+       "kind": "mode-forced-forwarded",
+       "assertion": 0,
+       "detail": "direct \u2192 forwarded"
+      }
+     ]
+    },
+    {
+     "passage": "DEV-111",
+     "gold": [
+      "DEV-111-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:763363d03cbea8bbdec82257731ad220",
+       "type": "reporting",
+       "participants": {
+        "report": "Ilsa Moreno",
+        "manager": "Omar Siddiq"
+       },
+       "evidence": "Ilsa Moreno does not report to Omar Siddiq",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-111-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-112",
+     "gold": [
+      "DEV-112-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:59cb6a155e33d260796c8c4ed710af6d",
+       "type": "employment",
+       "participants": {
+        "employee": "Ravi Menon",
+        "employer": "Halden Holdings"
+       },
+       "evidence": "Ravi Menon works at Halden Holdings",
+       "status": "review",
+       "result": "matched",
+       "gold": "DEV-112-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": false
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": [
+      {
+       "kind": "commitment-downgraded",
+       "assertion": 0,
+       "detail": "certain \u2192 unknown ('I think')"
+      }
+     ]
+    },
+    {
+     "passage": "DEV-113",
+     "gold": [
+      "DEV-113-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:44945a79c958fbc9f67aacbe14ba7e14",
+       "type": "employment",
+       "participants": {
+        "employee": "Mara Quist",
+        "employer": "Halden Holdings"
+       },
+       "evidence": "Mara Quist will join Halden Holdings in January 2026, if the board approves",
+       "status": "withheld",
+       "result": "matched",
+       "gold": "DEV-113-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-114",
+     "gold": [
+      "DEV-114-a1"
+     ],
+     "candidates": [],
+     "missed": [
+      "DEV-114-a1"
+     ],
+     "outcomes": [
+      {
+       "kind": "cue-conflict",
+       "evidence": "If Teo Brandt had stayed at Arnholt Systems",
+       "detail": "the evidence is future or conditional ('If') but the modality is actual"
+      }
+     ],
+     "flags": []
+    },
+    {
+     "passage": "DEV-115",
+     "gold": [],
+     "candidates": [],
+     "missed": [],
+     "outcomes": [
+      {
+       "kind": "invalid-model-output",
+       "evidence": "",
+       "detail": "not JSON: Expecting value: line 1 column 104 (char 103)"
+      }
+     ],
+     "flags": []
+    },
+    {
+     "passage": "DEV-116",
+     "gold": [],
+     "candidates": [],
+     "missed": [],
+     "outcomes": [
+      {
+       "kind": "ambiguous-reference",
+       "evidence": "Great work on the launch, everyone",
+       "detail": "'everyone' is a pronoun or vague reference: identity is never inferred"
+      }
+     ],
+     "flags": []
+    },
+    {
+     "passage": "DEV-117",
+     "gold": [
+      "DEV-117-a1"
+     ],
+     "candidates": [],
+     "missed": [
+      "DEV-117-a1"
+     ],
+     "outcomes": [
+      {
+       "kind": "grounding-failure",
+       "evidence": "Dana from finance has moved to the Pellwick team",
+       "detail": "participant 'Dana Okoro' does not occur exactly in the message"
+      }
+     ],
+     "flags": []
+    },
+    {
+     "passage": "DEV-118",
+     "gold": [
+      "DEV-118-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:976ad9606722b972ca330df9fbb6616c",
+       "type": "employment",
+       "participants": {
+        "employee": "Omar Siddiq",
+        "employer": "Halden Holdings"
+       },
+       "evidence": "Omar Siddiq started at Halden Holdings around 2019",
+       "status": "review",
+       "result": "matched",
+       "gold": "DEV-118-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": [
+      {
+       "kind": "unreadable-time",
+       "assertion": 0,
+       "detail": "around 2019"
+      }
+     ]
+    },
+    {
+     "passage": "DEV-119",
+     "gold": [
+      "DEV-119-a1"
+     ],
+     "candidates": [],
+     "missed": [
+      "DEV-119-a1"
+     ],
+     "outcomes": [
+      {
+       "kind": "grounding-failure",
+       "evidence": "Ilsa Moreno left Pellwick last month",
+       "detail": "time 'July 2025' does not occur exactly in the message"
+      }
+     ],
+     "flags": []
+    },
+    {
+     "passage": "DEV-120",
+     "gold": [
+      "DEV-120-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:5c196818632c44b86523a634cd01ec6d",
+       "type": "reporting",
+       "participants": {
+        "report": "Ravi Menon",
+        "manager": "Mara Quist"
+       },
+       "evidence": "Ravi Menon has reported to Mara Quist since May 2025",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-120-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-121",
+     "gold": [
+      "DEV-121-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:4fd8b2000724be46b95bcbb9f9e694e8",
+       "type": "reporting",
+       "participants": {
+        "report": "Ravi Menon",
+        "manager": "Teo Brandt"
+       },
+       "evidence": "Ravi Menon reports to Teo Brandt, not Mara",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-121-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-122",
+     "gold": [
+      "DEV-122-a1"
+     ],
+     "candidates": [],
+     "missed": [
+      "DEV-122-a1"
+     ],
+     "outcomes": [
+      {
+       "kind": "invalid-model-output",
+       "evidence": "",
+       "detail": "assertion 0: unexpected fields ['end', 'start'] (offsets, ids and dates are never accepted)"
+      }
+     ],
+     "flags": []
+    },
+    {
+     "passage": "DEV-123",
+     "gold": [
+      "DEV-123-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:bfd15c1a800af0d7148279fe867cd553",
+       "type": "statement",
+       "participants": {
+        "subject": "Pellwick"
+       },
+       "evidence": "Pellwick is under investigation by regulators",
+       "status": "review",
+       "result": "matched",
+       "gold": "DEV-123-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": [
+      {
+       "kind": "allegation",
+       "assertion": 0,
+       "detail": "no contract field for an allegation (C4)"
+      }
+     ]
+    },
+    {
+     "passage": "DEV-124",
+     "gold": [
+      "DEV-124-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:8e957c6f3fb494074190ae4a5c32cae8",
+       "type": "employment",
+       "participants": {
+        "employee": "I",
+        "employer": "Halden Holdings"
+       },
+       "evidence": "I started at Halden Holdings in June 2024",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-124-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-109",
+     "gold": [
+      "DEV-109-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:0d7657cdead14dc2e3f335ab2ad1f03e",
+       "type": "employment",
+       "participants": {
+        "employee": "Teo Brandt",
+        "employer": "Pellwick"
+       },
+       "evidence": "Teo Brandt joined Pellwick in March 2025",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-109-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-110",
+     "gold": [
+      "DEV-110-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:47a2c8f9724348b0771b3459e82479fd",
+       "type": "employment",
+       "participants": {
+        "employee": "Teo Brandt",
+        "employer": "Pellwick"
+       },
+       "evidence": "Teo Brandt joined Pellwick in April 2025, not March",
+       "status": "review",
+       "result": "matched",
+       "gold": "DEV-110-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true,
+        "time_expression_preserved": true,
+        "time_kind": true,
+        "time_window": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-125",
+     "gold": [
+      "DEV-125-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:b7650b1d17465bbdf5890e11c96ee8c7",
+       "type": "statement",
+       "participants": {
+        "subject": "Omar Siddiq"
+       },
+       "evidence": "Omar Siddiq leads the audit committee at Halden Holdings",
+       "status": "formed",
+       "result": "matched",
+       "gold": "DEV-125-a1",
+       "fields": {
+        "attribution_mode": true,
+        "claimant": true,
+        "polarity": true,
+        "modality": true,
+        "commitment": true
+       },
+       "severe": []
+      }
+     ],
+     "missed": [],
+     "outcomes": [],
+     "flags": []
+    },
+    {
+     "passage": "DEV-126",
+     "gold": [
+      "DEV-126-a1"
+     ],
+     "candidates": [
+      {
+       "candidate": "candidate:6dd318b0de05a5caa934a9ebf8c2fb69",
+       "type": "statement",
+       "participants": {
+        "subject": "Omar"
+       },
+       "evidence": "Please disregard my earlier note about Omar and the audit committee",
+       "status": "review",
+       "result": "partial",
+       "gold": "DEV-126-a1",
+       "severe": []
+      }
+     ],
+     "missed": [
+      "DEV-126-a1"
+     ],
+     "outcomes": [],
+     "flags": [
+      {
+       "kind": "predicate-paraphrased",
+       "assertion": 0,
+       "detail": "leads the audit committee at"
+      },
+      {
+       "kind": "correction-target-unresolved",
+       "assertion": 0,
+       "detail": "0 earlier candidates could be the target: left unestablished"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "typedb": "3.14.1"
+}
