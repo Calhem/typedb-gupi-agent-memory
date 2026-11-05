@@ -26,6 +26,7 @@ from typedb.driver import TransactionType
 from gupi import ids, retrieval, timeexpr, typeql
 from gupi.extraction.contract import referent_id
 from gupi.formation.candidate import to_dict
+from gupi.formation.fidelity import statement_problems
 from gupi.formation.validate import Unmappable, valid_time, validate
 from gupi.memory import _has
 from gupi.records import Batch, Claim, Evidence, Mention, Referent
@@ -113,6 +114,9 @@ def decide(candidate, issues, approvals, rejections=None, copy_of=None):
         needs.append("a stated correction whose target could not be identified")  # the passage still says so
     if any(t.kind != "holds-at" and t.earliest is None and t.latest is None for t in candidate.times):
         needs.append("a stated time could not be read")  # forming it would make the claim look timeless
+    if structure := statement_problems(candidate):
+        # R1: grounded is not faithful; a role structure that cannot be verified is never formed by the policy
+        needs.append("statement structure not verified (" + "; ".join(structure) + ")")
     if needs and candidate.id not in approvals:
         return Decision(candidate.id, "review", "needs a review decision before forming: " + ", ".join(needs))
     if needs:
