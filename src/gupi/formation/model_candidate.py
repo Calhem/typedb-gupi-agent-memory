@@ -49,9 +49,11 @@ OUTCOMES = (
     "unsupported-domain",          # reported by the model
     "insufficient-evidence",       # reported by the model
     "validation",                  # the candidate failed gupi.formation.validate
+    "bare-retraction-unrecorded",  # R2: a retraction GUPI could not turn into a reviewable candidate (no author)
 )
 FLAGS = ("unreadable-time", "commitment-downgraded", "mode-forced-forwarded", "forwarded-unmarked",
-         "predicate-paraphrased", "allegation", "correction-target-unresolved")
+         "predicate-paraphrased", "allegation", "correction-target-unresolved",
+         "bare-retraction", "retraction-possible-targets", "allegation-context", "allegation-inherited")
 
 HEDGE = re.compile(r"\b(?:probably|possibly|perhaps|maybe|might|could|apparently|reportedly|allegedly|"
                    r"supposedly|rumou?red|I think|I believe|it seems|likely|unconfirmed|not official)\b", re.I)
@@ -63,6 +65,17 @@ PRESENT = re.compile(r"(?:is|are|am|works?|reports?|leads?|owns?|manages?|heads?
 CONTRAST = re.compile(r",\s*not\s+[^,.;!?]+")   # a contrast (", not March"), never a plain "does not"
 FUTURE_OR_CONDITIONAL = re.compile(r"\b(?:will|would|shall|plans? to|planning to|going to|intends? to|if|unless|"
                                    r"expected to|due to (?:join|leave|start))\b", re.I)
+
+# R2: a retraction that does not restate what it retracts ("ignore what I said yesterday about Kim"); read by
+# code from the message itself, whatever the model returned
+BARE_RETRACTION = re.compile(
+    r"\b(?:(?:please\s+)?(?:ignore|disregard|forget)\s+(?:what\s+I\s+(?:said|wrote|told\s+you|mentioned)|"
+    r"my\s+(?:last|earlier|previous)\s+(?:message|email|note|post|comment))|"
+    r"I\s+(?:retract|withdraw)\s+(?:that|what\s+I\s+said|my\s+(?:last|earlier|previous)\s+\w+)|"
+    r"I\s+take\s+(?:that|it)\s+back|scratch\s+that|I\s+was\s+wrong\s+about|"
+    r"I\s+mixed\s+(?:him|her|them|it|that)\s+up)\b", re.I)
+NOT_BEFORE = re.compile(r"\b(?:don't|do not|never|didn't|did not)\s*$", re.I)
+SENTENCE_END = re.compile(r"[.!?\n]")
 
 TOP = {"format", "outcome", "assertions", "problems"}
 ASSERTION_REQUIRED = {"evidence", "relation", "participants", "times", "polarity", "modality", "commitment",
@@ -127,6 +140,7 @@ class ModelCandidateV1:
                                         "detail": stop.detail})
                 continue
             made.append(c)
+        made += _bare_retractions(observation, made, earlier, report)
         kept = []
         for c in dict.fromkeys(made):
             issues = validate(CandidateSet(cset.observation_id, cset.content_hash, cset.extractor, (c,), IR_VERSION_1_1),
@@ -392,3 +406,60 @@ def _correction(a, n, obs, participants, times, earlier, report):
     report.flags.append({"kind": "correction-target-unresolved", "assertion": n,
                          "detail": f"{len(matches)} earlier candidates could be the target: left unestablished"})
     return (Relation(corr["kind"], None, "stated", corr["cue"]),)
+
+
+# --- R2: bare retractions ------------------------------------------------------------------------------
+
+def _sentence(text, at):
+    lo = max(text.rfind(ch, 0, at) for ch in ".!?\n") + 1
+    m = SENTENCE_END.search(text, at)
+    hi = m.start() if m else len(text)
+    while lo < hi and text[lo].isspace():
+        lo += 1
+    while hi > lo and text[hi - 1].isspace():
+        hi -= 1
+    return lo, hi
+
+
+def _bare_retractions(obs, made, earlier, report):
+    """A candidate for each retraction in the message that no assertion already carries.
+
+    The candidate is what the author asserts, a retraction: a generic statement with the author ("I") as subject,
+    the retraction phrase as predicate, what it is about as object text, and a `retracts` relation with a null
+    target. Its target is never chosen: formation sends a null-target retraction to review, and nothing is
+    superseded. Earlier candidates in the thread that mention what it is about are listed for the reviewer in a
+    flag, never applied."""
+    text, out = obs.content, []
+    cued = [(c.passage.start, c.passage.end) for c in made for r in c.relations if r.kind in ("retracts", "corrects")]
+    for m in BARE_RETRACTION.finditer(text):
+        if NOT_BEFORE.search(text[max(0, m.start() - 16):m.start()]):
+            continue  # "don't forget what I said" is not a retraction
+        s, e = _sentence(text, m.start())
+        if any(lo < e and s < hi for lo, hi in cued):
+            continue  # an assertion already carries this retraction
+        i_at = [x.start() for x in re.finditer(r"\bI\b", text[s:e])]
+        if not obs.author_id or not i_at:
+            report.outcomes.append({"kind": "bare-retraction-unrecorded", "assertion": None, "evidence": text[s:e],
+                                    "detail": "a retraction with no author or no first person to attach it to: "
+                                              "reported here, not stored"})
+            continue
+        rest = text[m.end():e]
+        about = re.split(r"[,;:]", rest, maxsplit=1)[0].strip()
+        values = [("predicate-text", m.group())]
+        if about:
+            values.append(("object-text", about))
+        names = set(re.findall(r"\b[A-Z][\w'-]+", about))
+        possible = sorted({c.id for c in earlier
+                           if names & {w for p in c.participants for w in p.surface.split()}})
+        c = Candidate("statement", Passage(obs.id, s, e, text[s:e]),
+                      (Participant("subject", "I", s + i_at[0], s + i_at[0] + 1, "person"),), tuple(sorted(values)),
+                      (), "positive", "actual", "certain", Attribution(),
+                      (Relation("retracts", None, "stated", m.group()),), "explicit", None)
+        n = len(made) + len(out)
+        report.flags.append({"kind": "bare-retraction", "assertion": n,
+                             "detail": f"{m.group()!r}: a retraction that does not restate its target; sent to review"})
+        report.flags.append({"kind": "retraction-possible-targets", "assertion": n,
+                             "detail": ", ".join(possible) if possible else "none found in the thread"})
+        out.append(c)
+        cued.append((s, e))  # one candidate per sentence, however many cues it has
+    return out
