@@ -110,3 +110,39 @@ def test_other_safeguards_keep_their_order():
                   [("subject", "Halden Holdings", ORG), ("object", "Lena Ostrow", "person")], "might open", "an inquiry",
                   modality="planned", commitment="possible")
     assert outcome(c).outcome == "withheld"
+
+
+def test_the_predicate_is_matched_as_whole_words():
+    # review fix: "owns" inside "disowns" must not verify "X owns Y"
+    c = statement("Halden disowns Pellwick.", "Halden disowns Pellwick",
+                  [("subject", "Halden", ORG), ("object", "Pellwick", ORG)], "owns")
+    assert outcome(c).outcome == "review" and "does not occur in the passage" in outcome(c).reason
+
+
+@pytest.mark.parametrize("text, predicate, obj", [
+    ("Halden acquired Pellwick.", "acquired", "Pellwick"),
+    ("Halden sued Pellwick.", "sued", "Pellwick"),
+    ("Halden met with Pellwick.", "met with", "Pellwick"),
+    ("Halden has partnered with Pellwick.", "has partnered with", "Pellwick"),
+    ("Halden is a subsidiary of Pellwick.", "is a subsidiary of", "Pellwick"),
+    ("Halden invested in Pellwick.", "invested in", "Pellwick"),
+    ("Halden Acquired Pellwick.", "acquired", "Pellwick"),
+    ("Halden acquired  the\nPellwick group.", "acquired", "Pellwick group"),
+    ("Halden acquired Pellwick in May 2025.", "acquired", "Pellwick"),
+    ("Halden, the regulator, fined Pellwick on Monday.", "fined", "Pellwick"),
+    ("Halden has sued and fined Pellwick.", "fined", "Pellwick"),
+    ("Halden acquired an 80% stake in Pellwick.", "acquired an 80% stake in", "Pellwick"),
+])
+def test_common_valid_constructions_form(text, predicate, obj):
+    c = statement(text, text.rstrip("."), [("subject", "Halden", ORG), ("object", obj, ORG)], predicate)
+    assert statement_problems(c) == [] and outcome(c).outcome == "formed"
+
+
+@pytest.mark.parametrize("text, predicate, obj", [
+    ("Halden lives in Pellwick.", "lives", "Pellwick"),                       # preposition left out: conservative
+    ("Halden acquired an 80% stake in Pellwick.", "acquired", "Pellwick"),    # "acquired Pellwick" overstates
+    ("Halden met Pellwick's chair.", "met", "Pellwick"),                      # possessor
+])
+def test_constructions_deliberately_sent_to_review(text, predicate, obj):
+    c = statement(text, text.rstrip("."), [("subject", "Halden", ORG), ("object", obj, ORG)], predicate)
+    assert outcome(c).outcome == "review"

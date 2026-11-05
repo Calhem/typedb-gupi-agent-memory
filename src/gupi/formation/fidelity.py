@@ -44,7 +44,8 @@ def statement_problems(candidate):
     objects = [p for p in candidate.participants if p.role == "object"]
     if not objects:
         return problems
-    ends = [m.end() + base for m in re.finditer(re.escape(predicate), passage, re.I)] if predicate else []
+    # whole words only: "owns" must not match inside "disowns"
+    ends = [m.end() + base for m in re.finditer(rf"(?<!\w){re.escape(predicate)}(?!\w)", passage, re.I)] if predicate else []
     if not ends:
         problems.append(f"the predicate {predicate!r} does not occur in the passage: its relation to the object "
                         "participant cannot be checked")
