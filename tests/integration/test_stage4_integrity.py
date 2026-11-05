@@ -59,3 +59,22 @@ def test_r2_bare_retraction_is_stored_for_review_and_supersedes_nothing(memory, 
     store.review(memory, r.candidate.id, "approve", "reviewer-a", "the author confirmed the retraction")
     assert store.get(memory, r.candidate.id).claim_id
     assert e.claim_id in memory.believed_ids(clock.now)  # approving the retraction supersedes nothing
+
+
+def test_r3_fact_inside_an_allegation_is_never_formed_as_established(memory, clock):
+    text = "The lawsuit alleges that Corvane Freight's finance director, Ilse Marrow, hid losses from auditors."
+    lawsuit = {"mode": "reported", "claimant": "The lawsuit", "claimant_kind": "unknown", "via": []}
+    resp = response(
+        assertion(text.rstrip("."), [("subject", "Ilse Marrow", "person")], relation="statement", predicate="hid",
+                  object_text="losses from auditors", attribution=lawsuit, allegation=True),
+        assertion("Corvane Freight's finance director, Ilse Marrow",
+                  [("employee", "Ilse Marrow", "person"), ("employer", "Corvane Freight", ORG)], title="finance director"))
+    stored, _, _ = submit(memory, clock, text, resp, "r3-a")
+    assert [s.status for s in stored] == ["review", "review"] and not memory.all_claims()
+
+    emp = next(s for s in stored if s.candidate.claim_type == "employment")
+    clock.now += timedelta(minutes=1)
+    store.review(memory, emp.candidate.id, "approve", "reviewer-a", "the role is not disputed")
+    (claim,) = memory.all_claims()
+    # what memory holds is the lawsuit's report, uncommitted: never an unqualified fact of the author's
+    assert (claim.commitment, claim.attribution_mode) == ("unknown", "reported")

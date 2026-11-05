@@ -74,6 +74,9 @@ BARE_RETRACTION = re.compile(
     r"I\s+(?:retract|withdraw)\s+(?:that|what\s+I\s+said|my\s+(?:last|earlier|previous)\s+\w+)|"
     r"I\s+take\s+(?:that|it)\s+back|scratch\s+that|I\s+was\s+wrong\s+about|"
     r"I\s+mixed\s+(?:him|her|them|it|that)\s+up)\b", re.I)
+# R3: an allegation in the sentence. What the sentence alleges is the claimant's allegation, not an established fact
+ALLEGATION = re.compile(r"\b(?:alleg(?:e|es|ed|edly|ing|ation|ations)|accus(?:e|es|ed|ing|ation|ations)|"
+                        r"purport(?:s|ed|edly)?)\b", re.I)
 NOT_BEFORE = re.compile(r"\b(?:don't|do not|never|didn't|did not)\s*$", re.I)
 SENTENCE_END = re.compile(r"[.!?\n]")
 
@@ -131,10 +134,11 @@ class ModelCandidateV1:
             report.outcomes.append({"kind": "no-relevant-assertion", "assertion": None, "evidence": None,
                                     "detail": "the model found no relevant assertion"})
         earlier = [c for s in prior for c in s.candidates]
+        alleged = _allegation_spans(observation, data["assertions"])
         made = []
         for n, a in enumerate(data["assertions"]):
             try:
-                c = _candidate(a, n, observation, earlier + made, report, data["format"])
+                c = _candidate(a, n, observation, earlier + made, report, data["format"], alleged)
             except _Stop as stop:
                 report.outcomes.append({"kind": stop.kind, "assertion": n, "evidence": a.get("evidence"),
                                         "detail": stop.detail})
@@ -275,7 +279,21 @@ def _find(text, needle, lo, hi, what, occurrence=None):
     return starts[0], starts[0] + len(needle)
 
 
-def _candidate(a, n, obs, earlier, report, fmt):
+def _allegation_spans(obs, assertions):
+    """(start, end, index, attribution) of each assertion the model marked as an allegation, where its evidence
+    can be located; an unlocatable one stops later on its own."""
+    out = []
+    for n, a in enumerate(assertions):
+        if a.get("allegation"):
+            try:
+                s, e = _find(obs.content, a["evidence"], 0, len(obs.content), "evidence", a.get("evidence_occurrence"))
+            except _Stop:
+                continue
+            out.append((s, e, n, a["attribution"]))
+    return out
+
+
+def _candidate(a, n, obs, earlier, report, fmt, alleged=()):
     text = obs.content
     s, e = _find(text, a["evidence"], 0, len(text), "evidence", a.get("evidence_occurrence"))
     passage = Passage(obs.id, s, e, text[s:e])
@@ -344,7 +362,27 @@ def _candidate(a, n, obs, earlier, report, fmt):
     if a.get("allegation"):
         report.flags.append({"kind": "allegation", "assertion": n, "detail": "no contract field for an allegation (C4)"})
 
-    attribution = _attribution(a["attribution"], obs, s, e, n, report, fmt)
+    # R3: a fact embedded in an allegation is part of what is alleged. Its commitment is never kept as certain,
+    # and an assertion with no claimant of its own takes the alleger's attribution
+    at, at_span = a["attribution"], (s, e)
+    within = [x for x in alleged if x[2] != n and x[0] <= s and e <= x[1]]
+    sentence_end = _sentence(text, max(s, e - 1))[1]
+    cue = ALLEGATION.search(text[lead:max(e, sentence_end)])
+    if (within or cue) and not a.get("allegation"):
+        if commitment == "certain":
+            commitment = "unknown"
+            report.flags.append({"kind": "commitment-downgraded", "assertion": n,
+                                 "detail": "certain → unknown (inside an allegation)"})
+        if within:
+            report.flags.append({"kind": "allegation-inherited", "assertion": n,
+                                 "detail": f"evidence lies inside the allegation of assertion {within[0][2]}"})
+            if at["claimant"] is None and at["mode"] == "direct" and within[0][3]["claimant"] is not None:
+                at, at_span = within[0][3], within[0][:2]
+        else:
+            report.flags.append({"kind": "allegation-context", "assertion": n,
+                                 "detail": f"the sentence has an allegation cue ({cue.group()!r})"})
+
+    attribution = _attribution(at, obs, *at_span, n, report, fmt)
     relations = _correction(a, n, obs, participants, times, earlier, report)
     return Candidate(a["relation"], passage, tuple(participants), tuple(sorted(values)), tuple(times), a["polarity"],
                      a["modality"], commitment, attribution, relations, "explicit", None)
