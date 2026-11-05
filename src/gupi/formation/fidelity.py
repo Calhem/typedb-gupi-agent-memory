@@ -4,8 +4,8 @@ A generic statement is stored as roles plus text: subject participant(s), a `pre
 object participant or `object-text` (or both). Validation checks that every string is grounded; it does not
 check that the roles say what the passage says. A statement can be fully grounded and still misleading:
 
-- "X has opened an internal investigation into Y", stored as X -has opened-> Y, says X opened Y
-- "X is operated by the same team as Y", stored as X -is operated by-> Y, says Y operates X
+- "X has opened an inquiry into Y", stored as X -has opened-> Y, says X opened Y
+- "X is run by the same crew as Y", stored as X -is run by-> Y, says Y runs X
 
 This module checks, from offsets alone (no semantics, no model), whether an object participant is the direct
 object of the predicate as it appears in the passage. Anything it cannot verify is reported, and formation sends

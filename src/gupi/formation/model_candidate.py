@@ -66,7 +66,7 @@ CONTRAST = re.compile(r",\s*not\s+[^,.;!?]+")   # a contrast (", not March"), ne
 FUTURE_OR_CONDITIONAL = re.compile(r"\b(?:will|would|shall|plans? to|planning to|going to|intends? to|if|unless|"
                                    r"expected to|due to (?:join|leave|start))\b", re.I)
 
-# R2: a retraction that does not restate what it retracts ("ignore what I said yesterday about Kim"); read by
+# R2: a retraction that leaves its target unstated ("please disregard what I wrote about Kim"); read by
 # code from the message itself, whatever the model returned
 BARE_RETRACTION = re.compile(
     r"\b(?:(?:please\s+)?(?:ignore|disregard|forget)\s+(?:what\s+I\s+(?:said|wrote|told\s+you|mentioned)|"

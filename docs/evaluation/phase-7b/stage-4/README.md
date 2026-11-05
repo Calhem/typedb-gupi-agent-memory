@@ -22,5 +22,48 @@ changed content would. Recorded Stage 3B responses still parse; re-running them 
 gives different decisions by design, and the frozen Stage 3B results are not regenerated.
 
 ## The fixes
-Each section is filled in as the fix lands: [r1-structural-fidelity.md](r1-structural-fidelity.md),
-[r2-bare-retractions.md](r2-bare-retractions.md), [r3-allegation-propagation.md](r3-allegation-propagation.md).
+| Fix | Commit | Document | Tests |
+|---|---|---|---|
+| R1 statement structure | `9ea644b` | [r1-structural-fidelity.md](r1-structural-fidelity.md) | `tests/unit/test_stage4_r1_structure.py` (13), store path in `tests/integration/test_stage4_integrity.py` |
+| R2 bare retractions | `082f4e0` | [r2-bare-retractions.md](r2-bare-retractions.md) | `tests/unit/test_stage4_r2_retractions.py` (7), store path |
+| R3 allegation context | `b60e6c5` | [r3-allegation-propagation.md](r3-allegation-propagation.md) | `tests/unit/test_stage4_r3_allegations.py` (6), store path |
+
+**Full suite** (TypeDB 3.14.1 running, so the integration tests ran): 558 passed, 19 expected failures
+(unchanged known limitations), 0 skipped. Before this stage: 529 passed, 19 expected failures.
+
+## Check against the frozen Stage 3B responses (private, read-only)
+The 32 recorded Stage 3B responses were replayed through the fixed interface and formation in a disposable
+database (private record, `gupi-stage3-private` commit `61c6d91`). This is a check, not a new result: the frozen
+Stage 3B figures stand, nothing was tuned, and no passage or response is published.
+
+| | Stage 3B (frozen) | After R1–R3 |
+|---|---|---|
+| candidates | 30 | 31 (+1: the bare retraction) |
+| formed / review / withheld / rejected | 17 / 4 / 9 / 0 | 14 / 8 / 9 / 0 |
+| severe errors formed as facts | 3 (X3-09, X3-27, X3-28) | **0**: all three go to review |
+| other decisions | – | unchanged (the 14 remaining formed claims are the same) |
+| store rejections, failures, supersessions | 0, 0, 0 | 0, 0, 0 |
+
+- **X3-27, X3-28:** review, "statement structure not verified" (R1).
+- **X3-09 employment:** review, commitment unknown (R3).
+- **X3-17:** the bare retraction is now a review item with an unestablished target (R2); the retracted claim stays
+  believed until a reviewer acts.
+- **X3-19:** still review, now for two reasons: its hedge and its structure (R1).
+
+## What still holds
+- **Provenance, time and corrections:** evidence spans, time readings, `via`, forwarded-copy handling and D3
+  correction suggestions are unchanged; every existing test of them passes.
+- **Nothing is applied automatically:** no supersession, identity merge or target choice is added.
+
+## Remaining integrity risks
+- **Structural, not semantic:** a misleading predicate whose object directly follows it is not detected (R1).
+- **Lexical cues:** retractions and allegations worded outside the listed phrases are missed unless the model marks
+  them (R2, R3).
+- **Review volume rises:** "shortest verb" statements with an object participant, and every assertion near an
+  allegation cue, now wait for review.
+- **Not yet in answers:** a pending retraction is visible in the review queue, not flagged on the claims it may
+  retract.
+- **Deferred:** "former" (R4), within-passage surname coreference (R5), same-named people (S8), paraphrased copies
+  (L4), and `rules:v2` reading retractions.
+- **One synthetic test author:** the fixtures were written by the developer; an externally written corpus (R10)
+  is still the main gap before adoption.

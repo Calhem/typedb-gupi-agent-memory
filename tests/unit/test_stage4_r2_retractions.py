@@ -1,4 +1,4 @@
-"""R2 (Phase 7B Stage 4): a retraction that does not restate what it retracts becomes a reviewable candidate with
+"""R2 (Phase 7B Stage 4): a retraction that leaves its target unstated becomes a reviewable candidate with
 an unestablished target. It is never dropped and never applied. Synthetic, developer-authored fixtures."""
 
 from gupi.formation.form import decide
@@ -43,7 +43,7 @@ def test_possible_targets_are_listed_never_chosen():
 
 
 def test_two_cues_in_one_sentence_make_one_candidate():
-    cset, _ = run("Sorry, ignore what I said about Tomas, I mixed him up with someone else.", NOTHING)
+    cset, _ = run("Oops, scratch that about Tomas, I take it back.", NOTHING)
     assert len(cset.candidates) == 1
 
 
