@@ -16,7 +16,7 @@ refused or repaired.
 | direct object | an object participant does not follow an occurrence of the predicate with at most a determiner (the, a, an) between them |
 | inside object text | any participant lies inside the object text |
 | possessor | an object participant is followed by "'s" ("suspended X's licence" is not "suspended X") |
-| predicate not found | there is an object participant but the predicate does not occur in the passage (a paraphrase cannot be checked) |
+| predicate not found | there is an object participant but the predicate does not occur in the passage as whole words (a paraphrase cannot be checked; "owns" does not match inside "disowns") |
 
 **Order of rules:** unchanged apart from the new reason. Rejection, non-actual modality, copies and unmappable
 times still decide first; R1 adds one reason to the existing "needs a review decision" list. A reviewer's approval
@@ -43,3 +43,7 @@ decision and no claim; a reviewer's approval appends `formed` and creates the cl
 - **Recall cost:** statements that follow the frozen instructions' "shortest verb" rule with an object participant
   now wait for review. That is intended: the instructions themselves produce the failure class.
 - **Passive voice** with the agent as subject always goes to review.
+- **Prepositions left out of the predicate go to review** ("lives" + object, from "lives in X"). This is
+  deliberate: dropping a single word can invert a relation ("was operated" from "was operated by"), and the check
+  cannot tell which drops are harmless. Writing the predicate in full ("lives in", "met with", "is a subsidiary
+  of", "acquired an 80% stake in") forms normally; `test_common_valid_constructions_form` holds that list.

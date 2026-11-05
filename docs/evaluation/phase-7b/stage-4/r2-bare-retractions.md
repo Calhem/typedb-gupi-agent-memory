@@ -24,6 +24,9 @@ believed until a reviewer records a supersession (`store.assign_correction_targe
 **Never silently dropped:** a retraction with no known author, or with no first person to attach it to, gives
 the explicit outcome `bare-retraction-unrecorded` in the extraction report.
 
+**A broken model response cannot hide one:** the message is read by code, so a response that fails to parse
+still yields the review item, and nothing else.
+
 **Phrases read:** ignore / disregard / forget what I said (wrote, told you, mentioned) or my last (earlier,
 previous) message; I retract / withdraw that; I take that (it) back; scratch that; I was wrong about; I mixed
 him (her, them) up. Not after "don't", "do not", "never", "didn't".

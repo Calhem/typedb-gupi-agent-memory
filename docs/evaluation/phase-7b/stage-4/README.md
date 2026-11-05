@@ -28,8 +28,9 @@ gives different decisions by design, and the frozen Stage 3B results are not reg
 | R2 bare retractions | `082f4e0` | [r2-bare-retractions.md](r2-bare-retractions.md) | `tests/unit/test_stage4_r2_retractions.py` (7), store path |
 | R3 allegation context | `b60e6c5` | [r3-allegation-propagation.md](r3-allegation-propagation.md) | `tests/unit/test_stage4_r3_allegations.py` (6), store path |
 
-**Full suite** (TypeDB 3.14.1 running, so the integration tests ran): 558 passed, 19 expected failures
-(unchanged known limitations), 0 skipped. Before this stage: 529 passed, 19 expected failures.
+**Review fixes** (final review, [merge-readiness.md](merge-readiness.md)): `e2b251e` whole-word predicates (R1),
+`34e5243` retractions read from broken responses (R2), `848696a` persistence and retrieval tests, and a code-hash
+list that includes `fidelity.py`.
 
 ## Check against the frozen Stage 3B responses (private, read-only)
 The 32 recorded Stage 3B responses were replayed through the fixed interface and formation in a disposable

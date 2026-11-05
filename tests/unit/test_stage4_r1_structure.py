@@ -146,3 +146,9 @@ def test_common_valid_constructions_form(text, predicate, obj):
 def test_constructions_deliberately_sent_to_review(text, predicate, obj):
     c = statement(text, text.rstrip("."), [("subject", "Halden", ORG), ("object", obj, ORG)], predicate)
     assert outcome(c).outcome == "review"
+
+
+def test_a_future_freeze_hashes_the_structure_check():
+    # review fix: the formation policy now depends on fidelity.py, so a new manifest must record it
+    from gupi.benchmarks.phase7b.stage3 import CODE
+    assert "src/gupi/formation/fidelity.py" in CODE

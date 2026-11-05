@@ -440,7 +440,7 @@ def audit(transcripts, bundle_dir):
 CODE = ("src/gupi/benchmarks/phase7b/stage3.py", "src/gupi/benchmarks/phase7b/harness.py",
         "src/gupi/benchmarks/phase7b/annotations.py", "src/gupi/formation/model_candidate.py",
         "src/gupi/formation/candidate.py", "src/gupi/formation/validate.py", "src/gupi/formation/form.py",
-        "src/gupi/formation/store.py", "src/gupi/formation/rules_v21.py", "src/gupi/formation/rules_v2.py",
+        "src/gupi/formation/fidelity.py", "src/gupi/formation/store.py", "src/gupi/formation/rules_v21.py", "src/gupi/formation/rules_v2.py",
         "src/gupi/timeexpr.py")
 EXTRACTION_CONTRACT = "gupi.stage3-extraction/1"
 
