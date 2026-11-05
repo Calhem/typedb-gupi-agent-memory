@@ -126,7 +126,11 @@ class ModelCandidateV1:
             data = _parse(response)
         except ResponseError as e:
             report.outcomes.append({"kind": "invalid-model-output", "assertion": None, "evidence": None, "detail": str(e)})
-            return cset, report
+            # R2: a retraction is read from the message by code, so a broken response cannot hide it
+            data = None
+        if data is None:
+            made = _bare_retractions(observation, [], [c for s in prior for c in s.candidates], report)
+            return self._validated(cset, made, observation, schema, report)
         for p in data.get("problems", []):
             report.outcomes.append({"kind": p["kind"], "assertion": None, "evidence": p.get("evidence"),
                                     "detail": p.get("detail") or "reported by the model"})
@@ -145,6 +149,10 @@ class ModelCandidateV1:
                 continue
             made.append(c)
         made += _bare_retractions(observation, made, earlier, report)
+        return self._validated(cset, made, observation, schema, report)
+
+    @staticmethod
+    def _validated(cset, made, observation, schema, report):
         kept = []
         for c in dict.fromkeys(made):
             issues = validate(CandidateSet(cset.observation_id, cset.content_hash, cset.extractor, (c,), IR_VERSION_1_1),

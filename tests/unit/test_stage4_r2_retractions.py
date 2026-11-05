@@ -71,3 +71,15 @@ def test_approval_forms_the_retraction_but_never_its_target():
     (c,) = cset.candidates
     d = decide(c, [], {c.id: "reviewer-a"})
     assert d.outcome == "formed" and d.suggestion is None  # suggestions are made by form(), never applied
+
+
+def test_a_broken_model_response_cannot_hide_a_retraction():
+    # review fix: the retraction is read from the message, so an invalid response still yields the review item
+    for broken in ("{not json", None, {"format": "something-else/1", "outcome": "assertions", "assertions": [], "problems": []}):
+        cset, report = run(RETRACTION, broken, prior=[earlier_set()])
+        assert kinds(report) == ["invalid-model-output"]
+        (c,) = cset.candidates
+        assert c.relations[0].kind == "retracts" and c.relations[0].target is None
+        assert decide(c, [], {}).outcome == "review"
+    cset, _ = run("Tomas Reyl joined Halden in March 2025.", "{not json")
+    assert cset.candidates == ()  # nothing else is ever made from a broken response
