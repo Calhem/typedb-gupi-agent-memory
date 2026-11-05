@@ -20,12 +20,12 @@ the owner's decision. Not merged.**
 |---|---|---|
 | `e2b251e` | R1 matched predicates as substrings: "owns" verified inside "Halden disowns Pellwick", which would have formed | whole-word matching; test fails without the fix |
 | `34e5243` | R2 was skipped when a model response failed to parse, so a broken response could hide a retraction | retractions are read on that path too; test fails without the fix |
-| this branch | a future manifest would not hash the new `fidelity.py` | added to the code-hash list; the frozen Stage 3A manifest is unchanged |
+| `477cef8` | a future manifest would not hash the new `fidelity.py` | added to the code-hash list; the frozen Stage 3A manifest is unchanged |
 
 ## The specific confirmations
-- **R1 false positives:** 17 common constructions were probed. Complete predicates form ("acquired", "met with",
+- **R1 false positives:** 19 constructions were probed: 16 formed and 3 went to review. Complete predicates form ("acquired", "met with",
   "is a subsidiary of", "invested in", "acquired an 80% stake in"), including mixed case, line breaks and later
-  adverbials. Only three kinds go to review, all deliberately: a preposition left out of the predicate, a stake
+  adverbials. The three sent to review are deliberate: a preposition left out of the predicate, a stake
   overstated as the whole object, and a possessor. These are pinned by tests.
 - **R2:** a pending retraction survives a new connection with its null target, suggestion and history. Submitting,
   approving or rejecting it leaves decided answers and the believed set exactly as they were (test with a TRUE
