@@ -1,11 +1,14 @@
 # Phase 7B Stage 3C: adjudication preparation and failure diagnosis
 
-**Status (2026-11-04):** diagnosis complete; **independent adjudication not yet done.**
+**Status (2026-11-05):** diagnosis complete; **model-assisted adjudication done** (ChatGPT, 19 cases), results in
+[results-model-assisted.md](results-model-assisted.md). **Independent human adjudication not done.**
 - **Branch:** `feature/phase-7b-stage-3c-adjudication`, from Stage 3B (`e273a72`). Not merged.
 - **No production change:** extraction, format 1.1, formation, persistence and schema are all unchanged.
-- **Nothing rerun:** no extraction was rerun, no model was called, and $0 was spent.
+- **Nothing rerun:** no extraction was rerun and no extraction model was called; $0 API spend.
+- **The headline:** model F1 0.61 (gold v1) → 0.76 (gold v2, model-assisted), from revised annotations, not a
+  better model. **Three severe errors admitted as facts remain** (X3-09, X3-27, X3-28).
 
-**Why there are no revised metrics:** no human reviewer independent of GUPI and of the gold was available. The
+**Why the sections below give no revised metrics** (written 2026-11-04, before the model-assisted review): no human reviewer independent of GUPI and of the gold was available. The
 gold's author (Claude) must not adjudicate its own disputed answers, and a model-assisted second opinion needs the
 owner's approval first. So this stage gives the **original Stage 3B figures unchanged**, plus **bounds** on what
 adjudication could change. It issues no revised score.
@@ -19,6 +22,7 @@ adjudication could change. It issues no revised score.
 | [formation-safeguards.md](formation-safeguards.md) | the 30 formation decisions reconstructed; which safeguards worked and which did not |
 | [proposed-remediation.md](proposed-remediation.md) | design proposals only, ranked by correctness impact |
 | [remaining-limitations.md](remaining-limitations.md) | what this stage cannot settle |
+| [results-model-assisted.md](results-model-assisted.md) | the model-assisted adjudication: method, gold v1 vs gold v2 figures, confirmed errors, next priorities |
 
 **Private, outside the repository** (`gupi-stage3-private/stage3c/`):
 - the adjudication package (19 items, blank decisions sheet)

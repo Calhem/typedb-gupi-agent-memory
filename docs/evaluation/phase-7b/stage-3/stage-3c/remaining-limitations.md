@@ -1,14 +1,18 @@
 # Remaining limitations and unresolved decisions (Stage 3C)
 
 ## What this stage could not settle
-1. **No independent adjudication.** No reviewer outside GUPI and the gold was available.
-   - **The 19 package items are undecided,** including the 12 disputed ones.
-   - **No revised metrics are issued.** Only bounds are given: precision 21/30–29/30, recall 21/39–29/39 (29/36 if
-     the gold changes), formed severe errors 0–3.
+1. **No independent human adjudication.** No reviewer outside GUPI and the gold was available.
+   - **Update (2026-11-05):** the 19 items were decided by a model-assisted review (ChatGPT). Its exploratory
+     figures are in [results-model-assisted.md](results-model-assisted.md): within the bounds below, with 3 formed
+     severe errors remaining.
+   - **Still open:** human verification of those decisions, and the gold change for item 9, which the reviewer
+     flagged without specifying.
+   - **Bounds given before the review:** precision 21/30–29/30, recall 21/39–29/39 (29/36 if the gold changes),
+     formed severe errors 0–3.
 2. **The gold's author wrote the diagnosis.** The analysis rests on source text, frozen documents and code. Even so,
    the author's view of its own gold is not neutral, which is why every gold-dependent classification is left open.
-3. **A model-assisted opinion has not been run.** A separate Claude session reviewing the package needs the owner's
-   approval, and would be labelled model-assisted adjudication, not independent verification.
+3. **The adjudication is model-assisted.** With the owner's approval it was done by ChatGPT, not a Claude
+   session, and is labelled model-assisted adjudication, not independent verification.
 4. **The isolation is qualified.** The frozen audit failed on the desktop transcript format, and that result is
    preserved. The tool-call inspection supports the run but does not replace the audit.
 5. **One run, one corpus, one author and one model family.** The run is also a second attempt: attempt 1 was
