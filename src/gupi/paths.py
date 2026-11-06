@@ -28,6 +28,8 @@ from gupi.typedb.connection import transaction
 
 MEMBERS = evidence.IN_SCOPE + (' $o has observed-at $at, has received-at $r; '
                                'fetch { "id": $oid, "at": $o.observed-at, "received": $o.received-at };')
+SESSION_METHOD = "identity:session-link:v1"
+UNCONFIRMED = "identity not confirmed"
 AUTHORS = evidence.IN_SCOPE + (' authorship (author: $x, authored: $o); $x has gupi-id $xid, has label $l; '
                                'fetch { "id": $oid, "author": $xid, "label": $l };')
 
@@ -42,6 +44,7 @@ class Budget:
     hops: int = 2               # never more: there is no recursion
     max_paths: int = 50         # paths kept, after sorting
     hub: int = 100              # a referent with more claims is not crossed unless the question names it
+    unresolved_links: bool = False  # also cross hypothesis session links; what they reach is labelled, never merged
 
 
 @dataclass(frozen=True)
@@ -62,6 +65,7 @@ class EvidenceSet:
     ambiguous: list = field(default_factory=list)   # names matching people not accepted as the same
     truncated: list = field(default_factory=list)   # which limits cut something: absence is not "nothing else"
     steps: list = field(default_factory=list)
+    scope: frozenset = frozenset()                  # observations this question may return, and nothing else
 
     @property
     def ids(self):
@@ -75,7 +79,7 @@ class Hop:
     end: str
     observations: tuple         # the evidence for this hop; a hop with none is never returned
     relation: str               # claim type, with the predicate for a generic statement
-    tier: str                   # accepted or qualified
+    tier: str                   # accepted, qualified, or unresolved (reached across an unaccepted identity)
     notes: tuple = ()
 
 
@@ -172,7 +176,7 @@ def conversational(memory, question, contexts, budget=Budget(), believed_at=None
         reasons.append(Item(oid, "passage", why + (("speaker",) if oid in spoken else ())))
     return EvidenceSet(reasons, truncated=["k"] if len(ordered) > budget.k else [],
                        steps=[f"keyword: {len(hits)} hits", f"speaker: {'named' if speaker else 'none'}",
-                        f"candidates: {len(ordered)}"])
+                        f"candidates: {len(ordered)}"], scope=frozenset(sequence))
 
 
 # --- layer 2: claim paths ---------------------------------------------------------------------------------
@@ -224,10 +228,27 @@ def _named(tx, question, contexts, groups):
     return named, ambiguous
 
 
-def _walk(tx, starts, named, groups, t, budget):
-    """Paths from each start group: [[(claim, from, to), ...]] sorted, plus any limit that cut something."""
+def _session_links(tx, scope, t):
+    """{referent: referents it may be}, from unreviewed session links wholly inside this scope. Never merged."""
+    links = {}
+    for view in retrieval.claims_by_ids(tx, retrieval.hypothesis_ids(tx, t, "identity", method=SESSION_METHOD)):
+        if all(e.observation_id in scope for e in view.evidence):
+            a, b = view.roles["same"]
+            links.setdefault(a, set()).add(b)
+            links.setdefault(b, set()).add(a)
+    return links
+
+
+def _walk(tx, starts, named, groups, t, budget, links=None):
+    """Paths from each start group: [[(claim, from, to), ...]] sorted, plus any limit that cut something. With `links`,
+    a second hop may start from a referent that only may be the first hop's end: such a path stays visibly unresolved."""
+    links = links or {}
+
     def group(r):
         return frozenset(groups.get(r, {r}))
+
+    def maybe(g):
+        return sorted({group(x) for r in g for x in links.get(r, ())} - {g}, key=sorted)
 
     def edges(members):
         rows = typeql.rows_for(tx, HOP, [{"rid": r, "t": t} for r in sorted(members)]) if members else []
@@ -237,7 +258,8 @@ def _walk(tx, starts, named, groups, t, budget):
         return out
 
     first = edges({r for g in starts for r in g})
-    second = edges({m for es in first.values() for _, _, n in es for m in group(n)}) if budget.hops > 1 else {}
+    second = edges({m for es in first.values() for _, _, n in es for g in (group(n), *maybe(group(n))) for m in g}) \
+        if budget.hops > 1 else {}
     paths, cut = [], []
     for start in sorted(starts, key=sorted):
         for e1 in sorted(first.get(start, [])):
@@ -245,12 +267,13 @@ def _walk(tx, starts, named, groups, t, budget):
             if middle == start:
                 continue
             paths.append((e1,))
-            if len(second.get(middle, ())) > budget.hub and middle not in named:
-                cut.append("hub")
-                continue
-            for e2 in sorted(second.get(middle, [])):
-                if e2[0] != e1[0] and group(e2[2]) not in (start, middle):
-                    paths.append((e1, e2))
+            for via in (middle, *maybe(middle)):
+                if len(second.get(via, ())) > budget.hub and via not in named:
+                    cut.append("hub")
+                    continue
+                for e2 in sorted(second.get(via, [])):
+                    if e2[0] != e1[0] and group(e2[2]) not in (start, middle, via):
+                        paths.append((e1, e2))
     return paths, sorted(set(cut))
 
 
@@ -371,7 +394,8 @@ def _annotate(tx, ids_, t, labels_of):
 def _qualified(hop, info):
     """A hop is never more certain than its evidence: a note on an observation applies to the hop."""
     notes = tuple(n for o in hop.observations for n in info.get(o, ("", ()))[1] if n.startswith(("pending", "not accepted")))
-    return replace(hop, tier="qualified", notes=tuple(dict.fromkeys(hop.notes + notes))) if notes else hop
+    tier = "unresolved" if hop.tier == "unresolved" else "qualified"
+    return replace(hop, tier=tier, notes=tuple(dict.fromkeys(hop.notes + notes))) if notes else hop
 
 
 def render(found):
@@ -408,7 +432,8 @@ def retrieve(memory, question, contexts, budget=Budget(), believed_at=None):
         named, ambiguous = _named(tx, question, contexts, groups)
         seeded = {r for r, in _strings(typeql.rows_for(tx, SEED_REFERENTS, [{"oid": o, "t": t} for o in seeds]), "xid")} if seeds else set()
         starts = list(dict.fromkeys(named + sorted({frozenset(groups.get(r, {r})) for r in seeded}, key=sorted)))
-        edges, cut = _walk(tx, starts, set(named), groups, t, budget)
+        links = _session_links(tx, base.scope, t) if budget.unresolved_links else {}
+        edges, cut = _walk(tx, starts, set(named), groups, t, budget, links)
         views = {v.id: v for v in retrieval.claims_by_ids(tx, {e[0] for p in edges for e in p})}
         keys = {v.proposition_key for v in views.values()}
         recorded = retrieval.claims_by_ids(tx, retrieval.recorded_with_keys(tx, keys, t))
@@ -421,9 +446,12 @@ def retrieve(memory, question, contexts, budget=Budget(), believed_at=None):
         anchored = set(starts)
         paths = []
         for p in edges:
-            if not all(views.get(e[0]) and views[e[0]].evidence for e in p):
-                continue                                               # a hop with no evidence is never returned
+            if not all(views.get(e[0]) and any(x.observation_id in base.scope for x in views[e[0]].evidence) for e in p):
+                continue                         # a hop with no evidence the question may see is never returned
             hops = tuple(_hop(e, views[e[0]], families.get(_proposition(views[e[0]]), [views[e[0]]])) for e in p)
+            if len(p) == 2 and p[1][1] not in groups.get(p[0][2], {p[0][2]}):      # crossed a link no one has accepted
+                note = f"{UNCONFIRMED}: {labels.get(p[0][2])} and {labels.get(p[1][1])} may be different"
+                hops = (hops[0], replace(hops[1], tier="unresolved", notes=hops[1].notes + (note,)))
             over = overlap_label(*[families.get(_proposition(views[h.claim_id]), []) for h in hops]) if len(hops) == 2 else None
             ends = (frozenset(groups.get(p[0][1], {p[0][1]})), frozenset(groups.get(p[-1][2], {p[-1][2]})))
             walked = (labels.get(p[0][1]),) + tuple(labels.get(e[2]) for e in p)
@@ -437,7 +465,7 @@ def retrieve(memory, question, contexts, budget=Budget(), believed_at=None):
         for path in ranked:
             for h in path.hops:
                 from_paths += list(h.observations) + by_proposition.get(_proposition(views[h.claim_id]), [])
-        from_paths = list(dict.fromkeys(from_paths))
+        from_paths = [o for o in dict.fromkeys(from_paths) if o in base.scope]  # an accepted identity never widens scope
         conversation = base.ids
         order = list(conversation[:budget.keep])
         rest = [i for i in interleave(from_paths, conversation[budget.keep:]) + from_paths + conversation]
@@ -445,9 +473,14 @@ def retrieve(memory, question, contexts, budget=Budget(), believed_at=None):
         chosen = order[:budget.k]
         info = _annotate(tx, sorted(set(chosen) | {o for p in ranked for h in p.hops for o in h.observations}), t, labels_of)
         ranked = [replace(p, hops=tuple(_qualified(h, info) for h in p.hops)) for p in ranked]
+        firm = {o for p in ranked for h in p.hops if h.tier != "unresolved" for o in h.observations}
+        for h in (h for p in ranked for h in p.hops if h.tier == "unresolved"):
+            for o in set(h.observations) - firm:             # reached only across an unaccepted link
+                info[o] = ("unresolved", tuple(dict.fromkeys(info[o][1] + tuple(n for n in h.notes if n.startswith(UNCONFIRMED)))), info[o][2])
         texts = {d["id"]: d for d in typeql.documents_for(tx, TEXT, [{"oid": o} for o in chosen])} if chosen else {}
     earlier = {i.observation_id: i.reasons for i in base.items}
     items = [Item(o, info[o][0], earlier.get(o, ()) + (("path",) if o in from_paths else ()), info[o][1], info[o][2],
                   texts[o]["text"], texts[o]["at"]) for o in chosen]
     return EvidenceSet(items, ranked, ambiguous, sorted(set(cut + (["k"] if len(order) > budget.k else []))),
-                       base.steps + [f"anchors: {len(named)} named, {len(seeded)} from seeds", f"paths: {len(ranked)}"])
+                       base.steps + [f"anchors: {len(named)} named, {len(seeded)} from seeds", f"paths: {len(ranked)}"],
+                       base.scope)

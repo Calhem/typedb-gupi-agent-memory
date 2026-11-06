@@ -159,7 +159,7 @@ def check(q, result, keys, memory):
 def severe(result):
     """SCORING.md's must-be-zero list, on what C returned."""
     bad = [f"{i.observation_id}: unresolved shown as accepted" for i in result.items
-           if i.tier == "accepted" and any(n.startswith(("not accepted", "pending")) for n in i.notes)]
+           if i.tier == "accepted" and any(n.startswith(("not accepted", "pending", paths.UNCONFIRMED)) for n in i.notes)]
     bad += [f"hop {h.claim_id} has no evidence" for p in result.paths for h in p.hops if not h.observations]
     return bad
 
