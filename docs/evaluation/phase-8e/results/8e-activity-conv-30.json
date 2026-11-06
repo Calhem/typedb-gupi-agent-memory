@@ -1,0 +1,580 @@
+{
+ "note": "Exploratory, developer-written, circular by construction. Not an evaluation.",
+ "conversation": "conv-30",
+ "claims": 67,
+ "activities": [
+  {
+   "id": "J1",
+   "kind": "project",
+   "mentions": 20,
+   "clear": 18,
+   "not_linked": 2,
+   "roles": {
+    "start": 1,
+    "plan": 2,
+    "engagement": 12,
+    "event": 2,
+    "reference": 1
+   },
+   "ambiguous": false,
+   "after_the_last_session": "unknown",
+   "trajectory": [
+    "unknown",
+    "engaged",
+    "unknown"
+   ],
+   "resumed": false,
+   "relationship": "established",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 18,
+    "with_a_formed_claim": 11,
+    "distinct_predicates": 16,
+    "boundaries": 1,
+    "boundaries_as_claims": 1
+   },
+   "word_links": {
+    "matched": 9,
+    "other_or_unassigned": 2
+   }
+  },
+  {
+   "id": "J1o",
+   "kind": "state",
+   "mentions": 8,
+   "clear": 7,
+   "not_linked": 1,
+   "roles": {
+    "engagement": 4,
+    "negated": 3
+   },
+   "ambiguous": true,
+   "after_the_last_session": "unknown",
+   "trajectory": [
+    "unknown",
+    "engaged",
+    "unknown"
+   ],
+   "resumed": false,
+   "relationship": "contradictory",
+   "unreconciled_flips": 1,
+   "existing_claims": {
+    "mentions": 7,
+    "with_a_formed_claim": 2,
+    "distinct_predicates": 2,
+    "boundaries": 0,
+    "boundaries_as_claims": 0
+   },
+   "word_links": {
+    "matched": 9,
+    "other_or_unassigned": 6
+   }
+  },
+  {
+   "id": "J2",
+   "kind": "practice",
+   "mentions": 10,
+   "clear": 10,
+   "not_linked": 0,
+   "roles": {
+    "engagement": 6,
+    "event": 3,
+    "plan": 1
+   },
+   "ambiguous": false,
+   "after_the_last_session": "unknown",
+   "trajectory": [
+    "unknown",
+    "engaged",
+    "unknown"
+   ],
+   "resumed": false,
+   "relationship": "established",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 10,
+    "with_a_formed_claim": 2,
+    "distinct_predicates": 3,
+    "boundaries": 0,
+    "boundaries_as_claims": 0
+   },
+   "word_links": {
+    "matched": 14,
+    "other_or_unassigned": 10
+   }
+  },
+  {
+   "id": "J3",
+   "kind": "job",
+   "mentions": 2,
+   "clear": 2,
+   "not_linked": 0,
+   "roles": {
+    "end": 1,
+    "reference": 1
+   },
+   "ambiguous": false,
+   "after_the_last_session": "ended",
+   "trajectory": [
+    "ended"
+   ],
+   "resumed": false,
+   "relationship": "ended",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 2,
+    "with_a_formed_claim": 0,
+    "distinct_predicates": 0,
+    "boundaries": 1,
+    "boundaries_as_claims": 0
+   },
+   "word_links": {
+    "matched": 0,
+    "other_or_unassigned": 0
+   }
+  },
+  {
+   "id": "J4",
+   "kind": "job",
+   "mentions": 1,
+   "clear": 1,
+   "not_linked": 0,
+   "roles": {
+    "start": 1
+   },
+   "ambiguous": false,
+   "after_the_last_session": "unknown",
+   "trajectory": [
+    "unknown"
+   ],
+   "resumed": false,
+   "relationship": "established",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 1,
+    "with_a_formed_claim": 1,
+    "distinct_predicates": 1,
+    "boundaries": 1,
+    "boundaries_as_claims": 1
+   },
+   "word_links": {
+    "matched": 1,
+    "other_or_unassigned": 0
+   }
+  },
+  {
+   "id": "J5",
+   "kind": "practice",
+   "mentions": 1,
+   "clear": 1,
+   "not_linked": 0,
+   "roles": {
+    "start": 1
+   },
+   "ambiguous": false,
+   "after_the_last_session": "unknown",
+   "trajectory": [
+    "unknown"
+   ],
+   "resumed": false,
+   "relationship": "established",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 1,
+    "with_a_formed_claim": 0,
+    "distinct_predicates": 0,
+    "boundaries": 1,
+    "boundaries_as_claims": 0
+   },
+   "word_links": {
+    "matched": 0,
+    "other_or_unassigned": 0
+   }
+  },
+  {
+   "id": "J6",
+   "kind": "event-prep",
+   "mentions": 1,
+   "clear": 1,
+   "not_linked": 0,
+   "roles": {
+    "engagement": 1
+   },
+   "ambiguous": false,
+   "after_the_last_session": "unknown",
+   "trajectory": [
+    "unknown"
+   ],
+   "resumed": false,
+   "relationship": "established",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 1,
+    "with_a_formed_claim": 1,
+    "distinct_predicates": 1,
+    "boundaries": 0,
+    "boundaries_as_claims": 0
+   },
+   "word_links": {
+    "matched": 1,
+    "other_or_unassigned": 0
+   }
+  },
+  {
+   "id": "J7",
+   "kind": "event-prep",
+   "mentions": 3,
+   "clear": 3,
+   "not_linked": 0,
+   "roles": {
+    "plan": 3
+   },
+   "ambiguous": true,
+   "after_the_last_session": "unknown",
+   "trajectory": [
+    "unknown"
+   ],
+   "resumed": false,
+   "relationship": "unknown",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 3,
+    "with_a_formed_claim": 0,
+    "distinct_predicates": 0,
+    "boundaries": 0,
+    "boundaries_as_claims": 0
+   },
+   "word_links": {
+    "matched": 0,
+    "other_or_unassigned": 0
+   }
+  },
+  {
+   "id": "J8",
+   "kind": "project",
+   "mentions": 4,
+   "clear": 4,
+   "not_linked": 0,
+   "roles": {
+    "engagement": 3,
+    "event": 1
+   },
+   "ambiguous": false,
+   "after_the_last_session": "unknown",
+   "trajectory": [
+    "unknown"
+   ],
+   "resumed": false,
+   "relationship": "established",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 4,
+    "with_a_formed_claim": 2,
+    "distinct_predicates": 2,
+    "boundaries": 0,
+    "boundaries_as_claims": 0
+   },
+   "word_links": {
+    "matched": 2,
+    "other_or_unassigned": 0
+   }
+  },
+  {
+   "id": "J9",
+   "kind": "practice",
+   "mentions": 2,
+   "clear": 1,
+   "not_linked": 1,
+   "roles": {
+    "engagement": 1
+   },
+   "ambiguous": false,
+   "after_the_last_session": "unknown",
+   "trajectory": [
+    "unknown"
+   ],
+   "resumed": false,
+   "relationship": "established",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 1,
+    "with_a_formed_claim": 1,
+    "distinct_predicates": 1,
+    "boundaries": 0,
+    "boundaries_as_claims": 0
+   },
+   "word_links": {
+    "matched": 1,
+    "other_or_unassigned": 0
+   }
+  },
+  {
+   "id": "G1",
+   "kind": "project",
+   "mentions": 5,
+   "clear": 5,
+   "not_linked": 0,
+   "roles": {
+    "event": 3,
+    "plan": 1,
+    "engagement": 1
+   },
+   "ambiguous": true,
+   "after_the_last_session": "unknown",
+   "trajectory": [
+    "unknown"
+   ],
+   "resumed": false,
+   "relationship": "established",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 5,
+    "with_a_formed_claim": 3,
+    "distinct_predicates": 3,
+    "boundaries": 0,
+    "boundaries_as_claims": 0
+   },
+   "word_links": {
+    "matched": 8,
+    "other_or_unassigned": 7
+   }
+  },
+  {
+   "id": "G2",
+   "kind": "project",
+   "mentions": 9,
+   "clear": 7,
+   "not_linked": 2,
+   "roles": {
+    "engagement": 3,
+    "start": 1,
+    "event": 1,
+    "reference": 2
+   },
+   "ambiguous": true,
+   "after_the_last_session": "unknown",
+   "trajectory": [
+    "unknown",
+    "engaged",
+    "unknown"
+   ],
+   "resumed": false,
+   "relationship": "established",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 7,
+    "with_a_formed_claim": 4,
+    "distinct_predicates": 5,
+    "boundaries": 1,
+    "boundaries_as_claims": 0
+   },
+   "word_links": {
+    "matched": 8,
+    "other_or_unassigned": 3
+   }
+  },
+  {
+   "id": "G3",
+   "kind": "job",
+   "mentions": 2,
+   "clear": 2,
+   "not_linked": 0,
+   "roles": {
+    "end": 1,
+    "reference": 1
+   },
+   "ambiguous": false,
+   "after_the_last_session": "ended",
+   "trajectory": [
+    "unknown",
+    "ended"
+   ],
+   "resumed": false,
+   "relationship": "ended",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 2,
+    "with_a_formed_claim": 2,
+    "distinct_predicates": 2,
+    "boundaries": 1,
+    "boundaries_as_claims": 1
+   },
+   "word_links": {
+    "matched": 0,
+    "other_or_unassigned": 0
+   }
+  },
+  {
+   "id": "G4",
+   "kind": "practice",
+   "mentions": 5,
+   "clear": 5,
+   "not_linked": 0,
+   "roles": {
+    "engagement": 4,
+    "event": 1
+   },
+   "ambiguous": false,
+   "after_the_last_session": "unknown",
+   "trajectory": [
+    "unknown"
+   ],
+   "resumed": false,
+   "relationship": "established",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 5,
+    "with_a_formed_claim": 1,
+    "distinct_predicates": 1,
+    "boundaries": 0,
+    "boundaries_as_claims": 0
+   },
+   "word_links": {
+    "matched": 3,
+    "other_or_unassigned": 3
+   }
+  },
+  {
+   "id": "G5",
+   "kind": "practice",
+   "mentions": 3,
+   "clear": 3,
+   "not_linked": 0,
+   "roles": {
+    "past": 1,
+    "event": 1,
+    "reference": 1
+   },
+   "ambiguous": false,
+   "after_the_last_session": "ended",
+   "trajectory": [
+    "unknown",
+    "ended"
+   ],
+   "resumed": false,
+   "relationship": "ended",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 3,
+    "with_a_formed_claim": 1,
+    "distinct_predicates": 1,
+    "boundaries": 1,
+    "boundaries_as_claims": 1
+   },
+   "word_links": {
+    "matched": 1,
+    "other_or_unassigned": 0
+   }
+  },
+  {
+   "id": "G6",
+   "kind": "practice",
+   "mentions": 2,
+   "clear": 1,
+   "not_linked": 1,
+   "roles": {
+    "past": 1
+   },
+   "ambiguous": true,
+   "after_the_last_session": "ended",
+   "trajectory": [
+    "unknown",
+    "ended"
+   ],
+   "resumed": false,
+   "relationship": "ended",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 1,
+    "with_a_formed_claim": 1,
+    "distinct_predicates": 1,
+    "boundaries": 1,
+    "boundaries_as_claims": 1
+   },
+   "word_links": {
+    "matched": 0,
+    "other_or_unassigned": 0
+   }
+  },
+  {
+   "id": "G7",
+   "kind": "job",
+   "mentions": 3,
+   "clear": 2,
+   "not_linked": 1,
+   "roles": {
+    "event": 1,
+    "plan": 1
+   },
+   "ambiguous": false,
+   "after_the_last_session": "unknown",
+   "trajectory": [
+    "unknown"
+   ],
+   "resumed": false,
+   "relationship": "unknown",
+   "unreconciled_flips": 0,
+   "existing_claims": {
+    "mentions": 2,
+    "with_a_formed_claim": 1,
+    "distinct_predicates": 1,
+    "boundaries": 0,
+    "boundaries_as_claims": 0
+   },
+   "word_links": {
+    "matched": 1,
+    "other_or_unassigned": 0
+   }
+  }
+ ],
+ "questions": {
+  "began": {
+   "questions": 6,
+   "support_turns": 3,
+   "raw_top10": 2,
+   "raw_top100": 3,
+   "claim_word_match": 1,
+   "claim_word_foreign": 15
+  },
+  "changed": {
+   "questions": 6,
+   "support_turns": 41,
+   "raw_top10": 13,
+   "raw_top100": 37,
+   "claim_word_match": 16,
+   "claim_word_foreign": 15
+  },
+  "events": {
+   "questions": 6,
+   "support_turns": 7,
+   "raw_top10": 0,
+   "raw_top100": 4,
+   "claim_word_match": 3,
+   "claim_word_foreign": 15
+  },
+  "evidence": {
+   "questions": 6,
+   "support_turns": 41,
+   "raw_top10": 14,
+   "raw_top100": 32,
+   "claim_word_match": 16,
+   "claim_word_foreign": 15
+  },
+  "involved": {
+   "questions": 2,
+   "support_turns": 30,
+   "raw_top10": 1,
+   "raw_top100": 10,
+   "claim_word_match": 14,
+   "claim_word_foreign": 25
+  },
+  "still": {
+   "questions": 8,
+   "support_turns": 36,
+   "raw_top10": 14,
+   "raw_top100": 35,
+   "claim_word_match": 16,
+   "claim_word_foreign": 21
+  }
+ }
+}
