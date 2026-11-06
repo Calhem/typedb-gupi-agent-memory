@@ -33,7 +33,7 @@ FROZEN = common.ROOT / "benchmarks" / "phase8c-frozen.json"
 KS = tuple(phase8c.CONFIG["k"])
 SYSTEMS = ("A-keyword", "B-conversational", "C-claim-paths", "D-name-control", "C+-unresolved-links")
 PACK_FORMAT = "gupi.phase8c-pack/1"
-PACK_CATEGORIES = ("multi-hop", "temporal", "provenance", "identity")
+PACK_CATEGORIES = ("multi-hop", "temporal", "provenance", "identity", "relationship", "conflict", "historical-change", "activity")
 CAPITAL = re.compile(r"\b[A-Z][a-z]+\b")
 MID_SENTENCE = re.compile(r"(?<=[a-z,;:] )[A-Z][a-z]+\b")
 

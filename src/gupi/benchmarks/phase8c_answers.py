@@ -49,6 +49,29 @@ def memories(items, qualified):
     return "\n".join(lines)
 
 
+CONDITIONS = ("raw", "raw+claims", "raw+claims+qualifications")
+
+
+def condition_block(items, facts, condition, max_chars):
+    """One evidence block for an answer condition (docs/evaluation/phase-8d/evaluation-protocol.md). All conditions share one
+    character budget and one raw ranking, so structure pays for itself: every structured line displaces raw text from the
+    end. `items`: (date, speaker, text, notes), best first. `facts`: (sentence, notes), best first."""
+    if condition not in CONDITIONS:
+        raise ValueError(f"condition must be one of {CONDITIONS}")
+    with_notes = condition == CONDITIONS[2]
+    lines = []
+    if condition != "raw":
+        lines = [f"Fact: {text}" + (f" ({'; '.join(notes)})" if with_notes and notes else "") for text, notes in facts]
+    lines += memories(items, with_notes).split("\n") if items else []
+    kept, used = [], 0
+    for line in lines:
+        if used + len(line) + 1 > max_chars:
+            break
+        kept.append(line)
+        used += len(line) + 1
+    return "\n".join(kept)
+
+
 def answer_prompt(template, question, people):
     """`people`: exactly the two speakers as (name, memories), the protocol's shape."""
     (a, ma), (b, mb) = people

@@ -54,6 +54,22 @@ def test_only_the_notes_differ_between_plain_and_qualified():
     assert a.memories(items, True) == "[2023-05-08] Juno: Bram left. (unresolved: identity not confirmed)"
 
 
+def test_conditions_share_one_budget_and_differ_only_as_intended():
+    items = [("2023-05-08", "Juno", "Bram left in May.", ("sources disagree on the date",)), ("2023-05-09", "Juno", "x" * 40, ())]
+    facts = [("Bram left Fenwick Labs.", ("sources disagree on the date",))]
+    raw = a.condition_block(items, facts, "raw", 500)
+    claims = a.condition_block(items, facts, "raw+claims", 500)
+    full = a.condition_block(items, facts, "raw+claims+qualifications", 500)
+    assert "Fact:" not in raw and "disagree" not in raw
+    assert "Fact: Bram left Fenwick Labs." in claims and "disagree" not in claims
+    assert full.count("sources disagree") == 2
+    tight = 90
+    assert all(len(a.condition_block(items, facts, c, tight)) <= tight for c in a.CONDITIONS)
+    assert "x" * 40 not in a.condition_block(items, facts, "raw+claims", tight)      # structure displaces raw text
+    with pytest.raises(ValueError):
+        a.condition_block(items, facts, "other", 10)
+
+
 def test_prompts_fill_every_field():
     out = a.answer_prompt(TEMPLATE, "Why?", (("A", "m1"), ("B", "m2")))
     assert "{{" not in out and "A: m1" in out and "Q: Why?" in out

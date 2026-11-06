@@ -30,6 +30,8 @@ modes yet; keep the code open to them without building them.
 - Extractors return time phrases, never dates; the validator reads them with `gupi.timeexpr`.
 - Generic `statement` claims are provisional; prefer typed claims; no schema evolution from extraction.
 - Never merge identities, resolve conflicts or apply supersessions automatically: suggest, then review.
+- An event happened; it does not hold. `event-statement` has an occurrence window and no valid time, never enters spell
+  assembly, and `Memory.ask` refuses it (ADR 0010). "my" is the author only where code verifies a stated relation to a name.
 - A claim's FALSE outside its period counts only against the same spell (ADR 0006); start and end
   from different claims are assembled into one spell, labelled (ADR 0007).
 - Retrieval filters in TypeDB (believed_claim / hypothesis_claim functions, candidate queries); never add a

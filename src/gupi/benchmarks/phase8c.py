@@ -149,7 +149,10 @@ def graph_report(memory, observations, gold=frozenset()):
     linking = [c for c in claims if len(players[c.id]) >= 2]
     across = [c for c in claims if any(len(by_referent[r]) > 1 for r in players[c.id])]
     evidenced = {e.observation_id for c in claims for e in c.evidence}
-    return {"claims": len(claims), "referents": len(parent), "linking_claims": len(linking),
+    events = [c for c in claims if c.type == "event-statement"]
+    return {"claims": len(claims), "events": len(events), "dated_events": sum(1 for c in events if c.occurred[0]),
+            "derived_dates": sum(1 for c in events if c.values.get("occurred-at-basis") == "derived"),
+            "referents": len(parent), "linking_claims": len(linking),
             "linking_share": round(len(linking) / len(claims), 4) if claims else 0, "components": len(by_component),
             "largest_component_share": round(biggest / len(claims), 4) if claims else 0,
             "claims_reaching_another_session": len(across),

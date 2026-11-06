@@ -8,15 +8,19 @@ Write invented chat conversations, and questions about them, to test long-term m
 real people or organisations, and no text from existing benchmarks.
 
 ## What to produce
-Between 8 and 15 sessions, spread over several simulated months, between a few recurring speakers, and at least **30
+Between 8 and 15 sessions, spread over several simulated months, between a few recurring speakers, and at least **60
 questions**, answerable only by connecting information:
 | Category | At least | What it should test |
 |---|---:|---|
-| `provenance` | 10 | who said it, who disputes it, what is second-hand rumour, what was alleged but never established |
-| `identity` | 10 | two different people with one name; a nickname; someone changing jobs; the same person referred to differently in separate sessions |
-| `temporal` | 10 | what was true when; what stopped being true; corrections; a retraction; whether two things overlapped |
+| `relationship` | 10 | who is related to whom, including people never named ("my sister"), and two different people sharing a name |
+| `temporal` | 10 | what was true when; the order things happened in; whether two things overlapped |
+| `conflict` | 10 | sources that disagree; a correction; a retraction; which version still stands |
+| `historical-change` | 10 | a job, home or circumstance that changed; what was true before and after; what stopped being true |
+| `provenance` | 10 | who said it, what is second-hand rumour, what was alleged but never established, what is merely uncertain |
+| `activity` | 10 | an ongoing project or interest: how it started, progressed, paused or ended, across sessions |
 
 Prefer questions where looking up a name is not enough. Include some whose right answer is "unknown" or "disputed".
+Write the conversations the way people talk: mostly first person, few full names, and plenty of "my sister" and "the project".
 
 ## Format
 One JSON file:

@@ -51,7 +51,7 @@ for again. At most one prompt revision is planned, after Gate 1, and never after
 All of these come from reading the code. None is a measured result.
 | Risk | Why | What would show it |
 |---|---|---|
-| **Few links** | a claim only makes a graph edge with two referents; "I went to a support group" has one | `linking_share` |
+| **Few links** | a claim only makes a graph edge with two referents; "I went to a yoga class" has one | `linking_share` |
 | **One-time events withheld** | "I ran a race last week" reads as a dated event, and formation withholds it (known since Phase 8A) | `withheld_for_time` |
 | **"I" stops assertions** | the parser finds "I" by substring, so "I" inside "It" or "Italy" can make a span ambiguous. 20% of development sentences containing "I" (107 of 527) could hit this if quoted whole | `ambiguous-span` |
 | **"my sister" stops assertions** | vague references are never resolved, by design | `ambiguous-reference` |

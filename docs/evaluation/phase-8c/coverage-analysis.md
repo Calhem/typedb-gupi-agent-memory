@@ -15,7 +15,7 @@ lose more. These are not independently verified: 100 formed claims are sampled p
 | **Formed** | **123** (44%) | 5 | |
 | Stopped: another pronoun or vague phrase ("it", "they") | 25 | 2 | identity resolution |
 | Stopped: no stated subject ("Went to Oslo") | 27 | 2 | parsing |
-| Stopped: "my" or "our" ("my kids") | 26 | 2 | identity resolution |
+| Stopped: "my" or "our" ("my sister") | 26 | 2 | identity resolution |
 | Stopped: "we" | 19 | 2 | identity resolution |
 | Withheld: a dated event | 22 | 1 | formation policy |
 | Withheld: a plan or hypothetical | 19 | 0 | formation policy, **correct** |
@@ -27,7 +27,7 @@ lose more. These are not independently verified: 100 formed claims are sampled p
 
 **The most important column is the third.** Even if every stop were removed, only about 19 assertions of 279 would link two
 things. **Sparse links are mainly a property of the conversations, not of the rules.** Across 788 turns the extractor found
-22 distinct named participants. People talk about "pottery" and "the adoption agency", which the contract rightly keeps as
+22 distinct named participants. People talk about hobbies, plans and things that happened, which the contract rightly keeps as
 descriptive text.
 
 ## By construct
@@ -59,7 +59,7 @@ Each needs the owner's decision, except P1, which is done. None removes a protec
 |---|---|---|---|---:|
 | **P1** | whole-word participant matching | up to 12% of turns could have hit this | none: Stage 3B's replies are identical by hash | **done** |
 | **P2** | "My sister Kate": allow `my` as the author, only in a stated relation to a **named** person, in the author's own direct words | the kinship link itself | low: mirrors "I" | **do** |
-| **P3** | "my kids" as a descriptor referent, anchored to the author, labelled as written, tier `qualified` | up to 26, and the same thing across sessions | medium: two sisters could share one referent, so never `accepted` | **do, after P2** |
+| **P3** | "my sister" as a descriptor referent, anchored to the author, labelled as written, tier `qualified` | up to 26, and the same thing across sessions | medium: two sisters could share one referent, so never `accepted` | **do, after P2** |
 | **P4** | event claims, as Phase 8A option C: additive migration, own time window, never in spell assembly | 22, and dated facts | low: fills a slot the schema left open | **do** |
 | **P5** | implicit author for a verb-initial fragment, verified by code, tier `qualified` | up to 27 | medium: an inference, so it can't be `accepted` | decide |
 | | Keep stopped: other pronouns, "we", plans, inference | | weakening these is how false memories start | **no change** |
