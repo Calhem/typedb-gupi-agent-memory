@@ -226,6 +226,49 @@ def correction_share(result):
     return round((nb - result["aligned"] + result["merged_by_second"]) / nb, 4) if nb else None
 
 
+# --- post-hoc, reported apart from the frozen thresholds ------------------------------------------------------------
+
+def as_activities(ledger, said_at, speakers):
+    """A ledger as the 8E model reads it, using clear mentions only, so states come from the classifier."""
+    from gupi.benchmarks.phase8e_activity import Activity, Mention
+    out = []
+    for a in ledger.get("activities", ()):
+        mentions = tuple(Mention(m["turn"], m["quote"], m["role"], said_at[m["turn"]], m.get("link", "clear"), m.get("time"))
+                         for m in a.get("mentions", ()) if m.get("turn") in said_at and speakers[m["turn"]] == a.get("person"))
+        out.append(Activity(a["id"], a["person"], "", mentions))
+    return out
+
+
+def computed_states(ledger, said_at, speakers, end):
+    """{activity: state} from the unchanged classifier and nothing the reader said about the ending."""
+    from gupi.benchmarks.phase8e_activity import status, unreconciled
+    return {a.id: ("contradictory" if unreconciled(a) else status(a, end)[0]) for a in as_activities(ledger, said_at, speakers)}
+
+
+def large_only(ledger, least):
+    """The same ledger with only its activities of at least `least` mentions."""
+    return dict(ledger, activities=[a for a in ledger.get("activities", ()) if len(a.get("mentions", ())) >= least])
+
+
+def post_hoc(ledgers, said_at, speakers, texts, end, threshold=0.5):
+    states = {n: computed_states(l, said_at, speakers, end) for n, l in ledgers.items()}
+    out = {"note": "Post-hoc. Ideas formed after seeing the results; not part of the frozen decision.", "computed_final_states": {}, "negated_mentions": {},
+           "classifier_contradictions": {n: sum(v == "contradictory" for v in s.values()) for n, s in states.items()}, "large_activities_only": {}}
+    for n, l in ledgers.items():
+        out["computed_final_states"][n] = dict(Counter(states[n].values()))
+        out["negated_mentions"][n] = sum(m.get("role") == "negated" for a in l.get("activities", ()) for m in a.get("mentions", ()))
+    for x, y in combinations(ledgers, 2):
+        ux, uy = units(ledgers[x], texts, speakers), units(ledgers[y], texts, speakers)
+        aligned, _ = align(ux, uy, match(ux, uy), threshold)
+        pairs = [(states[x][i], states[y][j]) for i, j in aligned]
+        r = compare(large_only(ledgers[x], 3), large_only(ledgers[y], 3), texts, speakers, threshold)
+        out["large_activities_only"][f"{x}|{y}"] = {k: r[k] for k in ("activities", "aligned", "activity_f1", "adjusted_rand", "bcubed", "mention_f1")}
+        out.setdefault("computed_state_agreement", {})[f"{x}|{y}"] = {
+            "aligned": len(pairs), "agree": round(sum(a == b for a, b in pairs) / len(pairs), 4) if pairs else None,
+            "kappa": kappa([a for a, _ in pairs], [b for _, b in pairs])}
+    return out
+
+
 def load_texts(conversation):
     from gupi.benchmarks import phase8c
     sample = phase8c.samples([conversation])[0]
@@ -240,6 +283,7 @@ def main(argv=None):
     p.add_argument("--ledgers", nargs="+", help="NAME=FILE; the first two are the readers")
     p.add_argument("--conversation", default="conv-30")
     p.add_argument("--json")
+    p.add_argument("--post-hoc", help="write the post-hoc analysis here")
     args = p.parse_args(argv)
     texts, speakers = load_texts(args.conversation)
     last = max((k.split(":")[0] for k in texts), key=lambda s: int(s[1:]))
@@ -253,7 +297,7 @@ def main(argv=None):
     for n, l in ledgers.items():
         bad, total, reasons = problems(l, texts, speakers)
         out["evidence"][n] = {"mentions": total, "invalid": bad, "valid_share": round(1 - bad / total, 4) if total else None, "why": reasons}
-        out["invented_continuity"][n] = invented_continuity(l, last)
+        out["invented_continuity"][n] = len(invented_continuity(l, last))      # a count: readers' ids may quote the text
     for x, y in combinations(names, 2):
         out["pairs"][f"{x}|{y}"] = compare(ledgers[x], ledgers[y], texts, speakers)
     for n in names[2:]:
@@ -261,6 +305,14 @@ def main(argv=None):
     print(json.dumps(out, indent=1))
     if args.json:
         Path(args.json).write_text(json.dumps(out, indent=1) + "\n")
+    if args.post_hoc:
+        from datetime import timedelta
+
+        from gupi.benchmarks import phase8c
+        requests = phase8c.requests(phase8c.samples([args.conversation])[0])
+        said_at = {o.record_key.split(":", 1)[1]: o.observed_at for o, _, _ in requests}
+        extra = post_hoc(ledgers, said_at, speakers, texts, max(said_at.values()) + timedelta(days=1))
+        Path(args.post_hoc).write_text(json.dumps(extra, indent=1) + "\n")
     return 0
 
 

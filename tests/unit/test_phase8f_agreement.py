@@ -85,3 +85,15 @@ def test_consensus_scores_only_what_both_readers_agree_on():
 
 def test_correction_share_counts_what_would_have_to_change():
     assert g.correction_share({"activities": (4, 4), "aligned": 3, "merged_by_second": 1}) == 0.5
+
+
+def test_a_computed_state_ignores_what_the_reader_said_about_the_ending():
+    from datetime import datetime, timedelta, timezone
+    said = {k: datetime(2023, 1, 1, tzinfo=timezone.utc) + timedelta(days=i * 30) for i, k in enumerate(TEXT)}
+    still = {"activities": [activity("a", mention("D2:1", "I sail on Sundays"), state="engaged")]}
+    end = max(said.values()) + timedelta(days=1)
+    assert g.computed_states(still, said, WHO, end) == {"a": "unknown"}
+
+
+def test_only_large_activities_are_kept_when_asked():
+    assert [a["id"] for a in g.large_only(ONE, 3)["activities"]] == ["a"]
