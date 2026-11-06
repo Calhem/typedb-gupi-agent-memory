@@ -19,6 +19,13 @@
 
 **Isolation.** Each agent gets its own folder with only its instructions and conversation (and, for a judge, anonymous cases), uses only Read and Write, and is told to open nothing else. Agents automatically receive my memory index, so the line on this project is neutralised first and restored after. Tool calls are audited from transcripts. Any access outside its folder invalidates that run.
 
+## Amendment, before any score was seen
+**The first run is invalid, and was never scored.** The audit found that all five agents received my memory index with its line on this project intact, including the 8F conclusion, although I had neutralised the file first. Subagents get a copy cached by the parent session. A worktree does not avoid it, and a separate process isn't signed in. Their ledgers were checked for evidence validity only, then set aside privately and unscored. This also corrects 8F's report: neutralising the file had no effect there either. Those agents were clean because their cached copy was older and held no conclusion, which I've verified from their transcripts.
+
+**The rerun** uses fresh app sessions, which read the neutralised file from disk, with the same instructions, models and folders. Each session's context is audited for the line. If any session received it, that run is invalid too.
+
+**One thing was learned from the invalid run, and is fixed now.** One ledger wrote turn ids with the conversation name in front. The specification does not forbid that, though its example omits it. So: the frozen check is reported on every ledger exactly as produced. If a turn id carries exactly the `conv-NN:` prefix of its own conversation, a second check removes only that prefix, from a private copy, and scoring and the decision rule use that copy. It identifies the same turn, and every quote is still checked word for word. The raw figure is reported beside it. Nothing else is repaired. The specification stays unchanged.
+
 ## Measures
 All 8F measures, by the unchanged scorer. False separations are the agreed links an automated ledger fails to recover; false merges are agreed separations it breaks. Neither is called accuracy.
 
