@@ -1,0 +1,18 @@
+# Dated one-time events (Phase 8D.2; docs/evaluation/phase-8a/03-schema-and-temporal.md §3, option C). Additive only: one
+# concrete type under the `event` slot core/0001 left abstract, and one attribute. No existing type, attribute or data
+# changes, so no existing claim, id or proposition key changes.
+#
+# An event happened at some instant inside [occurred-at-earliest, occurred-at-latest). It has no valid time: it never
+# "holds", so it can never enter spell assembly. Both bounds are absent for an event stated with no date; none is invented.
+# When something was SAID is the observation's time, which is a separate thing.
+#
+# - occurred-at-basis: "stated" (the text gives the date) or "derived" (read from the time the message was written, as in
+#   "last week" or a month with no year).
+# - Roles and predicate mirror `statement`, so one extractor contract covers both.
+
+define
+  attribute occurred-at-basis, value string @values("stated", "derived");
+  relation event-statement sub event,
+    relates subject @card(1..), relates object @card(0..),
+    owns predicate-text, owns object-text, owns occurred-at-basis;
+  referent plays event-statement:subject, plays event-statement:object;

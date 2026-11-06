@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from typedb.driver import TransactionType
 
 from gupi import ids, migrations, retrieval, typeql
+from gupi.formation.candidate import not_an_event
 from gupi.records import VERDICTS, Batch, Claim, proposition_key
 from gupi.temporal import Answer
 from gupi.typedb.connection import connect, transaction
@@ -499,6 +500,7 @@ class Memory:
         """
         from gupi.answering import evaluate
         from gupi.answering_v2 import classify, contribution
+        not_an_event(claim_type)
         if semantics not in SEMANTICS:
             raise ValueError(f"semantics must be one of {SEMANTICS}")
         self._check("claim", claim_type)
@@ -555,6 +557,11 @@ class Memory:
         """Relationship-aware evidence for a free-text question within these contexts (gupi.paths)."""
         from gupi import paths
         return paths.retrieve(self, question, contexts, budget or paths.Budget(), believed_at)
+
+    def events(self, referent_id, believed_at=None):
+        """What happened to this referent, and when (gupi.events)."""
+        from gupi import events
+        return events.timeline(self, referent_id, believed_at)
 
     def suggest_identities(self, record=True):
         """Propose identity claims (as hypotheses, never merged until accepted). Returns the suggestions."""

@@ -14,6 +14,7 @@ from typedb.driver import TransactionType
 
 from gupi import retrieval, typeql
 from gupi.answering import evaluate
+from gupi.formation.candidate import not_an_event
 from gupi.status import Status
 from gupi.temporal import Answer
 from gupi.typedb.connection import transaction
@@ -146,6 +147,7 @@ def _cite(claim, verdict):
 def answer(memory, q: Question):
     """Answer a structured question. See Result for what comes back."""
     memory._check("claim", q.claim_type)
+    not_an_event(q.claim_type)
     if q.semantics not in ("v1", "v2"):
         raise ValueError("semantics must be 'v1' or 'v2'")
     t = q.believed_at or memory.clock()

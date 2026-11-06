@@ -14,6 +14,8 @@ the candidate to review instead of forming it. It never repairs a candidate and 
 
 import re
 
+from gupi.formation.candidate import EVENT_TYPE
+
 # words that may stand between a predicate and its direct object ("accessed the network")
 DETERMINERS = frozenset({"", "the", "a", "an"})
 POSSESSIVE = re.compile(r"\s*['’]s\b")
@@ -22,7 +24,7 @@ POSSESSIVE = re.compile(r"\s*['’]s\b")
 def statement_problems(candidate):
     """Reasons this statement's role structure cannot be verified against its passage; [] if it can (or if the
     candidate is not a generic statement)."""
-    if candidate.claim_type != "statement":
+    if candidate.claim_type not in ("statement", EVENT_TYPE):
         return []
     passage, base = candidate.passage.text, candidate.passage.start
     values = dict(candidate.values)

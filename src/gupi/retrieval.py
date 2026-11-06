@@ -68,6 +68,7 @@ class ClaimView:
     valid_from_basis: str | None = None   # core/0011, for claims formed from candidates
     commitment: str | None = None
     attribution_mode: str | None = None
+    occurred: tuple = (None, None)        # core/0013: when an event happened, [earliest, latest); never a valid time
     candidate_id: str | None = None
 
     @property
@@ -133,6 +134,7 @@ def _view(doc):
         values={k: v for k, v in a.items() if k not in CORE_ATTRIBUTES},
         valid=ValidTime(t(a.get("valid-from-earliest")), t(a.get("valid-from-latest")),
                         t(a.get("valid-to-earliest")), t(a.get("valid-to-latest"))),
+        occurred=(t(a.get("occurred-at-earliest")), t(a.get("occurred-at-latest"))),
         recorded_at=t(a["recorded-at"]),
         time_precision=a.get("time-precision"),
         valid_to_basis=a.get("valid-to-basis"),

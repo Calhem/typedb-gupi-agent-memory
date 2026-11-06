@@ -20,19 +20,23 @@ from dataclasses import dataclass, field
 from gupi import ids, timeexpr
 from gupi.formation import rules_v2
 from gupi.formation.candidate import (
-    ATTRIBUTION_MODES, COMMITMENTS, IR_VERSION_1_1, MODALITIES, NULLABLE_TARGET_KINDS, POLARITIES, Attribution,
+    ATTRIBUTION_MODES, COMMITMENTS, EVENT_TYPE, IR_VERSION_1_1, MODALITIES, NULLABLE_TARGET_KINDS, POLARITIES, Attribution,
     Candidate, CandidateSet, Participant, Passage, Relation, TimeEvidence,
 )
 from gupi.formation.rules_v21 import PRONOUNS
 from gupi.formation.validate import validate
 
 METHOD = "model:candidate-v1.1"          # emits gupi.candidate/1.1 (Stage 2B)
-RESPONSE_FORMAT = "gupi.model-response/1.1"
-RESPONSE_FORMATS = ("gupi.model-response/1", RESPONSE_FORMAT)   # format 1 recordings stay readable
-RELATIONS = ("employment", "reporting", "statement")
+RESPONSE_FORMAT_1_1 = "gupi.model-response/1.1"
+RESPONSE_FORMAT = "gupi.model-response/1.2"                     # adds the relation "event" (Phase 8D.2)
+RESPONSE_FORMATS = ("gupi.model-response/1", RESPONSE_FORMAT_1_1, RESPONSE_FORMAT)   # earlier recordings stay readable
+RELATIONS = ("employment", "reporting", "statement", "event")
+EARLIER_RELATIONS = RELATIONS[:3]
+CLAIM_TYPES = {"event": EVENT_TYPE}                             # otherwise a relation is named after its claim type
 KINDS = ("person", "organization", "unclassified")          # participant kinds (referent types)
 CLAIMANT_KINDS = {"gupi.model-response/1": {"person": "person", "organization": "organisation", "unclassified": "unknown"},
-                  "gupi.model-response/1.1": {"person": "person", "organisation": "organisation", "unknown": "unknown"}}
+                  RESPONSE_FORMAT_1_1: {"person": "person", "organisation": "organisation", "unknown": "unknown"},
+                  RESPONSE_FORMAT: {"person": "person", "organisation": "organisation", "unknown": "unknown"}}
 TIME_KINDS = ("start", "end", "holds-since", "holds-at")
 CORRECTIONS = ("corrects", "retracts", "updates", "contradicts")
 PROBLEM_KINDS = ("unsupported-domain", "ambiguous-reference", "insufficient-evidence")
@@ -96,6 +100,10 @@ NOT_A_NAME = frozenset({"I", "Monday", "Tuesday", "Wednesday", "Thursday", "Frid
                         "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"})
 
 FIRST_PERSON_POSSESSIVE = frozenset({"My", "my"})
+# Phase 8D.2: a word for a condition is not something that happened. "was CTO in March" stays a state.
+FUTURE_TIME = re.compile(r"\b(?:next|tomorrow|upcoming|coming|later this)\b", re.I)
+STATIVE = re.compile(r"(?:is|are|am|was|were|be|been|being|has|have|had|live[sd]?|living|works?|worked|working|knows?|knew|"
+                     r"loves?|loved|likes?|liked|wants?|wanted|feels?|felt|owns?|owned|believes?|believed|lives)\b", re.I)
 
 TOP = {"format", "outcome", "assertions", "problems"}
 ASSERTION_REQUIRED = {"evidence", "relation", "participants", "times", "polarity", "modality", "commitment",
@@ -210,7 +218,7 @@ def _parse(response):
         where = f"assertion {n}"
         _keys(a, ASSERTION_REQUIRED | ASSERTION_OPTIONAL, ASSERTION_REQUIRED, where)
         _text(a["evidence"], f"{where} evidence")
-        _enum(a["relation"], RELATIONS, f"{where} relation")
+        _enum(a["relation"], RELATIONS if response["format"] == RESPONSE_FORMAT else EARLIER_RELATIONS, f"{where} relation")
         _enum(a["polarity"], POLARITIES, f"{where} polarity")
         _enum(a["modality"], MODALITIES, f"{where} modality")
         _enum(a["commitment"], COMMITMENTS, f"{where} commitment")
@@ -354,7 +362,7 @@ def _candidate(a, n, obs, earlier, report, fmt, alleged=()):
             raise _Stop("grounding-failure", "a title belongs to an employment")
         _find(text, a["title"], s, e, "title")
         values.append(("job-title", a["title"]))
-    if a["relation"] == "statement":
+    if a["relation"] in ("statement", "event"):
         if not a.get("predicate"):
             raise _Stop("grounding-failure", "a statement needs a predicate")
         values.append(("predicate-text", a["predicate"].strip()))
@@ -364,6 +372,8 @@ def _candidate(a, n, obs, earlier, report, fmt, alleged=()):
             _find(text, a["object_text"], s, e, "object text")
             values.append(("object-text", a["object_text"]))
 
+    if a["relation"] == "event" and STATIVE.match(a["predicate"].strip()):
+        raise _Stop("cue-conflict", f"{a['predicate']!r} describes a state, not something that happened")
     times = []
     for t in a["times"]:
         ts, te = _find(text, t["text"], s, e, "time")
@@ -422,7 +432,10 @@ def _candidate(a, n, obs, earlier, report, fmt, alleged=()):
 
     attribution = _attribution(at, obs, *at_span, n, report, fmt)
     relations = _correction(a, n, obs, participants, times, earlier, report)
-    return Candidate(a["relation"], passage, tuple(participants), tuple(sorted(values)), tuple(times), a["polarity"],
+    if a["relation"] == "event" and any(FUTURE_TIME.search(t.phrase) or (t.earliest is not None and t.earliest >= obs.observed_at)
+                                        for t in times):
+        raise _Stop("cue-conflict", "an event dated after the message has not happened")
+    return Candidate(CLAIM_TYPES.get(a["relation"], a["relation"]), passage, tuple(participants), tuple(sorted(values)), tuple(times), a["polarity"],
                      a["modality"], commitment, attribution, relations, "explicit", None)
 
 
@@ -508,7 +521,7 @@ def _correction(a, n, obs, participants, times, earlier, report):
         raise _Stop("grounding-failure", f"correction cue {corr['cue']!r} is not in the message")
     roles = sorted((p.role, p.surface.casefold()) for p in participants)
     kinds = {t.kind for t in times} & {"start", "end", "holds-since"}
-    matches = [c for c in earlier if c.claim_type == a["relation"]
+    matches = [c for c in earlier if c.claim_type == CLAIM_TYPES.get(a["relation"], a["relation"])
                and sorted((p.role, p.surface.casefold()) for p in c.participants) == roles
                and (not kinds or kinds & {t.kind for t in c.times})]
     if len(matches) == 1:

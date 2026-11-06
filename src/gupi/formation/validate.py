@@ -10,7 +10,7 @@ from dataclasses import dataclass
 
 from gupi import ids
 from gupi.formation.candidate import (
-    ATTRIBUTION_MODES, BASES, CLAIMANT_KINDS, COMMITMENTS, IR_VERSION, IR_VERSION_1_1, IR_VERSIONS, MODALITIES,
+    ATTRIBUTION_MODES, BASES, CLAIMANT_KINDS, COMMITMENTS, EVENT_TYPE, IR_VERSION, IR_VERSION_1_1, IR_VERSIONS, MODALITIES,
     NULLABLE_TARGET_KINDS, POLARITIES, PRECISIONS, RELATION_KINDS, TIME_KINDS, TRANSMISSION,
 )
 from gupi.temporal import ValidTime
@@ -20,10 +20,11 @@ LABEL = re.compile(r"^[a-z][a-z0-9-]*$")
 # extraction contract's SchemaInfo.attributes leaves these core attributes out, so they are checked against
 # what the type really owns (SchemaInfo.owned).
 STATEMENT_VALUES = ("predicate-text", "object-text")
+GENERIC_TYPES = ("statement", EVENT_TYPE)
 # Attributes formation sets from the candidate's own fields: never supplied as values.
 SET_BY_FORMATION = frozenset({"polarity", "commitment", "attribution-mode", "candidate-id", "valid-from-basis",
                               "reason", "gupi-id", "proposition-key", "time-precision", "valid-to-basis", "method",
-                              "extraction-basis"})
+                              "extraction-basis", "occurred-at-basis"})
 SINCE_BEFORE = re.compile(r"\b(?:ever )?since\s+$", re.I)
 
 
@@ -83,9 +84,9 @@ def _candidate(c, where, text, observation_id, known, schema, bad):
             bad(where, "value", f"value {attr!r} needs a label and non-empty text")
         elif attr in SET_BY_FORMATION:
             bad(where, "value", f"{attr!r} is set by formation from the candidate's own fields, not given as a value")
-        elif attr in STATEMENT_VALUES and c.claim_type != "statement":
+        elif attr in STATEMENT_VALUES and c.claim_type not in GENERIC_TYPES:
             bad(where, "value", f"{attr!r} belongs to a generic statement, not to {c.claim_type!r}")
-    if c.claim_type == "statement":
+    if c.claim_type in GENERIC_TYPES:
         _statement(c, where, bad)
     _enum(where, "polarity", c.polarity, POLARITIES, bad)
     _enum(where, "modality", c.modality, MODALITIES, bad)
@@ -161,7 +162,7 @@ def _schema(c, where, schema, bad):
         elif p.kind not in roles[p.role]:
             bad(where, "schema", f"a {p.kind} cannot play {c.claim_type}:{p.role}")
     owned = set(schema.attributes.get(c.claim_type, ()))
-    if c.claim_type == "statement":
+    if c.claim_type in GENERIC_TYPES:
         owned |= set(STATEMENT_VALUES) & set(schema.owned.get(c.claim_type, ()))
     for attr, _ in c.values:
         if attr not in owned and attr not in SET_BY_FORMATION:
@@ -196,6 +197,18 @@ class Unmappable(ValueError):
     pass
 
 
+def occurrence(candidate):
+    """(earliest, latest, basis, precision) of a one-time event: when it happened, which is not when it was said. All
+    None for an event stated with no date: none is ever supplied. Basis is "stated", or "derived" when the date was read
+    from the message's own time."""
+    if len(candidate.times) > 1 or any(t.kind != "holds-at" for t in candidate.times):
+        raise Unmappable("an event happens at one stated time, so a start, end, span or second time is a state's")
+    if not candidate.times or candidate.times[0].earliest is None:
+        return None, None, None, None
+    t = candidate.times[0]
+    return t.earliest, t.latest, "stated" if t.explicit else "derived", t.precision
+
+
 def valid_time(candidate):
     """(ValidTime, valid-to-basis) for a candidate's time evidence, per candidate-ir.md §5.
 
@@ -208,6 +221,9 @@ def valid_time(candidate):
     A holds-at over a coarser window ("was CTO in March") says only that it held at some instant in it, which
     a valid time cannot express: Unmappable.
     """
+    if candidate.claim_type == EVENT_TYPE:
+        occurrence(candidate)                  # raises if it has no single occurrence; an event never has a valid time
+        return ValidTime(), None
     by = {t.kind: t for t in candidate.times if t.earliest is not None or t.latest is not None}  # unread: no bound
     fe = fl = te = tl = None
     basis = "unknown"

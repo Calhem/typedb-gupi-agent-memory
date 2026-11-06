@@ -28,6 +28,7 @@ from gupi.temporal import ValidTime
 GENERIC = "statement"
 UNCLASSIFIED = "unclassified"
 CORE_CLAIM_ATTRIBUTES = {
+    "occurred-at-basis",
     "gupi-id", "proposition-key", "time-precision", "valid-to-basis", "method", "extraction-basis",
     "predicate-text", "object-text",
 }

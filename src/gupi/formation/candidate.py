@@ -24,6 +24,7 @@ IR_VERSION = "gupi.candidate/1"
 IR_VERSION_1_1 = "gupi.candidate/1.1"   # adds asserted_by_kind and null correction targets (additive)
 IR_VERSIONS = (IR_VERSION, IR_VERSION_1_1)
 CLAIMANT_KINDS = ("person", "organisation", "unknown")
+EVENT_TYPE = "event-statement"          # a one-time event (core/0013): shaped like a statement, but it never "holds"
 NULLABLE_TARGET_KINDS = ("corrects", "retracts", "updates")
 
 TIME_KINDS = {
@@ -129,6 +130,12 @@ class CandidateSet:
     extractor: str                  # method, e.g. "rules:v2"
     candidates: tuple = ()
     ir_version: str = IR_VERSION
+
+
+def not_an_event(claim_type):
+    """An event happened; it does not hold. Asking if it held at a time would turn a moment into a state."""
+    if claim_type == EVENT_TYPE:
+        raise ValueError("an event has no holding period: use Memory.events")
 
 
 # --- serialisation -------------------------------------------------------------------------------------

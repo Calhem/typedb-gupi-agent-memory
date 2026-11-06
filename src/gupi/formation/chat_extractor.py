@@ -28,7 +28,7 @@ from gupi.formation.model_candidate import (
 )
 
 MODEL = "gpt-4o-mini"                         # required for LLM components in AML's open-source division (checked 2026-11-06)
-PROMPT_VERSION = "gupi.chat-extraction/2"
+PROMPT_VERSION = "gupi.chat-extraction/3"
 URL = "https://api.openai.com/v1/chat/completions"
 MAX_OUTPUT_TOKENS = 1200
 CONTEXT_TURNS = 2                             # earlier turns shown for understanding, never quoted as evidence
@@ -62,8 +62,11 @@ participant text occurs exactly once inside evidence.
 organisation, named group or named thing) is a participant. A descriptive object goes in object_text. Kinds are \
 person, organization or unclassified.
 5. Never compute a date. Quote the time words. Kinds: start (it began then), end (it ended then), holds-since (it has \
-held from then until now), holds-at (it held at that time, including an event on a day). A present-tense statement \
-with no time words has times [].
+held from then until now), holds-at (it held at that time). A present-tense statement with no time words has times [].
+A clearly stated one-time past happening (moved to a city, started or finished a project, bought, won, an acquisition) \
+is relation event, with the same roles as a statement, predicate the verb as written, and at most one time, of kind \
+holds-at, or times [] if none is stated. Never use event for something that continues ("lives in", "was CTO") or has not \
+happened. Joining or leaving an employer stays employment with start or end.
 6. Keep the author's certainty. commitment is certain, probable, possible or unknown: hedges ("probably", "I think", \
 "might") lower it. Plans, requests, conditions, hypotheticals and questions each take their modality, never actual. A \
 denial has polarity negative. Allegations and disputes take allegation true; otherwise null.

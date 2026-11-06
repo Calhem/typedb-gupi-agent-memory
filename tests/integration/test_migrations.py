@@ -146,7 +146,7 @@ def test_polarity_migration_keeps_existing_claims_and_stores_negations(driver, d
 
     assert migrations.migrate(driver, database, ["core", "people"]) == [
         "core/0010_polarity.schema.tql", "core/0011_claim_provenance.schema.tql",
-        "core/0012_candidate_store.schema.tql"]
+        "core/0012_candidate_store.schema.tql", "core/0013_event_statement.schema.tql"]
     with transaction(driver, database, TransactionType.READ) as tx:
         after = retrieval.all_claims(tx)
     assert after == before and after[0].polarity == "positive"
@@ -195,8 +195,30 @@ def test_core_0012_migrates_a_populated_0011_database_without_changing_claims(dr
     record(memory, [o], [plain, formed])
     with transaction(driver, database, TransactionType.READ) as tx:
         before = retrieval.all_claims(tx)
-    assert migrations.migrate(driver, database, ["core", "people"]) == ["core/0012_candidate_store.schema.tql"]
+    assert migrations.migrate(driver, database, ["core", "people"]) == ["core/0012_candidate_store.schema.tql",
+                                                                        "core/0013_event_statement.schema.tql"]
     with transaction(driver, database, TransactionType.READ) as tx:
         assert retrieval.all_claims(tx) == before
         assert typeql.concept_rows(tx, "match entity $t; $t label memory-candidate;")
     Memory(driver, database, Clock("2025-03-02"), ("core", "people"))  # opens without pending migrations
+
+
+def test_core_0013_migrates_a_populated_0012_database_without_changing_claims(driver, database, tmp_path):
+    """Events are added to a database that already holds claims: every claim, id and key reads back identical."""
+    old_core = tmp_path / "core"
+    old_core.mkdir()
+    for m in migrations.discover(["core"]):
+        if m.path.name < "0013":
+            shutil.copy(m.path, old_core / m.path.name)
+    migrations.migrate(driver, database, ["core", "people"], extra_dirs=[old_core])
+    memory = Memory(driver, database, Clock("2025-03-01"), ("core", "people"), require_current_schema=False)
+    o = observe(HR, "o1", "Alice reports to Bob.", "2025-03-01")
+    plain, formed = reports(o), reports(o, commitment="probable", candidate_id="candidate:0123")
+    record(memory, [o], [plain, formed])
+    with transaction(driver, database, TransactionType.READ) as tx:
+        before = retrieval.all_claims(tx)
+    assert migrations.migrate(driver, database, ["core", "people"]) == ["core/0013_event_statement.schema.tql"]
+    with transaction(driver, database, TransactionType.READ) as tx:
+        assert retrieval.all_claims(tx) == before
+        assert typeql.concept_rows(tx, "match relation $t; $t label event-statement;")
+    Memory(driver, database, Clock("2025-03-02"), ("core", "people"))

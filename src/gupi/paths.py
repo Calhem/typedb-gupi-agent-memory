@@ -21,6 +21,7 @@ from typedb.driver import TransactionType
 
 from gupi import evidence, retrieval, typeql
 from gupi.answering_v2 import classify
+from gupi.formation.candidate import EVENT_TYPE
 from gupi.qualification import qualifiers
 from gupi.search import tokens
 from gupi.temporal import Answer
@@ -283,14 +284,17 @@ def _times(views):
     for c in views:
         v = c.valid
         lo, hi = (v.from_earliest, v.from_latest) if v.from_earliest or v.from_latest else (v.to_earliest, v.to_latest)
+        if c.type == EVENT_TYPE:
+            lo, hi = c.occurred
         points += [x for x in (lo, hi - timedelta(seconds=1) if hi else None) if x is not None]
     return sorted(set(points))
 
 
 def _held_during(a, b):
-    """Did proposition `a` hold at the times `b` states? None if `b` states no time."""
+    """Did proposition `a` hold at the times `b` states? None if `b` states no time, or if `a` is an event: an event
+    happened, it does not hold, so nothing continues from it."""
     points = _times(b)
-    if not points:
+    if not points or any(c.type == EVENT_TYPE for c in a):
         return None
     answers = {classify([c for c in a if c.polarity != "negative"], p, True).answer for p in points}
     if answers == {Answer.TRUE}:
@@ -313,6 +317,8 @@ def _proposition(view):
 
 
 def _disputed(claims):
+    if len({c.occurred for c in claims if c.occurred[0]}) > 1:
+        return True
     return len({(c.valid.from_earliest, c.valid.from_latest, c.valid.to_earliest, c.valid.to_latest) for c in claims
                 if c.valid.from_earliest or c.valid.to_earliest}) > 1 and not any(c.valid.to_latest for c in claims)
 

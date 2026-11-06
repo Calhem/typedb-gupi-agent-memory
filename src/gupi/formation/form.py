@@ -25,9 +25,9 @@ from typedb.driver import TransactionType
 
 from gupi import ids, retrieval, timeexpr, typeql
 from gupi.extraction.contract import referent_id
-from gupi.formation.candidate import to_dict
+from gupi.formation.candidate import EVENT_TYPE, to_dict
 from gupi.formation.fidelity import statement_problems
-from gupi.formation.validate import Unmappable, valid_time, validate
+from gupi.formation.validate import Unmappable, occurrence, valid_time, validate
 from gupi.memory import _has
 from gupi.records import Batch, Claim, Evidence, Mention, Referent
 from gupi.typedb.connection import transaction
@@ -112,7 +112,8 @@ def decide(candidate, issues, approvals, rejections=None, copy_of=None):
         needs.append("a stated correction")
     elif CORRECTION_CUE.match(candidate.passage.text):
         needs.append("a stated correction whose target could not be identified")  # the passage still says so
-    if any(t.kind != "holds-at" and t.earliest is None and t.latest is None for t in candidate.times):
+    if any((t.kind != "holds-at" or candidate.claim_type == EVENT_TYPE) and t.earliest is None and t.latest is None
+           for t in candidate.times):
         needs.append("a stated time could not be read")  # forming it would make the claim look timeless
     if structure := statement_problems(candidate):
         # R1: grounded is not faithful; a role structure that cannot be verified is never formed by the policy
@@ -218,9 +219,14 @@ def _claim(c, obs, method, scope):
     kinds = {t.kind for t in read}
     from_basis = "stated" if "start" in kinds else "lower-bound" if "holds-since" in kinds else None
     precision = timeexpr.coarsest(*[t.precision for t in read if t.kind != "holds-at"]) if read else None
+    values = dict(c.values)
+    if c.claim_type == EVENT_TYPE:
+        earliest, latest, basis, precision = occurrence(c)
+        dated = {"occurred-at-earliest": earliest, "occurred-at-latest": latest, "occurred-at-basis": basis}
+        values |= {k: v for k, v in dated.items() if v is not None}
     claim = Claim(
         c.claim_type, {r: tuple(v) if len(v) > 1 else v[0] for r, v in roles.items()},
-        evidence=(Evidence(obs.id, c.passage.start, c.passage.end),), valid=vt, values=dict(c.values),
+        evidence=(Evidence(obs.id, c.passage.start, c.passage.end),), valid=vt, values=values,
         time_precision=precision, valid_to_basis=to_basis, method=method, confidence=c.confidence, basis=c.basis,
         polarity=c.polarity, valid_from_basis=from_basis, commitment=c.commitment,
         attribution_mode=c.attribution.mode, asserted_by=asserter, candidate_id=c.id)
