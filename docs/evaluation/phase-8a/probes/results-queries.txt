@@ -1,0 +1,19 @@
+claims formed: 6
+Q1: 2 rows, 4.9 ms
+Q2: 7 rows, 1.3 ms
+Q3: 7 rows, 3.3 ms
+Q4: 4 rows, 7.1 ms
+Q5: 6 rows, 20.1 ms
+Q6: 2 rows, 1.8 ms
+Q7: 7 rows, 16.0 ms
+Q8: 2 rows, 4.8 ms
+--- employment at Meridian, read across its claims (v2)
+mid 2022: PRESUMED; PRESUMED: inside a period joined from claim:a631b1278a612d13ba7834de84
+start 2022: PRESUMED; PRESUMED: inside a period joined from claim:a631b1278a612d13ba7834de84
+end 2022: PRESUMED; PRESUMED: inside a period joined from claim:a631b1278a612d13ba7834de84
+mid 2023: UNKNOWN; UNKNOWN: 2023-06-01 lies inside the uncertain date of claim:e2f7cf5fe5
+mid 2024: FALSE; FALSE: recorded as ended by 2024-01-01 (claim:e2f7cf5fe5a8af1f5cee78e7
+--- the acquisition, two disputed starts (v2)
+mid 2022: UNKNOWN; UNKNOWN: 2022-06-01 lies inside the uncertain date of claim:a8c2642ab51ff9c599d830f175800d
+mid 2023: UNKNOWN; UNKNOWN: 2023-06-01 lies inside the uncertain date of claim:32a20bb77208f4326055a8e443cb37
+mid 2024: UNKNOWN; UNKNOWN: no believed evidence covers 2024-06-01.

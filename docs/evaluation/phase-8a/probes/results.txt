@@ -1,0 +1,81 @@
+# Output of feasibility_locomo_edges.py (development split; aggregates only)
+{'turns': 788, 'turns_with_entity': 84, 'bridges': 7, 'convs': 2}
+adversarial  n= 71 | keyword   R5 0.599 R10 0.711 | prf-contr R5 0.556 R10 0.697 | adjacency R5 0.739 R10 0.859 | entity    R5 0.599 R10 0.711 | entity+ad R5 0.725 R10 0.859 
+multi-hop    n= 42 | keyword   R5 0.132 R10 0.195 | prf-contr R5 0.144 R10 0.168 | adjacency R5 0.107 R10 0.233 | entity    R5 0.144 R10 0.199 | entity+ad R5 0.119 R10 0.233 
+open-domain  n= 11 | keyword   R5 0.136 R10 0.318 | prf-contr R5 0.227 R10 0.273 | adjacency R5 0.182 R10 0.227 | entity    R5 0.136 R10 0.318 | entity+ad R5 0.182 R10 0.227 
+single-hop   n=114 | keyword   R5 0.500 R10 0.548 | prf-contr R5 0.496 R10 0.583 | adjacency R5 0.588 R10 0.746 | entity    R5 0.500 R10 0.557 | entity+ad R5 0.588 R10 0.746 
+temporal     n= 63 | keyword   R5 0.762 R10 0.825 | prf-contr R5 0.698 R10 0.778 | adjacency R5 0.667 R10 0.841 | entity    R5 0.762 R10 0.825 | entity+ad R5 0.667 R10 0.841 
+ALL          n=301 | keyword   R5 0.513 R10 0.587 | prf-contr R5 0.493 R10 0.582 | adjacency R5 0.558 R10 0.702 | entity    R5 0.515 R10 0.591 | entity+ad R5 0.556 R10 0.702 
+path complete (all gold in top k), multi-hop:
+  keyword 0 0.024
+  prf-control 0 0
+  adjacency 0 0.048
+  entity 0 0.024
+  entity+adjacency 0 0.048
+  paired R@10 prf-control      multi-hop    better 3 worse 5 of 42
+  paired R@10 prf-control      single-hop   better 6 worse 2 of 114
+  paired R@10 prf-control      temporal     better 0 worse 3 of 63
+  paired R@10 prf-control      adversarial  better 3 worse 4 of 71
+  paired R@10 adjacency        multi-hop    better 8 worse 5 of 42
+  paired R@10 adjacency        single-hop   better 25 worse 2 of 114
+  paired R@10 adjacency        temporal     better 3 worse 2 of 63
+  paired R@10 adjacency        adversarial  better 13 worse 2 of 71
+  paired R@10 entity           multi-hop    better 1 worse 1 of 42
+  paired R@10 entity           single-hop   better 1 worse 0 of 114
+  paired R@10 entity           temporal     better 0 worse 0 of 63
+  paired R@10 entity           adversarial  better 0 worse 0 of 71
+  paired R@10 entity+adjacency multi-hop    better 8 worse 5 of 42
+  paired R@10 entity+adjacency single-hop   better 25 worse 2 of 114
+  paired R@10 entity+adjacency temporal     better 3 worse 2 of 63
+  paired R@10 entity+adjacency adversarial  better 13 worse 2 of 71
+reachability (mean per question)
+ temporal     n=63 gold/q 1.00 kw50 0.937 seeds+1hop-entity 0.762 seeds+adj 0.825 gold-with-bridge-entity 0.048 gold-no-question-word 0.063 expansions 0.3
+ open-domain  n=11 gold/q 1.82 kw50 0.364 seeds+1hop-entity 0.136 seeds+adj 0.273 gold-with-bridge-entity 0.000 gold-no-question-word 0.576 expansions 0.0
+ multi-hop    n=42 gold/q 2.48 kw50 0.383 seeds+1hop-entity 0.144 seeds+adj 0.246 gold-with-bridge-entity 0.117 gold-no-question-word 0.544 expansions 0.1
+ single-hop   n=114 gold/q 1.05 kw50 0.702 seeds+1hop-entity 0.509 seeds+adj 0.772 gold-with-bridge-entity 0.044 gold-no-question-word 0.215 expansions 0.2
+ adversarial  n=71 gold/q 1.03 kw50 0.810 seeds+1hop-entity 0.599 seeds+adj 0.873 gold-with-bridge-entity 0.056 gold-no-question-word 0.148 expansions 0.3
+
+# Output of feasibility_structure.py (development split; aggregates only)
+LoCoMo gold structure
+ temporal     n=63 sessions-per-q 1.00 gold-in-a-seed-session 0.857 gold-authored-by-named-speaker 0.984 (q with one named 61/63)
+ open-domain  n=11 sessions-per-q 1.36 gold-in-a-seed-session 0.652 gold-authored-by-named-speaker 1.000 (q with one named 10/11)
+ multi-hop    n=42 sessions-per-q 2.24 gold-in-a-seed-session 0.483 gold-authored-by-named-speaker 0.991 (q with one named 36/42)
+ single-hop   n=114 sessions-per-q 1.00 gold-in-a-seed-session 0.868 gold-authored-by-named-speaker 0.927 (q with one named 89/114)
+ adversarial  n=71 sessions-per-q 1.00 gold-in-a-seed-session 0.944 gold-authored-by-named-speaker 0.164 (q with one named 70/71)
+lme dev questions 53
+locomo turn adversarial                 | author-first n= 71 R5 0.303 R10 0.401 | interleave   n= 71 R5 0.556 R10 0.775 | keyword      n= 71 R5 0.599 R10 0.711 | window-keep3 n= 71 R5 0.746 R10 0.859 | window-keep5 n= 71 R5 0.613 R10 0.873 
+locomo turn multi-hop                   | author-first n= 42 R5 0.211 R10 0.267 | interleave   n= 42 R5 0.187 R10 0.301 | keyword      n= 42 R5 0.132 R10 0.195 | window-keep3 n= 42 R5 0.156 R10 0.208 | window-keep5 n= 42 R5 0.132 R10 0.216 
+locomo turn open-domain                 | author-first n= 11 R5 0.182 R10 0.318 | interleave   n= 11 R5 0.182 R10 0.273 | keyword      n= 11 R5 0.136 R10 0.318 | window-keep3 n= 11 R5 0.136 R10 0.227 | window-keep5 n= 11 R5 0.136 R10 0.227 
+locomo turn single-hop                  | author-first n=114 R5 0.531 R10 0.601 | interleave   n=114 R5 0.548 R10 0.737 | keyword      n=114 R5 0.500 R10 0.548 | window-keep3 n=114 R5 0.632 R10 0.754 | window-keep5 n=114 R5 0.500 R10 0.763 
+locomo turn temporal                    | author-first n= 63 R5 0.841 R10 0.857 | interleave   n= 63 R5 0.794 R10 0.857 | keyword      n= 63 R5 0.762 R10 0.825 | window-keep3 n= 63 R5 0.714 R10 0.746 | window-keep5 n= 63 R5 0.762 R10 0.778 
+locomo turn ALL                         | author-first n=301 R5 0.485 R10 0.550 | interleave   n=301 R5 0.538 R10 0.693 | keyword      n=301 R5 0.513 R10 0.587 | window-keep3 n=301 R5 0.591 R10 0.682 | window-keep5 n=301 R5 0.517 R10 0.696 
+lme turn knowledge-update            | keyword      n=  6 R5 1.000 R10 1.000 | window-keep5 n=  6 R5 1.000 R10 1.000 
+lme turn multi-session               | keyword      n=  8 R5 0.479 R10 0.542 | window-keep5 n=  8 R5 0.479 R10 0.542 
+lme turn multi-session/abs           | keyword      n=  1 R5 1.000 R10 1.000 | window-keep5 n=  1 R5 1.000 R10 1.000 
+lme turn single-session-assistant    | keyword      n=  6 R5 1.000 R10 1.000 | window-keep5 n=  6 R5 1.000 R10 1.000 
+lme turn single-session-preference   | keyword      n=  4 R5 0.250 R10 0.750 | window-keep5 n=  4 R5 0.250 R10 0.250 
+lme turn single-session-user         | keyword      n= 11 R5 0.909 R10 1.000 | window-keep5 n= 11 R5 0.909 R10 1.000 
+lme turn temporal-reasoning          | keyword      n= 13 R5 0.782 R10 0.859 | window-keep5 n= 13 R5 0.782 R10 0.782 
+lme turn ALL                         | keyword      n= 49 R5 0.776 R10 0.867 | window-keep5 n= 49 R5 0.776 R10 0.806 
+lme session knowledge-update            | keyword      n=  6 R5 1.000 R10 1.000 | window-keep5 n=  6 R5 1.000 R10 1.000 
+lme session knowledge-update/abs        | keyword      n=  1 R5 1.000 R10 1.000 | window-keep5 n=  1 R5 1.000 R10 1.000 
+lme session multi-session               | keyword      n=  8 R5 0.865 R10 0.906 | window-keep5 n=  8 R5 0.865 R10 0.906 
+lme session multi-session/abs           | keyword      n=  4 R5 0.625 R10 0.875 | window-keep5 n=  4 R5 0.625 R10 0.875 
+lme session single-session-assistant    | keyword      n=  6 R5 1.000 R10 1.000 | window-keep5 n=  6 R5 1.000 R10 1.000 
+lme session single-session-preference   | keyword      n=  4 R5 1.000 R10 1.000 | window-keep5 n=  4 R5 1.000 R10 1.000 
+lme session single-session-user         | keyword      n= 11 R5 1.000 R10 1.000 | window-keep5 n= 11 R5 1.000 R10 1.000 
+lme session temporal-reasoning          | keyword      n= 13 R5 0.885 R10 0.923 | window-keep5 n= 13 R5 0.885 R10 0.923 
+lme session ALL                         | keyword      n= 53 R5 0.923 R10 0.958 | window-keep5 n= 53 R5 0.923 R10 0.958 
+
+# Output of traversal_latency.py
+built 2649 obs 5298 mentions 2649 claims in 37.7 s
+1-hop, ordinary person                     median     1.1 ms  p95     6.2 ms  rows(last) 1
+1-hop, hub organisation (limit 200)        median    28.5 ms  p95    31.0 ms  rows(last) 200
+2-hop, ordinary person (limit 200)         median     7.8 ms  p95    14.9 ms  rows(last) 21
+2-hop, through the hub (limit 200)         median    35.7 ms  p95    65.4 ms  rows(last) 200
+2-hop, through hub, no belief-free limit 2000 median   103.5 ms  p95   150.6 ms  rows(last) 525
+2-hop + temporal exclusion, ordinary       median     7.2 ms  p95    19.4 ms  rows(last) 7
+2-hop + temporal exclusion, hub (limit 200) median    57.9 ms  p95   117.4 ms  rows(last) 200
+claims_by_ids full views, 50 claims        median    12.1 ms  p95    15.1 ms  rows(last) 50
+seed observation to claims and players     median     0.8 ms  p95     5.1 ms  rows(last) 2
+observation-mention-referent-observation   median     1.5 ms  p95    10.6 ms  rows(last) 20
