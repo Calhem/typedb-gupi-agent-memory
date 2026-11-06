@@ -1,0 +1,306 @@
+{
+ "probes": [
+  {
+   "group": "first person",
+   "case": "plain employment",
+   "result": "formed",
+   "origin": "none",
+   "links": true,
+   "why": null
+  },
+  {
+   "group": "first person",
+   "case": "with a start",
+   "result": "formed",
+   "origin": "none",
+   "links": true,
+   "why": null
+  },
+  {
+   "group": "first person",
+   "case": "contraction",
+   "result": "formed",
+   "origin": "none",
+   "links": true,
+   "why": null
+  },
+  {
+   "group": "first person",
+   "case": "capital I inside a word",
+   "result": "formed",
+   "origin": "none",
+   "links": true,
+   "why": null
+  },
+  {
+   "group": "first person",
+   "case": "second I in the span",
+   "result": "review",
+   "origin": "formation policy",
+   "links": true,
+   "why": "needs a review decision before forming: hedged by the source (unknown)"
+  },
+  {
+   "group": "first person",
+   "case": "two I in the smallest span",
+   "result": "formed",
+   "origin": "none",
+   "links": true,
+   "why": null
+  },
+  {
+   "group": "first person",
+   "case": "no second referent",
+   "result": "formed",
+   "origin": "none",
+   "links": false,
+   "why": null
+  },
+  {
+   "group": "my X",
+   "case": "bare relation",
+   "result": "ambiguous-reference",
+   "origin": "identity resolution",
+   "links": false
+  },
+  {
+   "group": "my X",
+   "case": "relation with a name, the fact",
+   "result": "formed",
+   "origin": "none",
+   "links": true,
+   "why": null
+  },
+  {
+   "group": "my X",
+   "case": "relation with a name, the kinship",
+   "result": "grounding-failure",
+   "origin": "parsing",
+   "links": false
+  },
+  {
+   "group": "my X",
+   "case": "my manager",
+   "result": "ambiguous-reference",
+   "origin": "identity resolution",
+   "links": false
+  },
+  {
+   "group": "my X",
+   "case": "I report to",
+   "result": "formed",
+   "origin": "none",
+   "links": true,
+   "why": null
+  },
+  {
+   "group": "my X",
+   "case": "my colleague",
+   "result": "formed",
+   "origin": "none",
+   "links": true,
+   "why": null
+  },
+  {
+   "group": "one-time event",
+   "case": "no time",
+   "result": "formed",
+   "origin": "none",
+   "links": true,
+   "why": null
+  },
+  {
+   "group": "one-time event",
+   "case": "relative week",
+   "result": "withheld",
+   "origin": "formation policy",
+   "links": false,
+   "why": "its time cannot be expressed as a claim's valid time: 'last week' says only that it held a"
+  },
+  {
+   "group": "one-time event",
+   "case": "yesterday",
+   "result": "withheld",
+   "origin": "formation policy",
+   "links": false,
+   "why": "its time cannot be expressed as a claim's valid time: 'yesterday' says only that it held a"
+  },
+  {
+   "group": "one-time event",
+   "case": "exact day",
+   "result": "withheld",
+   "origin": "formation policy",
+   "links": false,
+   "why": "its time cannot be expressed as a claim's valid time: 'on 3 May 2023' says only that it he"
+  },
+  {
+   "group": "one-time event",
+   "case": "a year",
+   "result": "withheld",
+   "origin": "formation policy",
+   "links": true,
+   "why": "its time cannot be expressed as a claim's valid time: 'in 2022' says only that it held at "
+  },
+  {
+   "group": "one-time event",
+   "case": "read as a start",
+   "result": "formed",
+   "origin": "none",
+   "links": true,
+   "why": null
+  },
+  {
+   "group": "multi-turn",
+   "case": "pronoun for a named person",
+   "result": "ambiguous-reference",
+   "origin": "identity resolution",
+   "links": false
+  },
+  {
+   "group": "multi-turn",
+   "case": "fragment answer",
+   "result": "grounding-failure",
+   "origin": "parsing",
+   "links": false
+  },
+  {
+   "group": "multi-turn",
+   "case": "that refers back",
+   "result": "ambiguous-reference",
+   "origin": "identity resolution",
+   "links": false
+  },
+  {
+   "group": "implicit",
+   "case": "no subject",
+   "result": "grounding-failure",
+   "origin": "parsing",
+   "links": false
+  },
+  {
+   "group": "implicit",
+   "case": "no object",
+   "result": "ambiguous-reference",
+   "origin": "identity resolution",
+   "links": false
+  },
+  {
+   "group": "implicit",
+   "case": "inferred, declared",
+   "result": "inferred-not-admissible",
+   "origin": "extraction policy",
+   "links": false
+  },
+  {
+   "group": "protections",
+   "case": "hedge",
+   "result": "review",
+   "origin": "formation policy",
+   "links": true,
+   "why": "needs a review decision before forming: hedged by the source (unknown)"
+  },
+  {
+   "group": "protections",
+   "case": "a plan",
+   "result": "cue-conflict",
+   "origin": "parsing",
+   "links": false
+  },
+  {
+   "group": "protections",
+   "case": "negation",
+   "result": "cue-conflict",
+   "origin": "parsing",
+   "links": false
+  }
+ ],
+ "frequencies": {
+  "turns": 788,
+  "sentences": 2641,
+  "by_sentence": {
+   "first person": {
+    "count": 527,
+    "share": 0.2
+   },
+   "first person, a capital I elsewhere in the sentence": {
+    "count": 107,
+    "share": 0.041
+   },
+   "my + relation word": {
+    "count": 27,
+    "share": 0.01
+   },
+   "my + anything": {
+    "count": 265,
+    "share": 0.1
+   },
+   "starts with a pronoun": {
+    "count": 495,
+    "share": 0.187
+   },
+   "relative time": {
+    "count": 91,
+    "share": 0.034
+   },
+   "past-tense action": {
+    "count": 234,
+    "share": 0.089
+   },
+   "fragment, no subject": {
+    "count": 505,
+    "share": 0.191
+   },
+   "question": {
+    "count": 272,
+    "share": 0.103
+   },
+   "name mid-sentence": {
+    "count": 441,
+    "share": 0.167
+   }
+  },
+  "by_turn": {
+   "first person": {
+    "count": 369,
+    "share": 0.468
+   },
+   "first person, a capital I elsewhere in the sentence": {
+    "count": 96,
+    "share": 0.122
+   },
+   "my + relation word": {
+    "count": 25,
+    "share": 0.032
+   },
+   "my + anything": {
+    "count": 217,
+    "share": 0.275
+   },
+   "starts with a pronoun": {
+    "count": 384,
+    "share": 0.487
+   },
+   "relative time": {
+    "count": 86,
+    "share": 0.109
+   },
+   "past-tense action": {
+    "count": 207,
+    "share": 0.263
+   },
+   "fragment, no subject": {
+    "count": 449,
+    "share": 0.57
+   },
+   "question": {
+    "count": 234,
+    "share": 0.297
+   },
+   "name mid-sentence": {
+    "count": 422,
+    "share": 0.536
+   }
+  }
+ },
+ "note": "Best-case replies on invented messages, and pattern counts on development data. Not an extraction result."
+}

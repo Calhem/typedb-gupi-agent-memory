@@ -1,15 +1,20 @@
 # Phase 8C: real-conversation memory evaluation
 
-**Status: stopped at the first paid-call gate. No paid call has been made.** Nothing here is a benchmark or leaderboard
-result. The central question, whether structured knowledge improves real memory performance, is **not yet answered**:
-everything needed to answer it is built, and it needs the owner's approval to spend.
+**Status: all work inside the existing subscription. No paid call has been made, and the owner declined the paid gate on
+2026-11-06.** Nothing here is a benchmark or leaderboard result. Development data only; the frozen held-out set is untouched.
+
+**Start here: [findings.md](findings.md).**
 
 | Stage | State | Document |
 |---|---|---|
-| 8C.1 extraction adapter | built, offline tested | [run-plan.md](run-plan.md) |
+| Findings, assessment and next milestone | done | [findings.md](findings.md) |
+| Extraction coverage | measured | [coverage-analysis.md](coverage-analysis.md) |
+| Manual extraction | built, used on 788 development turns | [manual-workflow.md](manual-workflow.md) |
+| Extraction efficiency | design only | [efficiency.md](efficiency.md) |
+| 8C.1 `gpt-4o-mini` adapter | built, offline tested, deferred | [run-plan.md](run-plan.md) |
 | 8C.2 cross-session identity | built, tested | [identity-design.md](identity-design.md) |
-| 8C.3 independent evaluation | external set frozen; independent pack needs an author | [scoring.md](scoring.md), [authoring brief](independent-authoring-brief.md) |
-| 8C.4 answer harness | built, offline tested; no paid call | below |
+| 8C.3 independent evaluation | external set frozen, not run; pack needs an author | [scoring.md](scoring.md), [authoring brief](independent-authoring-brief.md) |
+| 8C.4 answer harness | built, offline tested, not run | below |
 
 ## Architecture
 ```
@@ -50,16 +55,16 @@ extraction, formation or review, retrieval, ranking, answer generation, unsuppor
 ## Evaluation criteria
 | # | Question | Measured by | Needs |
 |---|---|---|---|
-| 1 | Is the graph connected enough? | `graph_report` | Gate 1 |
+| 1 | Is the graph connected enough? | `graph_report` | measured by hand: **no**, see findings |
 | 2 | Does traversal find what text misses? | C over B and D; `gold_turns_only_claims_found` | Gate 2 |
 | 3 | Does it rank better on tight budgets? | R@5 and R@10 | Gate 2 |
 | 4 | Do qualifications improve answers? | qualified against plain | Gate 3 |
 | 5 | Is it worth the cost? | all of the above against [cost](run-plan.md) | Gates 2 and 3 |
 
 ## Known limitations
-- **No extraction has run.** Every test uses scripted replies. Nothing here shows `gpt-4o-mini` can do this.
-- The largest risks are in the [run plan](run-plan.md), and they are predictions.
+- **`gpt-4o-mini` has not been run.** The manual results come from a Claude model written by the builder, so they do not
+  transfer to it.
 - The external set has no provenance or identity questions, and the small sample means wide intervals.
 - Depth-100 recall on one 600-turn conversation is an easier task than on a long history.
-- `paths.py` is about 490 lines, above the 300-line guide.
+- `paths.py` is 486 lines, above the 300-line guide.
 - Per-message extraction does not scale to AML's corpus.

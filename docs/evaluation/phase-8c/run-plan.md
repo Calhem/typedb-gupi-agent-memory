@@ -1,6 +1,8 @@
 # Phase 8C: capped experimental run plan
 
-**Status: awaiting the owner's approval. No paid call has been made.** Prices and AML's model rule were re-checked on
+**Status: not approved. The owner declined Gate 1 on 2026-11-06, and `gpt-4o-mini` extraction is deferred with no paid call
+made.** Kept as the plan if that changes. Measured extraction rates now replace the scale estimate below: see
+[efficiency.md](efficiency.md). Prices and AML's model rule were re-checked on
 2026-11-06. Estimated tokens are characters divided by 4, computed from the real requests by
 `uv run python -I -m gupi.benchmarks.phase8c plan`. Real usage will differ; the caps do not depend on the estimate.
 
@@ -24,8 +26,7 @@ Each gate is a separate approval.
 | 2 frozen | `conv-41`, `conv-42` (held-out, once) | 1,292 | $0.57 | $0.85 | **$1.50** | the actual test |
 | 3 answers | 135 questions, 5 systems, plus judging | 1,350 | $0.54 | not bounded yet | set later | answer accuracy |
 
-**Approval requested now: Gate 1 only, a $1.00 cap covering 1a and 1b together.** The owner needs to set
-`OPENAI_API_KEY` in the environment; a key is never written to a file or a log.
+A live run would need an approved cap and the owner's `OPENAI_API_KEY`. A key is never written to a file or a log.
 
 ## Stop conditions
 **Automatic, during a run (frozen in `benchmarks/phase8c.json`):**

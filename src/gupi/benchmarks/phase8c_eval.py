@@ -23,6 +23,7 @@ from pathlib import Path
 from gupi import evidence, identity, paths
 from gupi.benchmarks import common, locomo, phase8c
 from gupi.benchmarks.__main__ import Clock
+from gupi.benchmarks.phase8c_manual import ManualExtractor
 from gupi.formation import chat_extractor as chat
 from gupi.formation.chat_extractor import ChatExtractor, Recording
 from gupi.memory import Memory
@@ -259,8 +260,10 @@ def run(args):
     driver, db, clock = connect(), f"gupi-bench-phase8c-{uuid.uuid4().hex[:8]}", Clock()
     memory = Memory.open(db, packs=("core", "people"), driver=driver, create=True, clock=clock)
     try:
+        names = args.conversations or names
         sample_list = phase8c.samples(names)
-        extractor = ChatExtractor(Recording(args.recording))           # replay only: this module can never spend
+        # replay only: this module can never spend
+        extractor = ManualExtractor(args.responses) if args.responses else ChatExtractor(Recording(args.recording))
         observations, stopped = phase8c.build(memory, clock, sample_list, extractor)
         turn_ids = {(o.record_key.split(":", 1)[0], o.record_key.split(":", 1)[1]): o.id for o in observations}
         everything, _ = locomo.questions(sample_list, turn_ids)
@@ -272,7 +275,9 @@ def run(args):
             links += len(identity.link_sessions(memory, contexts).linked)
         rows = evaluate(memory, questions, {o.id: o.content for o in observations})
         gold = {g for q in questions for g in q.gold["turn"]}
-        result = {"set": args.set, "prompt": chat.PROMPT_HASH, "stopped": stopped, "session_links": links,
+        result = {"set": args.set, "prompt": chat.PROMPT_HASH, "run_stopped": stopped, "session_links": links,
+                  "conversations": names, "source": "manual subscription session" if args.responses else "recording",
+                  "stopped": dict(getattr(extractor, "lost", {})), "stopped_that_would_link": dict(getattr(extractor, "lost_links", {})),
                   "tally": extractor.tally.as_dict(), "graph": phase8c.graph_report(memory, observations, gold),
                   "summary": summarise(rows), "note": "Evidence retrieval only; not a benchmark or leaderboard result."}
         print(json.dumps(result, indent=1))
@@ -289,8 +294,10 @@ def main(argv=None):
     p.add_argument("command", choices=("freeze", "run"))
     p.add_argument("--set", choices=("dev", "frozen"), default="dev")
     p.add_argument("--recording")
+    p.add_argument("--responses", help="manual lines, outside the repository (phase8c_manual)")
+    p.add_argument("--conversations", nargs="+")
     p.add_argument("--json")
-    p.add_argument("--sample", help="write the adjudication sample here (inside .data/)")
+    p.add_argument("--sample", help="write the adjudication sample here (not inside the repository's tracked files)")
     p.add_argument("--approved-frozen-run", action="store_true")
     args = p.parse_args(argv)
     if args.command == "freeze":
@@ -298,9 +305,11 @@ def main(argv=None):
         return 0
     if args.set == "frozen" and not args.approved_frozen_run:
         raise SystemExit("not started: the frozen set runs once, with the owner's approval (--approved-frozen-run)")
-    for path in (args.recording, args.sample):
-        if path and phase8c.DATA.resolve() not in Path(path).resolve().parents:
-            raise SystemExit("not started: recordings and samples quote the dataset and must be inside .data/")
+    if args.set == "frozen" and args.responses:
+        raise SystemExit("not started: manual replies are development only")
+    for path in (args.recording, args.sample, args.responses):
+        if path and common.ROOT.resolve() in Path(path).resolve().parents and phase8c.DATA.resolve() not in Path(path).resolve().parents:
+            raise SystemExit("not started: recordings, replies and samples quote the dataset and must not be in tracked files")
     run(args)
     return 0
 

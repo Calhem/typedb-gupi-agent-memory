@@ -1,0 +1,108 @@
+{
+ "note": "Exploratory, development data, hypothesis formed from these results. Not evidence of performance.",
+ "questions": {
+  "multi-hop": 38,
+  "temporal": 63
+ },
+ "recall": {
+  "multi-hop": {
+   "B-conversational": {
+    "recall@5": 0.207,
+    "recall@10": 0.3197,
+    "recall@100": 0.5947
+   },
+   "E1-promote-claim-turns": {
+    "recall@5": 0.1895,
+    "recall@10": 0.3079,
+    "recall@100": 0.6474
+   },
+   "E1c-promote-text-filter": {
+    "recall@5": 0.207,
+    "recall@10": 0.3329,
+    "recall@100": 0.643
+   },
+   "E2-add-claim-turns": {
+    "recall@5": 0.1412,
+    "recall@10": 0.275,
+    "recall@100": 0.6583
+   },
+   "E2c-add-text-filter": {
+    "recall@5": 0.1478,
+    "recall@10": 0.275,
+    "recall@100": 0.5969
+   }
+  },
+  "temporal": {
+   "B-conversational": {
+    "recall@5": 0.7937,
+    "recall@10": 0.8571,
+    "recall@100": 0.9683
+   },
+   "E1-promote-claim-turns": {
+    "recall@5": 0.8254,
+    "recall@10": 0.8413,
+    "recall@100": 0.9683
+   },
+   "E1c-promote-text-filter": {
+    "recall@5": 0.8095,
+    "recall@10": 0.8413,
+    "recall@100": 1.0
+   },
+   "E2-add-claim-turns": {
+    "recall@5": 0.8095,
+    "recall@10": 0.8413,
+    "recall@100": 0.9683
+   },
+   "E2c-add-text-filter": {
+    "recall@5": 0.8095,
+    "recall@10": 0.8413,
+    "recall@100": 1.0
+   }
+  }
+ },
+ "base_rates": {
+  "turns": 788,
+  "claim_turns": 111,
+  "text_filter_turns": 210,
+  "gold_turns": 117,
+  "gold_in_claim_turns": 42,
+  "gold_in_text_filter": 74
+ },
+ "efficiency": {
+  "turns": 788,
+  "kept_share": 0.266,
+  "turns_with_a_claim_kept": 0.694,
+  "linking_turns_kept": 0.6,
+  "gold_turns_kept": 0.632
+ },
+ "scale": {
+  "turns": 7894737,
+  "single_output_estimate": 76,
+  "rows": {
+   "every turn, 1 per request": {
+    "calls": 7894737,
+    "usd": 2729
+   },
+   "text filter, 1 per request": {
+    "calls": 2100000,
+    "usd": 819
+   },
+   "every turn, 5 per request": {
+    "calls": 1578947,
+    "usd": 749
+   },
+   "text filter, 5 per request": {
+    "calls": 420000,
+    "usd": 292
+   },
+   "every turn, 20 per request": {
+    "calls": 394737,
+    "usd": 415
+   },
+   "text filter, 20 per request": {
+    "calls": 105000,
+    "usd": 204
+   }
+  }
+ }
+}
