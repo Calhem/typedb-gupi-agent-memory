@@ -1,0 +1,9 @@
+{
+  "_comment": "Phase 8B development evaluation. Written before its first run. benchmarks/config.json stays frozen. Development splits only: the runner refuses held-out data.",
+  "k": [5, 10, 50],
+  "pool": 50,
+  "budget": {"keep": 3, "window": 1},
+  "systems": ["keyword", "conversational"],
+  "datasets": {"locomo": ["dev"], "longmemeval": ["dev"]},
+  "metrics": ["recall@k", "precision@k", "added: gold in the top k that keyword's top k missed", "displaced: gold in keyword's top k that this system's top k lost", "latency p50 and p95"]
+}

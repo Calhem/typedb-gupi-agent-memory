@@ -551,6 +551,11 @@ class Memory:
         from gupi import search
         return search.search(self, text, k, believed_at)
 
+    def retrieve(self, question, contexts, budget=None, believed_at=None):
+        """Relationship-aware evidence for a free-text question within these contexts (gupi.paths)."""
+        from gupi import paths
+        return paths.conversational(self, question, contexts, budget or paths.Budget(), believed_at)
+
     def suggest_identities(self, record=True):
         """Propose identity claims (as hypotheses, never merged until accepted). Returns the suggestions."""
         from gupi import identity
