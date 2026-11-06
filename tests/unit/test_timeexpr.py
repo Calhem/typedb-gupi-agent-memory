@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import pytest
 
@@ -129,3 +129,66 @@ def test_tense_is_read_at_the_phrase_in_the_original_text():
     vt, _, _ = _time({"end": "in June"}, text, OBS, notes, readings)
     assert vt.to_earliest == d(2026, 6)  # "due": the coming June, not last June
     assert readings[0]["explicit"] is False
+
+
+# --- Phase 8E: last Friday. 2023-05-08 is a Monday --------------------------------------------------------------
+
+def utc(y, m, day):
+    return datetime(y, m, day, 13, 0, tzinfo=timezone.utc)
+
+
+@pytest.mark.parametrize("phrase, said, day", [
+    ("last Friday", utc(2023, 5, 8), (2023, 5, 5)),         # Monday: the previous week's Friday
+    ("last Saturday", utc(2023, 5, 10), (2023, 5, 6)),      # Wednesday
+    ("last Tues", utc(2023, 5, 9), (2023, 5, 2)),           # the same weekday is a full week back
+    ("Last Fri", utc(2023, 5, 12), (2023, 5, 5)),           # Friday, and a capital
+    ("last Monday.", utc(2023, 5, 8), (2023, 5, 1)),
+    ("on last Thurs", utc(2023, 5, 11), (2023, 5, 4)),
+    ("last Sunday", utc(2023, 5, 7), (2023, 4, 30)),        # Sunday, across a month
+    ("last Friday", utc(2023, 3, 1), (2023, 2, 24)),        # across the end of February
+    ("last Thursday", utc(2024, 3, 4), (2024, 2, 29)),      # a leap day
+    ("last Saturday", utc(2024, 1, 1), (2023, 12, 30)),     # across a year
+])
+def test_a_settled_weekday_is_one_derived_day(phrase, said, day):
+    r = read(phrase, said)
+    assert (r.earliest.year, r.earliest.month, r.earliest.day) == day
+    assert r.latest - r.earliest == timedelta(days=1) and r.precision == "day"
+    assert r.explicit is False and r.assumption
+
+
+@pytest.mark.parametrize("phrase, said", [
+    ("last Monday", utc(2023, 5, 10)),      # Wednesday: this Monday, or the one before?
+    ("last Friday", utc(2023, 5, 13)),      # Saturday: yesterday, or eight days ago?
+    ("last Friday", utc(2023, 5, 14)),      # Sunday
+    ("last Sunday", utc(2023, 5, 8)),       # Monday: yesterday, in a week that starts on Sunday
+    ("last Sunday", utc(2023, 5, 13)),      # Saturday: the same doubt
+    ("last Wed", utc(2023, 5, 12)),
+])
+def test_a_weekday_with_two_readings_is_left_unread(phrase, said):
+    assert read(phrase, said) is None
+
+
+def test_every_day_of_a_week_is_decided_consistently():
+    for offset in range(7):
+        said = utc(2023, 5, 8) + timedelta(days=offset)
+        for name in ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"):
+            r = read(f"last {name}", said)
+            if r:
+                assert r.earliest < said and said - r.earliest <= timedelta(days=8)
+                assert r.earliest.strftime("%A").lower() == name
+
+
+@pytest.mark.parametrize("said", [utc(2023, 5, 8), utc(2023, 5, 12)])
+def test_last_weekend_is_saturday_and_sunday(said):
+    r = read("last weekend", said)
+    assert (r.earliest.day, r.latest.day, r.explicit) == (6, 8, False)
+
+
+@pytest.mark.parametrize("said", [utc(2023, 5, 13), utc(2023, 5, 14)])
+def test_during_a_weekend_last_weekend_is_left_unread(said):
+    assert read("last weekend", said) is None
+
+
+@pytest.mark.parametrize("text", ["last", "last fortnight", "last Fridays", "last friday night", "next Friday", "this Friday", "friday"])
+def test_nearby_phrases_are_not_guessed(text):
+    assert read(text, utc(2023, 5, 8)) is None

@@ -20,6 +20,9 @@ MONTHS = {name: i + 1 for i, name in enumerate(
 MONTHS.update({name[:3]: i for name, i in list(MONTHS.items())})
 MONTHS["sept"] = 9
 
+WEEKDAYS = {name: i for i, names in enumerate((("monday", "mon"), ("tuesday", "tue", "tues"), ("wednesday", "wed", "weds"),
+                                                ("thursday", "thu", "thur", "thurs"), ("friday", "fri"), ("saturday", "sat"),
+                                                ("sunday", "sun"))) for name in names}
 LEADING = re.compile(r"^(?:in|on|since|from|until|till|til|to|by|as of|during|starting|ending|at)\s+")
 ORDINAL = re.compile(r"(\d{1,2})(?:st|nd|rd|th)\b")
 PRECISION_RANK = {"instant": 0, "day": 1, "month": 2, "year": 3, "unknown": 4}
@@ -158,6 +161,11 @@ def read(expression, observed_at, direction=None):
     if text in ("last week", "the previous week"):
         monday = today - timedelta(days=today.weekday())
         return Reading(monday - timedelta(days=7), monday, "day", explicit=False)
+    if m := re.fullmatch(r"last ([a-z]+)", text):
+        if m.group(1) in WEEKDAYS:
+            return _last_weekday(WEEKDAYS[m.group(1)], today)
+        if m.group(1) == "weekend":
+            return _last_weekend(today)
     if text in ("this month",):
         return Reading(*_month_window(obs.year, obs.month), "month", explicit=False)
     if text in ("last month", "the previous month"):
@@ -168,6 +176,28 @@ def read(expression, observed_at, direction=None):
     if text in ("last year", "the previous year"):
         return Reading(_utc(obs.year - 1), _utc(obs.year), "year", explicit=False)
     return None
+
+
+def _settled(target, today):
+    """"Last Friday" said on a Wednesday can only mean the most recent Friday. Said on a Saturday it could be yesterday or
+    the Friday before, so it stays unread. Weeks start on Monday or Sunday depending on who is speaking, so the day must
+    fall in the previous week under both."""
+    return all((target + shift) % 7 >= (today.weekday() + shift) % 7 for shift in (0, 1))
+
+
+def _last_weekday(target, today):
+    if not _settled(target, today):
+        return None
+    start = today - timedelta(days=(today.weekday() - target - 1) % 7 + 1)
+    return Reading(start, start + timedelta(days=1), "day", "the most recent such day before the observation", explicit=False)
+
+
+def _last_weekend(today):
+    """The Saturday and Sunday before this week. Said during a weekend it could mean this one, so it stays unread."""
+    if today.weekday() >= 5:
+        return None
+    monday = today - timedelta(days=today.weekday())
+    return Reading(monday - timedelta(days=2), monday, "day", "the weekend before the observation's week", explicit=False)
 
 
 def _year_without_evidence(month, obs, direction, day=None):
