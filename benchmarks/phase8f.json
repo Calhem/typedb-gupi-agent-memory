@@ -1,0 +1,18 @@
+{
+  "_comment": "Phase 8F thresholds, fixed before any reader output existed. The conversation is the 8E development conversation. Readers are Claude agents, not human annotators.",
+  "conversation": "conv-30",
+  "alignment_dice": 0.5,
+  "thresholds": {
+    "mention_f1": 0.70,
+    "activity_f1": 0.60,
+    "adjusted_rand": 0.70,
+    "bcubed_f1": 0.75,
+    "role_kappa": 0.60,
+    "link_kappa": 0.40,
+    "final_state_kappa": 0.60,
+    "max_merge_rate": 0.15,
+    "max_invented_continuity": 0,
+    "min_valid_evidence": 0.98,
+    "max_correction_share": 0.30
+  }
+}
