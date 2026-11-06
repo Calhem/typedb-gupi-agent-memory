@@ -1,0 +1,157 @@
+{
+ "note": "Post-hoc. Ideas formed after seeing the results; not part of the frozen decision.",
+ "computed_final_states": {
+  "A": {
+   "unknown": 45,
+   "ended": 2
+  },
+  "B": {
+   "unknown": 38,
+   "ended": 3
+  },
+  "C1": {
+   "unknown": 18,
+   "ended": 4
+  },
+  "C2": {
+   "unknown": 16,
+   "ended": 6
+  }
+ },
+ "negated_mentions": {
+  "A": 3,
+  "B": 3,
+  "C1": 0,
+  "C2": 0
+ },
+ "classifier_contradictions": {
+  "A": 0,
+  "B": 0,
+  "C1": 0,
+  "C2": 0
+ },
+ "large_activities_only": {
+  "A|B": {
+   "activities": [
+    30,
+    16
+   ],
+   "aligned": 15,
+   "activity_f1": 0.6522,
+   "adjusted_rand": 0.9776,
+   "bcubed": [
+    0.982,
+    0.9775,
+    0.9797
+   ],
+   "mention_f1": 0.5968
+  },
+  "A|C1": {
+   "activities": [
+    30,
+    11
+   ],
+   "aligned": 10,
+   "activity_f1": 0.4878,
+   "adjusted_rand": 0.8693,
+   "bcubed": [
+    0.8616,
+    0.9713,
+    0.9132
+   ],
+   "mention_f1": 0.5169
+  },
+  "A|C2": {
+   "activities": [
+    30,
+    11
+   ],
+   "aligned": 10,
+   "activity_f1": 0.4878,
+   "adjusted_rand": 0.7268,
+   "bcubed": [
+    0.7666,
+    0.9189,
+    0.8359
+   ],
+   "mention_f1": 0.521
+  },
+  "B|C1": {
+   "activities": [
+    16,
+    11
+   ],
+   "aligned": 11,
+   "activity_f1": 0.8148,
+   "adjusted_rand": 0.9653,
+   "bcubed": [
+    0.9515,
+    1.0,
+    0.9752
+   ],
+   "mention_f1": 0.7857
+  },
+  "B|C2": {
+   "activities": [
+    16,
+    11
+   ],
+   "aligned": 9,
+   "activity_f1": 0.6667,
+   "adjusted_rand": 0.8402,
+   "bcubed": [
+    0.8754,
+    0.9275,
+    0.9007
+   ],
+   "mention_f1": 0.6479
+  },
+  "C1|C2": {
+   "activities": [
+    11,
+    11
+   ],
+   "aligned": 9,
+   "activity_f1": 0.8182,
+   "adjusted_rand": 0.8635,
+   "bcubed": [
+    0.9278,
+    0.9278,
+    0.9278
+   ],
+   "mention_f1": 0.7385
+  }
+ },
+ "computed_state_agreement": {
+  "A|B": {
+   "aligned": 36,
+   "agree": 0.9722,
+   "kappa": 0.7857
+  },
+  "A|C1": {
+   "aligned": 20,
+   "agree": 0.8,
+   "kappa": 0.2308
+  },
+  "A|C2": {
+   "aligned": 19,
+   "agree": 0.8421,
+   "kappa": 0.4956
+  },
+  "B|C1": {
+   "aligned": 20,
+   "agree": 0.75,
+   "kappa": 0.1379
+  },
+  "B|C2": {
+   "aligned": 18,
+   "agree": 0.7778,
+   "kappa": 0.3684
+  },
+  "C1|C2": {
+   "aligned": 16,
+   "agree": 0.8125,
+   "kappa": 0.5385
+  }
+ }
+}

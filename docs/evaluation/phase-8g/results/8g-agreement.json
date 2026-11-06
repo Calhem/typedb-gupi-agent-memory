@@ -1,0 +1,259 @@
+{
+ "note": "Agreement among Claude-produced ledgers. Not accuracy; no human reference exists.",
+ "evidence": {
+  "A": {
+   "mentions": 196,
+   "invalid": 0,
+   "valid_share": 1.0,
+   "why": {}
+  },
+  "B": {
+   "mentions": 116,
+   "invalid": 0,
+   "valid_share": 1.0,
+   "why": {}
+  },
+  "C1": {
+   "mentions": 79,
+   "invalid": 0,
+   "valid_share": 1.0,
+   "why": {}
+  },
+  "C2": {
+   "mentions": 84,
+   "invalid": 0,
+   "valid_share": 1.0,
+   "why": {}
+  }
+ },
+ "pairs": {
+  "A|B": {
+   "mentions": [
+    196,
+    116
+   ],
+   "matched": 112,
+   "mention_f1": 0.7179,
+   "activities": [
+    47,
+    41
+   ],
+   "aligned": 36,
+   "activity_f1": 0.8182,
+   "adjusted_rand": 0.9554,
+   "bcubed": [
+    0.9881,
+    0.9564,
+    0.972
+   ],
+   "role_kappa": 0.7882,
+   "role_exact": 0.8393,
+   "link_kappa": 0.3045,
+   "final_state_kappa": 0.1562,
+   "final_state_agree": 0.6667,
+   "merged_by_second": 0,
+   "merged_by_first": 0,
+   "merge_rate": 0.0,
+   "contradictions": [
+    10,
+    6
+   ],
+   "contradictions_shared": 6
+  },
+  "A|C1": {
+   "mentions": [
+    196,
+    79
+   ],
+   "matched": 76,
+   "mention_f1": 0.5527,
+   "activities": [
+    47,
+    22
+   ],
+   "aligned": 20,
+   "activity_f1": 0.5797,
+   "adjusted_rand": 0.8698,
+   "bcubed": [
+    0.8801,
+    0.9638,
+    0.9201
+   ],
+   "role_kappa": 0.8497,
+   "role_exact": 0.8684,
+   "link_kappa": 0.3107,
+   "final_state_kappa": 0.0,
+   "final_state_agree": 0.9,
+   "merged_by_second": 2,
+   "merged_by_first": 0,
+   "merge_rate": 0.029,
+   "contradictions": [
+    10,
+    5
+   ],
+   "contradictions_shared": 5
+  },
+  "A|C2": {
+   "mentions": [
+    196,
+    84
+   ],
+   "matched": 75,
+   "mention_f1": 0.5357,
+   "activities": [
+    47,
+    22
+   ],
+   "aligned": 19,
+   "activity_f1": 0.5507,
+   "adjusted_rand": 0.7363,
+   "bcubed": [
+    0.7937,
+    0.933,
+    0.8577
+   ],
+   "role_kappa": 0.6182,
+   "role_exact": 0.7067,
+   "link_kappa": -0.1111,
+   "final_state_kappa": -0.1271,
+   "final_state_agree": 0.6316,
+   "merged_by_second": 2,
+   "merged_by_first": 0,
+   "merge_rate": 0.029,
+   "contradictions": [
+    10,
+    5
+   ],
+   "contradictions_shared": 5
+  },
+  "B|C1": {
+   "mentions": [
+    116,
+    79
+   ],
+   "matched": 74,
+   "mention_f1": 0.759,
+   "activities": [
+    41,
+    22
+   ],
+   "aligned": 20,
+   "activity_f1": 0.6349,
+   "adjusted_rand": 0.8449,
+   "bcubed": [
+    0.8642,
+    0.9583,
+    0.9088
+   ],
+   "role_kappa": 0.7032,
+   "role_exact": 0.7568,
+   "link_kappa": 0.3532,
+   "final_state_kappa": 0.0,
+   "final_state_agree": 0.45,
+   "merged_by_second": 2,
+   "merged_by_first": 0,
+   "merge_rate": 0.0317,
+   "contradictions": [
+    6,
+    5
+   ],
+   "contradictions_shared": 4
+  },
+  "B|C2": {
+   "mentions": [
+    116,
+    84
+   ],
+   "matched": 66,
+   "mention_f1": 0.66,
+   "activities": [
+    41,
+    22
+   ],
+   "aligned": 18,
+   "activity_f1": 0.5714,
+   "adjusted_rand": 0.7249,
+   "bcubed": [
+    0.7917,
+    0.9495,
+    0.8634
+   ],
+   "role_kappa": 0.7212,
+   "role_exact": 0.803,
+   "link_kappa": 0.201,
+   "final_state_kappa": 0.2131,
+   "final_state_agree": 0.5556,
+   "merged_by_second": 2,
+   "merged_by_first": 0,
+   "merge_rate": 0.0317,
+   "contradictions": [
+    6,
+    5
+   ],
+   "contradictions_shared": 3
+  },
+  "C1|C2": {
+   "mentions": [
+    79,
+    84
+   ],
+   "matched": 58,
+   "mention_f1": 0.7117,
+   "activities": [
+    22,
+    22
+   ],
+   "aligned": 16,
+   "activity_f1": 0.7273,
+   "adjusted_rand": 0.8501,
+   "bcubed": [
+    0.9173,
+    0.9173,
+    0.9173
+   ],
+   "role_kappa": 0.6994,
+   "role_exact": 0.7414,
+   "link_kappa": 0.2633,
+   "final_state_kappa": 0.0,
+   "final_state_agree": 0.75,
+   "merged_by_second": 0,
+   "merged_by_first": 0,
+   "merge_rate": 0.0,
+   "contradictions": [
+    5,
+    5
+   ],
+   "contradictions_shared": 4
+  }
+ },
+ "invented_continuity": {
+  "A": 0,
+  "B": 11,
+  "C1": 0,
+  "C2": 5
+ },
+ "against_reader_agreement": {
+  "C1": {
+   "agreed_mentions": 112,
+   "mentions_recovered": 71,
+   "mention_recall": 0.6339,
+   "agreed_links": 177,
+   "links_recovered": 116,
+   "link_recall": 0.6554,
+   "agreed_separations": 6023,
+   "separations_broken": 23,
+   "false_merge_rate": 0.0038
+  },
+  "C2": {
+   "agreed_mentions": 112,
+   "mentions_recovered": 64,
+   "mention_recall": 0.5714,
+   "agreed_links": 177,
+   "links_recovered": 75,
+   "link_recall": 0.4237,
+   "agreed_separations": 6023,
+   "separations_broken": 37,
+   "false_merge_rate": 0.0061
+  }
+ }
+}

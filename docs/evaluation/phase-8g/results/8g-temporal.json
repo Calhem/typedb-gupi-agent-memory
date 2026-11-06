@@ -1,0 +1,259 @@
+{
+ "note": "Reference is agreement between two blind Claude judges. Not gold, and not a human reading.",
+ "judges": {
+  "cases": 132,
+  "both_answered": 132,
+  "agree": 71,
+  "kappa": 0.2709,
+  "reference_states": {
+   "unknown": 40,
+   "engaged": 26,
+   "ended": 5
+  }
+ },
+ "accuracy": {
+  "A": {
+   "written": {
+    "n": 26,
+    "correct": 19,
+    "unsafe": 1,
+    "wrong_way": 0,
+    "missed": 6
+   },
+   "computed": {
+    "n": 26,
+    "correct": 17,
+    "unsafe": 1,
+    "wrong_way": 0,
+    "missed": 8
+   },
+   "computed_at_end": {
+    "n": 26,
+    "correct": 17,
+    "unsafe": 1,
+    "wrong_way": 0,
+    "missed": 8
+   },
+   "not_one_activity": 0,
+   "decided": 26,
+   "activities": 47
+  },
+  "B": {
+   "written": {
+    "n": 26,
+    "correct": 24,
+    "unsafe": 0,
+    "wrong_way": 0,
+    "missed": 2
+   },
+   "computed": {
+    "n": 26,
+    "correct": 17,
+    "unsafe": 1,
+    "wrong_way": 0,
+    "missed": 8
+   },
+   "computed_at_end": {
+    "n": 26,
+    "correct": 17,
+    "unsafe": 1,
+    "wrong_way": 0,
+    "missed": 8
+   },
+   "not_one_activity": 0,
+   "decided": 26,
+   "activities": 41
+  },
+  "C1": {
+   "written": {
+    "n": 10,
+    "correct": 4,
+    "unsafe": 0,
+    "wrong_way": 0,
+    "missed": 6
+   },
+   "computed": {
+    "n": 10,
+    "correct": 5,
+    "unsafe": 0,
+    "wrong_way": 2,
+    "missed": 3
+   },
+   "computed_at_end": {
+    "n": 10,
+    "correct": 5,
+    "unsafe": 0,
+    "wrong_way": 2,
+    "missed": 3
+   },
+   "not_one_activity": 0,
+   "decided": 10,
+   "activities": 22
+  },
+  "C2": {
+   "written": {
+    "n": 9,
+    "correct": 4,
+    "unsafe": 0,
+    "wrong_way": 0,
+    "missed": 5
+   },
+   "computed": {
+    "n": 9,
+    "correct": 1,
+    "unsafe": 1,
+    "wrong_way": 3,
+    "missed": 4
+   },
+   "computed_at_end": {
+    "n": 9,
+    "correct": 1,
+    "unsafe": 1,
+    "wrong_way": 3,
+    "missed": 4
+   },
+   "not_one_activity": 0,
+   "decided": 9,
+   "activities": 22
+  }
+ },
+ "computed_states": {
+  "A": {
+   "unknown": 45,
+   "ended": 2
+  },
+  "B": {
+   "unknown": 38,
+   "ended": 3
+  },
+  "C1": {
+   "unknown": 18,
+   "ended": 4
+  },
+  "C2": {
+   "unknown": 16,
+   "ended": 6
+  }
+ },
+ "written_states": {
+  "A": {
+   "unknown": 43,
+   "ended": 3,
+   "engaged": 1
+  },
+  "B": {
+   "engaged": 11,
+   "unknown": 28,
+   "ended": 2
+  },
+  "C1": {
+   "unknown": 22
+  },
+  "C2": {
+   "unknown": 17,
+   "engaged": 5
+  }
+ },
+ "pairs": {
+  "A|B": {
+   "aligned": 36,
+   "both_agree": 23,
+   "gained": 12,
+   "gained_correct_by_default": 1,
+   "gained_incorrect": 5,
+   "gained_undecided": 6,
+   "lost": 1
+  },
+  "A|C1": {
+   "aligned": 20,
+   "both_agree": 15,
+   "gained": 1,
+   "gained_correct_same_evidence": 1,
+   "lost": 3,
+   "neither": 1
+  },
+  "A|C2": {
+   "aligned": 19,
+   "both_agree": 10,
+   "gained": 6,
+   "gained_incorrect": 3,
+   "gained_undecided": 3,
+   "lost": 2,
+   "neither": 1
+  },
+  "B|C1": {
+   "aligned": 20,
+   "both_agree": 6,
+   "gained": 9,
+   "gained_correct_same_evidence": 1,
+   "gained_incorrect": 3,
+   "gained_undecided": 5,
+   "lost": 3,
+   "neither": 2
+  },
+  "B|C2": {
+   "aligned": 18,
+   "both_agree": 8,
+   "gained": 6,
+   "gained_undecided": 6,
+   "lost": 2,
+   "neither": 2
+  },
+  "C1|C2": {
+   "aligned": 16,
+   "both_agree": 9,
+   "gained": 4,
+   "gained_incorrect": 1,
+   "gained_undecided": 3,
+   "lost": 3
+  }
+ },
+ "burden": {
+  "A": {
+   "activities": 47,
+   "not_same": 18,
+   "contradictions": 10,
+   "review": 12,
+   "items": 87,
+   "per_100_turns": 20.8,
+   "inferred": 1
+  },
+  "B": {
+   "activities": 41,
+   "not_same": 15,
+   "contradictions": 6,
+   "review": 8,
+   "items": 70,
+   "per_100_turns": 16.7,
+   "inferred": 1
+  },
+  "C1": {
+   "activities": 22,
+   "not_same": 8,
+   "contradictions": 5,
+   "review": 14,
+   "items": 49,
+   "per_100_turns": 11.7,
+   "inferred": 3
+  },
+  "C2": {
+   "activities": 22,
+   "not_same": 4,
+   "contradictions": 5,
+   "review": 11,
+   "items": 42,
+   "per_100_turns": 10.0,
+   "inferred": 2
+  }
+ },
+ "contradictions": {
+  "reports": 26,
+  "distinct": 9,
+  "by_number_of_ledgers": {
+   "1": 3,
+   "2": 2,
+   "3": 2,
+   "4": 2
+  }
+ }
+}

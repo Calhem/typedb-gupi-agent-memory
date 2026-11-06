@@ -1,0 +1,332 @@
+{
+ "note": "Reference is agreement between two blind Claude judges. Not gold, and not a human reading.",
+ "judges": {
+  "cases": 104,
+  "both_answered": 104,
+  "agree": 88,
+  "kappa": 0.778,
+  "reference_states": {
+   "engaged": 35,
+   "contradictory": 5,
+   "ended": 20,
+   "unknown": 28
+  }
+ },
+ "accuracy": {
+  "A": {
+   "written": {
+    "n": 16,
+    "correct": 8,
+    "unsafe": 0,
+    "wrong_way": 0,
+    "missed": 7
+   },
+   "computed": {
+    "n": 16,
+    "correct": 8,
+    "unsafe": 0,
+    "wrong_way": 0,
+    "missed": 7
+   },
+   "computed_at_end": {
+    "n": 16,
+    "correct": 8,
+    "unsafe": 0,
+    "wrong_way": 0,
+    "missed": 7
+   },
+   "not_one_activity": 0,
+   "decided": 16,
+   "activities": 17
+  },
+  "B": {
+   "written": {
+    "n": 24,
+    "correct": 18,
+    "unsafe": 0,
+    "wrong_way": 0,
+    "missed": 5
+   },
+   "computed": {
+    "n": 24,
+    "correct": 15,
+    "unsafe": 0,
+    "wrong_way": 0,
+    "missed": 8
+   },
+   "computed_at_end": {
+    "n": 24,
+    "correct": 15,
+    "unsafe": 0,
+    "wrong_way": 0,
+    "missed": 8
+   },
+   "not_one_activity": 0,
+   "decided": 24,
+   "activities": 27
+  },
+  "C1": {
+   "written": {
+    "n": 15,
+    "correct": 9,
+    "unsafe": 0,
+    "wrong_way": 0,
+    "missed": 5
+   },
+   "computed": {
+    "n": 15,
+    "correct": 7,
+    "unsafe": 0,
+    "wrong_way": 1,
+    "missed": 6
+   },
+   "computed_at_end": {
+    "n": 15,
+    "correct": 7,
+    "unsafe": 0,
+    "wrong_way": 1,
+    "missed": 6
+   },
+   "not_one_activity": 0,
+   "decided": 15,
+   "activities": 16
+  },
+  "C2": {
+   "written": {
+    "n": 8,
+    "correct": 5,
+    "unsafe": 0,
+    "wrong_way": 0,
+    "missed": 3
+   },
+   "computed": {
+    "n": 8,
+    "correct": 3,
+    "unsafe": 0,
+    "wrong_way": 2,
+    "missed": 3
+   },
+   "computed_at_end": {
+    "n": 8,
+    "correct": 3,
+    "unsafe": 0,
+    "wrong_way": 2,
+    "missed": 3
+   },
+   "not_one_activity": 0,
+   "decided": 8,
+   "activities": 9
+  },
+  "A-control": {
+   "written": {
+    "n": 25,
+    "correct": 21,
+    "unsafe": 0,
+    "wrong_way": 0,
+    "missed": 4
+   },
+   "computed": {
+    "n": 25,
+    "correct": 14,
+    "unsafe": 0,
+    "wrong_way": 0,
+    "missed": 11
+   },
+   "computed_at_end": {
+    "n": 25,
+    "correct": 14,
+    "unsafe": 0,
+    "wrong_way": 0,
+    "missed": 11
+   },
+   "not_one_activity": 0,
+   "decided": 25,
+   "activities": 35
+  }
+ },
+ "computed_states": {
+  "A": {
+   "unknown": 12,
+   "contradictory": 1,
+   "ended": 4
+  },
+  "B": {
+   "unknown": 22,
+   "ended": 5
+  },
+  "C1": {
+   "unknown": 12,
+   "ended": 4
+  },
+  "C2": {
+   "unknown": 5,
+   "ended": 4
+  },
+  "A-control": {
+   "ended": 5,
+   "unknown": 29,
+   "contradictory": 1
+  }
+ },
+ "written_states": {
+  "A": {
+   "unknown": 12,
+   "contradictory": 1,
+   "ended": 4
+  },
+  "B": {
+   "contradictory": 1,
+   "engaged": 3,
+   "unknown": 17,
+   "ended": 6
+  },
+  "C1": {
+   "contradictory": 3,
+   "engaged": 2,
+   "ended": 2,
+   "unknown": 9
+  },
+  "C2": {
+   "contradictory": 1,
+   "engaged": 2,
+   "ended": 2,
+   "unknown": 4
+  },
+  "A-control": {
+   "ended": 9,
+   "engaged": 6,
+   "contradictory": 1,
+   "unknown": 19
+  }
+ },
+ "pairs": {
+  "A|B": {
+   "aligned": 13,
+   "both_agree": 10,
+   "gained": 2,
+   "gained_incorrect": 2,
+   "lost": 1
+  },
+  "A|C1": {
+   "aligned": 13,
+   "both_agree": 7,
+   "gained": 5,
+   "gained_correct_same_evidence": 1,
+   "gained_incorrect": 2,
+   "gained_undecided": 2,
+   "neither": 1
+  },
+  "A|C2": {
+   "aligned": 9,
+   "both_agree": 5,
+   "gained": 2,
+   "gained_incorrect": 1,
+   "gained_undecided": 1,
+   "lost": 1,
+   "neither": 1
+  },
+  "A|A-control": {
+   "aligned": 14,
+   "both_agree": 11,
+   "gained": 3,
+   "gained_incorrect": 3
+  },
+  "B|C1": {
+   "aligned": 15,
+   "both_agree": 12,
+   "gained": 2,
+   "gained_correct_same_evidence": 1,
+   "gained_undecided": 1,
+   "neither": 1
+  },
+  "B|C2": {
+   "aligned": 6,
+   "both_agree": 6
+  },
+  "B|A-control": {
+   "aligned": 21,
+   "both_agree": 16,
+   "gained": 5,
+   "gained_incorrect": 5
+  },
+  "C1|C2": {
+   "aligned": 9,
+   "both_agree": 7,
+   "gained": 1,
+   "gained_incorrect": 1,
+   "lost": 1
+  },
+  "C1|A-control": {
+   "aligned": 14,
+   "both_agree": 9,
+   "gained": 4,
+   "gained_correct_same_evidence": 1,
+   "gained_incorrect": 2,
+   "gained_undecided": 1,
+   "neither": 1
+  },
+  "C2|A-control": {
+   "aligned": 6,
+   "both_agree": 4,
+   "gained": 1,
+   "gained_undecided": 1,
+   "lost": 1
+  }
+ },
+ "burden": {
+  "A": {
+   "activities": 17,
+   "not_same": 5,
+   "contradictions": 1,
+   "review": 5,
+   "items": 28,
+   "per_100_turns": 7.6,
+   "inferred": 0
+  },
+  "B": {
+   "activities": 27,
+   "not_same": 10,
+   "contradictions": 3,
+   "review": 6,
+   "items": 46,
+   "per_100_turns": 12.5,
+   "inferred": 0
+  },
+  "C1": {
+   "activities": 16,
+   "not_same": 6,
+   "contradictions": 5,
+   "review": 8,
+   "items": 35,
+   "per_100_turns": 9.5,
+   "inferred": 1
+  },
+  "C2": {
+   "activities": 9,
+   "not_same": 2,
+   "contradictions": 5,
+   "review": 6,
+   "items": 22,
+   "per_100_turns": 6.0,
+   "inferred": 1
+  },
+  "A-control": {
+   "activities": 35,
+   "not_same": 19,
+   "contradictions": 10,
+   "review": 11,
+   "items": 75,
+   "per_100_turns": 20.3,
+   "inferred": 1
+  }
+ },
+ "contradictions": {
+  "reports": 24,
+  "distinct": 3,
+  "by_number_of_ledgers": {
+   "2": 1,
+   "4": 1,
+   "5": 1
+  }
+ }
+}

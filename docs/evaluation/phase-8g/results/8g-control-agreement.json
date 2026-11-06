@@ -1,0 +1,261 @@
+{
+ "note": "Agreement among Claude-produced ledgers. Not accuracy; no human reference exists.",
+ "evidence": {
+  "A-control": {
+   "mentions": 171,
+   "invalid": 3,
+   "valid_share": 0.9825,
+   "why": {
+    "another person's words": 3
+   }
+  },
+  "B": {
+   "mentions": 73,
+   "invalid": 0,
+   "valid_share": 1.0,
+   "why": {}
+  },
+  "C1": {
+   "mentions": 72,
+   "invalid": 0,
+   "valid_share": 1.0,
+   "why": {}
+  },
+  "C2": {
+   "mentions": 47,
+   "invalid": 0,
+   "valid_share": 1.0,
+   "why": {}
+  }
+ },
+ "pairs": {
+  "A-control|B": {
+   "mentions": [
+    168,
+    73
+   ],
+   "matched": 69,
+   "mention_f1": 0.5726,
+   "activities": [
+    35,
+    27
+   ],
+   "aligned": 21,
+   "activity_f1": 0.6774,
+   "adjusted_rand": 0.64,
+   "bcubed": [
+    0.7791,
+    0.8729,
+    0.8234
+   ],
+   "role_kappa": 0.902,
+   "role_exact": 0.913,
+   "link_kappa": 0.0839,
+   "final_state_kappa": 0.5494,
+   "final_state_agree": 0.7619,
+   "merged_by_second": 2,
+   "merged_by_first": 0,
+   "merge_rate": 0.0323,
+   "contradictions": [
+    10,
+    3
+   ],
+   "contradictions_shared": 7
+  },
+  "A-control|C1": {
+   "mentions": [
+    168,
+    72
+   ],
+   "matched": 69,
+   "mention_f1": 0.575,
+   "activities": [
+    35,
+    16
+   ],
+   "aligned": 14,
+   "activity_f1": 0.549,
+   "adjusted_rand": 0.7461,
+   "bcubed": [
+    0.7635,
+    0.9278,
+    0.8376
+   ],
+   "role_kappa": 0.8344,
+   "role_exact": 0.8841,
+   "link_kappa": 0.2898,
+   "final_state_kappa": 0.3913,
+   "final_state_agree": 0.6429,
+   "merged_by_second": 2,
+   "merged_by_first": 0,
+   "merge_rate": 0.0392,
+   "contradictions": [
+    10,
+    5
+   ],
+   "contradictions_shared": 7
+  },
+  "A-control|C2": {
+   "mentions": [
+    168,
+    47
+   ],
+   "matched": 46,
+   "mention_f1": 0.4279,
+   "activities": [
+    35,
+    9
+   ],
+   "aligned": 6,
+   "activity_f1": 0.2727,
+   "adjusted_rand": 0.7081,
+   "bcubed": [
+    0.681,
+    0.971,
+    0.8005
+   ],
+   "role_kappa": 0.7638,
+   "role_exact": 0.7609,
+   "link_kappa": 0.2333,
+   "final_state_kappa": 0.75,
+   "final_state_agree": 0.8333,
+   "merged_by_second": 0,
+   "merged_by_first": 0,
+   "merge_rate": 0.0,
+   "contradictions": [
+    10,
+    5
+   ],
+   "contradictions_shared": 6
+  },
+  "B|C1": {
+   "mentions": [
+    73,
+    72
+   ],
+   "matched": 55,
+   "mention_f1": 0.7586,
+   "activities": [
+    27,
+    16
+   ],
+   "aligned": 15,
+   "activity_f1": 0.6977,
+   "adjusted_rand": 0.7755,
+   "bcubed": [
+    0.8455,
+    0.9101,
+    0.8766
+   ],
+   "role_kappa": 0.7923,
+   "role_exact": 0.8364,
+   "link_kappa": 0.0279,
+   "final_state_kappa": 0.6918,
+   "final_state_agree": 0.8,
+   "merged_by_second": 1,
+   "merged_by_first": 1,
+   "merge_rate": 0.0465,
+   "contradictions": [
+    3,
+    5
+   ],
+   "contradictions_shared": 2
+  },
+  "B|C2": {
+   "mentions": [
+    73,
+    47
+   ],
+   "matched": 36,
+   "mention_f1": 0.6,
+   "activities": [
+    27,
+    9
+   ],
+   "aligned": 6,
+   "activity_f1": 0.3333,
+   "adjusted_rand": 0.6922,
+   "bcubed": [
+    0.7457,
+    0.9167,
+    0.8224
+   ],
+   "role_kappa": 0.7709,
+   "role_exact": 0.8056,
+   "link_kappa": 0.1127,
+   "final_state_kappa": 1.0,
+   "final_state_agree": 1.0,
+   "merged_by_second": 1,
+   "merged_by_first": 1,
+   "merge_rate": 0.0556,
+   "contradictions": [
+    3,
+    5
+   ],
+   "contradictions_shared": 2
+  },
+  "C1|C2": {
+   "mentions": [
+    72,
+    47
+   ],
+   "matched": 40,
+   "mention_f1": 0.6723,
+   "activities": [
+    16,
+    9
+   ],
+   "aligned": 9,
+   "activity_f1": 0.72,
+   "adjusted_rand": 0.9141,
+   "bcubed": [
+    0.9125,
+    1.0,
+    0.9542
+   ],
+   "role_kappa": 0.8544,
+   "role_exact": 0.85,
+   "link_kappa": 0.28,
+   "final_state_kappa": 0.8475,
+   "final_state_agree": 0.8889,
+   "merged_by_second": 0,
+   "merged_by_first": 0,
+   "merge_rate": 0.0,
+   "contradictions": [
+    5,
+    5
+   ],
+   "contradictions_shared": 4
+  }
+ },
+ "invented_continuity": {
+  "A-control": 4,
+  "B": 1,
+  "C1": 1,
+  "C2": 1
+ },
+ "against_reader_agreement": {
+  "C1": {
+   "agreed_mentions": 69,
+   "mentions_recovered": 52,
+   "mention_recall": 0.7536,
+   "agreed_links": 79,
+   "links_recovered": 59,
+   "link_recall": 0.7468,
+   "agreed_separations": 2185,
+   "separations_broken": 23,
+   "false_merge_rate": 0.0105
+  },
+  "C2": {
+   "agreed_mentions": 69,
+   "mentions_recovered": 35,
+   "mention_recall": 0.5072,
+   "agreed_links": 79,
+   "links_recovered": 41,
+   "link_recall": 0.519,
+   "agreed_separations": 2185,
+   "separations_broken": 23,
+   "false_merge_rate": 0.0105
+  }
+ }
+}

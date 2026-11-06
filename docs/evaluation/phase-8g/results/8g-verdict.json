@@ -1,0 +1,39 @@
+{
+ "criteria": {
+  "1_reproducible": {
+   "mention_f1": true,
+   "activity_f1": true,
+   "adjusted_rand": true,
+   "bcubed_f1": true
+  },
+  "2_merges_continuity": {
+   "merge_rate": true,
+   "invented_continuity": false
+  },
+  "3_provenance": {
+   "valid_evidence": true
+  },
+  "4_temporal_ambiguity": {
+   "final_state_kappa": false,
+   "shared_conflict": true
+  },
+  "5_automation": {
+   "automated_reaches_readers": false,
+   "correction_share": false
+  }
+ },
+ "passed": {
+  "1_reproducible": true,
+  "2_merges_continuity": false,
+  "3_provenance": true,
+  "4_temporal_ambiguity": false,
+  "5_automation": false
+ },
+ "automated_reaching_readers": [],
+ "correction_share": {
+  "A|C1": 0.1818,
+  "B|C1": 0.1818,
+  "A|C2": 0.2273,
+  "B|C2": 0.2727
+ }
+}

@@ -13,7 +13,7 @@ Numbers: [agreement](results/8f-agreement.json), [post-hoc](results/8f-post-hoc.
 
 **Isolation.** Each agent's tool calls were audited from its transcript. Each read only its own folder and wrote only its own ledger. No agent saw another's output.
 
-**A disclosed leak path, closed.** Agents automatically receive my memory index. I had removed the line mentioning the Phase 8E conclusion before they ran, and the audit confirmed nothing else related arrived. Had I not done that, the blind would have been broken.
+**A disclosed leak path.** Agents automatically receive my memory index. *Corrected in Phase 8G:* I had removed the line mentioning the Phase 8E conclusion, but subagents receive a cached copy, so that made no difference. These agents were clean because their cached copy was older and held no conclusion, which their transcripts confirm.
 
 **A known bias.** I wrote the annotation scheme, so all readers share its vocabulary. And C1 and C2 share one specification, which helps them agree.
 
@@ -90,7 +90,7 @@ There is no defensible gold. The floor is **what A and B agree on**: 55 mentions
 **Ideas formed after seeing results, and outside the frozen decision.**
 | Idea | Result | |
 |---|---|---|
-| **Let the classifier compute final state, ignoring the reader's** | state kappa, A with C1, rises from 0.24 to 0.81; A with C2, from 0.45 to 0.53. Invented continuity is 0 by construction | **strong** |
+| **Let the classifier compute final state, ignoring the reader's** *(withdrawn: Phase 8G found this agreement mostly mechanical, not correct)* | state kappa, A with C1, rises from 0.24 to 0.81; A with C2, from 0.45 to 0.53. Invented continuity is 0 by construction | **strong** |
 | **Only compare activities of 3 or more mentions** | A with B stays at adjusted Rand 0.52 | **refuted**: granularity isn't confined to small activities |
 
 ## Temporal contradictions
