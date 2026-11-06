@@ -1,0 +1,18 @@
+{
+  "_comment": "Phase 8C frozen run settings. Committed before any model reply exists. A change after a paid run starts needs a new prompt version or a recorded amendment.",
+  "development": ["conv-26", "conv-30"],
+  "evaluation": ["conv-41", "conv-42"],
+  "k": [5, 10, 100],
+  "budget": {"pool": 100, "keep": 3, "window": 1, "seeds": 5, "hops": 2, "max_paths": 50, "hub": 100},
+  "estimate": {"chars_per_token": 4, "completion_tokens_typical": 250, "completion_tokens_high": 600},
+  "gates": {
+    "smoke":   {"conversations": ["conv-26"], "turns": 40,   "cap_usd": 0.10},
+    "pilot":   {"conversations": ["conv-26", "conv-30"], "turns": null, "cap_usd": 1.00},
+    "frozen":  {"conversations": ["conv-41", "conv-42"], "turns": null, "cap_usd": 1.50}
+  },
+  "decision": {"minimum_gain_points": 5, "bootstrap_samples": 10000, "seed": 8, "confidence": 0.95},
+  "stop": {
+    "max_failure_rate": 0.05, "check_after": 20, "max_consecutive_errors": 3,
+    "max_unusable_share": 0.30, "min_connected_claim_share": 0.10
+  }
+}

@@ -1,0 +1,1240 @@
+{
+ "format": "gupi.phase8c-frozen/1",
+ "source": "LoCoMo held-out conversations, first two in sorted order",
+ "corpus_sha256": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
+ "conversations": [
+  "conv-41",
+  "conv-42"
+ ],
+ "rule": "The selection rule, from the dataset's own labels only: 1 multi-hop with evidence in two or more sessions; 2\ntemporal with any evidence. Nothing about GUPI, and no system's output, can affect it.",
+ "items": [
+  {
+   "id": "conv-41:q0",
+   "stratum": "temporal",
+   "question_sha256": "62c47e0d61485f7124f92d2d383cdbf05ad65ff95f942b27ead36bacf548c9a2",
+   "gold_turns": [
+    "D13:16"
+   ]
+  },
+  {
+   "id": "conv-41:q1",
+   "stratum": "temporal",
+   "question_sha256": "cb8484e8f62f5ffe4d4b8b53b3ad385c91eeeaba6371412a0bee880d49949484",
+   "gold_turns": [
+    "D2:1"
+   ]
+  },
+  {
+   "id": "conv-41:q2",
+   "stratum": "multi-hop",
+   "question_sha256": "6d19412c589817768529a9340d088fc0f1b82b12c72d51ac018d5797b85f4bde",
+   "gold_turns": [
+    "D1:4",
+    "D2:28"
+   ]
+  },
+  {
+   "id": "conv-41:q3",
+   "stratum": "multi-hop",
+   "question_sha256": "d4159fd00b28554e4eb9bab42c8e83c8eae3def1f9af85d34ad57223fee6ef09",
+   "gold_turns": [
+    "D2:1",
+    "D3:5"
+   ]
+  },
+  {
+   "id": "conv-41:q4",
+   "stratum": "temporal",
+   "question_sha256": "d027373f679fd150e44e19bba9f9b81a32794e17a4efe64e31f23c98558b1f81",
+   "gold_turns": [
+    "D3:1"
+   ]
+  },
+  {
+   "id": "conv-41:q5",
+   "stratum": "temporal",
+   "question_sha256": "d111d486605ab1cf5a0bfb8fc61248d8d9c8289b70d1673cfe67474ed6edc20f",
+   "gold_turns": [
+    "D3:15"
+   ]
+  },
+  {
+   "id": "conv-41:q6",
+   "stratum": "multi-hop",
+   "question_sha256": "1cb0e4bf11aa6c1f754d919a9cfb2081fdaf20a9690f9df21cb39ecf6a3231d5",
+   "gold_turns": [
+    "D14:10",
+    "D19:1",
+    "D2:1",
+    "D4:1"
+   ]
+  },
+  {
+   "id": "conv-41:q7",
+   "stratum": "multi-hop",
+   "question_sha256": "af309471f9dfd21c54219b96befe1a61d55959693c9cd780308e43440094a57a",
+   "gold_turns": [
+    "D3:15",
+    "D5:13"
+   ]
+  },
+  {
+   "id": "conv-41:q9",
+   "stratum": "multi-hop",
+   "question_sha256": "9e9816075713987040ee5ab5fc9154c3babf0e9616f63e892d1ebe514fb99f31",
+   "gold_turns": [
+    "D5:8",
+    "D6:9"
+   ]
+  },
+  {
+   "id": "conv-41:q10",
+   "stratum": "temporal",
+   "question_sha256": "66f45c45a4282f9a783161179db4a343d8ed2b71157797847503917473e9888e",
+   "gold_turns": [
+    "D7:1"
+   ]
+  },
+  {
+   "id": "conv-41:q11",
+   "stratum": "multi-hop",
+   "question_sha256": "ac31c5e5b721c31f9b037393221ecb689e9e512e1423ba079ec8ce501f6a1349",
+   "gold_turns": [
+    "D21:19",
+    "D27:8",
+    "D6:5",
+    "D7:5"
+   ]
+  },
+  {
+   "id": "conv-41:q12",
+   "stratum": "multi-hop",
+   "question_sha256": "7f9179e7cfb2d0553b785e59b0940d047fb62f06635a20c0b46785be36b3069f",
+   "gold_turns": [
+    "D3:11",
+    "D8:18"
+   ]
+  },
+  {
+   "id": "conv-41:q13",
+   "stratum": "temporal",
+   "question_sha256": "367b7ba3cab5263bc66733d364bb66c8bb9ebd44c581d544504a7bd82bf2a00d",
+   "gold_turns": [
+    "D8:1"
+   ]
+  },
+  {
+   "id": "conv-41:q15",
+   "stratum": "multi-hop",
+   "question_sha256": "c9db754336bd8a97b657f6111ebabb03d6432ec673432a685973325aa4d389b0",
+   "gold_turns": [
+    "D7:1",
+    "D9:1"
+   ]
+  },
+  {
+   "id": "conv-41:q16",
+   "stratum": "temporal",
+   "question_sha256": "5ca38662b2c846fbff079559ac94c1b4e2933e990768d185f1ce7f3a908ad50d",
+   "gold_turns": [
+    "D9:2"
+   ]
+  },
+  {
+   "id": "conv-41:q18",
+   "stratum": "multi-hop",
+   "question_sha256": "0437a24cf863488d9dad4a5e5135efc6dc1f5b0e27594fa638ea8fc4c979d37d",
+   "gold_turns": [
+    "D10:1",
+    "D7:16"
+   ]
+  },
+  {
+   "id": "conv-41:q19",
+   "stratum": "multi-hop",
+   "question_sha256": "7c28911b859af395e16c75e3665de6fee466f2bda0ae59e5da25190e9abb5e0a",
+   "gold_turns": [
+    "D11:1",
+    "D4:2"
+   ]
+  },
+  {
+   "id": "conv-41:q20",
+   "stratum": "temporal",
+   "question_sha256": "8632906d06a0bac1e402a7fe3555dcb3a560376965bffdaa70dd782f849834bf",
+   "gold_turns": [
+    "D11:3",
+    "D11:5"
+   ]
+  },
+  {
+   "id": "conv-41:q21",
+   "stratum": "multi-hop",
+   "question_sha256": "0cb942693737627c2c6fdc8f3ffad60892aae69dc3f6170ae44798213532a3a8",
+   "gold_turns": [
+    "D11:5",
+    "D12:17"
+   ]
+  },
+  {
+   "id": "conv-41:q22",
+   "stratum": "temporal",
+   "question_sha256": "295f65598638807072d0812cc508586895186bbccf3767de31e4cbcf671cacf4",
+   "gold_turns": [
+    "D12:9"
+   ]
+  },
+  {
+   "id": "conv-41:q23",
+   "stratum": "multi-hop",
+   "question_sha256": "a8b2856d5853d592b56f67e704ebb911d9a281e24795da3a4050219eb29519fd",
+   "gold_turns": [
+    "D13:18",
+    "D2:25"
+   ]
+  },
+  {
+   "id": "conv-41:q24",
+   "stratum": "temporal",
+   "question_sha256": "508578e58b4f19d0a081aefa165834d9b4315b6437f0a0b244c1b2c529fd8156",
+   "gold_turns": [
+    "D13:3"
+   ]
+  },
+  {
+   "id": "conv-41:q25",
+   "stratum": "multi-hop",
+   "question_sha256": "19d4b640cb32176e2e995a2336a9dba47854a922798c545adc2eafab3d85a5c0",
+   "gold_turns": [
+    "D13:24",
+    "D8:15"
+   ]
+  },
+  {
+   "id": "conv-41:q26",
+   "stratum": "multi-hop",
+   "question_sha256": "ebaba5c76c0425e7a1b2fa5150075e4978df5342e19e4dae73d597998dabd1b0",
+   "gold_turns": [
+    "D11:10",
+    "D14:10"
+   ]
+  },
+  {
+   "id": "conv-41:q27",
+   "stratum": "temporal",
+   "question_sha256": "113620e496bba91671ee67ef36953fd3a531b7334b953f1ea85eb826e2f0e0ed",
+   "gold_turns": [
+    "D15:11"
+   ]
+  },
+  {
+   "id": "conv-41:q28",
+   "stratum": "multi-hop",
+   "question_sha256": "0635f4f0d3a0bd0bbbd18cd1716370b5ce049aacbf2953b188eb911876486ed8",
+   "gold_turns": [
+    "D12:5",
+    "D15:3",
+    "D1:8",
+    "D9:8"
+   ]
+  },
+  {
+   "id": "conv-41:q29",
+   "stratum": "multi-hop",
+   "question_sha256": "0e6a6d09e8d8986608e91edc11b35736e69098d5321abe17fd259598491d3ba9",
+   "gold_turns": [
+    "D15:18",
+    "D16:4"
+   ]
+  },
+  {
+   "id": "conv-41:q30",
+   "stratum": "multi-hop",
+   "question_sha256": "4d0741237b4a585447accd42f3980d9c0042d00f3facec8602a1faef603ee2d4",
+   "gold_turns": [
+    "D11:10",
+    "D17:12",
+    "D2:1"
+   ]
+  },
+  {
+   "id": "conv-41:q31",
+   "stratum": "temporal",
+   "question_sha256": "b54616e497682a3c46f577e0a6651641ea6c1f8c22537a1fb8b02e94e6ff9e5f",
+   "gold_turns": [
+    "D17:1"
+   ]
+  },
+  {
+   "id": "conv-41:q32",
+   "stratum": "multi-hop",
+   "question_sha256": "5a4325fa3d51cefad0a47f8a2dfa4b7f893b0049fe6b551404577b13060358f0",
+   "gold_turns": [
+    "D16:2",
+    "D18:2"
+   ]
+  },
+  {
+   "id": "conv-41:q33",
+   "stratum": "multi-hop",
+   "question_sha256": "cf84ddfc68e0c91a82aaa8a4d5d02a6b108eb5a6d542d88e5f9b3061d91eb5d7",
+   "gold_turns": [
+    "D18:15",
+    "D19:3",
+    "D1:3"
+   ]
+  },
+  {
+   "id": "conv-41:q34",
+   "stratum": "temporal",
+   "question_sha256": "95c2875891cdd98fa1094ea368658b8153d07950f6c974347a7e6c7e56f09559",
+   "gold_turns": [
+    "D19:1"
+   ]
+  },
+  {
+   "id": "conv-41:q35",
+   "stratum": "multi-hop",
+   "question_sha256": "4945d97718d5a358643a7f05008a26c4ea45d5c710b1f8d45366d1f73511875d",
+   "gold_turns": [
+    "D18:3",
+    "D19:23"
+   ]
+  },
+  {
+   "id": "conv-41:q36",
+   "stratum": "multi-hop",
+   "question_sha256": "6caa7863dc9affbd20b4f4dbf3cfca8462cdce028a7535f02c30f2248770b495",
+   "gold_turns": [
+    "D20:4",
+    "D8:12"
+   ]
+  },
+  {
+   "id": "conv-41:q37",
+   "stratum": "multi-hop",
+   "question_sha256": "8c3621d590a982e3fd5826ca25feabd109562e02692d0bafd583a7ee372aaa3d",
+   "gold_turns": [
+    "D15:1",
+    "D15:11",
+    "D21:22",
+    "D24:1",
+    "D29:4"
+   ]
+  },
+  {
+   "id": "conv-41:q38",
+   "stratum": "temporal",
+   "question_sha256": "3c24619d34748d7c5a2600a12c964e9887edd92d4e1f56645c322481649cef62",
+   "gold_turns": [
+    "D21:3"
+   ]
+  },
+  {
+   "id": "conv-41:q40",
+   "stratum": "multi-hop",
+   "question_sha256": "de56c30f1e7ef7304be2bcd88baaf331913cfaba099571e00c9d76a54aed8096",
+   "gold_turns": [
+    "D22:7",
+    "D8:4"
+   ]
+  },
+  {
+   "id": "conv-41:q42",
+   "stratum": "multi-hop",
+   "question_sha256": "eacdf9d390df0636d1fad74a0749d796b5d49d3fed030096fe22bce21e41cf83",
+   "gold_turns": [
+    "D14:21",
+    "D23:1"
+   ]
+  },
+  {
+   "id": "conv-41:q43",
+   "stratum": "temporal",
+   "question_sha256": "cd594c70804f77b01661e9be32d64f1a171eb5abbaab9e027a20b40c1780c130",
+   "gold_turns": [
+    "D23:1"
+   ]
+  },
+  {
+   "id": "conv-41:q44",
+   "stratum": "multi-hop",
+   "question_sha256": "8a352d3ef7eeee0ebf5d676e91ad4db989591354a4d827107d6e5aa8c1bfe8f6",
+   "gold_turns": [
+    "D24:6",
+    "D25:2",
+    "D28:5"
+   ]
+  },
+  {
+   "id": "conv-41:q46",
+   "stratum": "temporal",
+   "question_sha256": "f3dbc3705912d44188438d04dc2b3d57bdd090da9e058ca7b2170895a273c506",
+   "gold_turns": [
+    "D25:2"
+   ]
+  },
+  {
+   "id": "conv-41:q47",
+   "stratum": "multi-hop",
+   "question_sha256": "e4749e83cacc063331a117f5910acbec23adce70ae5fc98144c3673c304d0d0e",
+   "gold_turns": [
+    "D10:1",
+    "D1:4",
+    "D25:13",
+    "D25:17"
+   ]
+  },
+  {
+   "id": "conv-41:q48",
+   "stratum": "temporal",
+   "question_sha256": "ad4e30ab49635f7bfc2a4f04fa10ff470f96971bcc699bcc588fcf2b694aef4a",
+   "gold_turns": [
+    "D26:4"
+   ]
+  },
+  {
+   "id": "conv-41:q49",
+   "stratum": "multi-hop",
+   "question_sha256": "e9c565030ebba5988169bdbc9ed6e8e5aa3c5e561351d5134be8ec4362b09078",
+   "gold_turns": [
+    "D25:19",
+    "D26:1"
+   ]
+  },
+  {
+   "id": "conv-41:q51",
+   "stratum": "temporal",
+   "question_sha256": "ca766a04d5d07b73636c2c0d06805aae294c436afb62da3db640a72af3be8ec0",
+   "gold_turns": [
+    "D27:4"
+   ]
+  },
+  {
+   "id": "conv-41:q52",
+   "stratum": "multi-hop",
+   "question_sha256": "ec5a5fdbd735231a7592f31bd0badb62b14e64ef87746ad74c1db555680d03cf",
+   "gold_turns": [
+    "D21:19",
+    "D27:8"
+   ]
+  },
+  {
+   "id": "conv-41:q53",
+   "stratum": "temporal",
+   "question_sha256": "2c7c3c66eeaa3c3e2d6068f2dc5ca2b133a14a02a2838a35e7982d34bd312a4c",
+   "gold_turns": [
+    "D28:11"
+   ]
+  },
+  {
+   "id": "conv-41:q54",
+   "stratum": "temporal",
+   "question_sha256": "7d3dacce1004a5ffca7a3317a3811ed23bf6a67ae3c5109bf4590cab470633cf",
+   "gold_turns": [
+    "D28:8"
+   ]
+  },
+  {
+   "id": "conv-41:q55",
+   "stratum": "temporal",
+   "question_sha256": "18b6781c4c772ed1629f6c22cf001379c5f95e979ac21e9bf626599018c4461c",
+   "gold_turns": [
+    "D29:1"
+   ]
+  },
+  {
+   "id": "conv-41:q56",
+   "stratum": "temporal",
+   "question_sha256": "45a38bdc2ec68aa7fd9508a14e449e49d533980848ff1a9a874f9dc016ecd87d",
+   "gold_turns": [
+    "D29:2",
+    "D29:4"
+   ]
+  },
+  {
+   "id": "conv-41:q57",
+   "stratum": "multi-hop",
+   "question_sha256": "42868d22fce8215288c067bf222f5df65ef6cb89841c38627a83311b30ebb689",
+   "gold_turns": [
+    "D29:10",
+    "D29:4",
+    "D3:5",
+    "D6:12"
+   ]
+  },
+  {
+   "id": "conv-41:q58",
+   "stratum": "temporal",
+   "question_sha256": "03b694ecb8174b8b266549e8d2ed3054ddf70c073bbdfe506bdcc12b5985d08c",
+   "gold_turns": [
+    "D30:1"
+   ]
+  },
+  {
+   "id": "conv-41:q59",
+   "stratum": "temporal",
+   "question_sha256": "3907690ed0c47a093eefa8ee0495370f1a32fe362ce0a2086f4581f2cdea585b",
+   "gold_turns": [
+    "D30:6"
+   ]
+  },
+  {
+   "id": "conv-41:q60",
+   "stratum": "multi-hop",
+   "question_sha256": "b9ac6eb30a6cfbf05e8431e5c99c858d49fca09293cc46a1394c9e204cb2d97f",
+   "gold_turns": [
+    "D30:1",
+    "D31:4"
+   ]
+  },
+  {
+   "id": "conv-41:q61",
+   "stratum": "temporal",
+   "question_sha256": "336a9762cc98ab11cc9bb42c902797aafd31706634a841528bf4b8e2f959c5bf",
+   "gold_turns": [
+    "D31:2"
+   ]
+  },
+  {
+   "id": "conv-41:q62",
+   "stratum": "multi-hop",
+   "question_sha256": "82d2a716ccb4d4adae4a9d0a32bb316bb74d3899c3a1efd1bdda1e59598a8561",
+   "gold_turns": [
+    "D30:1",
+    "D31:2"
+   ]
+  },
+  {
+   "id": "conv-41:q63",
+   "stratum": "temporal",
+   "question_sha256": "fa35ea32a1266815565eaa0442085180e591c348e7ca42bc418047cb6409eccf",
+   "gold_turns": [
+    "D30:1",
+    "D31:2"
+   ]
+  },
+  {
+   "id": "conv-41:q91",
+   "stratum": "temporal",
+   "question_sha256": "05672addebda9affbbda9b3b49c99822c4cf9cd59f4db25f4cadea17d2468556",
+   "gold_turns": [
+    "D12:9"
+   ]
+  },
+  {
+   "id": "conv-42:q1",
+   "stratum": "multi-hop",
+   "question_sha256": "58d445627c6d910c20cf171f339c7128e2dcd96aa9f7c8ea39d370708a61fb8d",
+   "gold_turns": [
+    "D10:9",
+    "D1:10",
+    "D1:11",
+    "D1:12",
+    "D20:2",
+    "D3:4",
+    "D4:9"
+   ]
+  },
+  {
+   "id": "conv-42:q2",
+   "stratum": "temporal",
+   "question_sha256": "62635e49085195be5e22147f9553d935483e40228c734f967039e96931c0f4f0",
+   "gold_turns": [
+    "D1:18"
+   ]
+  },
+  {
+   "id": "conv-42:q3",
+   "stratum": "temporal",
+   "question_sha256": "85f62612fddb41009db2da12bb0f5c3b59517a9cb8b7994577a6d06f4325a0c6",
+   "gold_turns": [
+    "D1:3"
+   ]
+  },
+  {
+   "id": "conv-42:q5",
+   "stratum": "multi-hop",
+   "question_sha256": "d32c8f3d61b49c98ff6c1c26aecaaedde007ab95b2f998e2e899c5c69f0af9e6",
+   "gold_turns": [
+    "D1:10",
+    "D2:25"
+   ]
+  },
+  {
+   "id": "conv-42:q6",
+   "stratum": "temporal",
+   "question_sha256": "4a6b9a6b62d66dc80aecb8261134e5c54f3ce5932e7fd8a1b2e49674d7124000",
+   "gold_turns": [
+    "D2:12"
+   ]
+  },
+  {
+   "id": "conv-42:q7",
+   "stratum": "temporal",
+   "question_sha256": "6a252f4e8231b286a3c655e43fe2d1dc7d1dfb112ee41cb7949fba06785534d5",
+   "gold_turns": [
+    "D2:3"
+   ]
+  },
+  {
+   "id": "conv-42:q8",
+   "stratum": "temporal",
+   "question_sha256": "7da14a0dfafcc622f7f78de4d24445007c113f073249411be0264fc3985893d9",
+   "gold_turns": [
+    "D2:12"
+   ]
+  },
+  {
+   "id": "conv-42:q9",
+   "stratum": "temporal",
+   "question_sha256": "91e3575216cf33c074502dc2411b5cec64fff008b7451614180da5467e69e91f",
+   "gold_turns": [
+    "D2:3"
+   ]
+  },
+  {
+   "id": "conv-42:q10",
+   "stratum": "multi-hop",
+   "question_sha256": "47be6ce645da07092f48f672d4b80dfcc76630010b71885fd92ada6e6cdcaa7d",
+   "gold_turns": [
+    "D2:7",
+    "D3:1"
+   ]
+  },
+  {
+   "id": "conv-42:q11",
+   "stratum": "multi-hop",
+   "question_sha256": "b28c6e76318f68bc096d8fc8c3584f284048269da260a9c04c55bf28c4623c71",
+   "gold_turns": [
+    "D2:23",
+    "D4:4",
+    "D5:11"
+   ]
+  },
+  {
+   "id": "conv-42:q13",
+   "stratum": "temporal",
+   "question_sha256": "3053318f7c354e353604fbb0dace7c39f954d15883a52101254795a26368f684",
+   "gold_turns": [
+    "D6:2"
+   ]
+  },
+  {
+   "id": "conv-42:q15",
+   "stratum": "temporal",
+   "question_sha256": "a43f35ba89581d70b94bb08fecd7fd5cf676b55712fb7ba552240d3937c97ab8",
+   "gold_turns": [
+    "D7:1"
+   ]
+  },
+  {
+   "id": "conv-42:q16",
+   "stratum": "temporal",
+   "question_sha256": "3cce575450ec641b6dea148616813db1897b85df639fbd21275cc34c982692cf",
+   "gold_turns": [
+    "D7:1",
+    "D7:3"
+   ]
+  },
+  {
+   "id": "conv-42:q17",
+   "stratum": "temporal",
+   "question_sha256": "56cc81965db02988f31b17bde933db2f7092bafad04de3466c6ff132a22f170a",
+   "gold_turns": [
+    "D10:1"
+   ]
+  },
+  {
+   "id": "conv-42:q18",
+   "stratum": "temporal",
+   "question_sha256": "fbd57fabc0986d22c9a9b8a3e90317bd088680eb7210aec63a0b80fe4d5fdfd6",
+   "gold_turns": [
+    "D11:7"
+   ]
+  },
+  {
+   "id": "conv-42:q19",
+   "stratum": "multi-hop",
+   "question_sha256": "5c1a68177fca08530a4af0554ff3dff8d440870b144f6e1e91a04dd9f2e28a6a",
+   "gold_turns": [
+    "D11:3",
+    "D8:4"
+   ]
+  },
+  {
+   "id": "conv-42:q20",
+   "stratum": "temporal",
+   "question_sha256": "3d0dbf3b2b0c3ce49fc9d95a737033671384165c19a0cbdd8a61ca49a90d2579",
+   "gold_turns": [
+    "D12:3"
+   ]
+  },
+  {
+   "id": "conv-42:q21",
+   "stratum": "temporal",
+   "question_sha256": "6a9cf6330279e1a76062871864630c5e91f61a96fdef0297209fb604f90f36db",
+   "gold_turns": [
+    "D12:3"
+   ]
+  },
+  {
+   "id": "conv-42:q22",
+   "stratum": "temporal",
+   "question_sha256": "09066d5b2fb5638faaabc83a0a28960f5653dd5b8d0682cc7b75865c3b3f5902",
+   "gold_turns": [
+    "D12:13",
+    "D12:14"
+   ]
+  },
+  {
+   "id": "conv-42:q23",
+   "stratum": "multi-hop",
+   "question_sha256": "e6cb0f4b8cdd114b9d893306041388749e4759de3df535384fb9097556c73970",
+   "gold_turns": [
+    "D14:1",
+    "D24:12",
+    "D24:13",
+    "D2:7",
+    "D3:1"
+   ]
+  },
+  {
+   "id": "conv-42:q24",
+   "stratum": "temporal",
+   "question_sha256": "a49c62c67a7e37a37e17195ff9971319582cbeed20f1f5887b13f2e67edb6425",
+   "gold_turns": [
+    "D14:20"
+   ]
+  },
+  {
+   "id": "conv-42:q25",
+   "stratum": "temporal",
+   "question_sha256": "9ab72b61b47d9e87b718eacd76f7a6de8745545e0b072d7f161a57e153557b31",
+   "gold_turns": [
+    "D14:19"
+   ]
+  },
+  {
+   "id": "conv-42:q26",
+   "stratum": "temporal",
+   "question_sha256": "9c3412824159f6c909a69de4af0f73c83ee2c62f4b5224f9c54d5341a2b876b6",
+   "gold_turns": [
+    "D14:8"
+   ]
+  },
+  {
+   "id": "conv-42:q27",
+   "stratum": "multi-hop",
+   "question_sha256": "f88a5b94454b44a8302067abdc571f75f2898797a2b851119f661ad947e71523",
+   "gold_turns": [
+    "D16:1",
+    "D2:7"
+   ]
+  },
+  {
+   "id": "conv-42:q28",
+   "stratum": "temporal",
+   "question_sha256": "f783224eaa0ff78d953a70f1fe2ece5b63e65eda7fd55a1b548107c5e717c87f",
+   "gold_turns": [
+    "D16:8"
+   ]
+  },
+  {
+   "id": "conv-42:q29",
+   "stratum": "temporal",
+   "question_sha256": "45e807f489370cff4b063db071107cbba502afdd04f1172d4070582d8fc3391d",
+   "gold_turns": [
+    "D16:11"
+   ]
+  },
+  {
+   "id": "conv-42:q30",
+   "stratum": "multi-hop",
+   "question_sha256": "599e592d1d455288b4c19f2398837d5d9417e1332e244c6bab5102aa85752a66",
+   "gold_turns": [
+    "D17:14",
+    "D18:1",
+    "D18:5",
+    "D2:3"
+   ]
+  },
+  {
+   "id": "conv-42:q31",
+   "stratum": "temporal",
+   "question_sha256": "2df68f193fb5aa218b64013a8dcee26ee3e12db5dccb2770d7945808f30b711d",
+   "gold_turns": [
+    "D17:1"
+   ]
+  },
+  {
+   "id": "conv-42:q32",
+   "stratum": "temporal",
+   "question_sha256": "a912386111e66bed0496f8e5598bd0d817be4b177dd4afc18b3110941cbfbd22",
+   "gold_turns": [
+    "D17:4"
+   ]
+  },
+  {
+   "id": "conv-42:q33",
+   "stratum": "temporal",
+   "question_sha256": "76a5f776225a3cb6abe552922fd841999ba2312792c3113b4bad563b0321dbe2",
+   "gold_turns": [
+    "D18:5"
+   ]
+  },
+  {
+   "id": "conv-42:q34",
+   "stratum": "multi-hop",
+   "question_sha256": "1679dc0ffe3c5104dc985db51e03582f84074a98f0b3746c38891448cbfb1c33",
+   "gold_turns": [
+    "D19:14",
+    "D19:16",
+    "D3:17"
+   ]
+  },
+  {
+   "id": "conv-42:q35",
+   "stratum": "temporal",
+   "question_sha256": "ee0893089a747f01b2d17df94a98272c5c8fd399f7ece245561863dc802e6603",
+   "gold_turns": [
+    "D19:9"
+   ]
+  },
+  {
+   "id": "conv-42:q36",
+   "stratum": "temporal",
+   "question_sha256": "85b6fb7cdebebde59ee101f49d205ba8743112caea4bfd6ad9b3a0bfd1764244",
+   "gold_turns": [
+    "D19:6"
+   ]
+  },
+  {
+   "id": "conv-42:q37",
+   "stratum": "temporal",
+   "question_sha256": "63780be8ffedee430b4d082dacb1772b51599069f480023565e0410e047f6011",
+   "gold_turns": [
+    "D19:1"
+   ]
+  },
+  {
+   "id": "conv-42:q38",
+   "stratum": "temporal",
+   "question_sha256": "0e8b8212e04977ad9dbede835c40e24aa98de768ebb7b2e4b548f3f9e0fa5b0b",
+   "gold_turns": [
+    "D21:9"
+   ]
+  },
+  {
+   "id": "conv-42:q39",
+   "stratum": "temporal",
+   "question_sha256": "9fdf5605691b3c40722b9e7cd246b7efb7c4bb255af0a63b36bf782f3eb87e75",
+   "gold_turns": [
+    "D21:4"
+   ]
+  },
+  {
+   "id": "conv-42:q40",
+   "stratum": "temporal",
+   "question_sha256": "c5e69e15892d5c2277924b422e89be20ce1594e05a923863d2f15db24ccbf2e5",
+   "gold_turns": [
+    "D21:1"
+   ]
+  },
+  {
+   "id": "conv-42:q41",
+   "stratum": "temporal",
+   "question_sha256": "a9b589f47d9022b466c402e2f6d8a7cf1c6a72fef1ad1e3ba0be168bc76d1694",
+   "gold_turns": [
+    "D22:1"
+   ]
+  },
+  {
+   "id": "conv-42:q42",
+   "stratum": "multi-hop",
+   "question_sha256": "bd6a3d5e3f8851a69af0be5438050f73fff5154ae1da5b23da6e54b8b84d7aad",
+   "gold_turns": [
+    "D10:1",
+    "D22:8",
+    "D3:17"
+   ]
+  },
+  {
+   "id": "conv-42:q43",
+   "stratum": "temporal",
+   "question_sha256": "0c27f8eb74f49fa5f4ffeca830fbe30ebf0cfdb567a4190bc78d3518b0565d37",
+   "gold_turns": [
+    "D17:14",
+    "D22:9"
+   ]
+  },
+  {
+   "id": "conv-42:q44",
+   "stratum": "temporal",
+   "question_sha256": "2423328ca94df7b332a76052fc26c42a859a7cbe4804f44eb0a123a1170598d2",
+   "gold_turns": [
+    "D22:2"
+   ]
+  },
+  {
+   "id": "conv-42:q45",
+   "stratum": "temporal",
+   "question_sha256": "c87161c02742888332526a11278994688f312e88328bf5ecb6c36740d3326dc3",
+   "gold_turns": [
+    "D22:9"
+   ]
+  },
+  {
+   "id": "conv-42:q46",
+   "stratum": "multi-hop",
+   "question_sha256": "7be217b2cb18882609965c76279109b31bb7785b0588feec401dfc84746049a9",
+   "gold_turns": [
+    "D16:2",
+    "D23:7"
+   ]
+  },
+  {
+   "id": "conv-42:q47",
+   "stratum": "multi-hop",
+   "question_sha256": "0810350a7faf696bb394aafcf32a0fba24ce4dc7b13acd841af5911c5fe76f57",
+   "gold_turns": [
+    "D14:8",
+    "D23:1"
+   ]
+  },
+  {
+   "id": "conv-42:q48",
+   "stratum": "temporal",
+   "question_sha256": "ac3ea5364ba54a43129953af0da9379ac8638e5d35ca659ae3e17c2d946c70b4",
+   "gold_turns": [
+    "D23:1"
+   ]
+  },
+  {
+   "id": "conv-42:q49",
+   "stratum": "multi-hop",
+   "question_sha256": "adf0c4457b1e625cacc0dc9b471951e6629e6333b65620aaa8672aa88ec9c4ca",
+   "gold_turns": [
+    "D14:1",
+    "D24:12"
+   ]
+  },
+  {
+   "id": "conv-42:q50",
+   "stratum": "multi-hop",
+   "question_sha256": "ff5e74b24b574bd314a2bde67f019f3ecce46d87af868f8129c5678f91e2bb63",
+   "gold_turns": [
+    "D13:9",
+    "D24:2"
+   ]
+  },
+  {
+   "id": "conv-42:q51",
+   "stratum": "multi-hop",
+   "question_sha256": "6d6a1e0b61f0174d47219dae6a9f303b5a61a51505eb5369c32e5706d5f53023",
+   "gold_turns": [
+    "D13:9",
+    "D24:2"
+   ]
+  },
+  {
+   "id": "conv-42:q52",
+   "stratum": "multi-hop",
+   "question_sha256": "727a19015b67bbb521e82a06c595ec20b0fcad04d0df446d16318466a26ac194",
+   "gold_turns": [
+    "D15:1",
+    "D25:2"
+   ]
+  },
+  {
+   "id": "conv-42:q53",
+   "stratum": "multi-hop",
+   "question_sha256": "8ea1641e4c7a4e265be47a9558a70dc38a425ef0ba616aed80df8898cc74f7d0",
+   "gold_turns": [
+    "D25:15",
+    "D5:4"
+   ]
+  },
+  {
+   "id": "conv-42:q54",
+   "stratum": "temporal",
+   "question_sha256": "de17ef7570d38b47586c7a2a9a989ac2c8a2e3d5ae5379ec9a68cdd407e8069a",
+   "gold_turns": [
+    "D25:1"
+   ]
+  },
+  {
+   "id": "conv-42:q55",
+   "stratum": "multi-hop",
+   "question_sha256": "d53b6954a008e8b38c9b9d5538422d41531a90fed9e554d9e489a5ff23dff925",
+   "gold_turns": [
+    "D11:11",
+    "D25:10",
+    "D26:3",
+    "D26:7",
+    "D4:6",
+    "D7:6"
+   ]
+  },
+  {
+   "id": "conv-42:q56",
+   "stratum": "multi-hop",
+   "question_sha256": "e8bbefdde78fbb764f77491aa70c0e25bf30cf3e79f3a764a7f94719ba715aef",
+   "gold_turns": [
+    "D26:9",
+    "D5:6"
+   ]
+  },
+  {
+   "id": "conv-42:q57",
+   "stratum": "temporal",
+   "question_sha256": "112419b25861c83cf4cb8cf9c03973392e0da5b6785b05357fef595ddb5fc1c5",
+   "gold_turns": [
+    "D26:19"
+   ]
+  },
+  {
+   "id": "conv-42:q58",
+   "stratum": "multi-hop",
+   "question_sha256": "21eff128baf58a4929e82dac2faafaf2ad62ba8606a49f9c5126abb2db1afc7c",
+   "gold_turns": [
+    "D10:11",
+    "D10:19",
+    "D19:17",
+    "D27:23",
+    "D2:14",
+    "D9:12",
+    "D9:14"
+   ]
+  },
+  {
+   "id": "conv-42:q59",
+   "stratum": "multi-hop",
+   "question_sha256": "9f92b1257e68ef6e26fe127715a19482cda98660c2bd616f88a68ba953eb82bb",
+   "gold_turns": [
+    "D15:9",
+    "D27:34"
+   ]
+  },
+  {
+   "id": "conv-42:q61",
+   "stratum": "multi-hop",
+   "question_sha256": "873417bd31dd81c8a14777cbf18979db93540a55f9939c2db99bf97d072398b3",
+   "gold_turns": [
+    "D22:2",
+    "D27:15",
+    "D27:21"
+   ]
+  },
+  {
+   "id": "conv-42:q62",
+   "stratum": "multi-hop",
+   "question_sha256": "634795e052ea4bcf956a80257fe60163fbc39c31ee9576b1d217a006089e827a",
+   "gold_turns": [
+    "D14:1",
+    "D18:5"
+   ]
+  },
+  {
+   "id": "conv-42:q63",
+   "stratum": "multi-hop",
+   "question_sha256": "0e008af6775c35e55f91d8e5b18a2d628fed8258ae6fe142db2534dc5baab935",
+   "gold_turns": [
+    "D10:6",
+    "D1:7",
+    "D23:17",
+    "D27:1",
+    "D27:23"
+   ]
+  },
+  {
+   "id": "conv-42:q64",
+   "stratum": "temporal",
+   "question_sha256": "7a4ebafb1db323f94ea29ba92045658e89ea4747e8e2afdc1d8a3df1e78e8690",
+   "gold_turns": [
+    "D27:1"
+   ]
+  },
+  {
+   "id": "conv-42:q65",
+   "stratum": "temporal",
+   "question_sha256": "988fc6f77216a152348a32ad24dd89ff433e005a8b10866ddc5b26807ad084ce",
+   "gold_turns": [
+    "D27:1"
+   ]
+  },
+  {
+   "id": "conv-42:q67",
+   "stratum": "multi-hop",
+   "question_sha256": "d677c848d204bb2ffc1fafd6cb09c855f31dfa088a242c19655fb419f489f5f1",
+   "gold_turns": [
+    "D12:3",
+    "D28:23",
+    "D8:3"
+   ]
+  },
+  {
+   "id": "conv-42:q69",
+   "stratum": "multi-hop",
+   "question_sha256": "da4dcda9f418831b7498b096892a2c869b6c133e60b416490533597ad866d0cf",
+   "gold_turns": [
+    "D28:23",
+    "D8:3"
+   ]
+  },
+  {
+   "id": "conv-42:q70",
+   "stratum": "multi-hop",
+   "question_sha256": "8823201d40882348f1c32c20d7f7381ea9757047fb9a8b5642cac6355d8362a2",
+   "gold_turns": [
+    "D25:21",
+    "D25:23",
+    "D28:31"
+   ]
+  },
+  {
+   "id": "conv-42:q71",
+   "stratum": "multi-hop",
+   "question_sha256": "8fb7cc33b87a884895ded31189a9269465e4eacc7f790e38d81296c66f0d9717",
+   "gold_turns": [
+    "D11:9",
+    "D28:23"
+   ]
+  },
+  {
+   "id": "conv-42:q72",
+   "stratum": "temporal",
+   "question_sha256": "41d032da558870c424ed95cdfb9aa57069581447d898d6f9f77a0ec36f7a71e2",
+   "gold_turns": [
+    "D28:32"
+   ]
+  },
+  {
+   "id": "conv-42:q74",
+   "stratum": "multi-hop",
+   "question_sha256": "0704334eb6de44b409534a48ea6e56a675465b3dee8de6779873115ae3d901ee",
+   "gold_turns": [
+    "D15:14",
+    "D15:15",
+    "D19:15",
+    "D19:16",
+    "D1:16",
+    "D23:26",
+    "D3:17"
+   ]
+  },
+  {
+   "id": "conv-42:q75",
+   "stratum": "multi-hop",
+   "question_sha256": "2e3cc5f41be8fe603126d6256e0d74bb7d435dc8a43028c8894ad26e03f79c83",
+   "gold_turns": [
+    "D21:10",
+    "D3:10",
+    "D3:12",
+    "D3:4"
+   ]
+  },
+  {
+   "id": "conv-42:q76",
+   "stratum": "multi-hop",
+   "question_sha256": "4e657426ee58082270ed60f9e5f17c7316264677b4638a513de50c8814187276",
+   "gold_turns": [
+    "D18:8",
+    "D21:4"
+   ]
+  },
+  {
+   "id": "conv-42:q77",
+   "stratum": "temporal",
+   "question_sha256": "a52a9be1161761ac18adccd9266b96e5a47b58b27d552c4f68ba7610e69f9522",
+   "gold_turns": [
+    "D10:4"
+   ]
+  },
+  {
+   "id": "conv-42:q78",
+   "stratum": "multi-hop",
+   "question_sha256": "c9bbf38d70ebb1c81e62f17acfeed1e61c03f895df4fa29d83c0371ed2840022",
+   "gold_turns": [
+    "D10:4",
+    "D14:8",
+    "D17:1",
+    "D19:1",
+    "D1:3",
+    "D20:1",
+    "D22:2",
+    "D27:1",
+    "D6:7"
+   ]
+  },
+  {
+   "id": "conv-42:q79",
+   "stratum": "multi-hop",
+   "question_sha256": "5c849786eb736a862d9b3f7914df452237d73d200ed9f75821431edb77fda1e9",
+   "gold_turns": [
+    "D12:13",
+    "D12:14",
+    "D2:3",
+    "D4:10",
+    "D5:1"
+   ]
+  },
+  {
+   "id": "conv-42:q80",
+   "stratum": "multi-hop",
+   "question_sha256": "e643e27596d69ebcd7e9cf8c6ccf042cf74436d275b7e43f25c0e3b8a04ebc60",
+   "gold_turns": [
+    "D10:4",
+    "D14:8",
+    "D17:1",
+    "D19:1",
+    "D1:3",
+    "D22:2",
+    "D27:1"
+   ]
+  },
+  {
+   "id": "conv-42:q81",
+   "stratum": "multi-hop",
+   "question_sha256": "51d48c1305114ac78adc66f1c590f4e708931a530e7539b4e1b101f934c65be5",
+   "gold_turns": [
+    "D10:11",
+    "D10:9",
+    "D19:8",
+    "D20:10",
+    "D20:2",
+    "D21:11",
+    "D21:17",
+    "D21:3",
+    "D22:1"
+   ]
+  },
+  {
+   "id": "conv-42:q82",
+   "stratum": "multi-hop",
+   "question_sha256": "526fbe9a13086ba419926aae548532b40a87532fcfec14498f3a52987fd9acd5",
+   "gold_turns": [
+    "D3:4",
+    "D4:3"
+   ]
+  },
+  {
+   "id": "conv-42:q83",
+   "stratum": "multi-hop",
+   "question_sha256": "8959381655231f5445ef20c59ab040ca787a729478e57a53405547e4d64f0600",
+   "gold_turns": [
+    "D14:16",
+    "D18:8",
+    "D26:12"
+   ]
+  },
+  {
+   "id": "conv-42:q86",
+   "stratum": "temporal",
+   "question_sha256": "49213f981cdd184f790dc25cf14959ca8f6796a24473585efbd7b1c483d72013",
+   "gold_turns": [
+    "D29:6"
+   ]
+  }
+ ]
+}

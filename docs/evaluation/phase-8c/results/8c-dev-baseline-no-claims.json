@@ -1,0 +1,362 @@
+{
+ "set": "dev",
+ "prompt": "1581027addf8ca7f",
+ "stopped": null,
+ "session_links": 0,
+ "tally": {
+  "messages": 788,
+  "calls": 0,
+  "replayed": 0,
+  "failures": {
+   "no-recording": 788
+  },
+  "prompt_tokens": 0,
+  "cached_tokens": 0,
+  "completion_tokens": 0,
+  "charged_microusd": 0,
+  "outcomes": {
+   "invalid-model-output": 788
+  },
+  "flags": {},
+  "candidates": 0,
+  "invalid": 0,
+  "decisions": {},
+  "withheld_for_time": 0
+ },
+ "graph": {
+  "claims": 0,
+  "referents": 0,
+  "linking_claims": 0,
+  "linking_share": 0,
+  "components": 0,
+  "largest_component_share": 0,
+  "claims_reaching_another_session": 0,
+  "turns_with_a_claim": 0,
+  "turn_coverage": 0.0,
+  "gold_turns": 117,
+  "gold_turns_with_a_claim": 0
+ },
+ "summary": {
+  "systems": {
+   "A-keyword": {
+    "overall": {
+     "recall@5": 0.53,
+     "complete@5": 0.4752,
+     "recall@10": 0.5861,
+     "complete@10": 0.5149,
+     "recall@100": 0.7543,
+     "complete@100": 0.6337,
+     "questions": 101
+    },
+    "by_stratum": {
+     "multi-hop": {
+      "recall@5": 0.1456,
+      "complete@5": 0.0,
+      "recall@10": 0.1895,
+      "complete@10": 0.0,
+      "recall@100": 0.4522,
+      "complete@100": 0.1316,
+      "questions": 38
+     },
+     "temporal": {
+      "recall@5": 0.7619,
+      "complete@5": 0.7619,
+      "recall@10": 0.8254,
+      "complete@10": 0.8254,
+      "recall@100": 0.9365,
+      "complete@100": 0.9365,
+      "questions": 63
+     }
+    },
+    "latency_seconds": {
+     "p50": 0.0218,
+     "p95": 0.0345
+    }
+   },
+   "B-conversational": {
+    "overall": {
+     "recall@5": 0.5729,
+     "complete@5": 0.495,
+     "recall@10": 0.655,
+     "complete@10": 0.5644,
+     "recall@100": 0.8277,
+     "complete@100": 0.7327,
+     "questions": 101
+    },
+    "by_stratum": {
+     "multi-hop": {
+      "recall@5": 0.207,
+      "complete@5": 0.0,
+      "recall@10": 0.3197,
+      "complete@10": 0.0789,
+      "recall@100": 0.5947,
+      "complete@100": 0.3421,
+      "questions": 38
+     },
+     "temporal": {
+      "recall@5": 0.7937,
+      "complete@5": 0.7937,
+      "recall@10": 0.8571,
+      "complete@10": 0.8571,
+      "recall@100": 0.9683,
+      "complete@100": 0.9683,
+      "questions": 63
+     }
+    },
+    "latency_seconds": {
+     "p50": 0.0609,
+     "p95": 0.096
+    }
+   },
+   "C-claim-paths": {
+    "overall": {
+     "recall@5": 0.5729,
+     "complete@5": 0.495,
+     "recall@10": 0.655,
+     "complete@10": 0.5644,
+     "recall@100": 0.8277,
+     "complete@100": 0.7327,
+     "questions": 101
+    },
+    "by_stratum": {
+     "multi-hop": {
+      "recall@5": 0.207,
+      "complete@5": 0.0,
+      "recall@10": 0.3197,
+      "complete@10": 0.0789,
+      "recall@100": 0.5947,
+      "complete@100": 0.3421,
+      "questions": 38
+     },
+     "temporal": {
+      "recall@5": 0.7937,
+      "complete@5": 0.7937,
+      "recall@10": 0.8571,
+      "complete@10": 0.8571,
+      "recall@100": 0.9683,
+      "complete@100": 0.9683,
+      "questions": 63
+     }
+    },
+    "latency_seconds": {
+     "p50": 0.0812,
+     "p95": 0.1219
+    }
+   },
+   "D-name-control": {
+    "overall": {
+     "recall@5": 0.5581,
+     "complete@5": 0.505,
+     "recall@10": 0.6208,
+     "complete@10": 0.5347,
+     "recall@100": 0.8335,
+     "complete@100": 0.7129,
+     "questions": 101
+    },
+    "by_stratum": {
+     "multi-hop": {
+      "recall@5": 0.1412,
+      "complete@5": 0.0,
+      "recall@10": 0.2553,
+      "complete@10": 0.0263,
+      "recall@100": 0.5575,
+      "complete@100": 0.2368,
+      "questions": 38
+     },
+     "temporal": {
+      "recall@5": 0.8095,
+      "complete@5": 0.8095,
+      "recall@10": 0.8413,
+      "complete@10": 0.8413,
+      "recall@100": 1.0,
+      "complete@100": 1.0,
+      "questions": 63
+     }
+    },
+    "latency_seconds": {
+     "p50": 0.0612,
+     "p95": 0.0937
+    }
+   },
+   "C+-unresolved-links": {
+    "overall": {
+     "recall@5": 0.5729,
+     "complete@5": 0.495,
+     "recall@10": 0.655,
+     "complete@10": 0.5644,
+     "recall@100": 0.8277,
+     "complete@100": 0.7327,
+     "questions": 101
+    },
+    "by_stratum": {
+     "multi-hop": {
+      "recall@5": 0.207,
+      "complete@5": 0.0,
+      "recall@10": 0.3197,
+      "complete@10": 0.0789,
+      "recall@100": 0.5947,
+      "complete@100": 0.3421,
+      "questions": 38
+     },
+     "temporal": {
+      "recall@5": 0.7937,
+      "complete@5": 0.7937,
+      "recall@10": 0.8571,
+      "complete@10": 0.8571,
+      "recall@100": 0.9683,
+      "complete@100": 0.9683,
+      "questions": 63
+     }
+    },
+    "latency_seconds": {
+     "p50": 0.0822,
+     "p95": 0.1503
+    }
+   }
+  },
+  "comparisons": {
+   "multi-hop": {
+    "C over B": {
+     "recall@5": {
+      "gain_points": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "questions": 38
+     },
+     "recall@10": {
+      "gain_points": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "questions": 38
+     },
+     "recall@100": {
+      "gain_points": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "questions": 38
+     }
+    },
+    "C over D": {
+     "recall@5": {
+      "gain_points": 6.6,
+      "low": 1.3,
+      "high": 11.8,
+      "questions": 38
+     },
+     "recall@10": {
+      "gain_points": 6.4,
+      "low": 1.8,
+      "high": 11.8,
+      "questions": 38
+     },
+     "recall@100": {
+      "gain_points": 3.7,
+      "low": -3.5,
+      "high": 11.4,
+      "questions": 38
+     }
+    },
+    "C+ over C": {
+     "recall@5": {
+      "gain_points": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "questions": 38
+     },
+     "recall@10": {
+      "gain_points": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "questions": 38
+     },
+     "recall@100": {
+      "gain_points": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "questions": 38
+     }
+    }
+   },
+   "temporal": {
+    "C over B": {
+     "recall@5": {
+      "gain_points": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "questions": 63
+     },
+     "recall@10": {
+      "gain_points": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "questions": 63
+     },
+     "recall@100": {
+      "gain_points": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "questions": 63
+     }
+    },
+    "C over D": {
+     "recall@5": {
+      "gain_points": -1.6,
+      "low": -4.8,
+      "high": 0.0,
+      "questions": 63
+     },
+     "recall@10": {
+      "gain_points": 1.6,
+      "low": -3.2,
+      "high": 6.3,
+      "questions": 63
+     },
+     "recall@100": {
+      "gain_points": -3.2,
+      "low": -7.9,
+      "high": 0.0,
+      "questions": 63
+     }
+    },
+    "C+ over C": {
+     "recall@5": {
+      "gain_points": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "questions": 63
+     },
+     "recall@10": {
+      "gain_points": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "questions": 63
+     },
+     "recall@100": {
+      "gain_points": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "questions": 63
+     }
+    }
+   }
+  },
+  "decision": {
+   "recall@5": false,
+   "recall@10": false,
+   "recall@100": false
+  },
+  "gold_turns_only_claims_found": {
+   "top5": 0,
+   "top10": 0,
+   "top100": 0
+  },
+  "severe": [],
+  "overlap_labels": {
+   "confirmed": 0,
+   "presumed": 0,
+   "none": 0,
+   "unknown": 0
+  }
+ },
+ "note": "Evidence retrieval only; not a benchmark or leaderboard result."
+}
