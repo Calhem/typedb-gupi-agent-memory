@@ -258,3 +258,49 @@ def test_format_1_1_output_and_both_response_formats():
     old = dict(response(assertion("Nora Vance joined Halden in March 2025", NORA,
                                   attribution=dict(at11, claimant_kind="organization"))), format="gupi.model-response/1")
     assert run(text, old)[0].candidates[0].attribution.asserted_by_kind == "organisation"
+
+
+# --- Phase 8C: a word is not its letters -----------------------------------------------------------------------
+
+def _first_person(evidence, **over):
+    return {"format": RESPONSE_FORMAT, "outcome": "assertions", "problems": [], "assertions": [{
+        "evidence": evidence, "relation": "statement", "predicate": "met", "times": [], "polarity": "positive", "modality": "actual",
+        "commitment": "certain", "basis": "explicit", "participants": [{"role": "subject", "text": "I", "kind": "person", "is_pronoun_or_vague": False}],
+        "attribution": {"mode": "direct", "claimant": None, "claimant_kind": None, "via": []}} | over]}
+
+
+def _read(message, response):
+    return ModelCandidateV1().extract(Observation("src:t", "k", message, datetime(2023, 5, 8, tzinfo=timezone.utc), "s", "p:juno"), response=response)
+
+
+def test_capital_i_inside_a_word_is_not_a_second_i():
+    cset, report = _read("I met them in Italy.", _first_person("I met them in Italy"))
+    assert [p.start for p in cset.candidates[0].participants] == [0] and not report.outcomes
+
+
+def test_two_uses_of_i_by_the_author_are_one_referent():
+    cset, _ = _read("I said I met them.", _first_person("I said I met them"))
+    assert [p.start for p in cset.candidates[0].participants] == [0]
+
+
+def test_a_second_i_in_someone_elses_words_still_stops():
+    reported = {"mode": "reported", "claimant": "Bram", "claimant_kind": "person", "via": []}
+    cset, report = _read("Bram said I met I.", _first_person("Bram said I met I", attribution=reported))
+    assert not cset.candidates and report.outcomes[0]["kind"] == "ambiguous-span"
+
+
+def test_a_repeated_name_still_stops():
+    named = [{"role": "subject", "text": "Bram", "kind": "person", "is_pronoun_or_vague": False}]
+    cset, report = _read("Bram met Bram.", _first_person("Bram met Bram", participants=named))
+    assert not cset.candidates and report.outcomes[0]["kind"] == "ambiguous-span"
+
+
+def test_a_name_only_inside_longer_words_is_unchanged():
+    named = [{"role": "subject", "text": "Bram", "kind": "person", "is_pronoun_or_vague": False}]
+    cset, _ = _read("Bramley met them.", _first_person("Bramley met them", participants=named))
+    assert cset.candidates[0].participants[0].surface == "Bram"      # as before: stopping this is a separate question
+
+
+def test_evidence_spans_are_not_relaxed():
+    cset, report = _read("I met them. I met them.", _first_person("I met them"))
+    assert not cset.candidates and report.outcomes[0]["kind"] == "ambiguous-span"

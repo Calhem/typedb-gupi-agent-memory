@@ -270,12 +270,17 @@ class _Stop(Exception):
         self.kind, self.detail = kind, detail
 
 
-def _find(text, needle, lo, hi, what, occurrence=None):
-    """The exact (start, end) of `needle` within text[lo:hi]; never a guess."""
+def _find(text, needle, lo, hi, what, occurrence=None, same_referent=False):
+    """The exact (start, end) of `needle` within text[lo:hi]; never a guess. A word found inside a longer word is not
+    an occurrence of it unless nothing else is ("I" in "Italy"). With `same_referent`, every occurrence means one
+    thing, so which is cited changes nothing and the first is taken."""
     starts, i = [], text.find(needle, lo, hi)
     while i != -1 and i + len(needle) <= hi:
         starts.append(i)
         i = text.find(needle, i + 1, hi)
+    if occurrence is None and len(starts) > 1:
+        whole = [x for x in starts if not (x and text[x - 1].isalnum()) and not text[x + len(needle):x + len(needle) + 1].isalnum()]
+        starts = (whole[:1] if same_referent else whole) or starts
     if not starts:
         raise _Stop("grounding-failure", f"{what} {needle!r} does not occur exactly in the {'evidence' if lo else 'message'}")
     if occurrence is not None:
@@ -317,7 +322,8 @@ def _candidate(a, n, obs, earlier, report, fmt, alleged=()):
             raise _Stop("ambiguous-reference", f"{surface!r} is a pronoun or vague reference: identity is never inferred")
         if surface == "I" and not obs.author_id:
             raise _Stop("ambiguous-reference", "'I' with no known author")
-        ps, pe = _find(text, surface, s, e, "participant")
+        ps, pe = _find(text, surface, s, e, "participant",
+                       same_referent=surface == "I" and a["attribution"]["mode"] == "direct")   # the author, however often
         participants.append(Participant(p["role"], surface, ps, pe, p["kind"]))
 
     values = []
