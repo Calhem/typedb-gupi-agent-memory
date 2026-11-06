@@ -57,11 +57,16 @@ def test_reference_keeps_only_what_both_judges_agree():
 
 
 def test_computed_states_use_the_classifier_and_ignore_what_the_reader_wrote():
-    ledger = {"activities": [act("a", "engaged", *SAIL), act("b", "engaged", m("D2:1", "I sail on Sundays"))]}
+    ledger = {"activities": [act("a", "engaged", *SAIL[1:]), act("b", "engaged", m("D2:1", "I sail on Sundays"))]}
     states = g.computed(ledger, SAID, WHO, AFTER)
     assert states["a"][0] == "ended" and "D3:1" in states["a"][1]
     assert states["b"][0] == "unknown"
     assert g.computed(ledger, SAID, WHO, SAID["D2:1"])["b"][0] == "engaged"          # a statement holds at its own moment
+
+
+def test_an_undated_start_then_end_stays_unknown_as_the_classifier_has_it():
+    # The start has no earliest bound, so it might follow the end. Recorded, because it costs recall on real ledgers.
+    assert g.computed({"activities": [act("a", "engaged", *SAIL)]}, SAID, WHO, AFTER)["a"][0] == "unknown"
 
 
 def test_presumed_reads_as_unknown_because_engaged_needs_direct_evidence():
