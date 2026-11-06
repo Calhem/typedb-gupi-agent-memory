@@ -188,6 +188,15 @@ def test_without_claims_retrieval_equals_conversational(build):
 
 # --- integrity ----------------------------------------------------------------------------------------
 
+def test_a_plain_fact_across_threads_stays_accepted_and_appears_once(build):
+    # review defects: an identity claim's evidence is not this fact's evidence, and an item is never returned twice
+    memory, keys, ctx = build(world(*CHAIN))
+    found = memory.retrieve("Mina Roth employer Arbor Mills", ctx, paths.Budget(k=10))
+    item = next(i for i in found.items if i.observation_id == keys["a"])
+    assert item.tier == "accepted" and item.notes == ()
+    assert len(found.ids) == len(set(found.ids))
+
+
 def test_an_allegation_is_never_a_hop_and_stays_attributed(build):
     text = "The report alleges that Arbor Mills' treasurer, Mina Roth, hid losses."
     memory, keys, ctx = build(world(msg("a", "2022-02-01", text,
