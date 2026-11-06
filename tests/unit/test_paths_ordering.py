@@ -55,3 +55,8 @@ def test_ordering_is_deterministic():
 def test_the_default_budget_is_conservative():
     b = Budget()
     assert (b.k, b.keep, b.window) == (10, 3, 1)
+
+
+def test_a_question_with_no_stated_time_gets_no_overlap_claim():
+    from gupi.paths import overlap_label
+    assert overlap_label([], []) == "unknown"
