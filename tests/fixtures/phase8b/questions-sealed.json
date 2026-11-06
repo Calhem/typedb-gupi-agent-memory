@@ -1,0 +1,243 @@
+[
+ {
+  "id": "g04",
+  "cls": "simple",
+  "text": "Who leads Project Kestrel?",
+  "gold": [
+   "p2"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g06",
+  "cls": "simple",
+  "text": "Who does Corvane Freight supply?",
+  "gold": [
+   "d6"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g07",
+  "cls": "simple",
+  "text": "Where does Owen Tully work?",
+  "gold": [
+   "h12"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g16",
+  "cls": "multi-hop",
+  "text": "Which project does the customer of Corvane Freight fund?",
+  "gold": [
+   "d6",
+   "d7"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g17",
+  "cls": "multi-hop",
+  "text": "Where did the employer of Lena Ostrow send its supplies?",
+  "gold": [
+   "h10",
+   "d6"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g19",
+  "cls": "multi-hop",
+  "text": "Which company bought the developer of Project Juniper?",
+  "gold": [
+   "p1",
+   "d1"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g22",
+  "cls": "multi-hop",
+  "text": "What did Fenmoor Energy's partner build?",
+  "gold": [
+   "d4",
+   "d5"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g24",
+  "cls": "multi-hop",
+  "text": "Which project is funded by the bank that Corvane Freight supplies?",
+  "gold": [
+   "d6",
+   "d7"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g27",
+  "cls": "temporal",
+  "text": "Was Marek Sobol at Fenmoor Energy when it partnered with Veldt Robotics?",
+  "gold": [
+   "h8",
+   "d4"
+  ],
+  "checks": {
+   "overlap": [
+    "none"
+   ]
+  }
+ },
+ {
+  "id": "g29",
+  "cls": "temporal",
+  "text": "Did Noor Haddad work at Osprey Dock in 2022?",
+  "gold": [
+   "h5",
+   "h6"
+  ],
+  "checks": {
+   "structured": {
+    "type": "employment",
+    "roles": {
+     "employee": "Noor Haddad",
+     "employer": "Osprey Dock"
+    },
+    "at": "2022-06-01",
+    "answers": [
+     "FALSE",
+     "UNKNOWN"
+    ]
+   }
+  }
+ },
+ {
+  "id": "g30",
+  "cls": "temporal",
+  "text": "Did Noor Haddad work at Osprey Dock in 2020?",
+  "gold": [
+   "h4",
+   "h5"
+  ],
+  "checks": {
+   "structured": {
+    "type": "employment",
+    "roles": {
+     "employee": "Noor Haddad",
+     "employer": "Osprey Dock"
+    },
+    "at": "2020-06-01",
+    "answers": [
+     "PRESUMED"
+    ]
+   }
+  }
+ },
+ {
+  "id": "g37",
+  "cls": "provenance",
+  "text": "Which sources say when Larkfield Systems acquired Tarn Analytics?",
+  "gold": [
+   "d1",
+   "d2",
+   "d3"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g38",
+  "cls": "provenance",
+  "text": "Who says Ravi Menon advises Corvane Freight?",
+  "gold": [
+   "a2"
+  ],
+  "checks": {
+   "originator": {
+    "a2": "Merrow Bank"
+   }
+  }
+ },
+ {
+  "id": "g47",
+  "cls": "correction",
+  "text": "Was anything written about Bryn withdrawn?",
+  "gold": [
+   "o3"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g48",
+  "cls": "correction",
+  "text": "Did Larkfield Systems acquire Tarn Analytics in 2022 or 2023?",
+  "gold": [
+   "d1",
+   "d2",
+   "d3"
+  ],
+  "checks": {
+   "not_confirmed": true
+  }
+ },
+ {
+  "id": "g51",
+  "cls": "identity",
+  "text": "Is the Sam Whitlock at Merrow Bank the one at Osprey Dock?",
+  "gold": [
+   "c1",
+   "c5"
+  ],
+  "checks": {
+   "ambiguous": "Sam Whitlock",
+   "no_merge": [
+    "Sam Whitlock"
+   ]
+  }
+ },
+ {
+  "id": "g54",
+  "cls": "identity",
+  "text": "Who works at both Merrow Bank and Osprey Dock?",
+  "gold": [
+   "c1",
+   "c5"
+  ],
+  "checks": {
+   "no_merge": [
+    "Sam Whitlock"
+   ]
+  }
+ },
+ {
+  "id": "g59",
+  "cls": "negative",
+  "text": "Is Ilse Marrow connected to Project Ember?",
+  "gold": [
+   "a1"
+  ],
+  "checks": {
+   "no_path_established": [
+    [
+     "Ilse Marrow",
+     "Project Ember"
+    ]
+   ]
+  }
+ },
+ {
+  "id": "g60",
+  "cls": "negative",
+  "text": "Does Lena Ostrow work with Sam Whitlock?",
+  "gold": [],
+  "checks": {
+   "no_path_established": [
+    [
+     "Lena Ostrow",
+     "Sam Whitlock"
+    ]
+   ]
+  }
+ }
+]

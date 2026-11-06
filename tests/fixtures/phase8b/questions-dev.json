@@ -1,0 +1,503 @@
+[
+ {
+  "id": "g01",
+  "cls": "simple",
+  "text": "Where did Marek Sobol work in 2019?",
+  "gold": [
+   "h7"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g02",
+  "cls": "simple",
+  "text": "Who does Tomas Reyl report to?",
+  "gold": [
+   "h9"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g03",
+  "cls": "simple",
+  "text": "What did Veldt Robotics build?",
+  "gold": [
+   "d5"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g05",
+  "cls": "simple",
+  "text": "What does Merrow Bank fund?",
+  "gold": [
+   "d7"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g08",
+  "cls": "simple",
+  "text": "What did Tarn Analytics develop?",
+  "gold": [
+   "p1"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g09",
+  "cls": "simple",
+  "text": "Who manages Veldt Robotics?",
+  "gold": [
+   "o5"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g10",
+  "cls": "simple",
+  "text": "Which company did Fenmoor Energy partner with?",
+  "gold": [
+   "d4"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g11",
+  "cls": "multi-hop",
+  "text": "Which project is connected to Priya Nandan through her employer's acquisition?",
+  "gold": [
+   "h1",
+   "d1",
+   "p1"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g12",
+  "cls": "multi-hop",
+  "text": "Which organisation employs the manager of Tomas Reyl?",
+  "gold": [
+   "h9",
+   "h10"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g13",
+  "cls": "multi-hop",
+  "text": "Which project does Tomas Reyl's manager lead?",
+  "gold": [
+   "h9",
+   "p2"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g14",
+  "cls": "multi-hop",
+  "text": "What does the project led by Lena Ostrow depend on?",
+  "gold": [
+   "p2",
+   "p3"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g15",
+  "cls": "multi-hop",
+  "text": "Who built the thing Project Kestrel depends on?",
+  "gold": [
+   "p3",
+   "d5"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g18",
+  "cls": "multi-hop",
+  "text": "What did the company Owen Tully works for develop?",
+  "gold": [
+   "h12",
+   "p1"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g20",
+  "cls": "multi-hop",
+  "text": "Which business partner did Marek Sobol's former employer gain?",
+  "gold": [
+   "h7",
+   "d4"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g21",
+  "cls": "multi-hop",
+  "text": "Who is the manager at the partner of Fenmoor Energy?",
+  "gold": [
+   "d4",
+   "o5"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g23",
+  "cls": "multi-hop",
+  "text": "Who advises the supplier of Merrow Bank?",
+  "gold": [
+   "d6",
+   "a2"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g25",
+  "cls": "multi-hop",
+  "text": "Who at Larkfield Systems' acquisition target works there?",
+  "gold": [
+   "d1",
+   "h12"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g26",
+  "cls": "multi-hop",
+  "text": "Which project did the company that hired Priya Nandan in 2024 develop?",
+  "gold": [
+   "h3",
+   "p1"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g28",
+  "cls": "temporal",
+  "text": "Was Priya Nandan at Larkfield Systems when it acquired Tarn Analytics?",
+  "gold": [
+   "h1",
+   "h2",
+   "d1"
+  ],
+  "checks": {
+   "not_confirmed": true
+  }
+ },
+ {
+  "id": "g31",
+  "cls": "temporal",
+  "text": "How did Priya Nandan's relationship with Tarn Analytics change?",
+  "gold": [
+   "h1",
+   "d1",
+   "h2",
+   "h3"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g32",
+  "cls": "temporal",
+  "text": "When did Noor Haddad leave and come back to Osprey Dock?",
+  "gold": [
+   "h5",
+   "h6"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g33",
+  "cls": "temporal",
+  "text": "Did Marek Sobol work at Fenmoor Energy in 2019?",
+  "gold": [
+   "h7",
+   "h8"
+  ],
+  "checks": {
+   "structured": {
+    "type": "employment",
+    "roles": {
+     "employee": "Marek Sobol",
+     "employer": "Fenmoor Energy"
+    },
+    "at": "2019-06-01",
+    "answers": [
+     "PRESUMED"
+    ]
+   }
+  }
+ },
+ {
+  "id": "g34",
+  "cls": "temporal",
+  "text": "Did Marek Sobol work at Fenmoor Energy in 2022?",
+  "gold": [
+   "h8"
+  ],
+  "checks": {
+   "structured": {
+    "type": "employment",
+    "roles": {
+     "employee": "Marek Sobol",
+     "employer": "Fenmoor Energy"
+    },
+    "at": "2022-06-01",
+    "answers": [
+     "FALSE"
+    ]
+   }
+  }
+ },
+ {
+  "id": "g35",
+  "cls": "temporal",
+  "text": "Is Owen Tully still at Tarn Analytics in 2030?",
+  "gold": [
+   "h12"
+  ],
+  "checks": {
+   "structured": {
+    "type": "employment",
+    "roles": {
+     "employee": "Owen Tully",
+     "employer": "Tarn Analytics"
+    },
+    "at": "2030-06-01",
+    "answers": [
+     "UNKNOWN"
+    ]
+   }
+  }
+ },
+ {
+  "id": "g36",
+  "cls": "temporal",
+  "text": "Was Lena Ostrow at Corvane Freight when it supplied Merrow Bank?",
+  "gold": [
+   "h10",
+   "d6"
+  ],
+  "checks": {
+   "overlap": [
+    "unknown"
+   ]
+  }
+ },
+ {
+  "id": "g39",
+  "cls": "provenance",
+  "text": "Who claims that Ilse Marrow hid losses?",
+  "gold": [
+   "a1"
+  ],
+  "checks": {
+   "tier": {
+    "a1": "unresolved"
+   }
+  }
+ },
+ {
+  "id": "g40",
+  "cls": "provenance",
+  "text": "Who reported that Larkfield Systems bought Tarn Analytics in 2022?",
+  "gold": [
+   "d1",
+   "d3"
+  ],
+  "checks": {
+   "originator": {
+    "d3": "The filing"
+   }
+  }
+ },
+ {
+  "id": "g41",
+  "cls": "provenance",
+  "text": "Is it established that Ilse Marrow is the finance director at Corvane Freight?",
+  "gold": [
+   "a1"
+  ],
+  "checks": {
+   "tier": {
+    "a1": "unresolved"
+   }
+  }
+ },
+ {
+  "id": "g42",
+  "cls": "provenance",
+  "text": "Is it confirmed that Hana Birk works at Veldt Robotics?",
+  "gold": [
+   "h11",
+   "a3"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g43",
+  "cls": "correction",
+  "text": "When did Hana Birk join Veldt Robotics?",
+  "gold": [
+   "h11",
+   "o1"
+  ],
+  "checks": {
+   "tier": {
+    "o1": "unresolved"
+   }
+  }
+ },
+ {
+  "id": "g44",
+  "cls": "correction",
+  "text": "Who disputes the date of the Tarn Analytics acquisition?",
+  "gold": [
+   "d2"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g45",
+  "cls": "correction",
+  "text": "Does Bryn Castell manage Osprey Dock?",
+  "gold": [
+   "o2",
+   "o3"
+  ],
+  "checks": {
+   "pending": {
+    "o2": "o3"
+   }
+  }
+ },
+ {
+  "id": "g46",
+  "cls": "correction",
+  "text": "Who manages Osprey Dock?",
+  "gold": [
+   "o2",
+   "o3"
+  ],
+  "checks": {
+   "pending": {
+    "o2": "o3"
+   }
+  }
+ },
+ {
+  "id": "g49",
+  "cls": "identity",
+  "text": "Where does Sam Whitlock work?",
+  "gold": [
+   "c1",
+   "c5"
+  ],
+  "checks": {
+   "ambiguous": "Sam Whitlock"
+  }
+ },
+ {
+  "id": "g50",
+  "cls": "identity",
+  "text": "Which project is Sam Whitlock connected to through his employer?",
+  "gold": [
+   "c1",
+   "d7"
+  ],
+  "checks": {
+   "ambiguous": "Sam Whitlock",
+   "no_path": [
+    [
+     "Osprey Dock",
+     "Project Ember"
+    ]
+   ]
+  }
+ },
+ {
+  "id": "g52",
+  "cls": "identity",
+  "text": "Which projects is Priya Nandan connected to across her jobs?",
+  "gold": [
+   "h1",
+   "h3",
+   "p1"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g53",
+  "cls": "identity",
+  "text": "What did Priya say about the canteen?",
+  "gold": [
+   "c3"
+  ],
+  "checks": {}
+ },
+ {
+  "id": "g55",
+  "cls": "negative",
+  "text": "What did Marek Sobol build at Veldt Robotics?",
+  "gold": [
+   "d5"
+  ],
+  "checks": {
+   "no_path_established": [
+    [
+     "Marek Sobol",
+     "Project Slate"
+    ]
+   ]
+  }
+ },
+ {
+  "id": "g56",
+  "cls": "negative",
+  "text": "Which project does Noor Haddad work on through the Tarn Analytics merger?",
+  "gold": [
+   "d9"
+  ],
+  "checks": {
+   "gap": "event",
+   "no_path_established": [
+    [
+     "Noor Haddad",
+     "Project Juniper"
+    ]
+   ]
+  }
+ },
+ {
+  "id": "g57",
+  "cls": "negative",
+  "text": "Did Merrow Bank fine Corvane Freight?",
+  "gold": [
+   "d8"
+  ],
+  "checks": {
+   "gap": "event",
+   "tier": {
+    "d8": "unresolved"
+   }
+  }
+ },
+ {
+  "id": "g58",
+  "cls": "negative",
+  "text": "Does Hana Birk report to Kit Sorel?",
+  "gold": [
+   "o5"
+  ],
+  "checks": {
+   "no_path_established": [
+    [
+     "Hana Birk",
+     "Kit Sorel"
+    ]
+   ]
+  }
+ }
+]

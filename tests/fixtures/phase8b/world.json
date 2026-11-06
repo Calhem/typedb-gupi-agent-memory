@@ -1,0 +1,1543 @@
+{
+ "label": "exploratory, developer-authored",
+ "messages": [
+  {
+   "key": "h1",
+   "context": "hr",
+   "at": "2021-02-01T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Priya Nandan joined Larkfield Systems in 2021.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Priya Nandan",
+       "person"
+      ],
+      [
+       "employer",
+       "Larkfield Systems",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2021",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "h2",
+   "context": "hr",
+   "at": "2023-07-03T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Priya Nandan left Larkfield Systems in 2023.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Priya Nandan",
+       "person"
+      ],
+      [
+       "employer",
+       "Larkfield Systems",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2023",
+       "end"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "h3",
+   "context": "hr",
+   "at": "2024-03-04T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Priya Nandan joined Tarn Analytics in 2024.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Priya Nandan",
+       "person"
+      ],
+      [
+       "employer",
+       "Tarn Analytics",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2024",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "h4",
+   "context": "hr",
+   "at": "2019-03-04T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Noor Haddad joined Osprey Dock in 2019.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Noor Haddad",
+       "person"
+      ],
+      [
+       "employer",
+       "Osprey Dock",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2019",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "h5",
+   "context": "hr",
+   "at": "2021-06-07T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Noor Haddad left Osprey Dock in 2021.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Noor Haddad",
+       "person"
+      ],
+      [
+       "employer",
+       "Osprey Dock",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2021",
+       "end"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "h6",
+   "context": "hr",
+   "at": "2023-02-06T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Noor Haddad joined Osprey Dock in 2023.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Noor Haddad",
+       "person"
+      ],
+      [
+       "employer",
+       "Osprey Dock",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2023",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "h7",
+   "context": "hr",
+   "at": "2018-02-05T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Marek Sobol joined Fenmoor Energy in 2018.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Marek Sobol",
+       "person"
+      ],
+      [
+       "employer",
+       "Fenmoor Energy",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2018",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "h8",
+   "context": "hr",
+   "at": "2020-08-03T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Marek Sobol left Fenmoor Energy in 2020.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Marek Sobol",
+       "person"
+      ],
+      [
+       "employer",
+       "Fenmoor Energy",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2020",
+       "end"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "h9",
+   "context": "hr",
+   "at": "2023-01-09T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Tomas Reyl reports to Lena Ostrow.",
+   "assertions": [
+    {
+     "rel": "reporting",
+     "p": [
+      [
+       "report",
+       "Tomas Reyl",
+       "person"
+      ],
+      [
+       "manager",
+       "Lena Ostrow",
+       "person"
+      ]
+     ],
+     "t": []
+    }
+   ]
+  },
+  {
+   "key": "h10",
+   "context": "hr",
+   "at": "2022-05-02T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Lena Ostrow joined Corvane Freight in 2022.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Lena Ostrow",
+       "person"
+      ],
+      [
+       "employer",
+       "Corvane Freight",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "h11",
+   "context": "hr",
+   "at": "2024-02-05T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Hana Birk joined Veldt Robotics on 5 February 2024.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Hana Birk",
+       "person"
+      ],
+      [
+       "employer",
+       "Veldt Robotics",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "5 February 2024",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "h12",
+   "context": "hr",
+   "at": "2022-09-05T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Owen Tully works at Tarn Analytics.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Owen Tully",
+       "person"
+      ],
+      [
+       "employer",
+       "Tarn Analytics",
+       "organization"
+      ]
+     ],
+     "t": []
+    }
+   ]
+  },
+  {
+   "key": "hh0",
+   "context": "hr",
+   "at": "2022-10-03T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Rita Voss joined Larkfield Systems in 2022.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Rita Voss",
+       "person"
+      ],
+      [
+       "employer",
+       "Larkfield Systems",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "hh1",
+   "context": "hr",
+   "at": "2022-10-03T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Kofi Lamar joined Larkfield Systems in 2022.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Kofi Lamar",
+       "person"
+      ],
+      [
+       "employer",
+       "Larkfield Systems",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "hh2",
+   "context": "hr",
+   "at": "2022-10-03T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Ines Duarte joined Larkfield Systems in 2022.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Ines Duarte",
+       "person"
+      ],
+      [
+       "employer",
+       "Larkfield Systems",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "hh3",
+   "context": "hr",
+   "at": "2022-10-03T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Pavel Hruby joined Larkfield Systems in 2022.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Pavel Hruby",
+       "person"
+      ],
+      [
+       "employer",
+       "Larkfield Systems",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "hh4",
+   "context": "hr",
+   "at": "2022-10-03T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Mei Tan joined Larkfield Systems in 2022.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Mei Tan",
+       "person"
+      ],
+      [
+       "employer",
+       "Larkfield Systems",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "hh5",
+   "context": "hr",
+   "at": "2022-10-03T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Jonas Bell joined Larkfield Systems in 2022.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Jonas Bell",
+       "person"
+      ],
+      [
+       "employer",
+       "Larkfield Systems",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "hh6",
+   "context": "hr",
+   "at": "2022-10-03T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Sara Lindh joined Larkfield Systems in 2022.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Sara Lindh",
+       "person"
+      ],
+      [
+       "employer",
+       "Larkfield Systems",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "hh7",
+   "context": "hr",
+   "at": "2022-10-03T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Amir Qureshi joined Larkfield Systems in 2022.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Amir Qureshi",
+       "person"
+      ],
+      [
+       "employer",
+       "Larkfield Systems",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "hh8",
+   "context": "hr",
+   "at": "2022-10-03T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Tess Rowan joined Larkfield Systems in 2022.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Tess Rowan",
+       "person"
+      ],
+      [
+       "employer",
+       "Larkfield Systems",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "hh9",
+   "context": "hr",
+   "at": "2022-10-03T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Yuki Mori joined Larkfield Systems in 2022.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Yuki Mori",
+       "person"
+      ],
+      [
+       "employer",
+       "Larkfield Systems",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "hh10",
+   "context": "hr",
+   "at": "2022-10-03T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Leo Grant joined Larkfield Systems in 2022.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Leo Grant",
+       "person"
+      ],
+      [
+       "employer",
+       "Larkfield Systems",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "hh11",
+   "context": "hr",
+   "at": "2022-10-03T09:00:00Z",
+   "author": "Ada Finch",
+   "text": "Dara Quinn joined Larkfield Systems in 2022.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Dara Quinn",
+       "person"
+      ],
+      [
+       "employer",
+       "Larkfield Systems",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "d1",
+   "context": "deals",
+   "at": "2022-03-07T09:00:00Z",
+   "author": "Ben Oyelaran",
+   "text": "Larkfield Systems acquired Tarn Analytics in 2022.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Larkfield Systems",
+       "organization"
+      ],
+      [
+       "object",
+       "Tarn Analytics",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ],
+     "pred": "acquired"
+    }
+   ]
+  },
+  {
+   "key": "d2",
+   "context": "deals",
+   "at": "2023-09-04T09:00:00Z",
+   "author": "Cleo Marsh",
+   "text": "Larkfield Systems acquired Tarn Analytics in 2023, not 2022.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Larkfield Systems",
+       "organization"
+      ],
+      [
+       "object",
+       "Tarn Analytics",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2023",
+       "start"
+      ]
+     ],
+     "pred": "acquired",
+     "ev": "Larkfield Systems acquired Tarn Analytics in 2023"
+    }
+   ]
+  },
+  {
+   "key": "d3",
+   "context": "deals",
+   "at": "2023-10-02T09:00:00Z",
+   "author": "Ben Oyelaran",
+   "text": "The filing says that Larkfield Systems acquired Tarn Analytics in 2022.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Larkfield Systems",
+       "organization"
+      ],
+      [
+       "object",
+       "Tarn Analytics",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ],
+     "pred": "acquired",
+     "ev": "Larkfield Systems acquired Tarn Analytics in 2022",
+     "attr": [
+      "reported",
+      "The filing",
+      "unknown"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "d4",
+   "context": "deals",
+   "at": "2022-11-07T09:00:00Z",
+   "author": "Ben Oyelaran",
+   "text": "Fenmoor Energy partnered with Veldt Robotics in 2022.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Fenmoor Energy",
+       "organization"
+      ],
+      [
+       "object",
+       "Veldt Robotics",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2022",
+       "start"
+      ]
+     ],
+     "pred": "partnered with"
+    }
+   ]
+  },
+  {
+   "key": "d5",
+   "context": "deals",
+   "at": "2023-03-06T09:00:00Z",
+   "author": "Ben Oyelaran",
+   "text": "Veldt Robotics built Project Slate.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Veldt Robotics",
+       "organization"
+      ],
+      [
+       "object",
+       "Project Slate",
+       "unclassified"
+      ]
+     ],
+     "t": [],
+     "pred": "built"
+    }
+   ]
+  },
+  {
+   "key": "d6",
+   "context": "deals",
+   "at": "2023-04-03T09:00:00Z",
+   "author": "Ben Oyelaran",
+   "text": "Corvane Freight supplies Merrow Bank.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Corvane Freight",
+       "organization"
+      ],
+      [
+       "object",
+       "Merrow Bank",
+       "organization"
+      ]
+     ],
+     "t": [],
+     "pred": "supplies"
+    }
+   ]
+  },
+  {
+   "key": "d7",
+   "context": "deals",
+   "at": "2023-05-01T09:00:00Z",
+   "author": "Ben Oyelaran",
+   "text": "Merrow Bank funds Project Ember.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Merrow Bank",
+       "organization"
+      ],
+      [
+       "object",
+       "Project Ember",
+       "unclassified"
+      ]
+     ],
+     "t": [],
+     "pred": "funds"
+    }
+   ]
+  },
+  {
+   "key": "d8",
+   "context": "deals",
+   "at": "2023-11-06T09:00:00Z",
+   "author": "Cleo Marsh",
+   "text": "Merrow Bank fined Corvane Freight in 2023.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Merrow Bank",
+       "organization"
+      ],
+      [
+       "object",
+       "Corvane Freight",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2023",
+       "holds-at"
+      ]
+     ],
+     "pred": "fined"
+    }
+   ]
+  },
+  {
+   "key": "d9",
+   "context": "deals",
+   "at": "2024-06-03T09:00:00Z",
+   "author": "Cleo Marsh",
+   "text": "Osprey Dock merged with Tarn Analytics in 2024.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Osprey Dock",
+       "organization"
+      ],
+      [
+       "object",
+       "Tarn Analytics",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "2024",
+       "holds-at"
+      ]
+     ],
+     "pred": "merged with"
+    }
+   ]
+  },
+  {
+   "key": "d10",
+   "context": "deals",
+   "at": "2024-07-01T09:00:00Z",
+   "author": "Cleo Marsh",
+   "text": "Tarn Analytics opened an office in Lisbon.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Tarn Analytics",
+       "organization"
+      ]
+     ],
+     "t": [],
+     "pred": "opened",
+     "obj_text": "an office in Lisbon"
+    }
+   ]
+  },
+  {
+   "key": "p1",
+   "context": "projects",
+   "at": "2022-06-06T09:00:00Z",
+   "author": "Dev Anand",
+   "text": "Tarn Analytics developed Project Juniper.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Tarn Analytics",
+       "organization"
+      ],
+      [
+       "object",
+       "Project Juniper",
+       "unclassified"
+      ]
+     ],
+     "t": [],
+     "pred": "developed"
+    }
+   ]
+  },
+  {
+   "key": "p2",
+   "context": "projects",
+   "at": "2023-06-05T09:00:00Z",
+   "author": "Dev Anand",
+   "text": "Lena Ostrow leads Project Kestrel.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Lena Ostrow",
+       "person"
+      ],
+      [
+       "object",
+       "Project Kestrel",
+       "unclassified"
+      ]
+     ],
+     "t": [],
+     "pred": "leads"
+    }
+   ]
+  },
+  {
+   "key": "p3",
+   "context": "projects",
+   "at": "2023-08-07T09:00:00Z",
+   "author": "Dev Anand",
+   "text": "Project Kestrel depends on Project Slate.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Project Kestrel",
+       "unclassified"
+      ],
+      [
+       "object",
+       "Project Slate",
+       "unclassified"
+      ]
+     ],
+     "t": [],
+     "pred": "depends on"
+    }
+   ]
+  },
+  {
+   "key": "p4",
+   "context": "projects",
+   "at": "2023-08-14T09:00:00Z",
+   "author": "Dev Anand",
+   "text": "The Project Juniper status meeting moved to Thursday.",
+   "assertions": []
+  },
+  {
+   "key": "p5",
+   "context": "projects",
+   "at": "2023-08-21T09:00:00Z",
+   "author": "Dev Anand",
+   "text": "Project Ember slides are in the shared folder.",
+   "assertions": []
+  },
+  {
+   "key": "p6",
+   "context": "projects",
+   "at": "2023-08-28T09:00:00Z",
+   "author": "Dev Anand",
+   "text": "Nobody has updated the Project Kestrel roadmap since spring.",
+   "assertions": []
+  },
+  {
+   "key": "p7",
+   "context": "projects",
+   "at": "2023-09-11T09:00:00Z",
+   "author": "Dev Anand",
+   "text": "The Project Slate demo was well attended.",
+   "assertions": []
+  },
+  {
+   "key": "p8",
+   "context": "projects",
+   "at": "2023-09-18T09:00:00Z",
+   "author": "Dev Anand",
+   "text": "Please send project budget notes to the finance list.",
+   "assertions": []
+  },
+  {
+   "key": "a1",
+   "context": "audit",
+   "at": "2023-12-04T09:00:00Z",
+   "author": "Rosa Keane",
+   "text": "The audit report alleges that Corvane Freight's finance director, Ilse Marrow, hid losses from auditors.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Ilse Marrow",
+       "person"
+      ]
+     ],
+     "t": [],
+     "pred": "hid",
+     "obj_text": "losses from auditors",
+     "attr": [
+      "reported",
+      "The audit report",
+      "unknown"
+     ],
+     "allegation": true,
+     "ev": "The audit report alleges that Corvane Freight's finance director, Ilse Marrow, hid losses from auditors"
+    },
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Ilse Marrow",
+       "person"
+      ],
+      [
+       "employer",
+       "Corvane Freight",
+       "organization"
+      ]
+     ],
+     "t": [],
+     "title": "finance director",
+     "ev": "Corvane Freight's finance director, Ilse Marrow"
+    }
+   ]
+  },
+  {
+   "key": "a2",
+   "context": "audit",
+   "at": "2023-12-11T09:00:00Z",
+   "author": "Rosa Keane",
+   "text": "According to Merrow Bank, Ravi Menon advises Corvane Freight.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Ravi Menon",
+       "person"
+      ],
+      [
+       "object",
+       "Corvane Freight",
+       "organization"
+      ]
+     ],
+     "t": [],
+     "pred": "advises",
+     "ev": "Ravi Menon advises Corvane Freight",
+     "attr": [
+      "reported",
+      "Merrow Bank",
+      "organisation"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "a3",
+   "context": "audit",
+   "at": "2023-12-18T09:00:00Z",
+   "author": "Rosa Keane",
+   "text": "Hana Birk possibly works at Veldt Robotics.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Hana Birk",
+       "person"
+      ],
+      [
+       "employer",
+       "Veldt Robotics",
+       "organization"
+      ]
+     ],
+     "t": [],
+     "commitment": "possible"
+    }
+   ]
+  },
+  {
+   "key": "a4",
+   "context": "audit",
+   "at": "2024-01-08T09:00:00Z",
+   "author": "Rosa Keane",
+   "text": "The auditors will return next quarter.",
+   "assertions": []
+  },
+  {
+   "key": "o1",
+   "context": "ops",
+   "at": "2024-03-11T09:00:00Z",
+   "author": "Gil Amaro",
+   "text": "Correction: Hana Birk joined Veldt Robotics on 3 March 2024.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Hana Birk",
+       "person"
+      ],
+      [
+       "employer",
+       "Veldt Robotics",
+       "organization"
+      ]
+     ],
+     "t": [
+      [
+       "3 March 2024",
+       "start"
+      ]
+     ],
+     "corr": [
+      "corrects",
+      "Correction"
+     ],
+     "ev": "Hana Birk joined Veldt Robotics on 3 March 2024"
+    }
+   ]
+  },
+  {
+   "key": "o2",
+   "context": "ops",
+   "at": "2024-04-01T09:00:00Z",
+   "author": "Gil Amaro",
+   "text": "Bryn Castell manages Osprey Dock.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Bryn Castell",
+       "person"
+      ],
+      [
+       "object",
+       "Osprey Dock",
+       "organization"
+      ]
+     ],
+     "t": [],
+     "pred": "manages"
+    }
+   ]
+  },
+  {
+   "key": "o3",
+   "context": "ops",
+   "at": "2024-04-02T09:00:00Z",
+   "author": "Gil Amaro",
+   "text": "Apologies, please disregard what I wrote about Bryn, wrong person.",
+   "assertions": []
+  },
+  {
+   "key": "o4",
+   "context": "ops",
+   "at": "2024-04-03T09:00:00Z",
+   "author": "Gil Amaro",
+   "text": "The dock cranes passed inspection this week.",
+   "assertions": []
+  },
+  {
+   "key": "o5",
+   "context": "ops",
+   "at": "2024-04-04T09:00:00Z",
+   "author": "Gil Amaro",
+   "text": "Kit Sorel manages Veldt Robotics.",
+   "assertions": [
+    {
+     "rel": "statement",
+     "p": [
+      [
+       "subject",
+       "Kit Sorel",
+       "person"
+      ],
+      [
+       "object",
+       "Veldt Robotics",
+       "organization"
+      ]
+     ],
+     "t": [],
+     "pred": "manages"
+    }
+   ]
+  },
+  {
+   "key": "c1",
+   "context": "chat-a",
+   "at": "2023-05-08T09:00:00Z",
+   "author": "Mina Roth",
+   "text": "Sam Whitlock works at Merrow Bank.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Sam Whitlock",
+       "person"
+      ],
+      [
+       "employer",
+       "Merrow Bank",
+       "organization"
+      ]
+     ],
+     "t": []
+    }
+   ]
+  },
+  {
+   "key": "c2",
+   "context": "chat-a",
+   "at": "2023-05-08T09:00:00Z",
+   "author": "Joel Hart",
+   "text": "Good to know, thanks.",
+   "assertions": []
+  },
+  {
+   "key": "c3",
+   "context": "chat-a",
+   "at": "2023-05-09T09:00:00Z",
+   "author": "Mina Roth",
+   "text": "Priya said the Larkfield canteen is closing.",
+   "assertions": []
+  },
+  {
+   "key": "c4",
+   "context": "chat-a",
+   "at": "2023-05-09T09:00:00Z",
+   "author": "Joel Hart",
+   "text": "Shame, the Larkfield Systems coffee was decent.",
+   "assertions": []
+  },
+  {
+   "key": "c5",
+   "context": "chat-b",
+   "at": "2024-02-12T09:00:00Z",
+   "author": "Theo Vale",
+   "text": "Sam Whitlock works at Osprey Dock.",
+   "assertions": [
+    {
+     "rel": "employment",
+     "p": [
+      [
+       "employee",
+       "Sam Whitlock",
+       "person"
+      ],
+      [
+       "employer",
+       "Osprey Dock",
+       "organization"
+      ]
+     ],
+     "t": []
+    }
+   ]
+  },
+  {
+   "key": "c6",
+   "context": "chat-b",
+   "at": "2024-02-12T09:00:00Z",
+   "author": "Nell Ward",
+   "text": "Which team?",
+   "assertions": []
+  },
+  {
+   "key": "c7",
+   "context": "chat-b",
+   "at": "2024-02-12T09:00:00Z",
+   "author": "Theo Vale",
+   "text": "Crane scheduling, I think.",
+   "assertions": []
+  },
+  {
+   "key": "c8",
+   "context": "chat-b",
+   "at": "2024-02-13T09:00:00Z",
+   "author": "Nell Ward",
+   "text": "Priya Nandan said Tarn Analytics hired two analysts.",
+   "assertions": []
+  },
+  {
+   "key": "c9",
+   "context": "chat-b",
+   "at": "2024-02-13T09:00:00Z",
+   "author": "Theo Vale",
+   "text": "Noor Haddad sent the harbour photos around.",
+   "assertions": []
+  },
+  {
+   "key": "c10",
+   "context": "chat-b",
+   "at": "2024-02-14T09:00:00Z",
+   "author": "Nell Ward",
+   "text": "Ilse Marrow is speaking at the finance meetup.",
+   "assertions": []
+  },
+  {
+   "key": "c11",
+   "context": "chat-b",
+   "at": "2024-02-14T09:00:00Z",
+   "author": "Theo Vale",
+   "text": "Marek Sobol recommended a good energy podcast.",
+   "assertions": []
+  },
+  {
+   "key": "c12",
+   "context": "chat-b",
+   "at": "2024-02-15T09:00:00Z",
+   "author": "Nell Ward",
+   "text": "Lena Ostrow booked the large meeting room.",
+   "assertions": []
+  },
+  {
+   "key": "f0",
+   "context": "chat-a",
+   "at": "2023-06-01T09:00:00Z",
+   "author": "Joel Hart",
+   "text": "The office wifi was down all morning.",
+   "assertions": []
+  },
+  {
+   "key": "f1",
+   "context": "chat-a",
+   "at": "2023-06-02T09:00:00Z",
+   "author": "Joel Hart",
+   "text": "Lunch on Friday is at the usual place.",
+   "assertions": []
+  },
+  {
+   "key": "f2",
+   "context": "chat-a",
+   "at": "2023-06-03T09:00:00Z",
+   "author": "Joel Hart",
+   "text": "Who has the spare charger?",
+   "assertions": []
+  },
+  {
+   "key": "f3",
+   "context": "chat-a",
+   "at": "2023-06-04T09:00:00Z",
+   "author": "Joel Hart",
+   "text": "The quarterly newsletter goes out next week.",
+   "assertions": []
+  },
+  {
+   "key": "f4",
+   "context": "chat-a",
+   "at": "2023-06-05T09:00:00Z",
+   "author": "Joel Hart",
+   "text": "Parking passes need renewing by Monday.",
+   "assertions": []
+  },
+  {
+   "key": "f5",
+   "context": "chat-a",
+   "at": "2023-06-06T09:00:00Z",
+   "author": "Joel Hart",
+   "text": "The new coffee machine finally works.",
+   "assertions": []
+  },
+  {
+   "key": "f6",
+   "context": "chat-a",
+   "at": "2023-06-07T09:00:00Z",
+   "author": "Joel Hart",
+   "text": "Remember the fire drill at ten.",
+   "assertions": []
+  },
+  {
+   "key": "f7",
+   "context": "chat-a",
+   "at": "2023-06-08T09:00:00Z",
+   "author": "Joel Hart",
+   "text": "The train strike may delay everyone tomorrow.",
+   "assertions": []
+  }
+ ],
+ "identity": {
+  "accept_same_name": true,
+  "never_merge": [
+   "Sam Whitlock"
+  ]
+ },
+ "review": []
+}
