@@ -124,6 +124,8 @@ def test_connected_relationships_that_never_held_together(build):
     (p, *_) = two_hop(found, "Mina Roth", "Sefton Mill")
     assert p.overlap == "none"
     assert any("at the same time: none" in line for line in paths.render(found))
+    reverse = two_hop(found, "Sefton Mill", "Mina Roth")
+    assert reverse and all(x.overlap == "none" for x in reverse)    # the same whichever end the path starts from
 
 
 # --- paths and evidence -----------------------------------------------------------------------------------

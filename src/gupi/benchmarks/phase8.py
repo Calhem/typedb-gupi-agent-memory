@@ -40,6 +40,8 @@ def rank(memory, q, system):
     if system == "keyword":
         return evidence.keyword(memory, q.text, q.contexts, pool).ids
     budget = paths.Budget(k=pool, pool=pool, **CONFIG["budget"])
+    if system == "claim-paths":                    # with no claims this should equal conversational, at some cost
+        return paths.retrieve(memory, q.text, q.contexts, budget).ids
     return paths.conversational(memory, q.text, q.contexts, budget).ids
 
 
@@ -81,6 +83,7 @@ def summarise(rows):
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--dataset", choices=["locomo", "longmemeval"], required=True)
+    p.add_argument("--systems", nargs="+", default=CONFIG["systems"])
     p.add_argument("--json", help="write results here")
     args = p.parse_args(argv)
     driver = connect()
@@ -101,7 +104,7 @@ def main(argv=None):
             questions = longmemeval.questions(data, by_context)
             info["observations"] = sum(map(len, by_context.values()))
         clock.now = datetime(2030, 1, 1, tzinfo=timezone.utc)
-        rows = run(memory, questions, CONFIG["systems"])
+        rows = run(memory, questions, args.systems)
         result = {"dataset": args.dataset, "split": SPLIT, "questions": len(questions), "info": info,
                   "config_sha256": hashlib.sha256(CONFIG_PATH.read_bytes()).hexdigest(),
                   "note": "Evidence retrieval on development data only; not a benchmark or leaderboard score.",

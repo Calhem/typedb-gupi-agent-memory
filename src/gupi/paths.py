@@ -264,23 +264,25 @@ def _times(views):
     return sorted(set(points))
 
 
-def overlap_label(a, b):
-    """Did proposition `a` hold during `b`'s stated time? From the existing model, over all of each proposition's
-    believed claims. Connectivity alone is never enough: with no stated time the answer is unknown."""
-    a, b, label = [c for c in a if c.polarity != "negative"], list(b), "unknown"
+def _held_during(a, b):
+    """Did proposition `a` hold at the times `b` states? None if `b` states no time."""
     points = _times(b)
     if not points:
-        a, b, points = b, a, _times(a)
-    if not points:
-        return label
-    answers = {classify(a, p, True).answer for p in points}
+        return None
+    answers = {classify([c for c in a if c.polarity != "negative"], p, True).answer for p in points}
     if answers == {Answer.TRUE}:
         return "confirmed"
     if answers == {Answer.FALSE}:
         return "none"
-    if answers <= {Answer.TRUE, Answer.PRESUMED}:
-        return "presumed"
-    return label
+    return "presumed" if answers <= {Answer.TRUE, Answer.PRESUMED} else "unknown"
+
+
+def overlap_label(a, b):
+    """Did two propositions hold together? From the existing model, over all of each one's believed claims, asked both
+    ways so the label does not depend on which end a path started from: a stated end before a stated start settles it
+    whichever is asked about. Connectivity alone is never enough: with no stated time the answer is unknown."""
+    found = {_held_during(a, b), _held_during(b, a)}
+    return next((label for label in ("none", "presumed", "confirmed") if label in found), "unknown")
 
 
 def _proposition(view):
