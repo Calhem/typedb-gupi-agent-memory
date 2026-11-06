@@ -1,0 +1,23 @@
+{
+  "_comment": "Phase 8G replication, fixed before any reader ran. Hashes pin the Phase 8F method, thresholds and classifier, which are reused unchanged. Readers and judges are Claude agents, not human annotators.",
+  "conversation": "conv-26",
+  "control_conversation": "conv-30",
+  "thresholds_from": "benchmarks/phase8f.json",
+  "frozen_sha256": {
+    "docs/evaluation/phase-8f/annotation-manual.md": "c56f1a759f1b954ec1767eed9eb51b5c47e1e84a477850ca17d475e597d86a05",
+    "docs/evaluation/phase-8f/consolidation-spec.md": "3c4164dda9a8005da44f151210f8b247fa54f9d372c54683795e0183b15c9d6f",
+    "benchmarks/phase8f.json": "9a6aa54fe8f9ff4e58bd2d8fd63e34862a03773b5d0f252783ec1b53749be85f",
+    "src/gupi/benchmarks/phase8f_agreement.py": "58e4cd3c4afab3f971f7edbc9619d47f2c8ad9963641548f1ea2b411f54f315c",
+    "src/gupi/benchmarks/phase8e_activity.py": "af882bc9a2a30882858f065c8047c6a8fc52ec27be2cef9cb83d280f94b8dba8",
+    "src/gupi/answering_v2.py": "e2721ab3df52436374c3f110d19bc51d160627ee3b6e012b8d294bc719d33cd6",
+    "src/gupi/timeexpr.py": "05076948b4a2ebf12a8edef398f32fcadb11a26f548a658f1e9d0401572ddff1"
+  },
+  "decision": {
+    "computed_gain_margin": 0.05,
+    "false_merge_rate_a": 0.02,
+    "false_merge_rate_b": 0.05,
+    "link_recall_b": 0.6,
+    "max_items_per_100_turns": 15,
+    "structure_floor_adjusted_rand": 0.5
+  }
+}
