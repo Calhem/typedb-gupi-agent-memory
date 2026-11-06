@@ -197,7 +197,7 @@ def _claim(c, obs, method, scope):
     """The claim a candidate becomes. Raises ValueError rather than invent a participant or a date."""
     refs, mentions, roles = [], [], {}
     for p in c.participants:
-        if p.surface == "I":
+        if p.surface in ("I", "My", "my"):       # "my" reaches a candidate only where a stated relation was verified
             if not obs.author_id:
                 raise ValueError("first person, but the observation has no author")
             rid = obs.author_id

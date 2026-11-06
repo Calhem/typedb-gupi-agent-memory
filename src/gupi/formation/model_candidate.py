@@ -53,7 +53,8 @@ OUTCOMES = (
 )
 FLAGS = ("unreadable-time", "commitment-downgraded", "mode-forced-forwarded", "forwarded-unmarked",
          "predicate-paraphrased", "allegation", "correction-target-unresolved",
-         "bare-retraction", "retraction-possible-targets", "allegation-context", "allegation-inherited")
+         "bare-retraction", "retraction-possible-targets", "allegation-context", "allegation-inherited",
+         "stated-relation", "relation-name-conflict")
 
 HEDGE = re.compile(r"\b(?:probably|possibly|perhaps|maybe|might|could|apparently|reportedly|allegedly|"
                    r"supposedly|rumou?red|I think|I believe|it seems|likely|unconfirmed|not official)\b", re.I)
@@ -79,6 +80,22 @@ ALLEGATION = re.compile(r"\b(?:alleg(?:e|es|ed|edly|ing|ation|ations)|accus(?:e|
                         r"purport(?:s|ed|edly)?)\b", re.I)
 NOT_BEFORE = re.compile(r"\b(?:don't|do not|never|didn't|did not)\s*$", re.I)
 SENTENCE_END = re.compile(r"[.!?\n]")
+
+# Phase 8D, P2: "My sister Kate". "my" is the author only when code reads a stated relation to a named person, here. The
+# nouns are closed on purpose, and a modifier like "former" or "late" is not listed: it changes what the relation means.
+SAME_RELATION = ({"mother", "mom", "mum"}, {"father", "dad"}, {"manager", "boss", "supervisor"}, {"colleague", "coworker", "co-worker"},
+                 {"grandmother", "grandma"}, {"grandfather", "grandpa"}, {"neighbour", "neighbor"})
+MANAGER_NOUNS = {"manager", "boss", "supervisor"}
+RELATION_NOUNS = sorted(set().union(*SAME_RELATION) | {
+    "sister", "brother", "son", "daughter", "wife", "husband", "partner", "aunt", "uncle", "cousin", "niece", "nephew",
+    "girlfriend", "boyfriend", "fiance", "fiancee", "mentor", "mentee", "teammate", "assistant", "friend", "roommate",
+    "flatmate", "landlord", "landlady", "teacher", "tutor", "coach", "doctor", "therapist"})
+STATED_RELATION = re.compile(r"\b[Mm]y (?:(?:older|younger|big|little|twin|best|close|good|dear) )?(" + "|".join(RELATION_NOUNS)
+                             + r"),? ([A-Z][\w'-]+(?: [A-Z][\w'-]+)*)")
+NOT_A_NAME = frozenset({"I", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "January", "February",
+                        "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"})
+
+FIRST_PERSON_POSSESSIVE = frozenset({"My", "my"})
 
 TOP = {"format", "outcome", "assertions", "problems"}
 ASSERTION_REQUIRED = {"evidence", "relation", "participants", "times", "polarity", "modality", "commitment",
@@ -316,8 +333,13 @@ def _candidate(a, n, obs, earlier, report, fmt, alleged=()):
                                                "review, so it is not admitted")
 
     participants = []
+    stated = _stated_relation(a, obs, s, e, earlier, report, n) if any(
+        p["text"] in FIRST_PERSON_POSSESSIVE and not p["is_pronoun_or_vague"] for p in a["participants"]) else None
     for p in a["participants"]:
         surface = p["text"]
+        if stated and surface in FIRST_PERSON_POSSESSIVE:
+            participants.append(Participant(p["role"], surface, stated.start(), stated.start() + len(surface), p["kind"]))
+            continue
         if p["is_pronoun_or_vague"] or surface in PRONOUNS or surface.lower() in LOWER_PRONOUNS - {"i"}:
             raise _Stop("ambiguous-reference", f"{surface!r} is a pronoun or vague reference: identity is never inferred")
         if surface == "I" and not obs.author_id:
@@ -369,6 +391,8 @@ def _candidate(a, n, obs, earlier, report, fmt, alleged=()):
         raise _Stop("cue-conflict", f"the evidence is future or conditional ({FUTURE_OR_CONDITIONAL.search(asserted).group()!r}) "
                                     "but the modality is actual")
     commitment = a["commitment"]
+    if stated and any(f["kind"] == "relation-name-conflict" and f["assertion"] == n for f in report.flags):
+        commitment = "unknown" if commitment == "certain" else commitment   # one name, two stated relations: a reviewer decides
     if commitment == "certain" and (HEDGE.search(asserted) or a.get("allegation")):
         cue = HEDGE.search(asserted).group() if HEDGE.search(asserted) else "an allegation"
         commitment = "unknown"   # never kept as certain against a hedge: formation sends "unknown" to review
@@ -400,6 +424,44 @@ def _candidate(a, n, obs, earlier, report, fmt, alleged=()):
     relations = _correction(a, n, obs, participants, times, earlier, report)
     return Candidate(a["relation"], passage, tuple(participants), tuple(sorted(values)), tuple(times), a["polarity"],
                      a["modality"], commitment, attribution, relations, "explicit", None)
+
+
+def _noun_group(noun):
+    return next((g for g in SAME_RELATION if noun.casefold() in g), {noun.casefold()})
+
+
+def _stated_relation(a, obs, s, e, earlier, report, n):
+    """The match for "My <relation> <Name>" that makes "my" the author, or a stop. Checked by code, whatever the model
+    said: the author is known and speaking for themself, and the words state this relation to this named person."""
+    text = obs.content
+    at = a["attribution"]
+    if not obs.author_id:
+        raise _Stop("ambiguous-reference", "'my' with no known author")
+    if at["mode"] != "direct" or at["claimant"] is not None:
+        raise _Stop("ambiguous-reference", "'my' in someone else's words is not the author")
+    if a["relation"] not in ("statement", "reporting"):
+        raise _Stop("ambiguous-reference", "'my' states a relation, so it is a statement or a reporting line")
+    if any(forwarded is not None and lo <= s and e <= hi for lo, hi, forwarded in rules_v2._regions(text)):
+        raise _Stop("ambiguous-reference", "'my' in forwarded text is not the author")
+    roles = {p["role"]: p["text"] for p in a["participants"]}
+    named = roles.get("object") if a["relation"] == "statement" else roles.get("manager")
+    wanted = (a.get("predicate") or "").strip().casefold()
+    for m in STATED_RELATION.finditer(text, s, e):
+        noun, name = m.group(1), m.group(2)
+        if text.count('"', 0, m.start()) % 2 or name != named or set(name.split()) & NOT_A_NAME:
+            continue
+        if noun.casefold() != wanted if a["relation"] == "statement" else noun.casefold() not in MANAGER_NOUNS:
+            continue
+        report.flags.append({"kind": "stated-relation", "assertion": n, "detail": f"my {noun} {name}"})
+        for c in earlier:
+            if c.claim_type in ("statement", "reporting") and name in {p.surface for p in c.participants} and {
+                    p.surface for p in c.participants} & FIRST_PERSON_POSSESSIVE:
+                before = dict(c.values).get("predicate-text", "manager")
+                if noun.casefold() not in _noun_group(before):
+                    report.flags.append({"kind": "relation-name-conflict", "assertion": n,
+                                         "detail": f"{name} is also this author's {before}: may be two people"})
+        return m
+    raise _Stop("ambiguous-reference", "'my' is the author only in a stated relation to a named person, here")
 
 
 def _attribution(at, obs, s, e, n, report, fmt):

@@ -28,7 +28,7 @@ from gupi.formation.model_candidate import (
 )
 
 MODEL = "gpt-4o-mini"                         # required for LLM components in AML's open-source division (checked 2026-11-06)
-PROMPT_VERSION = "gupi.chat-extraction/1"
+PROMPT_VERSION = "gupi.chat-extraction/2"
 URL = "https://api.openai.com/v1/chat/completions"
 MAX_OUTPUT_TOKENS = 1200
 CONTEXT_TURNS = 2                             # earlier turns shown for understanding, never quoted as evidence
@@ -49,8 +49,12 @@ character from the message. Participants, times, title and object_text must lie 
 smallest span that states the assertion. If that span occurs more than once, evidence_occurrence says which; \
 otherwise null.
 2. Never complete or resolve an identity. Write what the message writes, and add no surname, company or role. The \
-author is "I": use the participant text "I" with kind person for their own statements ("my" is not "I"). "you", "she", \
-"they", "we", "it", and vague references ("my boss", "a friend") take is_pronoun_or_vague true.
+author is "I": use the participant text "I" with kind person for their own statements. "you", "she", "they", "we", \
+"it", and vague references ("my boss", "a friend") take is_pronoun_or_vague true. One exception: when the author names \
+someone by a relation ("My sister Kate", "My manager Alice"), state that relation as its own assertion, with the \
+participant text "My", is_pronoun_or_vague false. Evidence is just those words. For a manager, boss or supervisor use \
+reporting (report "My", manager the name). Otherwise use statement (subject "My", object the name, predicate the \
+relation word, such as "sister"). Then state anything else about that person separately, by name.
 3. relation: employment (roles employee, employer) when a person works for an organisation; reporting (roles report, \
 manager) when a person reports to another; statement (role subject, optional role object) for anything else. Each \
 participant text occurs exactly once inside evidence.
