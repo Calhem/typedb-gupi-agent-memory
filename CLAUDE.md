@@ -25,8 +25,8 @@ modes yet; keep the code open to them without building them.
 - Schema changes are new numbered migration files; never edit an applied one.
 - An LLM output is a hypothesis, never accepted truth by default. Extraction never writes reviews.
 - LLM spending goes only through `gupi.budget.Ledger` (fail closed; $10 total, owner decision). Never
-  call the Anthropic API outside `ClaudeExtractor`, never raise the limit without the owner, and never run
-  the held-out evaluation repeatedly to tune against it.
+  call the Anthropic API outside `ClaudeExtractor`, never call OpenAI outside `formation/chat_extractor.py`,
+  never raise the limit without the owner, and never run the held-out evaluation repeatedly to tune against it.
 - Extractors return time phrases, never dates; the validator reads them with `gupi.timeexpr`.
 - Generic `statement` claims are provisional; prefer typed claims; no schema evolution from extraction.
 - Never merge identities, resolve conflicts or apply supersessions automatically: suggest, then review.

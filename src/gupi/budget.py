@@ -21,7 +21,7 @@ from typedb.driver import TransactionType
 from gupi import migrations, typeql
 from gupi.typedb.connection import transaction
 
-# USD per million tokens (input, output), from Anthropic's published first-party prices as cached in the
+# USD per million tokens (input, output), from each provider's published prices. Claude models: as cached in the
 # Claude API reference on 2026-10-06. Update deliberately; a model missing here cannot be called.
 PRICES_USD_PER_MTOK = {
     "claude-fable-5-1": (10.00, 50.00),
@@ -36,6 +36,7 @@ PRICES_USD_PER_MTOK = {
     "claude-sonnet-4-6": (3.00, 15.00),
     "claude-haiku-5-5": (0.50, 2.50),   # the >100K-token rate, to stay on the safe side
     "claude-haiku-4-5": (1.00, 5.00),
+    "gpt-4o-mini": (0.15, 0.60),        # OpenAI standard tier, checked 2026-11-06; its cached-input discount is ignored
 }
 # Server-side fallbacks may route to a model we cannot predict, so worst cases use the highest price.
 MAX_PRICE = (max(p[0] for p in PRICES_USD_PER_MTOK.values()), max(p[1] for p in PRICES_USD_PER_MTOK.values()))
