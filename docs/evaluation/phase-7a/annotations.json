@@ -50,7 +50,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "has done an abstract painting"
+       "note": "has made an abstract artwork"
       }
      ]
     },
@@ -429,7 +429,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": "2|3",
-       "note": "opened an online clothing store; 'my own boss'"
+       "note": "started an online store selling clothes; self-employed"
       }
      ]
     },
@@ -452,7 +452,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "rehearsing for an upcoming show"
+       "note": "preparing for a performance"
       },
       {
        "category": "B",
@@ -475,7 +475,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": "2|3",
-       "note": "still working on opening a studio: planned start"
+       "note": "plans to open a studio, not yet open: planned start"
       }
      ]
     },
@@ -491,7 +491,7 @@
         "relative time"
        ],
        "stage": 3,
-       "note": "accepted for a fashion internship; organisation unnamed; accepted, not yet started (modality)"
+       "note": "accepted onto an internship; organisation unnamed; accepted, not yet started (modality)"
       }
      ]
     },
@@ -518,7 +518,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "studio on tenuous grounds; looking for investors"
+       "note": "the studio's future is uncertain; seeking funding"
       },
       {
        "category": "A?",
@@ -568,7 +568,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "thinking of working with trans people (possible)"
+       "note": "considering a career supporting transgender people (possible)"
       },
       {
        "category": "B",
@@ -643,7 +643,7 @@
         "cross-turn"
        ],
        "stage": 2,
-       "note": "the addressee speaks up for the trans community"
+       "note": "the addressee advocates for transgender people"
       }
      ]
     },
@@ -657,7 +657,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "rehearsing; working on business plans"
+       "note": "preparing a performance; planning the business"
       }
      ]
     },
@@ -694,7 +694,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "teamed up with a local artist (unnamed)"
+       "note": "collaborating with an unnamed artist"
       }
      ]
     },
@@ -708,7 +708,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 3,
-       "note": "'since I lost my job' (employer unnamed)"
+       "note": "'lost my job' (employer unnamed)"
       },
       {
        "category": "A?",
@@ -901,7 +901,7 @@
         "duration ('for about 6 weeks')"
        ],
        "stage": 3,
-       "note": "the user is the new Senior Marketing Manager at a named company, for about six weeks: in domain, unsupported syntax; the name contains '&'"
+       "note": "the user recently started a senior marketing role at a named company: in domain, unsupported syntax; the name contains '&'"
       }
      ]
     },
@@ -924,7 +924,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "considering cancelling a monthly beauty box ($50/month)"
+       "note": "considering cancelling a cosmetics subscription"
       },
       {
        "category": "B",
@@ -933,7 +933,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "buys beauty products at a discount store"
+       "note": "shops for cosmetics at a budget retailer"
       }
      ]
     },
@@ -956,7 +956,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "received a coupon book from a named retailer"
+       "note": "was given discount vouchers by a named retailer"
       }
      ]
     },
@@ -972,7 +972,7 @@
         "relative time"
        ],
        "stage": 2,
-       "note": "just moved into a new apartment in a named district"
+       "note": "recently relocated to a named district"
       }
      ]
     },
@@ -1058,7 +1058,7 @@
         "cross-turn"
        ],
        "stage": 2,
-       "note": "advice presupposes the user will volunteer at a charity event"
+       "note": "advice presupposes the user is volunteering at a fundraiser"
       }
      ]
     },

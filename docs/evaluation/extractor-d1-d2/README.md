@@ -45,7 +45,7 @@ No API calls, and no models downloaded. Version selection and behaviour: docs/fo
 | Phase 7A sample (100 turns) rejections | no-pattern only | LoCoMo targeted: 4 unsupported-expression | 4 named |
 
 **The phrasings reported as unsupported on the complete datasets:**
-- **LoCoMo:** "lost my job" (6), "accepted for a fashion internship" (1), "got a temp job" (1).
+- **LoCoMo:** "lost my job" (6), "accepted for an internship" (1), "got a temp job" (1).
 - **LongMemEval's most frequent:** "was appointed", "your boss", "my boss", "began working", and other
   forms of "appointed".
 

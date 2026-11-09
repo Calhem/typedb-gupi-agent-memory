@@ -2,7 +2,7 @@ dataset,sample,turn_key,stratum,chars,extractor_candidates,domain_verbs,extracto
 locomo,representative,conv-26:D1:12,conv-26/long,196,0,work,1,1,B,career aspiration,addressee,implicit,cross-turn,2,praise implies the addressee wants to work as a counsellor
 locomo,representative,conv-26:D1:12,conv-26/long,196,0,work,1,2,B,activity (shared image),speaker,implicit,,2,image caption: a photo of a painting
 locomo,representative,conv-26:D17:14,conv-26/long,219,0,,0,1,B,hobby,speaker,explicit,pronoun,2,painted the earlier-mentioned painting ('it')
-locomo,representative,conv-26:D17:14,conv-26/long,219,0,,0,2,B,hobby,speaker,explicit,,2,has done an abstract painting
+locomo,representative,conv-26:D17:14,conv-26/long,219,0,,0,2,B,hobby,speaker,explicit,,2,has made an abstract artwork
 locomo,representative,conv-26:D11:7,conv-26/long,324,0,work,1,1,B,event,speaker,explicit,relative time,2,attended a music event last night (caption)
 locomo,representative,conv-26:D11:7,conv-26/long,324,0,work,1,2,B,family,speaker,implicit,,2,has children ('our kids')
 locomo,representative,conv-26:D11:7,conv-26/long,324,0,work,1,3,B,occupation/identity,addressee,implicit,cross-turn,2,question presupposes the addressee is an artist
@@ -40,30 +40,30 @@ locomo,targeted,conv-26:D1:2,targeted/work-vocabulary,98,0,work,1,1,A,employment
 locomo,targeted,conv-26:D1:2,targeted/work-vocabulary,98,0,work,1,2,B,family,speaker,explicit,,2,has children
 locomo,targeted,conv-26:D4:11,targeted/work-vocabulary,201,0,,0,1,A?,career intention (counselling),speaker,explicit,,2|3,considering a career field; no organisation; planned/possible
 locomo,targeted,conv-30:D14:8,targeted/work-vocabulary,162,0,,0,1,A,employment ended,speaker,explicit,cross-turn,3,'lost my job' (employer unnamed); the turn answers the previous one
-locomo,targeted,conv-30:D14:8,targeted/work-vocabulary,162,0,,0,2,A?,started own business (online store),speaker,explicit,,2|3,opened an online clothing store; 'my own boss'
+locomo,targeted,conv-30:D14:8,targeted/work-vocabulary,162,0,,0,2,A?,started own business (online store),speaker,explicit,,2|3,started an online store selling clothes; self-employed
 locomo,targeted,conv-30:D4:11,targeted/work-vocabulary,290,0,working,1,1,A?,runs own business,speaker,explicit,,2|3,'working on my business'
-locomo,targeted,conv-30:D4:11,targeted/work-vocabulary,290,0,working,1,2,B,plan/event,speaker,explicit,,2,rehearsing for an upcoming show
+locomo,targeted,conv-30:D4:11,targeted/work-vocabulary,290,0,working,1,2,B,plan/event,speaker,explicit,,2,preparing for a performance
 locomo,targeted,conv-30:D4:11,targeted/work-vocabulary,290,0,working,1,3,B,hobby,speaker,explicit,,2,dancing
-locomo,targeted,conv-30:D15:3,targeted/work-vocabulary,54,0,working,1,1,A?,plans own business (studio),speaker,explicit,,2|3,still working on opening a studio: planned start
-locomo,targeted,conv-30:D12:1,targeted/work-vocabulary,92,0,,0,1,A,employment start (internship),speaker,explicit,relative time,3,"accepted for a fashion internship; organisation unnamed; accepted, not yet started (modality)"
+locomo,targeted,conv-30:D15:3,targeted/work-vocabulary,54,0,working,1,1,A?,plans own business (studio),speaker,explicit,,2|3,"plans to open a studio, not yet open: planned start"
+locomo,targeted,conv-30:D12:1,targeted/work-vocabulary,92,0,,0,1,A,employment start (internship),speaker,explicit,relative time,3,"accepted onto an internship; organisation unnamed; accepted, not yet started (modality)"
 locomo,targeted,conv-30:D12:11,targeted/work-vocabulary,109,0,working,1,0,C,,,,,,no relevant extractable fact
 locomo,targeted,conv-30:D18:2,targeted/work-vocabulary,229,0,,0,1,A,employment start (temporary job),speaker,explicit,,3,'got a temp job' (employer unnamed)
-locomo,targeted,conv-30:D18:2,targeted/work-vocabulary,229,0,,0,2,B,business status,speaker,explicit,,2,studio on tenuous grounds; looking for investors
+locomo,targeted,conv-30:D18:2,targeted/work-vocabulary,229,0,,0,2,B,business status,speaker,explicit,,2,the studio's future is uncertain; seeking funding
 locomo,targeted,conv-30:D18:2,targeted/work-vocabulary,229,0,,0,3,A?,runs own business (store),addressee,implicit,cross-turn,2|3,congratulations on the addressee's store
 locomo,targeted,conv-30:D9:3,targeted/work-vocabulary,130,0,work,1,1,A,employment ended,speaker,explicit,,3,'losing my job' (employer unnamed)
 locomo,targeted,conv-30:D9:3,targeted/work-vocabulary,130,0,work,1,2,A?,runs own business (studio),speaker,explicit,cross-turn,2|3,'this studio'
-locomo,targeted,conv-26:D4:13,targeted/work-vocabulary,418,0,work working,2,1,B,career intention,speaker,explicit,,2,thinking of working with trans people (possible)
+locomo,targeted,conv-26:D4:13,targeted/work-vocabulary,418,0,work working,2,1,B,career intention,speaker,explicit,,2,considering a career supporting transgender people (possible)
 locomo,targeted,conv-26:D4:13,targeted/work-vocabulary,418,0,work working,2,2,B,event,speaker,explicit,relative time,2,attended a counselling workshop last Friday
 locomo,targeted,conv-30:D3:3,targeted/work-vocabulary,155,0,work,1,1,A?,own business (store location),addressee,implicit,cross-turn,2|3,the addressee found a spot for their store
 locomo,targeted,conv-26:D2:6,targeted/work-vocabulary,128,0,,0,0,C,,,,,,no relevant extractable fact
 locomo,targeted,conv-26:D1:9,targeted/work-vocabulary,77,0,,0,1,B,plan (education/career),speaker,explicit,,2,"continue education, explore career options"
 locomo,targeted,conv-30:D14:14,targeted/work-vocabulary,226,0,,0,1,B,past activity,speaker,explicit,,2,used to dance (photo)
-locomo,targeted,conv-26:D3:4,targeted/work-vocabulary,292,0,work,1,1,B,activism,addressee,implicit,cross-turn,2,the addressee speaks up for the trans community
-locomo,targeted,conv-30:D19:1,targeted/work-vocabulary,146,0,working,1,1,B,activity,speaker,explicit,,2,rehearsing; working on business plans
+locomo,targeted,conv-26:D3:4,targeted/work-vocabulary,292,0,work,1,1,B,activism,addressee,implicit,cross-turn,2,the addressee advocates for transgender people
+locomo,targeted,conv-30:D19:1,targeted/work-vocabulary,146,0,working,1,1,B,activity,speaker,explicit,,2,preparing a performance; planning the business
 locomo,targeted,conv-30:D18:10,targeted/work-vocabulary,160,0,working,1,1,B,activity/plan,speaker,explicit,,2,revising a business plan; pitching to investors; building a platform
 locomo,targeted,conv-30:D5:5,targeted/work-vocabulary,333,0,working,1,1,A?,runs own business (online store),speaker,explicit,,2|3,'my online store'
-locomo,targeted,conv-30:D5:5,targeted/work-vocabulary,333,0,working,1,2,B,collaboration,speaker,explicit,,2,teamed up with a local artist (unnamed)
-locomo,targeted,conv-30:D16:8,targeted/work-vocabulary,152,0,,0,1,A,employment ended,speaker,explicit,,3,'since I lost my job' (employer unnamed)
+locomo,targeted,conv-30:D5:5,targeted/work-vocabulary,333,0,working,1,2,B,collaboration,speaker,explicit,,2,collaborating with an unnamed artist
+locomo,targeted,conv-30:D16:8,targeted/work-vocabulary,152,0,,0,1,A,employment ended,speaker,explicit,,3,'lost my job' (employer unnamed)
 locomo,targeted,conv-30:D16:8,targeted/work-vocabulary,152,0,,0,2,A?,runs own business,speaker,explicit,,2|3,'my business'
 locomo,targeted,conv-30:D1:13,targeted/work-vocabulary,51,0,works,1,1,B,plan (meeting),speaker,explicit,cross-turn; relative time,2,agrees to meet next Friday
 longmemeval,representative,lme:4344c2f1_1:57d6b5d8cd86:5,assistant/long,2252,0,manage,1,0,C,,,,,,no relevant extractable fact
@@ -87,13 +87,13 @@ longmemeval,representative,lme:sharegpt_R79o5xs_0:60c21d6130ea:2,user/long,1966,
 longmemeval,representative,lme:sharegpt_igR6Bmm_0:0d1b1c2e72be:0,user/long,19257,0,left reported reporting reports work working,11,1,B,habit,user,explicit,,2,keeps interesting sentences in a note app (the rest is a pasted article)
 longmemeval,representative,lme:sharegpt_YvsQDjp_0:f27bdbada369:2,user/long,2429,0,,0,0,C,,,,,,no relevant extractable fact
 longmemeval,representative,lme:sharegpt_XYtuANl_9:ed77c62015b6:1,user/long,5325,0,report working,4,0,C,,,,,,no relevant extractable fact
-longmemeval,representative,lme:9f8c432e_1:83052b381db7:0,user/medium,258,0,,0,1,A,employment with title and named organisation,user,explicit,duration ('for about 6 weeks'),3,"the user is the new Senior Marketing Manager at a named company, for about six weeks: in domain, unsupported syntax; the name contains '&'"
+longmemeval,representative,lme:9f8c432e_1:83052b381db7:0,user/medium,258,0,,0,1,A,employment with title and named organisation,user,explicit,duration ('for about 6 weeks'),3,"the user recently started a senior marketing role at a named company: in domain, unsupported syntax; the name contains '&'"
 longmemeval,representative,lme:answer_7cb94507:8eb842fccb8b:6,user/medium,707,0,,0,1,B,shopping habit,user,explicit,,2,browses at named retailers
-longmemeval,representative,lme:answer_7cb94507:8eb842fccb8b:6,user/medium,707,0,,0,2,B,plan (cancel subscription),user,explicit,,2,considering cancelling a monthly beauty box ($50/month)
-longmemeval,representative,lme:answer_7cb94507:8eb842fccb8b:6,user/medium,707,0,,0,3,B,shopping habit,user,explicit,,2,buys beauty products at a discount store
+longmemeval,representative,lme:answer_7cb94507:8eb842fccb8b:6,user/medium,707,0,,0,2,B,plan (cancel subscription),user,explicit,,2,considering cancelling a cosmetics subscription
+longmemeval,representative,lme:answer_7cb94507:8eb842fccb8b:6,user/medium,707,0,,0,3,B,shopping habit,user,explicit,,2,shops for cosmetics at a budget retailer
 longmemeval,representative,lme:b9361a4f_1:0407b0bcc7e2:0,user/medium,282,0,,0,1,B,plan (purchase),user,explicit,,2,looking to buy a coffee maker
-longmemeval,representative,lme:b9361a4f_1:0407b0bcc7e2:0,user/medium,282,0,,0,2,B,event/possession,user,explicit,,2,received a coupon book from a named retailer
-longmemeval,representative,lme:1cafd864_3:8a5980818177:8,user/medium,249,0,,0,1,B,residence (moved),user,explicit,relative time,2,just moved into a new apartment in a named district
+longmemeval,representative,lme:b9361a4f_1:0407b0bcc7e2:0,user/medium,282,0,,0,2,B,event/possession,user,explicit,,2,was given discount vouchers by a named retailer
+longmemeval,representative,lme:1cafd864_3:8a5980818177:8,user/medium,249,0,,0,1,B,residence (moved),user,explicit,relative time,2,recently relocated to a named district
 longmemeval,representative,lme:3b5205b6_1:4eaca794bddb:10,user/medium,343,0,,0,1,B,plan,user,explicit,,2,will talk to relatives about family history
 longmemeval,representative,lme:e627b1aa_4:6183f508e72d:2,user/short,195,0,,0,1,B,preference/plan (education),user,explicit,,2,interested in online degree programmes at two named providers
 longmemeval,representative,lme:ultrachat_556010:f449f2697a43:0,user/short,81,0,,0,0,C,,,,,,no relevant extractable fact
@@ -101,7 +101,7 @@ longmemeval,representative,lme:ultrachat_518651:6844edf749f8:6,user/short,181,0,
 longmemeval,representative,lme:ultrachat_443538:9127a878bd62:0,user/short,71,0,,0,0,C,,,,,,no relevant extractable fact
 longmemeval,representative,lme:6ea1541e_1:cb3b9cc73472:10,user/short,189,0,,0,1,B,interest (entrepreneurship funding),user,implicit,,2,asks about a named charity's microloans for entrepreneurs
 longmemeval,targeted,lme:495cf518_2:3487e1b09b6b:3,targeted/work-vocabulary,2642,0,work,1,1,B,world knowledge (books and authors),third parties,explicit,,2,book authorship and authors' positions
-longmemeval,targeted,lme:bd8708e2_2:0750ad9a8a4e:9,targeted/work-vocabulary,2846,0,report work,2,1,B,plan (volunteering),user,implicit,cross-turn,2,advice presupposes the user will volunteer at a charity event
+longmemeval,targeted,lme:bd8708e2_2:0750ad9a8a4e:9,targeted/work-vocabulary,2846,0,report work,2,1,B,plan (volunteering),user,implicit,cross-turn,2,advice presupposes the user is volunteering at a fundraiser
 longmemeval,targeted,lme:c625cff4_3:dccec659c52e:3,targeted/work-vocabulary,2026,0,works,1,0,C,,,,,,no relevant extractable fact
 longmemeval,targeted,lme:ultrachat_322794:bd4ae323f6c9:13,targeted/work-vocabulary,1520,0,works,1,1,B,world knowledge (infrastructure),third parties,explicit,,2,"named projects, cost and places"
 longmemeval,targeted,lme:a6b6067b:f6e930d7a5bc:11,targeted/work-vocabulary,2654,0,work,1,1,B,world knowledge (works and authors),third parties,explicit,dates,2,"plays, their authors and premiere dates"

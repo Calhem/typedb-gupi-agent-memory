@@ -98,9 +98,9 @@ UNSUPPORTED_SENTENCES = [
     "Nora Vance is employed by Halden.",
     "Nora Vance was let go by Halden in May 2025.",
     "Nora Vance is Ivo Marsh's boss.",
-    "I lost my job in May.",                              # the Phase 7A sample's in-domain phrasings
-    "I got a temp job to cover expenses.",
-    "I just got accepted for a fashion internship!",
+    "Last spring I lost my job.",                            # invented forms of the Phase 7A sample's phrasings
+    "I got a summer job at the harbour.",
+    "I was accepted for a design placement last week.",
 ]
 SILENT_IN_V2 = {UNSUPPORTED_SENTENCES[i] for i in (1, 2, 3, 4, 5, 6, 7, 8, 10, 11)}
 

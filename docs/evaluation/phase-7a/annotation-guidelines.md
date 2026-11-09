@@ -13,18 +13,18 @@ sampled turn. There is one annotator, the implementer, with no adjudication.
   - questions that presuppose nothing new
   - generated content the user asked for (recipes, tweets, translations, documents)
   - pasted material the user does not assert
-- **Presuppositions:** a durable fact presupposed by the other speaker counts. For example, "How do you stay
-  inclusive in your work as an artist?" presupposes the addressee is an artist. It is marked `implicit`, and
+- **Presuppositions:** a durable fact presupposed by the other speaker counts. For example, a question about how
+  the addressee keeps their art inclusive presupposes the addressee is an artist. It is marked `implicit`, and
   usually needs `cross-turn`.
-- **Text:** labels are short descriptions. No dataset text is copied beyond a few words of common phrasing.
+- **Text:** labels are short descriptions. No dataset text is copied beyond a few words of common phrasing (examples reworded on 2026-11-09, see the README).
 
 ## Domain categories
 | Category | Rule | Examples |
 |---|---|---|
-| **A** supported domain | The fact is one of `rules:v2`'s claim types and roles: employment (a person joins, works at, leaves or is appointed at an organisation) or reporting (a person reports to a person), or a correction of one of these | "the new Senior Marketing Manager at [named company]"; "lost my job"; "got a temp job" |
+| **A** supported domain | The fact is one of `rules:v2`'s claim types and roles: employment (a person joins, works at, leaves or is appointed at an organisation) or reporting (a person reports to a person), or a correction of one of these | a new marketing role "at [named company]"; "lost my job"; "got a temp job" |
 | **A?** borderline | Plausibly employment, but not cleanly: running one's own business, a role at an unnamed institution, a career intention without an employer | "my store", "my dance studio", "my teaching assistantship" |
 | **B** representable, unsupported | No typed claim exists. Representable only as the provisional generic `statement` claim (core/0003: subject referents, `predicate-text`, optional object or `object-text`, valid time), so typing and constraints are lost. World knowledge is B, with domain `world knowledge` | hobbies, family, plans, purchases, residence, education, events, opinions, book authorship |
-| **C** nothing relevant | The turn holds no fact as defined above | "Wow, what a fun moment! What's the band?" |
+| **C** nothing relevant | The turn holds no fact as defined above | an exclamation followed by a question about a band |
 
 **How representability was checked:** against the schema in TypeDB (`employment`, `reporting`,
 `statement`, `identity`; referent kinds person, organisation, unclassified) and the candidate contract

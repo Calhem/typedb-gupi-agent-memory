@@ -110,7 +110,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "has done an abstract painting",
+       "note": "has made an abstract artwork",
        "observed_stage": 2
       }
      ],
@@ -859,7 +859,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": "2|3",
-       "note": "opened an online clothing store; 'my own boss'",
+       "note": "started an online store selling clothes; self-employed",
        "observed_stage": "2|3"
       }
      ],
@@ -893,7 +893,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "rehearsing for an upcoming show",
+       "note": "preparing for a performance",
        "observed_stage": 2
       },
       {
@@ -931,7 +931,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": "2|3",
-       "note": "still working on opening a studio: planned start",
+       "note": "plans to open a studio, not yet open: planned start",
        "observed_stage": "2|3"
       }
      ],
@@ -961,7 +961,7 @@
         "relative time"
        ],
        "stage": 3,
-       "note": "accepted for a fashion internship; organisation unnamed; accepted, not yet started (modality)",
+       "note": "accepted onto an internship; organisation unnamed; accepted, not yet started (modality)",
        "observed_stage": 3
       }
      ],
@@ -1012,7 +1012,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "studio on tenuous grounds; looking for investors",
+       "note": "the studio's future is uncertain; seeking funding",
        "observed_stage": 2
       },
       {
@@ -1088,7 +1088,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "thinking of working with trans people (possible)",
+       "note": "considering a career supporting transgender people (possible)",
        "observed_stage": 2
       },
       {
@@ -1223,7 +1223,7 @@
         "cross-turn"
        ],
        "stage": 2,
-       "note": "the addressee speaks up for the trans community",
+       "note": "the addressee advocates for transgender people",
        "observed_stage": 2
       }
      ],
@@ -1251,7 +1251,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "rehearsing; working on business plans",
+       "note": "preparing a performance; planning the business",
        "observed_stage": 2
       }
      ],
@@ -1317,7 +1317,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "teamed up with a local artist (unnamed)",
+       "note": "collaborating with an unnamed artist",
        "observed_stage": 2
       }
      ],
@@ -1345,7 +1345,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 3,
-       "note": "'since I lost my job' (employer unnamed)",
+       "note": "'lost my job' (employer unnamed)",
        "observed_stage": 3
       },
       {
@@ -1836,7 +1836,7 @@
         "duration ('for about 6 weeks')"
        ],
        "stage": 3,
-       "note": "the user is the new Senior Marketing Manager at a named company, for about six weeks: in domain, unsupported syntax; the name contains '&'",
+       "note": "the user recently started a senior marketing role at a named company: in domain, unsupported syntax; the name contains '&'",
        "observed_stage": 3
       }
      ],
@@ -1870,7 +1870,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "considering cancelling a monthly beauty box ($50/month)",
+       "note": "considering cancelling a cosmetics subscription",
        "observed_stage": 2
       },
       {
@@ -1880,7 +1880,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "buys beauty products at a discount store",
+       "note": "shops for cosmetics at a budget retailer",
        "observed_stage": 2
       }
      ],
@@ -1914,7 +1914,7 @@
        "explicit": "explicit",
        "needs": [],
        "stage": 2,
-       "note": "received a coupon book from a named retailer",
+       "note": "was given discount vouchers by a named retailer",
        "observed_stage": 2
       }
      ],
@@ -1940,7 +1940,7 @@
         "relative time"
        ],
        "stage": 2,
-       "note": "just moved into a new apartment in a named district",
+       "note": "recently relocated to a named district",
        "observed_stage": 2
       }
      ],
@@ -2142,7 +2142,7 @@
         "cross-turn"
        ],
        "stage": 2,
-       "note": "advice presupposes the user will volunteer at a charity event",
+       "note": "advice presupposes the user is volunteering at a fundraiser",
        "observed_stage": 2
       }
      ],

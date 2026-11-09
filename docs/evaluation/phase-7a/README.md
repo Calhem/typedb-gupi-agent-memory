@@ -8,6 +8,13 @@ Date: 2026-11-04. Branch `feature/phase-7a-extraction-diagnosis`, from `main` at
 
 **Measured and estimated results are labelled throughout.**
 
+**Reworded on 2026-11-09 (privacy):** 17 annotation notes and 3 test sentences (in
+`tests/unit/test_formation_rules_v21.py`) stayed too close to LoCoMo and LongMemEval wording, and 3 guideline
+examples did too, two of them quoting turns word for word. All now use paraphrases or invented sentences, as does
+one phrase in `../extractor-d1-d2/README.md`. Only the wording changed: categories, stages and counts did not.
+`classification.json` received the same note changes, and `sample-results.csv` and `sample-manifest.json`
+(including the hash of `annotations.json`) were regenerated. The earlier wording is still in the git history.
+
 ## Conclusion
 **Why the result is zero:** `rules:v2` produced no candidates from LoCoMo or LongMemEval because of two
 things together:
