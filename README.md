@@ -4,8 +4,14 @@ An experimental, open-source semantic memory and context engine for applications
 on [TypeDB](https://typedb.com) 3. GUPI records what sources said, the claims drawn from them, which claims
 were accepted, when each was true and when GUPI knew it, so every answer can be traced to its evidence.
 
-**Status: Phase 5 (offline evidence-retrieval evaluation) under review.** Not yet a product. See
-[docs/phase-5-report.md](docs/phase-5-report.md).
+**Status (2026-11-09): research paused.** GUPI's evidence model holds in tests. But it hasn't been shown to improve an agent's answers, or that TypeDB adds a measurable advantage on conversational data. The final answer-level evaluation was not run, because no independent question pack exists. Read [docs/final-report.md](docs/final-report.md) first. Research branches are kept unmerged, and `main` holds the Stage 4 state.
+
+| Topic | Where |
+|---|---|
+| Final report: what was built, what works, what doesn't, TypeDB's contribution, recommendation | [docs/final-report.md](docs/final-report.md) |
+| Why the final evaluation could not run | [docs/evaluation/final/pack-audit.md](docs/evaluation/final/pack-audit.md) |
+| Phase reports | `docs/phase-*-report.md`, `docs/evaluation/phase-*/README.md` |
+| Known issues and limits | [docs/known-issues.md](docs/known-issues.md), and section C of the final report |
 
 ## What works today
 - A core ontology in TypeDB: sources, verbatim observations, typed claims (one per attestation), evidence
@@ -78,6 +84,14 @@ Set `GUPI_TYPEDB_ADDRESS`, `GUPI_TYPEDB_USERNAME` and `GUPI_TYPEDB_PASSWORD` for
 ## Known issues
 See [docs/known-issues.md](docs/known-issues.md): LoCoMo's non-commercial licence is an unresolved
 compliance consideration, and vector search is exact and linear in the number of vectors.
+
+**Known limitations from the research** ([final report](docs/final-report.md), section C):
+- Claims add no measurable recall on real chat, and few of them link two named things.
+- Several temporal readings are fragile: "since" read as a start; an undated start then an end stays unknown; activities closed by past-tense mentions.
+- Activity consolidation is not implemented, and final states are not reliable.
+- Every favourable answer-level result comes from developer-written material.
+
+**Reproducing the research:** the commands are at the end of the final report and in each phase's README. Datasets go in git-ignored `.data/`. Recorded model responses and annotations are private, so the phases that depend on them can't be rerun from this repository alone.
 
 ## Licence
 Apache-2.0: see [LICENSE](LICENSE). GUPI is an independent Noodlelab experiment.
